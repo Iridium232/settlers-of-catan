@@ -24,7 +24,7 @@ public class Game
 	/**
 	 * List of current players
 	 */
-	private ArrayList<Player> players;
+	private Player[] players = new Player[4];
 	
 	/**
 	 * structure to keep track of whose turn it is
@@ -97,15 +97,16 @@ public class Game
 	/**
 	 * @return the players
 	 */
-	public ArrayList<Player> getPlayers() {
+	public Player[] getPlayers() {
 		return players;
 	}
 
 	/**
 	 * @param players the players to set
 	 */
-	public void setPlayers(ArrayList<Player> players) {
-		this.players = players;
+	public void setPlayer(Player player, int index) {
+		assert (index >= 0 && index <=4);
+		this.players[index] = player;
 	}
 
 	/**
