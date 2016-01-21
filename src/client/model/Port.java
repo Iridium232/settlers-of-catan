@@ -31,18 +31,32 @@ public class Port
 	}
 	
 	/**
-	 * @return the location
+	 * @return the location1
 	 */
-	public VertexLocation getLocation() {
-		return location;
+	public VertexLocation getLocation1() {
+		return location1;
 	}
 	
 	/**
-	 * @param location the location to set
+	 * @param location the location1 to set
 	 */
-	public void setLocation(VertexLocation location) {
-		assert this.location == null;
-		this.location = location;
+	public void setLocation1(VertexLocation location) {
+		assert this.location1 == null;
+		this.location1 = location;
 	}
 	
+	/**
+	 * @return the location2
+	 */
+	public VertexLocation getLocation2() {
+		return location2;
+	}
+	
+	/**
+	 * @param location the location2 to set
+	 */
+	public void setLocation2(VertexLocation location) {
+		assert this.location2 == null;
+		this.location2 = location;
+	}
 }

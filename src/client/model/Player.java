@@ -448,7 +448,7 @@ public class Player {
      * at least one card to discard
      * @post    The number of cards in the ResourceCardList is reduced by the number of cards being discarded
      */
-    public void discard(ArrayList<ResourceType> resources) {
+    public void discard(ResourceList resources) {
 
     }
 
@@ -519,7 +519,7 @@ public class Player {
      * least one card to discard
      * @post    The number of cards in the DevCardList is reduced by the number of cards being discarded
      */
-    public void discardDevCards(ArrayList<DevCardType> devCards) {
+    public void discardDevCards(DevCardList devCards) {
 
     }
 
@@ -533,7 +533,7 @@ public class Player {
      * at least one card to discard
      * @post    The number of cards in the ResourceCardList is reduced by the number of cards being discarded
      */
-    public void discardResourceCards(ArrayList<ResourceType> resources) {
+    public void discardResourceCards(ResourceList resources) {
 
     }
 
@@ -554,9 +554,10 @@ public class Player {
      * Determines whether the pre-conditions of discard are met
      *
      * @param resources   List of Resources to be discarded
-     * @return  Whether a card(s) can be discarded
+     * 
+     * @post  result = Whether a card(s) can be discarded
      */
-    public boolean canDiscard(ArrayList<ResourceType> resources) {
+    public boolean canDiscard(ResourceList resources) {
         return true;
     }
 
@@ -617,7 +618,7 @@ public class Player {
      * @param devCards  List of DevCardTypes to be discarded
      * @return  Whether a card(s) can be discarded
      */
-    public boolean canDiscardDevCards(ArrayList<DevCardType> devCards) {
+    public boolean canDiscardDevCards(DevCardList devCards) {
         return true;
     }
 
@@ -628,7 +629,7 @@ public class Player {
      * @param resources  List of Resources to be discarded
      * @return  Whether a card(s) can be discarded
      */
-    public boolean canDiscardResourceCards(ArrayList<ResourceType> resources) {
+    public boolean canDiscardResourceCards(ResourceList resources) {
         return true;
     }
 }
