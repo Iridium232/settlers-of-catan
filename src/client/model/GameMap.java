@@ -42,7 +42,7 @@ public class GameMap
 	 */
 	public void addEdge(Edge edge)
 	{
-		assert !map_edges.containsKey(edge.getLocation);
+		assert !map_edges.containsKey(edge.getLocation());
 		map_edges.put(edge.getLocation(), edge);
 	}
 	

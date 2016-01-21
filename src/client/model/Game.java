@@ -1,6 +1,6 @@
 package client.model;
 import java.util.ArrayList;
-
+import client.data.*;
 
 /**
  * The Catan Game all collected is represented in this class
@@ -12,6 +12,11 @@ import java.util.ArrayList;
 public class Game 
 {
 	private GameMap map;
+	private GameInfo gameinfo;
 	private ArrayList<Player> players;
-	private Player activePlayer;
+	private int activePlayer;
+	private int winner = -1;
+	private int version = -1;
+	private MessageList chat;
+	private MessageList log;
 }
