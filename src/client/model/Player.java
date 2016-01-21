@@ -442,13 +442,13 @@ public class Player {
      *
      * Removes a certain card(s) from the player's ResourceCardList
      *
-     * @param cards  A list of ResourceCards to be discarded from ResourceCardList
+     * @param resources  A list of Resources to be discarded from ResourceCardList
      *
      * @pre Number of cards to be discarded can not exceed number of cards in the ResourceCardList and player must have
      * at least one card to discard
      * @post    The number of cards in the ResourceCardList is reduced by the number of cards being discarded
      */
-    public void discard(ArrayList<ResourceCard> cards) {
+    public void discard(ArrayList<ResourceType> resources) {
 
     }
 
@@ -513,13 +513,13 @@ public class Player {
      *
      * Removes a certain card(s) from the player's DevCardList
      *
-     * @param cards  A list of DevCards to be discarded from DevCardList
+     * @param devCards  A list of DevCardTypes to be discarded from DevCardList
      *
      * @pre Number of cards to be discarded can not exceed number of cards in the DevCardList and player must have at
      * least one card to discard
      * @post    The number of cards in the DevCardList is reduced by the number of cards being discarded
      */
-    public void discardDevCards(ArrayList<DevCard> cards) {
+    public void discardDevCards(ArrayList<DevCardType> devCards) {
 
     }
 
@@ -527,13 +527,13 @@ public class Player {
      *
      * Removes a certain card(s) from the player's ResourceCardList
      *
-     * @param cards  A list of ResourceCards to be discarded from ResourceCardList
+     * @param resources  A list of Resources to be discarded from ResourceCardList
      *
      * @pre Number of cards to be discarded can not exceed number of cards in the ResourceCardList and player must have
      * at least one card to discard
      * @post    The number of cards in the ResourceCardList is reduced by the number of cards being discarded
      */
-    public void discardResourceCards(ArrayList<ResourceCard> cards) {
+    public void discardResourceCards(ArrayList<ResourceType> resources) {
 
     }
 
@@ -553,10 +553,10 @@ public class Player {
      *
      * Determines whether the pre-conditions of discard are met
      *
-     * @param cards   List of ResourceCards to be discarded
+     * @param resources   List of Resources to be discarded
      * @return  Whether a card(s) can be discarded
      */
-    public boolean canDiscard(ArrayList<ResourceCard> cards) {
+    public boolean canDiscard(ArrayList<ResourceType> resources) {
         return true;
     }
 
@@ -614,10 +614,10 @@ public class Player {
      *
      * Determines whether the pre-conditions of discardDevCards are met
      *
-     * @param cards  List of DevCards to be discarded
+     * @param devCards  List of DevCardTypes to be discarded
      * @return  Whether a card(s) can be discarded
      */
-    public boolean canDiscardDevCards(ArrayList<DevCard> cards) {
+    public boolean canDiscardDevCards(ArrayList<DevCardType> devCards) {
         return true;
     }
 
@@ -625,10 +625,10 @@ public class Player {
      *
      * Determines whether the pre-conditions of discardResourceCards are met
      *
-     * @param cards  List of ResourceCards to be discarded
+     * @param resources  List of Resources to be discarded
      * @return  Whether a card(s) can be discarded
      */
-    public boolean canDiscardResourceCards(ArrayList<ResourceCard> cards) {
+    public boolean canDiscardResourceCards(ArrayList<ResourceType> resources) {
         return true;
     }
 }
