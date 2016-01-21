@@ -1,5 +1,6 @@
 package client.model;
 import client.data.*;
+import java.util.*;
 
 /**
  * The Fascade class handles all communication and commands to and from the game model.
@@ -53,9 +54,9 @@ public class Fascade
 	 * @pre PlayerInfo can buy a development card (see previous function)
 	 * @post result = the development card purchased by the player
 	 */
-	public DevelopmentCard buyDevelopmentCard(PlayerInfo player)
+	public void buyDevelopmentCard(PlayerInfo player)
 	{
-		return null;//TODO
+		return;//TODO
 	}
 	
 	/**
@@ -131,7 +132,9 @@ public class Fascade
 	 */
 	public int[] getCurrentDiceValue()
 	{
-		return new int[-1,-1];
+		int result[] = new int[2];
+		
+		return result;
 	}
 	
 	//++++++++++++++++++++++++++++++++++++++++++++++
@@ -152,15 +155,15 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public List<ResourceCard> getCurrentResources(PlayerInfo player)
+	public ResourceList getCurrentResources(PlayerInfo player)
 	{
-		return void; //TODO
+		return null; //TODO
 	}
 	
 	/**
 	 * 
 	 */
-	public void discardResources(List<ResourceCard>)
+	public void discardResources(ResourceList discard_list)
 	{
 		return; //TODO
 	}
@@ -199,7 +202,7 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public List<PlayerInfo> whoCanBeRobbedBy(PlayerInfo player)
+	public ArrayList<Player> whoCanBeRobbedBy(PlayerInfo player)
 	{
 		return null;//TODO
 	}
@@ -209,9 +212,9 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public ResourceCard rob(PlayerInfo player)
+	public void rob(Player robber, Player robbed)
 	{
-		return null; //TODO
+		return; //TODO
 	}
 	
 	//+++++++++++++++++++++++++++++++++++++++++++++++
@@ -223,9 +226,9 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public List<DevelopmentCard> getDevelopmentCards(PlayerInfo player)
+	public DevCardList getDevelopmentCards(Player player)
 	{
-		
+		return null;//TODO
 	}
 	
 	/**
@@ -233,9 +236,9 @@ public class Fascade
 	 * @param player
 	 * @param dev_card
 	 */
-	public void playDevelopmentCard(PlayerInfo player, DevelopmentCard dev_card)
+	public void playDevelopmentCard(Player player, DevCardList dev_card)
 	{
-		
+		//TODO
 	}
 	
 	/**
@@ -244,9 +247,9 @@ public class Fascade
 	 * @param dev_card
 	 * @return
 	 */
-	public boolean canPlayDevelopmentCard(PlayerInfo player, DevelopmentCard dev_card)
+	public boolean canPlayDevelopmentCard(Player player, DevCardList dev_card)
 	{
-		
+		return false;//TODO
 	}
 	
 	//+++++++++++++++++++++++++++++++++++++++++++++++
@@ -258,7 +261,7 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public List<ResourceCard> getResourcesOwnedBy(PlayerInfo player)
+	public ResourceList getResourcesOwnedBy(PlayerInfo player)
 	{
 		
 		return null; //TODO
@@ -270,16 +273,16 @@ public class Fascade
 	 */
 	public boolean canTradeAtWoolHarbor()
 	{
-		
+		return false;//TODO
 	}
 	
 	/**
 	 * 
 	 * @param desired_card
 	 */
-	public void tradeAtWoolHarbor(ResourceCard desired_card) 
+	public void tradeAtWoolHarbor(ResourceList desired_card) 
 	{
-		
+		//TODO
 	}
 	
 	/**
@@ -288,14 +291,14 @@ public class Fascade
 	 */
 	public boolean canTradeAtLumberHarbor()
 	{
-		
+		return false;//TODO
 	}
 	
 	/**
 	 * 
 	 * @param desired_card
 	 */
-	public void tradeAtLumberHarbor(ResourceCard desired_card)
+	public void tradeAtLumberHarbor(ResourceList desired_card)
 	{
 		
 	}
@@ -306,14 +309,14 @@ public class Fascade
 	 */
 	public boolean canTradeAtStoneHarbor()
 	{
-		
+		return false;//TODO
 	}
 	
 	/**
 	 * 
 	 * @param desired_card
 	 */
-	public void tradeAtStoneHarbor(ResourceCard desired_card)
+	public void tradeAtStoneHarbor(ResourceList desired_card)
 	{
 		
 	}
@@ -324,14 +327,14 @@ public class Fascade
 	 */
 	public boolean canTradeAtGrainHarbor()
 	{
-		
+		return false;
 	}
 	
 	/**
 	 * 
 	 * @param desired_card
 	 */
-	public void tradeAtGrainHarbor(ResourceCard desired_card)
+	public void tradeAtGrainHarbor(ResourceList desired_card)
 	{
 		
 	}
@@ -342,14 +345,14 @@ public class Fascade
 	 */
 	public boolean canTradeAtBrickHarbor()
 	{
-		
+		return false;
 	}
 	
 	/**
 	 * 
 	 * @param desired_card
 	 */
-	public void tradeAtBrickHarbor(ResourceCard desired_card)
+	public void tradeAtBrickHarbor(ResourceList desired_card)
 	{
 		
 	}
@@ -359,9 +362,9 @@ public class Fascade
 	 * @param trade_in_card
 	 * @return
 	 */
-	public boolean canTradeAtMiscHarbor(ResourceCard trade_in_card)
+	public boolean canTradeAtMiscHarbor(ResourceList trade_in_card)
 	{
-		
+		return false;
 	}
 	
 	/**
@@ -369,7 +372,7 @@ public class Fascade
 	 * @param trade_in_card
 	 * @param desired_card
 	 */
-	public void tradeAtMiscHarbor(ResourceCard trade_in_card, ResourceCard desired_card)
+	public void tradeAtMiscHarbor(ResourceList trade_in_cards, ResourceList desired_card)
 	{
 		
 	}
@@ -378,9 +381,9 @@ public class Fascade
 	 * 
 	 * @param trade_in_card
 	 */
-	public void canTradeFourToOne(ResourceCard trade_in_card)
+	public boolean canTradeFourToOne(ResourceList trade_in_cards, ResourceList desired_cards)
 	{
-		return;//TODO
+		return false;//TODO
 	}
 	
 	/**
@@ -388,7 +391,7 @@ public class Fascade
 	 * @param trade_in_card
 	 * @param desired_card
 	 */
-	public void tradeFourToOne(ResourceCard trade_in_card, ResourceCard desired_card)
+	public void tradeFourToOne(ResourceList trade_in_card, ResourceList desired_card)
 	{
 		//TODO
 	}
@@ -402,15 +405,17 @@ public class Fascade
 		return -1; //TODO
 	}
 	
-	public String getModelAsJSON()
-	{
-		return "STUB"; //TODO
-	}
-	
 	public void updateModelFromJSON(String json_model)
 	{
 		//TODO
 	}
+	
+	private String serializeModel()
+	{
+		return "NOT IMPLEMENTED";
+	}
+	
+	
 }
 	
 	

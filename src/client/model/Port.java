@@ -11,7 +11,9 @@ import shared.locations.*;
 public class Port 
 {
 	private PortType type = null;
-	private VertexLocation location = null;
+	private VertexLocation location1 = null;
+	private VertexLocation location2 = null;
+	
 	
 	/**
 	 * @return the type
