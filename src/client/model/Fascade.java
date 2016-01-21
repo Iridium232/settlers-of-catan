@@ -1,5 +1,10 @@
 package client.model;
+import client.data.*;
 
+/**
+ * The Fascade class handles all communication and commands to and from the game model.
+ * 
+ */
 public class Fascade 
 {
 	//+++++++++++++++++++++++++++++++++++++++++++++++
@@ -8,39 +13,47 @@ public class Fascade
 	/**
 	 * 
 	 * @param player
-	 * @param road_position
+	 * @param edge
 	 * @return
 	 */
-	public boolean canBuildRoad(Player player, Vertex road_from, Vertex road_to)
+	public boolean canBuildRoad(PlayerInfo player, Edge edge)
 	{
 		return false;//TODO
 	}
 	
 	/**
 	 * 
+	 * 
 	 * @param player
 	 * @param road_position
 	 */
-	public void buildRoadAt(Player player, Vertex road_from, Vertex road_to)
+	public void buildRoadAt(PlayerInfo player, Edge edge)
 	{
 		//TODO
 	}
 	
 	/**
+	 * Tells whether a specified PlayerInfo can buy a Development card right now.
 	 * 
 	 * @param player
-	 * @return
+	 * 
+	 * @pre None
+	 * @post result = True when the player can afford a development card 
+	 * and it is their turn to buy things. /result = false otherwise.
 	 */
-	public boolean canBuyProgressCard(Player player)
+	public boolean canBuyDevelopmentCard(PlayerInfo player)
 	{
 		return false;//TODO
 	}
 	
 	/**
 	 * 
-	 * @return
+	 * @param player
+	 * 
+	 * @pre PlayerInfo can buy a development card (see previous function)
+	 * @post result = the development card purchased by the player
 	 */
-	public ProgressCard buyProgressCard(Player)
+	public DevelopmentCard buyDevelopmentCard(PlayerInfo player)
 	{
 		return null;//TODO
 	}
@@ -51,7 +64,7 @@ public class Fascade
 	 * @param location
 	 * @return
 	 */
-	public boolean canBuildSettlement(Player player, Vertex location)
+	public boolean canBuildSettlement(PlayerInfo player, Vertex location)
 	{
 		return false; //TODO
 	}
@@ -61,7 +74,7 @@ public class Fascade
 	 * @param player
 	 * @param location
 	 */
-	public void buildSettlement(Player player, Vertex location)
+	public void buildSettlement(PlayerInfo player, Vertex location)
 	{
 		return;//TODO
 	}
@@ -72,7 +85,7 @@ public class Fascade
 	 * @param location
 	 * @return
 	 */
-	public boolean canBuildCity(Player player, Vertex location)
+	public boolean canBuildCity(PlayerInfo player, Vertex location)
 	{
 		return false;
 	}
@@ -82,7 +95,7 @@ public class Fascade
 	 * @param player
 	 * @param location
 	 */
-	public void BuildCity(Player player, Vertex location)
+	public void BuildCity(PlayerInfo player, Vertex location)
 	{
 		//TODO
 	}
@@ -96,7 +109,7 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public boolean canRollDice(Player player)
+	public boolean canRollDice(PlayerInfo player)
 	{
 		return false;//TODO
 	}
@@ -106,7 +119,7 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public int RollDice(Player player)
+	public int RollDice(PlayerInfo player)
 	{
 		return -1; //TODO
 	}
@@ -129,7 +142,7 @@ public class Fascade
 	 * 
 	 * @return
 	 */
-	public boolean mustDiscardHalf(Player player)
+	public boolean mustDiscardHalf(PlayerInfo player)
 	{
 		return false;
 	}
@@ -139,7 +152,7 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public List<ResourceCard> getCurrentResources(Player player)
+	public List<ResourceCard> getCurrentResources(PlayerInfo player)
 	{
 		return void; //TODO
 	}
@@ -157,7 +170,7 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public boolean shouldMoveRobber(Player player)
+	public boolean shouldMoveRobber(PlayerInfo player)
 	{
 		return false;//TODO
 	}
@@ -176,7 +189,7 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public boolean canRobSomeone(Player player)
+	public boolean canRobSomeone(PlayerInfo player)
 	{
 		return false; //TODO
 	}
@@ -186,7 +199,7 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public List<Player> whoCanBeRobbedBy(Player player)
+	public List<PlayerInfo> whoCanBeRobbedBy(PlayerInfo player)
 	{
 		return null;//TODO
 	}
@@ -196,7 +209,7 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public ResourceCard rob(Player player)
+	public ResourceCard rob(PlayerInfo player)
 	{
 		return null; //TODO
 	}
@@ -210,7 +223,7 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public List<DevelopmentCard> getDevelopmentCards(Player player)
+	public List<DevelopmentCard> getDevelopmentCards(PlayerInfo player)
 	{
 		
 	}
@@ -220,7 +233,7 @@ public class Fascade
 	 * @param player
 	 * @param dev_card
 	 */
-	public void playDevelopmentCard(Player player, DevelopmentCard dev_card)
+	public void playDevelopmentCard(PlayerInfo player, DevelopmentCard dev_card)
 	{
 		
 	}
@@ -231,7 +244,7 @@ public class Fascade
 	 * @param dev_card
 	 * @return
 	 */
-	public boolean canPlayDevelopmentCard(Player player, DevelopmentCard dev_card)
+	public boolean canPlayDevelopmentCard(PlayerInfo player, DevelopmentCard dev_card)
 	{
 		
 	}
@@ -245,7 +258,7 @@ public class Fascade
 	 * @param player
 	 * @return
 	 */
-	public List<ResourceCard> getResourcesOwnedBy(Player player)
+	public List<ResourceCard> getResourcesOwnedBy(PlayerInfo player)
 	{
 		
 		return null; //TODO

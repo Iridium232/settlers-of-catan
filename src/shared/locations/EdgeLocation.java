@@ -83,7 +83,7 @@ public class EdgeLocation
 	 * hex location to a single canonical form. This is useful for using hex
 	 * locations as map keys.
 	 * 
-	 * @return Normalized hex location
+	 * @post result = Normalized hex location
 	 */
 	public EdgeLocation getNormalizedLocation()
 	{

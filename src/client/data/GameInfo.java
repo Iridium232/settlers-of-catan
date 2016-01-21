@@ -46,6 +46,12 @@ public class GameInfo
 		this.title = title;
 	}
 	
+	/**
+	 * Adds a player to a game. There should be 4 players in each game.
+	 * 
+	 * @pre There are fewer than 4 players in the game.
+	 * @post There is one more player in the game list. There are not more than 4 players
+	 */
 	public void addPlayer(PlayerInfo newPlayer)
 	{
 		players.add(newPlayer);
