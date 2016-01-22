@@ -621,6 +621,38 @@ public class Fascade
 	{
 		
 	}
+	
+	/**
+	 * Who has the longest road?
+	 * This info is stored in the turn-tracker class
+	 * The idea for this function came from another
+	 * group in another section who were penalized for
+	 * not having this in their design
+	 * 
+	 * @pre none
+	 * @post result = the player index with the most roads played
+	 * or -1 if nobody controlls that honor
+	 */
+	public int whoLongestRoad()
+	{
+		return -1;
+	}
+	
+	/**
+	 * Who has the largest army?
+	 * This info is stored in the turn-tracker class
+	 * The idea for this function came from another
+	 * group in another section who were penalized for
+	 * not having this in their design
+	 * 
+	 * @pre none
+	 * @post result = the player index with the largest army
+	 * or -1 if nobody controlls that honor
+	 */
+	public int whoLargestArmy()
+	{
+		return -1;
+	}
 }
 	
 	
