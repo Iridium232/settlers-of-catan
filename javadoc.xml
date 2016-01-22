@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="package" additionalparam=" -tag pre:cm:&quot;Pre-Conditions&quot;&#10;-tag post:cm:&quot;Post-Conditions&quot;&#10;-tag invariants:t:&quot;Invariants&quot;" author="true" classpath="." destdir="doc/Design" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="shared.model,shared.definitions,shared.locations" source="1.7" sourcefiles="src/client/communication/ServerProxy.java,src/client/communication/ClientCommunicator.java,src/client/communication/ServerPoller.java" sourcepath="src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>

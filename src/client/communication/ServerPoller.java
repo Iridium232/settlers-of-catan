@@ -16,7 +16,7 @@ public class ServerPoller {
 	 * @pre The client is connected to a server, a user is logged in, the user belongs to a game. 
 	 * @post A ServerPoller will call the server every few seconds to keep the player's board current.
 	 */
-	public ServerPoller(Server server, User user){
+	public ServerPoller(String server, String user){
 		
 	}
 	

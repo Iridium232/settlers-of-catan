@@ -37,11 +37,12 @@ public class GameMap
 	 * get players' buildings adjoining a Hex
 	 * Useful for robbing or for assigning resources
 	 * 
+	 * @param location
 	 * @pre none
 	 * @post result = an array of all buildings adjoining the hex
 	 * 
 	 */
-	public Building[] getAdjoiningPlayers(TerrainHex) throws Exception
+	public Building[] getAdjoiningPlayers(TerrainHex location) throws Exception
 	{
 		return null;
 	}

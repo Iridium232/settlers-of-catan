@@ -1,6 +1,7 @@
 package client.communication;
 
 import org.json.JSONObject;
+ 
 
 /**
  * Handles communication between the client and server
@@ -18,7 +19,7 @@ public class ClientCommunicator {
 	 * @post receives the http response and sets the user cookie.
 	 */
 	public JSONObject login(String username, String password){
-		
+		return null;
 	}
 	
 	/**
@@ -30,7 +31,7 @@ public class ClientCommunicator {
 	 * @post new user account is created, receive a http response, set the user cookie
 	 */
 	public JSONObject register(String username,String password){
-		
+		return null;
 	}
 	
 	/**
@@ -39,7 +40,7 @@ public class ClientCommunicator {
 	 * @return a JSON array containing a list of objects containing information about the server's games.
 	 */
 	public JSONObject gamesList(){
-		
+		return null;
 	}
 	
 	/**
@@ -53,7 +54,7 @@ public class ClientCommunicator {
 	 * @post receive a HTTP response for success or failure 
 	 */
 	public JSONObject createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts){
-		
+		return null;
 	}
 	
 	/**
@@ -65,7 +66,7 @@ public class ClientCommunicator {
 	 * @post the player is added to the game with the desired color, 
 	 */
 	public JSONObject joinGame(int ID, String color){
-		
+		return null;
 	}
 	
 	/**
@@ -76,7 +77,7 @@ public class ClientCommunicator {
 	 * @post Response from the server
 	 */
 	public String doGet(JSONObject o){
-		
+		return null;
 	}
 	
 	/**
@@ -87,6 +88,6 @@ public class ClientCommunicator {
 	 * @post returns an http response
 	 */
 	public String doPost(JSONObject o){
-		
+		return null;
 	}
 }
