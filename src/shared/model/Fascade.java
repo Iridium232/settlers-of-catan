@@ -213,7 +213,7 @@ public class Fascade
 	}
 	
 	/**
-	 * 
+	 * Get a list of players who can be robbed because of where the robber is
 	 * 
 	 * @pre none
 	 * @post result = an array of indexes to the players that can be robbed. 
@@ -225,13 +225,14 @@ public class Fascade
 	}
 	
 	/**
-	 * Rob the indicated player of the specified card
+	 * Rob the indicated player of a random specified card
 	 * 
 	 * @param robber
 	 * @param robbed
 	 * @pre The player is in the rob phase of their turn and have not yet robbed 
 	 * @post The robbed player has one resource taken and given to 
 	 * the robber player at random.
+	 * @pre robber != robbed
 	 * @post the turn phase is advanced
 	 */
 	public void rob(int robber, int robbed)
@@ -244,32 +245,42 @@ public class Fascade
 	//+++++++++++++++++++++++++++++++++++++++++++++++
 	
 	/**
+	 * Get the Develoment cards in that player's hand
+	 * 
 	 * 
 	 * @param player
-	 * @return
+	 * @pre none
+	 * @post Gets a list of the Development cards in the player's hand
 	 */
-	public DevCardList getDevelopmentCards(Player player)
+	public DevCardList getDevelopmentCards(int player)
 	{
 		return null;//TODO
 	}
 	
 	/**
 	 * 
+	 *  Play this development card
+	 * 
 	 * @param player
 	 * @param dev_card
+	 * @pre canPlayDevelopmentCard() is true 
+	 * @post the effect of the development card is applied
 	 */
-	public void playDevelopmentCard(Player player, DevCardList dev_card)
+	public void playDevelopmentCard(int player, DevCardList dev_card)
 	{
 		//TODO
 	}
 	
 	/**
+	 * Can this player play this card right now?
+	 * 
 	 * 
 	 * @param player
 	 * @param dev_card
-	 * @return
+	 * @pre none
+	 * @post True iff the player can legally play the card he specified now
 	 */
-	public boolean canPlayDevelopmentCard(Player player, DevCardList dev_card)
+	public boolean canPlayDevelopmentCard(int player, DevCardList dev_card)
 	{
 		return false;//TODO
 	}
@@ -279,110 +290,191 @@ public class Fascade
 	//+++++++++++++++++++++++++++++++++++++++++++++++
 	
 	/**
+	 * Get the resources this player has
 	 * 
 	 * @param player
-	 * @return
+	 * @pre This client is this player
+	 * @post result = a list of resources this player has
 	 */
-	public ResourceList getResourcesOwnedBy(PlayerInfo player)
+	public ResourceList getResourcesOwnedBy(int player)
 	{
 		
 		return null; //TODO
 	}
+
 	
 	/**
+	 * Trade at the Food Harbor
 	 * 
-	 * @return
-	 */
-	public boolean canTradeAtWoolHarbor()
-	{
-		return false;//TODO
-	}
-	
-	/**
-	 * 
+	 * @param player
 	 * @param desired_card
+	 * @pre canTradeAtFoodHarbor() is true.
+	 * @pre desired_card is not food
+	 * @post the player is charged 2 food and given the desired card
+	 * 
 	 */
-	public void tradeAtWoolHarbor(ResourceList desired_card) 
+	public void tradeAtFoodHarbor(int player, ResourceList desired_card) 
 	{
 		//TODO
 	}
 	
 	/**
+	 * Can this player Trade at the Food Harbor?
 	 * 
-	 * @return
+	 * @param player
+	 * @pre none
+	 * @post True iff this player could use the Food Harbor legally at this time.
 	 */
-	public boolean canTradeAtLumberHarbor()
+	public boolean canTradeAtFoodHarbor(int player)
 	{
 		return false;//TODO
 	}
 	
 	/**
+	 * Can this player Trade at the Wool Harbor?
 	 * 
-	 * @param desired_card
+	 * @param player
+	 * @pre none
+	 * @post True iff this player could use the Wool Harbor legally at this time.
 	 */
-	public void tradeAtLumberHarbor(ResourceList desired_card)
-	{
-		
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean canTradeAtStoneHarbor()
+	public boolean canTradeAtWoolHarbor(int player)
 	{
 		return false;//TODO
 	}
 	
 	/**
+	 * Trade at the Wool Harbor
 	 * 
+	 * @param player
 	 * @param desired_card
+	 * @pre canTradeAtWoolHarbor() is true.
+	 * @pre desired_card is not wool
+	 * @post the player is charged 2 wool and given the desired card
+	 * 
 	 */
-	public void tradeAtStoneHarbor(ResourceList desired_card)
+	public void tradeAtWoolHarbor(int player, ResourceList desired_card) 
+	{
+		//TODO
+	}
+	
+	/**
+	 * Can this player Trade at the Wood Harbor?
+	 * 
+	 * @param player
+	 * @pre none
+	 * @post True iff this player could use the Wood Harbor legally at this time.
+	 */
+	public boolean canTradeAtWoodHarbor(int player)
+	{
+		return false;//TODO
+	}
+	
+	/**
+	 * Trade at the Wood Harbor
+	 * 
+	 * @param player
+	 * @param desired_card
+	 * @pre canTradeAtWoodHarbor() is true.
+	 * @pre desired_card is not wood
+	 * @post the player is charged 2 wood and given the desired card
+	 * 
+	 */
+	public void tradeAtWoodHarbor(int player, ResourceList desired_card)
 	{
 		
 	}
 	
 	/**
+	 * Can this player Trade at the Ore Harbor?
 	 * 
-	 * @return
+	 * @param player
+	 * @pre none
+	 * @post True iff this player could use the Ore Harbor legally at this time.
 	 */
-	public boolean canTradeAtGrainHarbor()
+	public boolean canTradeAtOreHarbor(int player)
+	{
+		return false;//TODO
+	}
+	
+	/**
+	 * Trade at the Ore Harbor
+	 * 
+	 * @param player
+	 * @param desired_card
+	 * @pre canTradeAtOreHarbor() is true.
+	 * @pre desired_card is not ore
+	 * @post the player is charged 2 ore and given the desired card
+	 * 
+	 */
+	public void tradeAtOreHarbor(int player, ResourceList desired_card)
+	{
+		
+	}
+	
+	/**
+	 * Can this player Trade at the Grain Harbor?
+	 * 
+	 * @param player
+	 * @pre none
+	 * @post True iff this player could use the Grain Harbor legally at this time.
+	 */
+	public boolean canTradeAtGrainHarbor(int player)
 	{
 		return false;
 	}
 	
 	/**
+	 * Trade at the Grain Harbor
 	 * 
+	 * @param player
 	 * @param desired_card
+	 * @pre canTradeAtGrainHarbor() is true.
+	 * @pre desired_card is not grain
+	 * @post the player is charged 2 grain and given the desired card
+	 * 
 	 */
-	public void tradeAtGrainHarbor(ResourceList desired_card)
+	public void tradeAtGrainHarbor(int player, ResourceList desired_card)
 	{
 		
 	}
  	
 	/**
+	 * Can this player Trade at the Brick Harbor?
 	 * 
-	 * @return
+	 * @param player
+	 * @pre none
+	 * @post True iff this player could use the Brick Harbor legally at this time.
 	 */
-	public boolean canTradeAtBrickHarbor()
+	public boolean canTradeAtBrickHarbor(int player)
 	{
 		return false;
 	}
 	
 	/**
+	 * Trade at the Brick Harbor
 	 * 
+	 * @param player
 	 * @param desired_card
+	 * @pre canTradeAtBrickHarbor() is true.
+	 * @pre desired_card is not bricks
+	 * @post the player is charged 2 bricks and given the desired card
+	 * 
 	 */
-	public void tradeAtBrickHarbor(ResourceList desired_card)
+	public void tradeAtBrickHarbor(int player, ResourceList desired_card)
 	{
 		
 	}
 	
 	/**
+	 * Can this player trade 3-to-1 on these parameters?
 	 * 
+	 * @param player
 	 * @param trade_in_card
-	 * @return
+	 * @param desired_cards
+	 * 
+	 * @pre none
+	 * @post True iff the player can legally make this trade at this time
+	 * 
 	 */
 	public boolean canTradeAtMiscHarbor(ResourceList trade_in_card)
 	{
@@ -391,29 +483,50 @@ public class Fascade
 	
 	/**
 	 * 
+	 * use the 3-to-1 trade at a miscilaneous harbor
+	 * 
 	 * @param trade_in_card
 	 * @param desired_card
+	 * @param player
+	 * @pre canTradeAtMiscHarbor() is true. The trade-in list has only 3 of the same resourse to trade in
+	 * @pre the desired card is a list of a single card different from what they traded in
+	 * @post the player's resources are reduced by those 3 resources and increased by 1 of the desired card.
+	 * 
 	 */
-	public void tradeAtMiscHarbor(ResourceList trade_in_cards, ResourceList desired_card)
+	public void tradeAtMiscHarbor(int player, ResourceList trade_in_cards, ResourceList desired_card)
 	{
 		
 	}
 	
 	/**
+	 * Can this player trade 4-to-1 on these parameters?
 	 * 
+	 * @param player
 	 * @param trade_in_card
+	 * @param desired_cards
+	 * 
+	 * @pre none
+	 * @post True iff the player can legally make this trade at this time
+	 * 
 	 */
-	public boolean canTradeFourToOne(ResourceList trade_in_cards, ResourceList desired_cards)
+	public boolean canTradeFourToOne(int player, ResourceList trade_in_cards, ResourceList desired_cards)
 	{
 		return false;//TODO
 	}
 	
 	/**
 	 * 
+	 * use the 4-to-1 trade
+	 * 
 	 * @param trade_in_card
 	 * @param desired_card
+	 * @param player
+	 * @pre canTradeFourToOne() is true. The trade in has only 4 of the same resourse to trade in
+	 * @pre the desired card is a list with a single card different from what they traded in
+	 * @post the player's resources are reduced by those 4 resources and increased by 1 of the desired card.
+	 * 
 	 */
-	public void tradeFourToOne(ResourceList trade_in_card, ResourceList desired_card)
+	public void tradeFourToOne(int player, ResourceList trade_in_card, ResourceList desired_card)
 	{
 		//TODO
 	}
@@ -422,14 +535,24 @@ public class Fascade
 	// Server Communication and Model Instantiation
 	//+++++++++++++++++++++++++++++++++++++++++++++++
 	
+	/**
+	 * Get the version number of the model
+	 * 
+	 * @pre none
+	 * @post result = the model number of the current version of the model
+	 */
 	public int getLatestModelNum()
 	{
 		return -1; //TODO
 	}
 	
 	/**
+	 * Update the model from the JSON string
 	 * 
 	 * @param json_model
+	 * @pre the server has sent an updated version of the model
+	 * which must replace the current model
+	 * @post The model matches the data sent in the JSON
 	 */
 	public void updateModelFromJSON(String json_model)
 	{
