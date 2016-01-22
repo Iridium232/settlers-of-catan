@@ -12,7 +12,15 @@ public class DevCardList
 	private int road_building;
 	private int soldier;
 	private int year_of_plenty;
-	
+	/**
+	 * Class constructor
+	 * @param monopoly
+	 * @param monument
+	 * @param road_buildingl
+	 * @param soldier
+	 * @param year_of_plenty
+	 */
+
 	/**
 	 * @return the monopoly
 	 */
