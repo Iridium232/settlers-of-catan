@@ -2,6 +2,7 @@ package shared.model;
 import java.util.*;
 import shared.locations.*;
 import shared.definitions.*;
+import shared.model.*;
 
 /**
  * The class that represents the map of the game. 
@@ -27,19 +28,47 @@ public class GameMap
 	 * @pre map_json is a valid standardized form json object for a Catan map
 	 * @post a map is created and reflects the data serialized
 	 */
-	public GameMap(String map_json)
+	public GameMap(String map_json) throws Exception
 	{
 		
 	}
 	
 	/**
+	 * Gets the terrain hexes benefited by a dice roll
+	 * 
+	 * 
+	 * @param number
+	 * @pre number is between 2 and 12
+	 * @post result = an array of the 1 or 2 hexes with this number
+	 * 
+	 */
+	public TerrainHex[] getHexesByNumber(int number) throws Exception
+	{
+		return null;
+	}
+	
+	/**
+	 * Gets the resources gained by each player on a roll
+	 * 
+	 * @param number
+	 * @pre number is between 2 and 12
+	 * @post gives an array with the same indexes as
+	 * the players saying what they each get from a roll
+	 */
+	public ResourceList[] whatDoTheyGet(int number) throws Exception
+	{
+		return null;
+	}
+	
+	/**
 	 * Gets a list of Ports accessible to the player by color
 	 * 
-	 * @pre the color represents a real player of the game
+	 * @pre the index is a real player
 	 * @post result = an array of ports accessible to that player based
-	 * on where they have buildings
+	 * on where they have buildings or an empty array if that player controlls
+	 * no ports
 	 */
-	public Port[] getPortsAccessibleTo(CatanColor player_color)
+	public Port[] getPortsAccessibleTo(int player) throws Exception
 	{
 			return null;	
 	}
@@ -65,7 +94,7 @@ public class GameMap
 	 * 
 	 * @post the robber is on the specified location
 	 */
-	public void moveRobber(HexLocation location)
+	public void moveRobber(HexLocation location) throws Exception
 	{
 		robber.setLocation(location);
 	}
@@ -76,7 +105,7 @@ public class GameMap
 	 * @pre this is a valid road not already on the game map
 	 * @post the road is registered on the map
 	 */
-	public void addRoad(Road edge)
+	public void addRoad(Road edge) throws Exception
 	{
 		//TODO
 	}
@@ -102,7 +131,7 @@ public class GameMap
 	 * @pre this is a valid building not already on the game map
 	 * @post the building is registered on the map
 	 */
-	public void addBuilding(Building building)
+	public void addBuilding(Building building) throws Exception
 	{
 		//TODO
 	}

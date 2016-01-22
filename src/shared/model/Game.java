@@ -8,7 +8,7 @@ import client.data.*;
  * 
  */
 public class Game 
-{
+{ 
 	/**
 	 * Map of the board with all the pieces
 	 */
@@ -27,7 +27,7 @@ public class Game
 	/**
 	 * structure to keep track of whose turn it is
 	 */
-	private TurnTracker turn_tracker;
+	private   turn_tracker;
 	
 	/**
 	 * index of winning player
@@ -233,6 +233,7 @@ public class Game
 	
 	/**
 	 * advances the turn to the next player
+	 * 
 	 * @pre the player is finished with his turn
 	 * @post it is the next player's turn
 	 */

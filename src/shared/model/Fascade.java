@@ -38,7 +38,7 @@ public class Fascade
 	 * @post a road is built for that player on that edge. The server is notified.
 	 * @post The player's resources are reduced by 1 wood and 1 brick
 	 */
-	public void buildRoadAt(PlayerInfo player, Edge edge)
+	public void buildRoadAt(PlayerInfo player, Edge edge) throws Exception
 	{
 		//TODO
 	}
@@ -65,7 +65,7 @@ public class Fascade
 	 * @post the player has a new development card.
 	 * @post The player's resources are reduced by 1 food and 1 ore and 1 wool
 	 */
-	public void buyDevelopmentCard(PlayerInfo player)
+	public void buyDevelopmentCard(PlayerInfo player) throws Exception
 	{
 		return;//TODO
 	}
@@ -92,7 +92,7 @@ public class Fascade
 	 * @post a settlement is built by that player on the specified location
 	 * @post The player's resources are reduced by 1 food, 1 brick, 1 wood, and 1 wool
 	 */
-	public void buildSettlement(PlayerInfo player, Vertex location)
+	public void buildSettlement(PlayerInfo player, Vertex location) throws Exception
 	{
 		return;//TODO
 	}
@@ -120,7 +120,7 @@ public class Fascade
 	 * @post The player's resources are reduced by 2 food and 3 ore
 	 * 
 	 */
-	public void BuildCity(PlayerInfo player, Vertex location)
+	public void BuildCity(PlayerInfo player, Vertex location) throws Exception
 	{
 		//TODO
 	}
@@ -152,7 +152,7 @@ public class Fascade
 	 * @post the dice are rolled and the consequences are applied to each player
 	 * and the game state is advanced to the next turn phase
 	 */
-	public int RollDice(PlayerInfo player)
+	public int RollDice(PlayerInfo player) throws Exception
 	{
 		return -1; //TODO
 	}
@@ -194,7 +194,7 @@ public class Fascade
 	 * generated a list of half his resources to discard
 	 * @post the chosen resources are returned to the game bank
 	 */
-	public void discardResources(ResourceList discard_list)
+	public void discardResources(ResourceList discard_list) throws Exception
 	{
 		return; //TODO
 	}
@@ -203,11 +203,12 @@ public class Fascade
 	 * Move the Robber
 	 * 
 	 * @param hex
+	 * @param player
 	 * @pre the player just rolled a 7
 	 * @post the robber is placed on the designated
 	 *  hex and the player's turn phase is set to rob
 	 */
-	public void moveRobber(TerrainHex hex)
+	public void moveRobber(int player, TerrainHex hex) throws Exception
 	{
 		//TODO
 	}
@@ -235,7 +236,7 @@ public class Fascade
 	 * @pre robber != robbed
 	 * @post the turn phase is advanced
 	 */
-	public void rob(int robber, int robbed)
+	public void rob(int robber, int robbed) throws Exception
 	{
 		return; //TODO
 	}
@@ -266,7 +267,7 @@ public class Fascade
 	 * @pre canPlayDevelopmentCard() is true 
 	 * @post the effect of the development card is applied
 	 */
-	public void playDevelopmentCard(int player, DevCardList dev_card)
+	public void playDevelopmentCard(int player, DevCardList dev_card) throws Exception
 	{
 		//TODO
 	}
@@ -313,7 +314,7 @@ public class Fascade
 	 * @post the player is charged 2 food and given the desired card
 	 * 
 	 */
-	public void tradeAtFoodHarbor(int player, ResourceList desired_card) 
+	public void tradeAtFoodHarbor(int player, ResourceList desired_card) throws Exception
 	{
 		//TODO
 	}
@@ -352,7 +353,7 @@ public class Fascade
 	 * @post the player is charged 2 wool and given the desired card
 	 * 
 	 */
-	public void tradeAtWoolHarbor(int player, ResourceList desired_card) 
+	public void tradeAtWoolHarbor(int player, ResourceList desired_card) throws Exception
 	{
 		//TODO
 	}
@@ -379,7 +380,7 @@ public class Fascade
 	 * @post the player is charged 2 wood and given the desired card
 	 * 
 	 */
-	public void tradeAtWoodHarbor(int player, ResourceList desired_card)
+	public void tradeAtWoodHarbor(int player, ResourceList desired_card) throws Exception
 	{
 		
 	}
@@ -406,7 +407,7 @@ public class Fascade
 	 * @post the player is charged 2 ore and given the desired card
 	 * 
 	 */
-	public void tradeAtOreHarbor(int player, ResourceList desired_card)
+	public void tradeAtOreHarbor(int player, ResourceList desired_card) throws Exception
 	{
 		
 	}
@@ -433,7 +434,7 @@ public class Fascade
 	 * @post the player is charged 2 grain and given the desired card
 	 * 
 	 */
-	public void tradeAtGrainHarbor(int player, ResourceList desired_card)
+	public void tradeAtGrainHarbor(int player, ResourceList desired_card) throws Exception
 	{
 		
 	}
@@ -460,7 +461,7 @@ public class Fascade
 	 * @post the player is charged 2 bricks and given the desired card
 	 * 
 	 */
-	public void tradeAtBrickHarbor(int player, ResourceList desired_card)
+	public void tradeAtBrickHarbor(int player, ResourceList desired_card) throws Exception
 	{
 		
 	}
@@ -493,7 +494,7 @@ public class Fascade
 	 * @post the player's resources are reduced by those 3 resources and increased by 1 of the desired card.
 	 * 
 	 */
-	public void tradeAtMiscHarbor(int player, ResourceList trade_in_cards, ResourceList desired_card)
+	public void tradeAtMiscHarbor(int player, ResourceList trade_in_cards, ResourceList desired_card) throws Exception
 	{
 		
 	}
@@ -526,7 +527,7 @@ public class Fascade
 	 * @post the player's resources are reduced by those 4 resources and increased by 1 of the desired card.
 	 * 
 	 */
-	public void tradeFourToOne(int player, ResourceList trade_in_card, ResourceList desired_card)
+	public void tradeFourToOne(int player, ResourceList trade_in_card, ResourceList desired_card) throws Exception
 	{
 		//TODO
 	}
@@ -554,7 +555,7 @@ public class Fascade
 	 * which must replace the current model
 	 * @post The model matches the data sent in the JSON
 	 */
-	public void updateModelFromJSON(String json_model)
+	public void updateModelFromJSON(String json_model) throws Exception
 	{
 		//TODO
 	}
@@ -569,8 +570,34 @@ public class Fascade
 	{
 		return "NOT IMPLEMENTED";
 	}
+	//===========================
+	//Records and Chat
+	//===========================
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public MessageLine[] getMessages()
+	{
+		return null;
+	}
 	
 	
+	public MessageLine[] getLog()
+	{
+		return null;
+	}
+	
+	public void addMessage(MessageLine message) 
+	{
+		
+	}
+	
+	public void addLog(MessageLine log)
+	{
+		
+	}
 }
 	
 	
