@@ -575,25 +575,48 @@ public class Fascade
 	//===========================
 	
 	/**
+	 * Gets the current game messages
 	 * 
-	 * @return
+	 * @pre none
+	 * @post result = an array of the messages sent this game
 	 */
 	public MessageLine[] getMessages()
 	{
 		return null;
 	}
 	
-	
+	/**
+	 * Gets the current game log
+	 * 
+	 * @pre none
+	 * @post result = an array of the logs logged this game
+	 */
 	public MessageLine[] getLog()
 	{
 		return null;
 	}
 	
+	/**
+	 * Adds a message to the game messages
+	 * 
+	 * @param message
+	 * @pre none
+	 * @post the message is added to the list
+	 * 
+	 */
 	public void addMessage(MessageLine message) 
 	{
 		
 	}
 	
+	/**
+	 * Adds a log to the game logs
+	 * 
+	 * @param log
+	 * @pre none
+	 * @post the log is added to the log list
+	 * 
+	 */
 	public void addLog(MessageLine log)
 	{
 		

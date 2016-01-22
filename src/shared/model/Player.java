@@ -2,6 +2,8 @@ package shared.model;
 
 import java.util.ArrayList;
 
+import shared.definitions.PieceType;
+
 /**
  * Michael Rhodes
  * CS 340
@@ -22,7 +24,7 @@ public class Player {
      */
     private boolean discarded;
     /**
-     *  How many monuments this player has played
+     *  How many monuments this player has
      */
     private int monuments;
     /**
@@ -52,7 +54,7 @@ public class Player {
     /**
      *  The resource cards this player has
      */
-    private ResourceList resources;
+    private ResourceCard resources;
     /**
      *  How many roads this player has left to play
      */
@@ -122,6 +124,67 @@ public class Player {
         this.soldiers = 0;
         this.victoryPoints = 0;
     }
+    
+    /**
+     * Tells whether this player can afford to buy something with this cost
+     * @pre none
+     * @post result = true iff the player has this many of the required resources
+     * and has the piece nessesary in his collection
+     */
+    public boolean canAfford(ResourceCard cost, PieceType type)
+    {
+    	return false;
+    }
+    
+    
+    /**
+     * Pay resources to  buy something
+     * 
+     * @pre canAfford() is true and something is being bought
+     * @post the player has that many resources deducted
+     */
+    public void pay(ResourceCard cost) throws Exception
+    {
+    	
+    	
+    }
+    
+    /**
+     * Builds this thing. The player's piece collection is affected
+     * 
+     * @pre canAfford(type) was true and this is a legal time to build
+     * @param type
+     * @post this piece is taken from the player's collection. In the case of a city,
+     * a settlement is also returned to the player's collection
+     */
+    public void build(PieceType type)
+    {
+    	
+    }
+    
+    /**
+     * this player recieves a resource
+     * 
+     * @param resource
+     * @pre none
+     * @post The player has this resource added to their stash
+     */
+    public void recieve(ResourceCard resource) throws Exception
+    {
+    	
+    }
+    
+    /**
+     * Robs a random resource from the player and returns it
+     * @pre The player has been legally selected to rob and has at least 1 resource
+     * @post result = the resource that was deducted from this player to give to another
+     */
+    public ResourceCard getRobbed() throws Exception
+    {
+    	return null;
+    }
+    
+    
 
     //******************************************* Getters/Setters ****************************************************//
 
@@ -331,7 +394,7 @@ public class Player {
      *
      * @return  The resource cards this player has
      */
-    public ResourceList getResources() {
+    public ResourceCard getResources() {
         return resources;
     }
 
@@ -341,7 +404,7 @@ public class Player {
      *
      * @param resources The resource cards this player has
      */
-    public void setResources(ResourceList resources) {
+    public void setResources(ResourceCard resources) {
         this.resources = resources;
     }
 

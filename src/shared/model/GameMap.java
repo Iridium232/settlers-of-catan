@@ -34,6 +34,19 @@ public class GameMap
 	}
 	
 	/**
+	 * get players' buildings adjoining a Hex
+	 * Useful for robbing or for assigning resources
+	 * 
+	 * @pre none
+	 * @post result = an array of all buildings adjoining the hex
+	 * 
+	 */
+	public Building[] getAdjoiningPlayers(TerrainHex) throws Exception
+	{
+		return null;
+	}
+	
+	/**
 	 * Gets the terrain hexes benefited by a dice roll
 	 * 
 	 * 

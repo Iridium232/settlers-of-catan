@@ -27,7 +27,7 @@ public class Game
 	/**
 	 * structure to keep track of whose turn it is
 	 */
-	private   turn_tracker;
+	private TurnTracker  turn_tracker;
 	
 	/**
 	 * index of winning player
