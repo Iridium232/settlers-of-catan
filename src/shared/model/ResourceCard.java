@@ -1,7 +1,8 @@
 package shared.model;
 import shared.definitions.ResourceType;
 /**
- * Created by rscheuer on 1/20/16.
+ * @author rscheuer
+ * The ResourceCard class has cards that are available to be played
  */
 public class ResourceCard {
     public int brick;

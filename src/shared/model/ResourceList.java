@@ -4,10 +4,10 @@ package shared.model;
 /**
  * 
  * Indicates a list of resources
- * .This is often used to show posessions
+ * .This is often used to show posessions from player in hand
  * or costs.
  * 
- * It tells how many brick,ore,sheep,wool, and food
+ * It tells how many brick,ore,sheep,wool, and wheat
  * are there.
  *
  */
@@ -17,7 +17,36 @@ public class ResourceList
 	private int ore;
 	private int sheep;
 	private int wood;
-	private int food;
+	private int wheat;
+
+	/**
+	 * Class Contructor
+	 */
+
+	public ResourceList() {
+		brick = 0;
+		wheat = 0;
+		ore = 0;
+		sheep = 0;
+		wood = 0;
+	}
+
+	/**
+	 * Class Constructor
+	 * @param brick
+	 * @param wheat
+	 * @param ore
+	 * @param sheep
+	 * @param wood
+	 */
+
+	public ResourceList(int brick, int wheat, int ore, int sheep, int wood) {
+		this.wheat = wheat;
+		this.wood = wood;
+		this.sheep = sheep;
+		this.brick = brick;
+	}
+
 	/**
 	 * @return the brick
 	 */
@@ -67,15 +96,15 @@ public class ResourceList
 		this.wood = wood;
 	}
 	/**
-	 * @return the food
+	 * @return the wheat
 	 */
-	public int getFood() {
-		return food;
+	public int getwheat() {
+		return wheat;
 	}
 	/**
-	 * @param food the food to set
+	 * @param wheat the wheat to set
 	 */
-	public void setFood(int food) {
-		this.food = food;
+	public void setwheat(int wheat) {
+		this.wheat = wheat;
 	}
 }
