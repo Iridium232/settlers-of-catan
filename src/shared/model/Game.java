@@ -4,9 +4,7 @@ import client.data.*;
 
 /**
  * The Catan Game all collected is represented in this class
- * It has a Map
- * It has a Player List
- * It has an Active Player (whose turn it is)
+ * This is the model's main container
  * 
  */
 public class Game 
@@ -217,7 +215,43 @@ public class Game
 	/**
 	 * @param development_bank the development_bank to set
 	 */
-	public void setDevelopment_bank(DevCardList development_bank) {
+	public void setDevelopment_bank(DevCardList development_bank) 
+	{
 		this.development_bank = development_bank;
 	}
+	
+	/**
+	 * advances to the next phase in this player's turn
+	 * @pre this turn phase is finished
+	 * @post the next turn phase is entered. If that means another player
+	 * should become the active player, that player becomes so.
+	 */
+	public void nextTurnPhase()
+	{
+		
+	}
+	
+	/**
+	 * advances the turn to the next player
+	 * @pre the player is finished with his turn
+	 * @post it is the next player's turn
+	 */
+	public void endTurn()
+	{
+		
+	}
+	
+	/**
+	 * 
+	 * @pre the active player has rolled the dice in turn and achieved this result
+	 * @post players recieve resources and are forced to discard if they have
+	 * too many resources.
+	 * @post if the player rolled a 7, they are put into the ROB phase of their turn.
+	 */
+	public void applyDiceRoll(int result)
+	{
+		
+	}
+	
+	
 }

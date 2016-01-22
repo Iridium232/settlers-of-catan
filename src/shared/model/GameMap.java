@@ -14,11 +14,48 @@ import shared.definitions.*;
  */
 public class GameMap 
 {
-	private HashMap<EdgeLocation, Edge> map_edges = new HashMap<EdgeLocation, Edge>();
-	private HashMap<VertexLocation, Vertex> map_vertexes = new HashMap<VertexLocation, Vertex>();
-	private HashMap<HexLocation, TerrainHex> map_hexes = new HashMap<HexLocation, TerrainHex>();
-	private ArrayList<Port> map_ports = new ArrayList<Port>();
+	private TerrainHex[] hexes;
+	private Port[] ports;
+	private Road[] roads;
+	private Building[] buildings;
 	private Robber robber = new Robber();
+	private int radius;
+	
+	/**
+	 * Builds a GameMap based on a JSON string
+	 * 
+	 * @pre map_json is a valid standardized form json object for a Catan map
+	 * @post a map is created and reflects the data serialized
+	 */
+	public GameMap(String map_json)
+	{
+		
+	}
+	
+	/**
+	 * Gets a list of Ports accessible to the player by color
+	 * 
+	 * @pre the color represents a real player of the game
+	 * @post result = an array of ports accessible to that player based
+	 * on where they have buildings
+	 */
+	public Port[] getPortsAccessibleTo(CatanColor player_color)
+	{
+			return null;	
+	}
+	
+	/**
+	 * Determines whether that edge represents a valid road placement
+	 * 
+	 * @param edge
+	 * @param player_color
+	 * @pre the player_color is currently playing and the edge exists in the map
+	 * @post returns true iff it is a valid road placement
+	 */
+	public boolean canBuildRoad(EdgeLocation edge, CatanColor player_color)
+	{
+		return false;//TODO
+	}
 	
 	/**
 	 * Moves the robber to the specified hex location
@@ -34,29 +71,40 @@ public class GameMap
 	}
 	
 	/**
-	 * Adds an Edge to the map for setup
-	 * @param edge
-	 * @param location
-	 * @pre this is a valid edge not already on the game map
-	 * @post the edge is registered on the map
+	 * Adds a Road to the map for setup
+	 * @param road
+	 * @pre this is a valid road not already on the game map
+	 * @post the road is registered on the map
 	 */
-	public void addEdge(Edge edge)
+	public void addRoad(Road edge)
 	{
-		assert !map_edges.containsKey(edge.getLocation());
-		map_edges.put(edge.getLocation(), edge);
+		//TODO
 	}
 	
 	/**
-	 * adds a Vertex to the Map for setup
-	 * @param vertex
+	 * Tells whether a building can be added by this player at this location
+	 * 
+	 * @param type
 	 * @param location
-	 * @pre this is a valid vertex not already on the game map
-	 * @post the vertex is registered on the map
+	 * @param player_color
+	 * @pre the player with this color is playing the game
+	 * @pre the location is on the map
+	 * @post result is True if this is a valid building placement based on existing structures on the map
 	 */
-	public void addVertex(Vertex vertex)
+	public boolean canAddBuilding(PieceType type, VertexLocation location, CatanColor player_color)
 	{
-		assert !map_edges.containsKey(vertex.getLocation());
-		map_vertexes.put(vertex.getLocation(), vertex);
+		return false;//TODO
+	}
+	
+	/**
+	 * adds a Building to the Map for setup
+	 * @param building
+	 * @pre this is a valid building not already on the game map
+	 * @post the building is registered on the map
+	 */
+	public void addBuilding(Building building)
+	{
+		//TODO
 	}
 	
 	/**
@@ -68,8 +116,7 @@ public class GameMap
 	 */
 	public void addTerrainHex(TerrainHex hex)
 	{
-		assert !map_edges.containsKey(hex.getLocation());
-		map_hexes.put(hex.getLocation(), hex);
+		//TODO;
 	}
 	
 	/**
@@ -80,35 +127,7 @@ public class GameMap
 	 */
 	public void addPort(Port port)
 	{
-		map_ports.add(port);
-	}
-
-	/**
-	 * @return the map_edges
-	 */
-	public HashMap<EdgeLocation, Edge> getMap_edges() {
-		return map_edges;
-	}
-
-	/**
-	 * @return the map_vertexes
-	 */
-	public HashMap<VertexLocation, Vertex> getMap_vertexes() {
-		return map_vertexes;
-	}
-
-	/**
-	 * @return the map_hexes
-	 */
-	public HashMap<HexLocation, TerrainHex> getMap_hexes() {
-		return map_hexes;
-	}
-
-	/**
-	 * @return the map_ports
-	 */
-	public ArrayList<Port> getMap_ports() {
-		return map_ports;
+		//TODO
 	}
 
 	/**
@@ -116,6 +135,41 @@ public class GameMap
 	 */
 	public Robber getRobber() {
 		return robber;
+	}
+
+	/**
+	 * @return the hexes
+	 */
+	public TerrainHex[] getHexes() {
+		return hexes;
+	}
+
+	/**
+	 * @return the ports
+	 */
+	public Port[] getPorts() {
+		return ports;
+	}
+
+	/**
+	 * @return the roads
+	 */
+	public Road[] getRoads() {
+		return roads;
+	}
+
+	/**
+	 * @return the buildings
+	 */
+	public Building[] getBuildings() {
+		return buildings;
+	}
+
+	/**
+	 * @return the radius
+	 */
+	public int getRadius() {
+		return radius;
 	}
 	
 
