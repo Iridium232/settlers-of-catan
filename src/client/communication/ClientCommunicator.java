@@ -67,4 +67,26 @@ public class ClientCommunicator {
 	public JSONObject joinGame(int ID, String color){
 		
 	}
+	
+	/**
+	 * 
+	 * @param o
+	 * @return HTTP Get Response
+	 * @pre o contains a valid http get request
+	 * @post Response from the server
+	 */
+	public String doGet(JSONObject o){
+		
+	}
+	
+	/**
+	 * 
+	 * @param o
+	 * @return HTTP success response
+	 * @pre o is a valid http post request
+	 * @post returns an http response
+	 */
+	public String doPost(JSONObject o){
+		
+	}
 }
