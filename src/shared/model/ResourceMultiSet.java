@@ -4,7 +4,7 @@ import shared.definitions.ResourceType;
  * @author rscheuer
  * The ResourceCard class has cards that are available to be played
  */
-public class ResourceCard {
+public class ResourceMultiSet {
     public int brick;
     public int ore;
     public int sheep;
@@ -14,7 +14,7 @@ public class ResourceCard {
     /**
      * Class constructor. Initializes each stack with 19 of its respective resource.
      */
-    public ResourceCard(){
+    public ResourceMultiSet(){
         brick=19;
         wheat=19;
         ore=19;
@@ -31,7 +31,7 @@ public class ResourceCard {
      * @param wood: the amount of woods cards the ResourceCard has.
      * @param sheep: the amount of sheeps cards the ResourceCard has.
      */
-    public ResourceCard(int brick, int wheat, int ore, int wood, int sheep) {
+    public ResourceMultiSet(int brick, int wheat, int ore, int wood, int sheep) {
         this.brick = brick;
         this.wheat = wheat;
         this.ore = ore;

@@ -13,7 +13,7 @@ public class TradeOffer
 {
 	private int sender;
 	private int reciever;
-	private ResourceList offer;
+	private ResourceMultiSet offer;
 	/**
 	 * @return the sender
 	 */
@@ -41,13 +41,13 @@ public class TradeOffer
 	/**
 	 * @return the offer
 	 */
-	public ResourceList getOffer() {
+	public ResourceMultiSet getOffer() {
 		return offer;
 	}
 	/**
 	 * @param offer the offer to set
 	 */
-	public void setOffer(ResourceList offer) {
+	public void setOffer(ResourceMultiSet offer) {
 		this.offer = offer;
 	}
 }

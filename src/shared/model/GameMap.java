@@ -69,7 +69,7 @@ public class GameMap
 	 * @post gives an array with the same indexes as
 	 * the players saying what they each get from a roll
 	 */
-	public ResourceList[] whatDoTheyGet(int number) throws Exception
+	public ResourceMultiSet[] whatDoTheyGet(int number) throws Exception
 	{
 		return null;
 	}

@@ -182,7 +182,7 @@ public class Fascade
 	 * @pre none
 	 * @post result a list of resources that the player has
 	 */
-	public ResourceList getCurrentResources(PlayerInfo player)
+	public ResourceMultiSet getCurrentResources(PlayerInfo player)
 	{
 		return null; //TODO
 	}
@@ -194,7 +194,7 @@ public class Fascade
 	 * generated a list of half his resources to discard
 	 * @post the chosen resources are returned to the game bank
 	 */
-	public void discardResources(ResourceList discard_list) throws Exception
+	public void discardResources(ResourceMultiSet discard_list) throws Exception
 	{
 		return; //TODO
 	}
@@ -297,7 +297,7 @@ public class Fascade
 	 * @pre This client is this player
 	 * @post result = a list of resources this player has
 	 */
-	public ResourceList getResourcesOwnedBy(int player)
+	public ResourceMultiSet getResourcesOwnedBy(int player)
 	{
 		
 		return null; //TODO
@@ -314,7 +314,7 @@ public class Fascade
 	 * @post the player is charged 2 food and given the desired card
 	 * 
 	 */
-	public void tradeAtFoodHarbor(int player, ResourceList desired_card) throws Exception
+	public void tradeAtFoodHarbor(int player, ResourceMultiSet desired_card) throws Exception
 	{
 		//TODO
 	}
@@ -353,7 +353,7 @@ public class Fascade
 	 * @post the player is charged 2 wool and given the desired card
 	 * 
 	 */
-	public void tradeAtWoolHarbor(int player, ResourceList desired_card) throws Exception
+	public void tradeAtWoolHarbor(int player, ResourceMultiSet desired_card) throws Exception
 	{
 		//TODO
 	}
@@ -380,7 +380,7 @@ public class Fascade
 	 * @post the player is charged 2 wood and given the desired card
 	 * 
 	 */
-	public void tradeAtWoodHarbor(int player, ResourceList desired_card) throws Exception
+	public void tradeAtWoodHarbor(int player, ResourceMultiSet desired_card) throws Exception
 	{
 		
 	}
@@ -407,7 +407,7 @@ public class Fascade
 	 * @post the player is charged 2 ore and given the desired card
 	 * 
 	 */
-	public void tradeAtOreHarbor(int player, ResourceList desired_card) throws Exception
+	public void tradeAtOreHarbor(int player, ResourceMultiSet desired_card) throws Exception
 	{
 		
 	}
@@ -434,7 +434,7 @@ public class Fascade
 	 * @post the player is charged 2 grain and given the desired card
 	 * 
 	 */
-	public void tradeAtGrainHarbor(int player, ResourceList desired_card) throws Exception
+	public void tradeAtGrainHarbor(int player, ResourceMultiSet desired_card) throws Exception
 	{
 		
 	}
@@ -461,7 +461,7 @@ public class Fascade
 	 * @post the player is charged 2 bricks and given the desired card
 	 * 
 	 */
-	public void tradeAtBrickHarbor(int player, ResourceList desired_card) throws Exception
+	public void tradeAtBrickHarbor(int player, ResourceMultiSet desired_card) throws Exception
 	{
 		
 	}
@@ -477,7 +477,7 @@ public class Fascade
 	 * @post True iff the player can legally make this trade at this time
 	 * 
 	 */
-	public boolean canTradeAtMiscHarbor(ResourceList trade_in_card)
+	public boolean canTradeAtMiscHarbor(ResourceMultiSet trade_in_card)
 	{
 		return false;
 	}
@@ -494,7 +494,7 @@ public class Fascade
 	 * @post the player's resources are reduced by those 3 resources and increased by 1 of the desired card.
 	 * 
 	 */
-	public void tradeAtMiscHarbor(int player, ResourceList trade_in_cards, ResourceList desired_card) throws Exception
+	public void tradeAtMiscHarbor(int player, ResourceMultiSet trade_in_cards, ResourceMultiSet desired_card) throws Exception
 	{
 		
 	}
@@ -510,7 +510,7 @@ public class Fascade
 	 * @post True iff the player can legally make this trade at this time
 	 * 
 	 */
-	public boolean canTradeFourToOne(int player, ResourceList trade_in_cards, ResourceList desired_cards)
+	public boolean canTradeFourToOne(int player, ResourceMultiSet trade_in_cards, ResourceMultiSet desired_cards)
 	{
 		return false;//TODO
 	}
@@ -527,7 +527,7 @@ public class Fascade
 	 * @post the player's resources are reduced by those 4 resources and increased by 1 of the desired card.
 	 * 
 	 */
-	public void tradeFourToOne(int player, ResourceList trade_in_card, ResourceList desired_card) throws Exception
+	public void tradeFourToOne(int player, ResourceMultiSet trade_in_card, ResourceMultiSet desired_card) throws Exception
 	{
 		//TODO
 	}

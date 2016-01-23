@@ -57,7 +57,7 @@ public class Game
 	/**
 	 * list of resource cards owned by nobody
 	 */
-	private ResourceList resource_bank;
+	private ResourceMultiSet resource_bank;
 	
 	/**
 	 * list of development cards owned by nobody
@@ -194,14 +194,14 @@ public class Game
 	/**
 	 * @return the resource_bank
 	 */
-	public ResourceList getResource_bank() {
+	public ResourceMultiSet getResource_bank() {
 		return resource_bank;
 	}
 
 	/**
 	 * @param resource_bank the resource_bank to set
 	 */
-	public void setResource_bank(ResourceList resource_bank) {
+	public void setResource_bank(ResourceMultiSet resource_bank) {
 		this.resource_bank = resource_bank;
 	}
 

@@ -54,7 +54,7 @@ public class Player {
     /**
      *  The resource cards this player has
      */
-    private ResourceCard resources;
+    private ResourceMultiSet resources;
     /**
      *  How many roads this player has left to play
      */
@@ -131,7 +131,7 @@ public class Player {
      * @post result = true iff the player has this many of the required resources
      * and has the piece nessesary in his collection
      */
-    public boolean canAfford(ResourceCard cost, PieceType type)
+    public boolean canAfford(ResourceMultiSet cost, PieceType type)
     {
     	return false;
     }
@@ -143,7 +143,7 @@ public class Player {
      * @pre canAfford() is true and something is being bought
      * @post the player has that many resources deducted
      */
-    public void pay(ResourceCard cost) throws Exception
+    public void pay(ResourceMultiSet cost) throws Exception
     {
     	
     	
@@ -169,7 +169,7 @@ public class Player {
      * @pre none
      * @post The player has this resource added to their stash
      */
-    public void recieve(ResourceCard resource) throws Exception
+    public void recieve(ResourceMultiSet resource) throws Exception
     {
     	
     }
@@ -179,7 +179,7 @@ public class Player {
      * @pre The player has been legally selected to rob and has at least 1 resource
      * @post result = the resource that was deducted from this player to give to another
      */
-    public ResourceCard getRobbed() throws Exception
+    public ResourceMultiSet getRobbed() throws Exception
     {
     	return null;
     }
@@ -394,7 +394,7 @@ public class Player {
      *
      * @return  The resource cards this player has
      */
-    public ResourceCard getResources() {
+    public ResourceMultiSet getResources() {
         return resources;
     }
 
@@ -404,7 +404,7 @@ public class Player {
      *
      * @param resources The resource cards this player has
      */
-    public void setResources(ResourceCard resources) {
+    public void setResources(ResourceMultiSet resources) {
         this.resources = resources;
     }
 
@@ -511,7 +511,7 @@ public class Player {
      * at least one card to discard
      * @post    The number of cards in the ResourceCardList is reduced by the number of cards being discarded
      */
-    public void discard(ResourceList resources) {
+    public void discard(ResourceMultiSet resources) {
 
     }
 
@@ -596,7 +596,7 @@ public class Player {
      * at least one card to discard
      * @post    The number of cards in the ResourceCardList is reduced by the number of cards being discarded
      */
-    public void discardResourceCards(ResourceList resources) {
+    public void discardResourceCards(ResourceMultiSet resources) {
 
     }
 
@@ -620,7 +620,7 @@ public class Player {
      * 
      * @post  result = Whether a card(s) can be discarded
      */
-    public boolean canDiscard(ResourceList resources) {
+    public boolean canDiscard(ResourceMultiSet resources) {
         return true;
     }
 
@@ -692,7 +692,7 @@ public class Player {
      * @param resources  List of Resources to be discarded
      * @return  Whether a card(s) can be discarded
      */
-    public boolean canDiscardResourceCards(ResourceList resources) {
+    public boolean canDiscardResourceCards(ResourceMultiSet resources) {
         return true;
     }
 }
