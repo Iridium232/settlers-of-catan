@@ -10,11 +10,11 @@ import shared.locations.VertexLocation;
 import shared.model.Game;
 import shared.model.Player;
 /**
- * Implements IServerProxy send requests through the client communicator to the server.
+ * Implements the IServerProxy. returns set values used for testing.
  * @author Doug
  *
  */
-public class ServerProxy implements IServerProxy {
+public class MockServer implements IServerProxy {
 
 	@Override
 	public void ServerProxy(String host, int port) {
