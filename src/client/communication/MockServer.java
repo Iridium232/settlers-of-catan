@@ -9,6 +9,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.Game;
 import shared.model.Player;
+import shared.model.ResourceMultiSet;
 /**
  * Implements the IServerProxy. returns set values used for testing.
  * @author Doug

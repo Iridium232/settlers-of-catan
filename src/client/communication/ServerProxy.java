@@ -9,6 +9,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.Game;
 import shared.model.Player;
+import shared.model.ResourceMultiSet;
 /**
  * Implements IServerProxy send requests through the client communicator to the server.
  * @author Doug

@@ -9,6 +9,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.Game;
 import shared.model.Player;
+import shared.model.ResourceMultiSet;
 
 /**
  * A proxy server that can be implemented to either speak with the server or just return values for testing purposes.
