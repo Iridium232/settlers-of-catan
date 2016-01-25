@@ -4,18 +4,18 @@ import shared.locations.*;
 
 
 /**
- *Class that holds information about Game Pieces
- *These are Settlements or Cities and not Roads 
+ *Abstract Class that holds information about Game Pieces
+ *These are Settlements or Cities and not Roads
+ *Settlements and Cities inherit from this class
  *They have a color to link them to their player
  *They have a location on a vertex of the map
  *These attributes cannot be changed once set
  *
- *@invariants The piece type is either SETTLEMENT or CITY
+ *
  */
-public class Building 
+public abstract class Building
 {
 	private VertexLocation location;
-	private PieceType type;
 	private CatanColor color;
 	/**
 	 * @return the location
@@ -28,18 +28,6 @@ public class Building
 	 */
 	public void setLocation(VertexLocation location) {
 		this.location = location;
-	}
-	/**
-	 * @return the type
-	 */
-	public PieceType getType() {
-		return type;
-	}
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(PieceType type) {
-		this.type = type;
 	}
 	/**
 	 * @return the color
