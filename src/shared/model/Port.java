@@ -1,5 +1,4 @@
 package shared.model;
-import shared.definitions.*;
 import shared.locations.*;
 
 /**
@@ -10,53 +9,112 @@ import shared.locations.*;
  */
 public class Port 
 {
-	private PortType type = null;
-	private VertexLocation location1 = null;
-	private VertexLocation location2 = null;
-	
-	
-	/**
-	 * @return the type
-	 */
-	public PortType getType() {
-		return type;
+	private String resource;
+	private HexLocation location;
+	private String direction;
+	private int ratio;
+
+
+	public Port(String resourceType, int vertX, int vertY, String direction, int ratio) {
+		this.resource = resourceType;
+		this.location = new HexLocation(vertX, vertY);
+		this.direction = direction;
+		this.ratio = ratio;
 	}
-	
 	/**
-	 * @param type the type to set
+	 * Class constructor
+	 * @param resourceType
+	 * @param vertX
+	 * @param vertY
+	 * @param direction
+	 * @param ratio
 	 */
-	public void setType(PortType type) {
-		assert this.type == null;
-		this.type = type;
+
+	/**
+	 * This is the getter for the type of the resource that port class can trade with
+	 * @pre none
+	 * @post Returns a string representing the type of resource that the port can trade
+	 */
+
+	public String getResourceType() {
+		return resource;
 	}
-	
+
 	/**
-	 * @return the location1
+	 * Here is the setter for the type of the resource that port class can trade
+	 * @param resourceType
+	 * @pre none
+	 * @post string is passed as a parameter
 	 */
-	public VertexLocation getLocation1() {
-		return location1;
+	public void setResourceType(String resourceType) {
+		this.resource = resourceType;
 	}
-	
+
 	/**
-	 * @param location the location1 to set
+	 * Here is the getter for the hex (vertX and vertY location) of the port
+	 * @pre none
+	 * @post Returns the hex location of the port
 	 */
-	public void setLocation1(VertexLocation location) {
-		assert this.location1 == null;
-		this.location1 = location;
+	public HexLocation getLocation() {
+		return location;
 	}
-	
+
 	/**
-	 * @return the location2
+	 * Here is the setter for the hex (vertX and vertY location) of the port
+	 * @param coordX
+	 * @param coordY
+	 * @pore none
+	 * @post The hex location of this port get now the coordinates as the x and y previously
 	 */
-	public VertexLocation getLocation2() {
-		return location2;
+	public void setLocation(int coordX, int coordY) {
+		this.location = new HexLocation(coordX, coordY);
 	}
-	
+
 	/**
-	 * @param location the location2 to set
+	 * Here is the setter for the location of the port
+	 * @param location
+	 * @pre none
+	 * @post The hex location of this port get now the coordinates as the x and y previously passed as a parameter
 	 */
-	public void setLocation2(VertexLocation location) {
-		assert this.location2 == null;
-		this.location2 = location;
+	public void setLocation(HexLocation location) {
+		this.location = location;
+	}
+
+	/**
+	 * Here is the getter for the direction of the port
+	 * @pre none
+	 * @post Returns a string that represents the direction of the port
+	 */
+	public String getDirection() {
+		return direction;
+	}
+
+	/**
+	 * here is the setter for the direction of the port
+	 * @param direction
+	 * @pre none
+	 * @post This is the string that has the direction of the port compared to the string that was passed in as a parameter
+	 */
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+	/**
+	 * Here is the getter for the trade ratio of the port
+	 * @pre none
+	 * @post Returns an integer representing the trade ratio for the port
+	 */
+	public int getRatio() {
+		return ratio;
+	}
+
+	/**
+	 * Here is the setter for the trade ratio fo the port
+	 * @param ratio
+	 * @pre none
+	 * @post integer that equal the ratio passed as a parameter
+	 */
+	public void setRatio(int ratio) {
+		this.ratio = ratio;
 	}
 }
