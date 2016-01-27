@@ -1,7 +1,9 @@
 package client.communication;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
+import shared.model.Fascade;
 import shared.model.Player;
 
 /**
@@ -13,10 +15,12 @@ import shared.model.Player;
  */
 public class ServerPoller {
 	
-	private IServerProxy server;
-	private Timer poller=null;
-	private ClientCommunicator comm;
+	private static IServerProxy server;
+	private static Fascade f;
+	private static Timer poller=null;
+	private static ClientCommunicator comm;
 	public final static long DEFAULT_POLL_INTERVAL=3000;
+	private static ServerPoller sp;
 	/**
 	 * 
 	 * @param server
@@ -24,22 +28,52 @@ public class ServerPoller {
 	 * @pre The client is connected to a server, a user is logged in, the user belongs to a game. 
 	 * @post A ServerPoller will call the server every 3 seconds to keep the player's board current.
 	 */
-	public ServerPoller(IServerProxy server, Player user){
-		
+	private ServerPoller(){}
+	
+	public static ServerPoller getServerPoller(){
+		if(sp!=null){
+			return sp;
+		} else{
+			sp=new ServerPoller();
+			return sp;
+		}
 	}
 	
+	private static void setComm(ClientCommunicator c){
+		comm=c;
+	}
+	
+	private static void setServer(IServerProxy s){
+		server=s;
+	}
+	
+	private static void setFascade(Fascade fas){
+		f=fas;
+	}
 	/**
 	 * @pre the poller is not already running
 	 * @post the poller will start calling the server.
 	 */
-	public void Start(){
-		
+	private static void Start(){
+		poller = new Timer(true);
+		poller.scheduleAtFixedRate(new TimerTask(){
+			
+			@Override
+			public void run(){
+					try{
+						int version=f.getLatestModelNum();
+						
+					}catch(Exception e){
+						
+					}
+			}
+		}, 0, DEFAULT_POLL_INTERVAL);
 	}
 	
 	/**
 	 * @post the poller will stop calling the server
 	 */
-	public void Stop(){
+	private static void Stop(){
 		
 	}
 }
