@@ -1,5 +1,6 @@
 package shared.model;
 import shared.locations.*;
+import shared.model.ports.Port;
 import shared.definitions.*;
 
 /**

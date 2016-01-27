@@ -3,6 +3,7 @@ import java.util.*;
 import shared.locations.*;
 import shared.definitions.*;
 import shared.model.*;
+import shared.model.ports.Port;
 
 /**
  * The class that represents the map of the game. 

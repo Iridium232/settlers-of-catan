@@ -2,6 +2,9 @@ package shared.model;
 import client.data.*;
 import java.util.*;
 
+import shared.model.ports.MiscPort;
+import shared.model.ports.*;
+
 /**
  * The Facade class handles all communication and commands to and from the game model.
  * 
@@ -281,8 +284,17 @@ public class Fascade
 	 * @pre none
 	 * @post True iff the player can legally play the card he specified now
 	 */
-	public boolean canPlayDevelopmentCard(int player, DevCardList dev_card)
+	public boolean canPlayDevelopmentCard(int player_index, DevCardList dev_card)
 	{
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		
+		
+		
+		
 		return false;//TODO
 	}
 	
@@ -297,38 +309,14 @@ public class Fascade
 	 * @pre This client is this player
 	 * @post result = a list of resources this player has
 	 */
-	public ResourceMultiSet getResourcesOwnedBy(int player)
+	public ResourceMultiSet getResourcesOwnedBy(int player_index)
 	{
-		
-		return null; //TODO
-	}
-
-	
-	/**
-	 * Trade at the Food Harbor
-	 * 
-	 * @param player
-	 * @param desired_card
-	 * @pre canTradeAtFoodHarbor() is true.
-	 * @pre desired_card is not food
-	 * @post the player is charged 2 food and given the desired card
-	 * 
-	 */
-	public void tradeAtFoodHarbor(int player, ResourceMultiSet desired_card) throws Exception
-	{
-		//TODO
-	}
-	
-	/**
-	 * Can this player Trade at the Food Harbor?
-	 * 
-	 * @param player
-	 * @pre none
-	 * @post True iff this player could use the Food Harbor legally at this time.
-	 */
-	public boolean canTradeAtFoodHarbor(int player)
-	{
-		return false;//TODO
+		if(player_index < 0 || player_index > 3)
+		{
+			return null;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		return player.getResources();
 	}
 	
 	/**
@@ -338,9 +326,34 @@ public class Fascade
 	 * @pre none
 	 * @post True iff this player could use the Wool Harbor legally at this time.
 	 */
-	public boolean canTradeAtWoolHarbor(int player)
+	public boolean canTradeAtWoolHarbor(int player_index, ResourceMultiSet trade_in_cards)
 	{
-		return false;//TODO
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		GameMap map = game_model.getMap();
+		Port[] valid_ports;
+		try
+		{
+			valid_ports = map.getPortsAccessibleTo(player_index);
+		}
+		catch (Exception e)
+		{
+			System.err.print("Port list not found!");
+			return false;
+		}
+		boolean matching_port = false;
+		SheepPort example = new SheepPort();
+		for( Port p : valid_ports)
+		{
+			if(p.getClass().equals(example.getClass()))
+			{
+				matching_port = true;
+			}
+		}
+		return player.canAfford(trade_in_cards) && matching_port;
 	}
 	
 	/**
@@ -365,9 +378,34 @@ public class Fascade
 	 * @pre none
 	 * @post True iff this player could use the Wood Harbor legally at this time.
 	 */
-	public boolean canTradeAtWoodHarbor(int player)
+	public boolean canTradeAtWoodHarbor(int player_index, ResourceMultiSet trade_in_cards)
 	{
-		return false;//TODO
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		GameMap map = game_model.getMap();
+		Port[] valid_ports;
+		try
+		{
+			valid_ports = map.getPortsAccessibleTo(player_index);
+		}
+		catch (Exception e)
+		{
+			System.err.print("Port list not found!");
+			return false;
+		}
+		boolean matching_port = false;
+		WoodPort example = new WoodPort();
+		for( Port p : valid_ports)
+		{
+			if(p.getClass().equals(example.getClass()))
+			{
+				matching_port = true;
+			}
+		}
+		return player.canAfford(trade_in_cards) && matching_port;
 	}
 	
 	/**
@@ -392,9 +430,34 @@ public class Fascade
 	 * @pre none
 	 * @post True iff this player could use the Ore Harbor legally at this time.
 	 */
-	public boolean canTradeAtOreHarbor(int player)
+	public boolean canTradeAtOreHarbor(int player_index, ResourceMultiSet trade_in_cards)
 	{
-		return false;//TODO
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		GameMap map = game_model.getMap();
+		Port[] valid_ports;
+		try
+		{
+			valid_ports = map.getPortsAccessibleTo(player_index);
+		}
+		catch (Exception e)
+		{
+			System.err.print("Port list not found!");
+			return false;
+		}
+		boolean matching_port = false;
+		OrePort example = new OrePort();
+		for( Port p : valid_ports)
+		{
+			if(p.getClass().equals(example.getClass()))
+			{
+				matching_port = true;
+			}
+		}
+		return player.canAfford(trade_in_cards) && matching_port;
 	}
 	
 	/**
@@ -419,9 +482,34 @@ public class Fascade
 	 * @pre none
 	 * @post True iff this player could use the Grain Harbor legally at this time.
 	 */
-	public boolean canTradeAtGrainHarbor(int player)
+	public boolean canTradeAtWheatHarbor(int player_index, ResourceMultiSet trade_in_cards)
 	{
-		return false;
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		GameMap map = game_model.getMap();
+		Port[] valid_ports;
+		try
+		{
+			valid_ports = map.getPortsAccessibleTo(player_index);
+		}
+		catch (Exception e)
+		{
+			System.err.print("Port list not found!");
+			return false;
+		}
+		boolean matching_port = false;
+		WheatPort example = new WheatPort();
+		for( Port p : valid_ports)
+		{
+			if(p.getClass().equals(example.getClass()))
+			{
+				matching_port = true;
+			}
+		}
+		return player.canAfford(trade_in_cards) && matching_port;
 	}
 	
 	/**
@@ -434,7 +522,7 @@ public class Fascade
 	 * @post the player is charged 2 grain and given the desired card
 	 * 
 	 */
-	public void tradeAtGrainHarbor(int player, ResourceMultiSet desired_card) throws Exception
+	public void tradeAtWheatHarbor(int player, ResourceMultiSet desired_card) throws Exception
 	{
 		
 	}
@@ -443,12 +531,38 @@ public class Fascade
 	 * Can this player Trade at the Brick Harbor?
 	 * 
 	 * @param player
+	 * @param trade_in_cards
 	 * @pre none
 	 * @post True iff this player could use the Brick Harbor legally at this time.
 	 */
-	public boolean canTradeAtBrickHarbor(int player)
+	public boolean canTradeAtBrickHarbor(int player_index, ResourceMultiSet trade_in_cards)
 	{
-		return false;
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		GameMap map = game_model.getMap();
+		Port[] valid_ports;
+		try
+		{
+			valid_ports = map.getPortsAccessibleTo(player_index);
+		}
+		catch (Exception e)
+		{
+			System.err.print("Port list not found!");
+			return false;
+		}
+		boolean matching_port = false;
+		BrickPort example = new BrickPort();
+		for( Port p : valid_ports)
+		{
+			if(p.getClass().equals(example.getClass()))
+			{
+				matching_port = true;
+			}
+		}
+		return player.canAfford(trade_in_cards) && matching_port;
 	}
 	
 	/**
@@ -477,9 +591,34 @@ public class Fascade
 	 * @post True iff the player can legally make this trade at this time
 	 * 
 	 */
-	public boolean canTradeAtMiscHarbor(ResourceMultiSet trade_in_card)
+	public boolean canTradeAtMiscHarbor(int player_index, ResourceMultiSet trade_in_cards)
 	{
-		return false;
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		GameMap map = game_model.getMap();
+		Port[] valid_ports;
+		try
+		{
+			valid_ports = map.getPortsAccessibleTo(player_index);
+		}
+		catch (Exception e)
+		{
+			System.err.print("Port list not found!");
+			return false;
+		}
+		boolean matching_port = false;
+		MiscPort example = new MiscPort();
+		for( Port p : valid_ports)
+		{
+			if(p.getClass().equals(example.getClass()))
+			{
+				matching_port = true;
+			}
+		}
+		return player.canAfford(trade_in_cards) && matching_port;
 	}
 	
 	/**
@@ -510,9 +649,14 @@ public class Fascade
 	 * @post True iff the player can legally make this trade at this time
 	 * 
 	 */
-	public boolean canTradeFourToOne(int player, ResourceMultiSet trade_in_cards, ResourceMultiSet desired_cards)
+	public boolean canTradeFourToOne(int player_index, ResourceMultiSet trade_in_cards, ResourceMultiSet desired_cards)
 	{
-		return false;//TODO
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		return player.canAfford(trade_in_cards);
 	}
 	
 	/**

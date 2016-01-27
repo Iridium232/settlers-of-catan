@@ -136,6 +136,16 @@ public class Player {
     	return false;
     }
     
+    /**
+     * Tells whether this player can afford this cost
+     * @pre none
+     * @post result = true iff the player has this many of the required resources
+     */
+    public boolean canAfford(ResourceMultiSet cost)
+    {
+    	return resources.canAfford(cost);
+    }
+    
     
     /**
      * Pay resources to  buy something
@@ -608,7 +618,9 @@ public class Player {
      *
      * @return  Whether a city can be placed
      */
-    public boolean canPlaceCity() {
+    public boolean canPlaceCity() 
+    {
+    	
         return true;
     }
 

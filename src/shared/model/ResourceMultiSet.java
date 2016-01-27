@@ -232,5 +232,18 @@ public class ResourceMultiSet {
     }
 
 
+	public boolean canAfford(ResourceMultiSet trade_in_cards) 
+	{
+		int other_wood = trade_in_cards.getWood();
+		int other_ore = trade_in_cards.getOre();
+		int other_brick = trade_in_cards.getBrick();
+		int other_sheep = trade_in_cards.getSheep();
+		int other_wheat = trade_in_cards.getWheat();
+		return (this.wood >= other_wood) && (this.ore >= other_ore) 
+				&& (this.wheat >= other_wheat) && (this.sheep >= other_sheep)
+				&& (this.brick > other_brick);
+	}
+
+
 
 }

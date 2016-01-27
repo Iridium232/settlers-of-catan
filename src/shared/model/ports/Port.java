@@ -1,4 +1,4 @@
-package shared.model;
+package shared.model.ports;
 import shared.locations.*;
 
 /**
@@ -7,16 +7,18 @@ import shared.locations.*;
  * Ports have a type depending on what you can trade with them
  * Ports cannot change location or type after the map is generated
  */
-public class Port 
+public abstract class Port 
 {
-	private String resource;
 	private HexLocation location;
 	private String direction;
 	private int ratio;
 
+	public Port()
+	{
+		
+	}
 
 	public Port(String resourceType, int vertX, int vertY, String direction, int ratio) {
-		this.resource = resourceType;
 		this.location = new HexLocation(vertX, vertY);
 		this.direction = direction;
 		this.ratio = ratio;
@@ -30,25 +32,6 @@ public class Port
 	 * @param ratio
 	 */
 
-	/**
-	 * This is the getter for the type of the resource that port class can trade with
-	 * @pre none
-	 * @post Returns a string representing the type of resource that the port can trade
-	 */
-
-	public String getResourceType() {
-		return resource;
-	}
-
-	/**
-	 * Here is the setter for the type of the resource that port class can trade
-	 * @param resourceType
-	 * @pre none
-	 * @post string is passed as a parameter
-	 */
-	public void setResourceType(String resourceType) {
-		this.resource = resourceType;
-	}
 
 	/**
 	 * Here is the getter for the hex (vertX and vertY location) of the port

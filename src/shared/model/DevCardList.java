@@ -20,6 +20,14 @@ public class DevCardList
 	 * @param soldier
 	 * @param year_of_plenty
 	 */
+	
+	/**
+	 * @return the total number of cards
+	 */
+	public int getTotalCards()
+	{
+		return monopoly + monument + road_building + soldier + year_of_plenty;
+	}
 
 	/**
 	 * @return the monopoly
