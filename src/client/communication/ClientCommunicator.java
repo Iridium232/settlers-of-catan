@@ -1,7 +1,11 @@
 package client.communication;
 
 import org.json.JSONObject;
- 
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 /**
  * Handles communication between the client and server
@@ -9,7 +13,48 @@ import org.json.JSONObject;
  *
  */
 public class ClientCommunicator {
-	
+
+//******************************************* Static Fields/Methods *************************************************//
+	private static final String DEFAULT_SERVER_HOST = "localhost";
+	private static final int DEFAULT_SERVER_PORT = 5555;
+	private static final String HTTP_GET = "GET";
+	private static final String HTTP_POST = "POST";
+	private static ClientCommunicator SINGLETON;
+
+	public static ClientCommunicator getSingleton(String server_host, String server_port) {
+		if (SINGLETON == null) {
+			SINGLETON = new ClientCommunicator(server_host, server_port);
+		}
+		return SINGLETON;
+	}
+
+//******************************************* Other Fields/Methods **************************************************//
+	private String url_prefix;
+	private String server_host;
+	private int server_port;
+	private Serializer serializer;
+
+	/**
+	 * Constructer that takes the server's host name and port as arguments
+	 * @param server_host	Machine the server is running on
+	 * @param strServer_port	Port that the server is running on
+	 */
+	private ClientCommunicator(String server_host, String strServer_port) {
+		if (server_host != "") {
+			this.server_host = server_host;
+		} else {
+			this.server_host = DEFAULT_SERVER_HOST;
+		}
+
+		if (strServer_port.matches("\\d+")) {
+			this.server_port = Integer.parseInt(strServer_port);
+		} else {
+			this.server_port = DEFAULT_SERVER_PORT;
+		}
+
+		this.url_prefix = "http://" + this.server_host + ":" + this.server_port;
+	}
+
 	/**
 	 * Calls login on the server
 	 * @param username
@@ -87,7 +132,25 @@ public class ClientCommunicator {
 	 * @pre o is a valid http post request
 	 * @post returns an http response
 	 */
-	public String doPost(JSONObject o){
-		return null;
+	public JSONObject doPost(String path, JSONObject o) throws Exception {
+		try {
+			URL url = new URL(url_prefix + path);
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod(HTTP_POST);
+			connection.setDoOutput(true);
+			connection.connect();
+//			xmlStream.toXML(postData, connection.getOutputStream());
+			connection.getOutputStream().close();
+			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				JSONObject result = null;//xmlStream.fromXML(connection.getInputStream());
+				return result;
+			} else {
+				throw new Exception(String.format("doPost failed: %s (http code %d)",
+						path, connection.getResponseCode()));
+			}
+		}
+		catch (IOException e) {
+			throw new Exception(String.format("doPost failed: %s", e.getMessage()), e);
+		}
 	}
 }
