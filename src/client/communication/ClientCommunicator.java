@@ -1,8 +1,7 @@
 package client.communication;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -24,6 +23,13 @@ public class ClientCommunicator {
 	public static ClientCommunicator getSingleton(String server_host, String server_port) {
 		if (SINGLETON == null) {
 			SINGLETON = new ClientCommunicator(server_host, server_port);
+		}
+		return SINGLETON;
+	}
+
+	public static ClientCommunicator getSINGLETON() throws Exception {
+		if (SINGLETON == null) {
+			throw new Exception("ClientCommunicator not initialized with host and port");
 		}
 		return SINGLETON;
 	}
@@ -53,76 +59,93 @@ public class ClientCommunicator {
 		}
 
 		this.url_prefix = "http://" + this.server_host + ":" + this.server_port;
+		serializer = Serializer.getSINGLETON();
 	}
 
-	/**
-	 * Calls login on the server
-	 * @param username
-	 * @param password
-	 * @return JSONObject containing name, password, and ID
-	 * @pre username and password are not null
-	 * @post receives the http response and sets the user cookie.
-	 */
-	public JSONObject login(String username, String password){
-		return null;
-	}
-	
-	/**
-	 * Calls register on the server
-	 * @param username
-	 * @param password
-	 * @return JSONObject containing name,password, and ID used to set user.cookie
-	 * @pre username and password are not null and the username isn't already in use. 
-	 * @post new user account is created, receive a http response, set the user cookie
-	 */
-	public JSONObject register(String username,String password){
-		return null;
-	}
-	
-	/**
-	 * Calls games/list on the server
-	 * @post got a list of games from the server
-	 * @return a JSON array containing a list of objects containing information about the server's games.
-	 */
-	public JSONObject gamesList(){
-		return null;
-	}
+//	/**
+//	 * Calls login on the server
+//	 * @param username
+//	 * @param password
+//	 * @return JSONObject containing name, password, and ID
+//	 * @pre username and password are not null
+//	 * @post receives the http response and sets the user cookie.
+//	 */
+//	public JSONObject login(String username, String password){
+//		return null;
+//	}
+//
+//	/**
+//	 * Calls register on the server
+//	 * @param username
+//	 * @param password
+//	 * @return JSONObject containing name,password, and ID used to set user.cookie
+//	 * @pre username and password are not null and the username isn't already in use.
+//	 * @post new user account is created, receive a http response, set the user cookie
+//	 */
+//	public JSONObject register(String username,String password){
+//		return null;
+//	}
+//
+//	/**
+//	 * Calls games/list on the server
+//	 * @post got a list of games from the server
+//	 * @return a JSON array containing a list of objects containing information about the server's games.
+//	 */
+//	public JSONObject gamesList(){
+//		return null;
+//	}
+//
+//	/**
+//	 *
+//	 * @param name
+//	 * @param randomTiles
+//	 * @param randomNumbers
+//	 * @param randomPorts
+//	 * @return a JSONObject containing all of the information for the game board including game name, game id and an array for four empty player objects.
+//	 * @pre name is not null, has values for randomTiles, randomNumbers, and randomPorts.
+//	 * @post receive a HTTP response for success or failure
+//	 */
+//	public JSONObject createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts){
+//		return null;
+//	}
+//
+//	/**
+//	 *
+//	 * @param ID
+//	 * @param color
+//	 * @return
+//	 * @pre the user is logged in, the player is already in the specified game or the game has space for an extra player, the ID is valid, and the color is valid
+//	 * @post the player is added to the game with the desired color,
+//	 */
+//	public JSONObject joinGame(int ID, String color){
+//		return null;
+//	}
 	
 	/**
 	 * 
-	 * @param name
-	 * @param randomTiles
-	 * @param randomNumbers
-	 * @param randomPorts
-	 * @return a JSONObject containing all of the information for the game board including game name, game id and an array for four empty player objects.
-	 * @pre name is not null, has values for randomTiles, randomNumbers, and randomPorts.
-	 * @post receive a HTTP response for success or failure 
-	 */
-	public JSONObject createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts){
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param ID
-	 * @param color
-	 * @return 
-	 * @pre the user is logged in, the player is already in the specified game or the game has space for an extra player, the ID is valid, and the color is valid
-	 * @post the player is added to the game with the desired color, 
-	 */
-	public JSONObject joinGame(int ID, String color){
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param o
+	 * @param path
 	 * @return HTTP Get Response
 	 * @pre o contains a valid http get request
 	 * @post Response from the server
 	 */
-	public String doGet(JSONObject o){
-		return null;
+	public Object doGet(String path) throws Exception {
+		try {
+			URL url = new URL(url_prefix + path);
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod(HTTP_GET);
+			connection.connect();
+			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				InputStream result = connection.getInputStream();
+				return serializer.deserialize(result);
+			}
+			else {
+				throw new Exception(String.format("doGet failed: %s (http code %d)",
+						path, connection.getResponseCode()));
+			}
+		}
+		catch (IOException e) {
+			throw new Exception(String.format("doGet failed: %s", e.getMessage()), e);
+		}
 	}
 	
 	/**
@@ -132,18 +155,19 @@ public class ClientCommunicator {
 	 * @pre o is a valid http post request
 	 * @post returns an http response
 	 */
-	public JSONObject doPost(String path, JSONObject o) throws Exception {
+	public Object doPost(String path, Object o) throws Exception {
 		try {
 			URL url = new URL(url_prefix + path);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 			connection.setRequestMethod(HTTP_POST);
 			connection.setDoOutput(true);
 			connection.connect();
-//			xmlStream.toXML(postData, connection.getOutputStream());
+			String serialized = serializer.serialize(o);
+			connection.getOutputStream().write(serialized.getBytes());
 			connection.getOutputStream().close();
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				JSONObject result = null;//xmlStream.fromXML(connection.getInputStream());
-				return result;
+				InputStream result = connection.getInputStream();
+				return serializer.deserialize(result);
 			} else {
 				throw new Exception(String.format("doPost failed: %s (http code %d)",
 						path, connection.getResponseCode()));
