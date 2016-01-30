@@ -1,5 +1,7 @@
 package shared.communication.toServer.moves;
 
+import shared.communication.ResourceList;
+
 /**
  * Michael Rhodes
  * CS 340

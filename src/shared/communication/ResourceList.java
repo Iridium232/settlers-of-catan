@@ -1,4 +1,4 @@
-package shared.communication.toServer.moves;
+package shared.communication;
 
 /**
  * Michael Rhodes
