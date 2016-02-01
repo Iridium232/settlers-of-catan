@@ -620,8 +620,10 @@ public class Player {
      */
     public boolean canPlaceCity() 
     {
-    	
-        return true;
+    	ResourceMultiSet cost = new ResourceMultiSet();
+    	cost.setWheat(2);
+    	cost.setOre(3);
+        return resources.canAfford(cost) && cities > 0;
     }
 
     /**
@@ -632,8 +634,9 @@ public class Player {
      * 
      * @post  result = Whether a card(s) can be discarded
      */
-    public boolean canDiscard(ResourceMultiSet resources) {
-        return true;
+    public boolean canDiscard(ResourceMultiSet resources) 
+    {
+        return this.resources.canAfford(resources);
     }
 
     /**
@@ -642,8 +645,11 @@ public class Player {
      *
      * @return  Whether a monument can be played
      */
-    public boolean canPlayMonument() {
-        return true;
+    public boolean canPlayMonument() 
+    {
+    	DevCardList cost = new DevCardList();
+    	cost.setMonument(1);
+        return oldDevCards.includes(cost);
     }
 
     /**
@@ -651,9 +657,11 @@ public class Player {
      * Determines whether the pre-conditions of playDevCard are met
      *
      * @return  Whether a DevCard can be played
+     * 
      */
-    public boolean canPlayDevCard() {
-        return true;
+    public boolean canPlayDevelopmentCard(DevCardList card) 
+    {
+    	return this.oldDevCards.includes(card);
     }
 
     /**
@@ -662,8 +670,12 @@ public class Player {
      *
      * @return  Whether a road can be placed
      */
-    public boolean canPlaceRoad() {
-        return true;
+    public boolean canPlaceRoad() 
+    {
+    	ResourceMultiSet cost = new ResourceMultiSet();
+    	cost.setWood(1);
+    	cost.setBrick(1);
+        return resources.canAfford(cost) && roads > 0;
     }
 
     /**
@@ -672,8 +684,14 @@ public class Player {
      *
      * @return  Whether a settlement can be placed
      */
-    public boolean canPlaceSettlement() {
-        return true;
+    public boolean canPlaceSettlement() 
+    {
+    	ResourceMultiSet settlement_cost = new ResourceMultiSet();
+    	settlement_cost.setBrick(1);
+    	settlement_cost.setSheep(1);
+    	settlement_cost.setWheat(1);
+    	settlement_cost.setWood(1);
+        return resources.canAfford(settlement_cost) && settlements > 0; 
     }
 
     /**
@@ -682,8 +700,11 @@ public class Player {
      *
      * @return  Whether a soldier can be played
      */
-    public boolean canPlaySoldier() {
-        return true;
+    public boolean canPlaySoldier() 
+    {
+    	DevCardList soldier_cost = new DevCardList();
+    	soldier_cost.setSoldier(1);
+        return oldDevCards.includes(soldier_cost);
     }
 
     /**
@@ -693,8 +714,9 @@ public class Player {
      * @param devCards  List of DevCardTypes to be discarded
      * @return  Whether a card(s) can be discarded
      */
-    public boolean canDiscardDevCards(DevCardList devCards) {
-        return true;
+    public boolean canDiscardDevCards(DevCardList devCards) 
+    {
+        return oldDevCards.includes(devCards);
     }
 
     /**
@@ -704,7 +726,17 @@ public class Player {
      * @param resources  List of Resources to be discarded
      * @return  Whether a card(s) can be discarded
      */
-    public boolean canDiscardResourceCards(ResourceMultiSet resources) {
-        return true;
+    public boolean canDiscardResourceCards(ResourceMultiSet resources) 
+    {
+        return resources.canAfford(resources);
     }
+
+	public boolean canBuyDevCard() 
+	{
+		ResourceMultiSet cost = new ResourceMultiSet();
+		cost.setSheep(1);
+		cost.setWheat(1);
+		cost.setOre(1);
+		return resources.canAfford(cost);
+	}
 }

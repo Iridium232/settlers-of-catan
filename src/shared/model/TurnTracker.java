@@ -11,12 +11,14 @@ public class TurnTracker
 {
 	private int active_player;
 	private TurnStatus status;
+	private int waiting_for_player;
 	private int longest_road_player;
 	private int largest_army_player;
 	/**
 	 * @return the active_player
 	 */
-	public int getActive_player() {
+	public int getActive_player() 
+	{
 		return active_player;
 	}
 	/**
@@ -31,6 +33,16 @@ public class TurnTracker
 	public TurnStatus getStatus() {
 		return status;
 	}
+	
+	public TurnStatus turnStatusOf(int player)
+	{
+		if(player == active_player)
+		{
+			return status;
+		}
+		else return TurnStatus.WAITING;
+	}
+	
 	/**
 	 * @param status the status to set
 	 */

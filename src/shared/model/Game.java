@@ -1,5 +1,7 @@
 package shared.model;
 import java.util.ArrayList;
+
+import shared.definitions.TurnStatus;
 import client.data.*;
 
 /**
@@ -253,6 +255,31 @@ public class Game
 	{
 		
 	}
+
+	/**
+	 * Tells which player has the most soldiers in play first
+	 * 
+	 * @pre none
+	 * 
+	 * @post the player index of the player with the largest army.
+	 * or -1 if the card is not yet awarded
+	 */
+	public int whoLargestArmy() 
+	{
+		return turn_tracker.getLargest_army_player();
+	}
 	
+	/**
+	 * Gets the turn status of the given player index
+	 * 
+	 * @pre none
+	 * 
+	 * @post returns the turn status of the player as an Enum
+	 * 
+	 */
+	public TurnStatus getTurnStatus(int player)
+	{
+		return turn_tracker.turnStatusOf(player);
+	}
 	
 }

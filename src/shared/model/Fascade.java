@@ -2,7 +2,8 @@ package shared.model;
 import client.data.*;
 import java.util.*;
 
-import shared.model.ports.MiscPort;
+import shared.definitions.PieceType;
+import shared.definitions.TurnStatus;
 import shared.model.ports.*;
 
 /**
@@ -26,9 +27,12 @@ public class Fascade
 	 * @pre none
 	 * @post result is true iff that is a valid road construction
 	 */
-	public boolean canBuildRoad(PlayerInfo player, Edge edge)
+	public boolean canBuildRoad(int player_index, Edge edge)
 	{
-		return false;//TODO
+		GameMap game_map = game_model.getMap();
+		Player player = game_model.getPlayers()[player_index];
+		return game_map.canBuildRoad(edge, player_index) &&
+				player.canPlaceRoad() && (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
 	/**
@@ -41,9 +45,9 @@ public class Fascade
 	 * @post a road is built for that player on that edge. The server is notified.
 	 * @post The player's resources are reduced by 1 wood and 1 brick
 	 */
-	public void buildRoadAt(PlayerInfo player, Edge edge) throws Exception
+	public void buildRoadAt(int player_index, Edge edge) throws Exception
 	{
-		//TODO
+//TODO
 	}
 	
 	/**
@@ -55,9 +59,11 @@ public class Fascade
 	 * @post result = True when the player can afford a development card 
 	 * and it is their turn to buy things. /result = false otherwise.
 	 */
-	public boolean canBuyDevelopmentCard(PlayerInfo player)
+	public boolean canBuyDevelopmentCard(int player_index)
 	{
-		return false;//TODO
+		GameMap game_map = game_model.getMap();
+		Player player = game_model.getPlayers()[player_index];
+		return player.canBuyDevCard() && (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
 	/**
@@ -81,9 +87,12 @@ public class Fascade
 	 * @pre the player is playing the game
 	 * @post returns true iff the player can legally put a settlement on that location
 	 */
-	public boolean canBuildSettlement(PlayerInfo player, Vertex location)
+	public boolean canBuildSettlement(int player_index, Vertex location)
 	{
-		return false; //TODO
+		GameMap game_map = game_model.getMap();
+		Player player = game_model.getPlayers()[player_index];
+		return game_map.canAddBuilding(PieceType.SETTLEMENT, location, player_index) &&
+				player.canPlaceSettlement() && (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
 	/**
@@ -108,9 +117,12 @@ public class Fascade
 	 * @pre None
 	 * @post result = true iff building a city on that vertex is valid 
 	 */
-	public boolean canBuildCity(PlayerInfo player, Vertex location)
+	public boolean canBuildCity(int player_index, Vertex location)
 	{
-		return false;
+		GameMap game_map = game_model.getMap();
+		Player player = game_model.getPlayers()[player_index];
+		return game_map.canAddBuilding(PieceType.CITY, location, player_index) &&
+				player.canPlaceCity() && (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
 	/**
@@ -141,9 +153,9 @@ public class Fascade
 	 * @post returns true iff the player is currently allowed to roll the dice
 	 * 
 	 */
-	public boolean canRollDice(PlayerInfo player)
+	public boolean canRollDice(int player_index)
 	{
-		return false;//TODO
+		return (game_model.getTurnStatus(player_index) == TurnStatus.ROLLING);//TODO
 	}
 	
 	/**
@@ -185,9 +197,10 @@ public class Fascade
 	 * @pre none
 	 * @post result a list of resources that the player has
 	 */
-	public ResourceMultiSet getCurrentResources(PlayerInfo player)
+	public ResourceMultiSet getCurrentResources(int player)
 	{
-		return null; //TODO
+		Player pl = game_model.getPlayers()[player];	
+		return pl.getResources(); 
 	}
 	
 	/**
@@ -258,7 +271,8 @@ public class Fascade
 	 */
 	public DevCardList getDevelopmentCards(int player)
 	{
-		return null;//TODO
+		Player p =  game_model.getPlayers()[player];
+		return p.getOldDevCards();
 	}
 	
 	/**
@@ -286,16 +300,19 @@ public class Fascade
 	 */
 	public boolean canPlayDevelopmentCard(int player_index, DevCardList dev_card)
 	{
-		if(player_index < 0 || player_index > 3)
+		if(player_index < 0 || player_index > 3)//Check it's a valid 
 		{
 			return false;
 		}
 		Player player = game_model.getPlayers()[player_index];
-		
-		
-		
-		
-		return false;//TODO
+		if (!(dev_card.getTotalCards() == 1))
+		{
+			return false;
+		}
+		TurnTracker turn_tracker = game_model.getTurn_tracker();
+		//TODO check its his turn
+		return player.canPlayDevelopmentCard(dev_card) &&
+				(game_model.getTurnStatus(player_index) == TurnStatus.PLAYING) ;
 	}
 	
 	//+++++++++++++++++++++++++++++++++++++++++++++++
@@ -353,7 +370,8 @@ public class Fascade
 				matching_port = true;
 			}
 		}
-		return player.canAfford(trade_in_cards) && matching_port;
+		return player.canAfford(trade_in_cards) && matching_port
+				&& (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
 	/**
@@ -405,7 +423,8 @@ public class Fascade
 				matching_port = true;
 			}
 		}
-		return player.canAfford(trade_in_cards) && matching_port;
+		return player.canAfford(trade_in_cards) && matching_port
+				&& (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
 	/**
@@ -457,7 +476,8 @@ public class Fascade
 				matching_port = true;
 			}
 		}
-		return player.canAfford(trade_in_cards) && matching_port;
+		return player.canAfford(trade_in_cards) && matching_port 
+				&& (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
 	/**
@@ -509,7 +529,8 @@ public class Fascade
 				matching_port = true;
 			}
 		}
-		return player.canAfford(trade_in_cards) && matching_port;
+		return player.canAfford(trade_in_cards) && matching_port 
+				&& (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
 	/**
@@ -562,7 +583,8 @@ public class Fascade
 				matching_port = true;
 			}
 		}
-		return player.canAfford(trade_in_cards) && matching_port;
+		return player.canAfford(trade_in_cards) && matching_port 
+				&& (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
 	/**
@@ -618,7 +640,8 @@ public class Fascade
 				matching_port = true;
 			}
 		}
-		return player.canAfford(trade_in_cards) && matching_port;
+		return player.canAfford(trade_in_cards) && matching_port 
+				&& (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
 	/**
@@ -656,7 +679,8 @@ public class Fascade
 			return false;
 		}
 		Player player = game_model.getPlayers()[player_index];
-		return player.canAfford(trade_in_cards);
+		return player.canAfford(trade_in_cards) && (game_model.getTurnStatus(player_index) 
+				== TurnStatus.PLAYING);
 	}
 	
 	/**
@@ -688,7 +712,7 @@ public class Fascade
 	 */
 	public int getLatestModelNum()
 	{
-		return -1; //TODO
+		return game_model.getVersion();
 	}
 	
 	/**
@@ -779,7 +803,8 @@ public class Fascade
 	 */
 	public int whoLongestRoad()
 	{
-		return -1;
+		TurnTracker tst = game_model.getTurn_tracker();
+		return tst.getLongest_road_player();
 	}
 	
 	/**
@@ -791,12 +816,32 @@ public class Fascade
 	 * 
 	 * @pre none
 	 * @post result = the player index with the largest army
-	 * or -1 if nobody controlls that honor
+	 * or -1 if nobody controls that honor
 	 */
 	public int whoLargestArmy()
 	{
-		return -1;
+		return game_model.whoLargestArmy();
 	}
+	
+	/**
+	 * Tells whether the player can use ANY port
+	 * 
+	 * @pre none
+	 * 
+	 * @post true iff the player has a city or settlement at a port
+	 */
+	public boolean canMaritimeTrade(int player_index)
+	{
+		return this.canTradeAtBrickHarbor(player_index, new ResourceMultiSet())
+				|| canTradeAtWoolHarbor(player_index, new ResourceMultiSet())
+				|| canTradeAtWheatHarbor(player_index, new ResourceMultiSet())
+				|| canTradeAtOreHarbor(player_index, new ResourceMultiSet())
+				|| canTradeAtWoodHarbor(player_index, new ResourceMultiSet())
+				|| canTradeAtMiscHarbor(player_index, new ResourceMultiSet());
+	}
+	
+	
+	
 }
 	
 	

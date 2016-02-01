@@ -21,6 +21,25 @@ public class DevCardList
 	 * @param year_of_plenty
 	 */
 	
+	
+	/**
+	 * 
+	 * @param cards
+	 * @pre none
+	 * @post result is true iff the current devcardlist has >= the cards in the parameter
+	 */
+	public boolean includes(DevCardList cards)
+	{
+		int other_monopoly = cards.getMonopoly();
+		int other_monument = cards.getMonument();
+		int other_road_building = cards.getRoad_building();
+		int other_soldier = cards.getSoldier();
+		int other_yearop = cards.getYear_of_plenty();
+		return (monopoly >= other_monopoly) && (monument >= other_monument)
+				&& (road_building >= other_road_building) && (soldier >= other_soldier)
+				&& (year_of_plenty >= other_yearop);
+	}
+	
 	/**
 	 * @return the total number of cards
 	 */
