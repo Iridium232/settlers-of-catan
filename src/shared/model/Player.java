@@ -649,26 +649,55 @@ public class Player {
     {
     	DevCardList cost = new DevCardList();
     	cost.setMonument(1);
-        return oldDevCards.includes(cost);
+        return oldDevCards.includes(cost) && !this.playedDevCard;
     }
+    
+    /**
+    *
+    * Determines whether the pre-conditions of playYearOfPlenty are met
+    *
+    * @pre 
+    * @post
+    */
+   public boolean canPlayRoadBuilding() 
+   {
+   	DevCardList cost = new DevCardList();
+   	cost.setRoad_building(1);
+       return oldDevCards.includes(cost) && !this.playedDevCard;
+   }
+   
+   /**
+   *
+   * Determines whether the pre-conditions of playMonument are met
+   *
+   * @return  Whether a monument can be played
+   */
+  public boolean canPlayYearOfPlenty() 
+  {
+  	DevCardList cost = new DevCardList();
+  	cost.setYear_of_plenty(1);
+      return oldDevCards.includes(cost) && !this.playedDevCard;
+  }
 
     /**
      *
      * Determines whether the pre-conditions of playDevCard are met
      *
-     * @return  Whether a DevCard can be played
+     * @pre none
+     * @post  Whether a DevCard can be played
      * 
      */
     public boolean canPlayDevelopmentCard(DevCardList card) 
     {
-    	return this.oldDevCards.includes(card);
+    	return this.oldDevCards.includes(card) && !this.playedDevCard;
     }
 
     /**
      *
      * Determines whether the pre-conditions of placeRoad are met
      *
-     * @return  Whether a road can be placed
+     * @pre none
+     * @post  Whether a road can be placed
      */
     public boolean canPlaceRoad() 
     {
@@ -681,8 +710,9 @@ public class Player {
     /**
      *
      * Determines whether the pre-conditions of placeSettlement are met
-     *
-     * @return  Whether a settlement can be placed
+     * 
+     * @pre none
+     * @post  Whether a settlement can be placed
      */
     public boolean canPlaceSettlement() 
     {
@@ -704,7 +734,7 @@ public class Player {
     {
     	DevCardList soldier_cost = new DevCardList();
     	soldier_cost.setSoldier(1);
-        return oldDevCards.includes(soldier_cost);
+        return oldDevCards.includes(soldier_cost) && !playedDevCard;
     }
 
     /**

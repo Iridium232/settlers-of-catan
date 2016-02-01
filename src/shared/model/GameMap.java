@@ -83,21 +83,73 @@ public class GameMap
 	 * on where they have buildings or an empty array if that player controlls
 	 * no ports
 	 */
-	public Port[] getPortsAccessibleTo(int player) throws Exception
+	public Port[] getPortsAccessibleTo(int player_index) throws Exception
 	{
-			return null;	
+		ArrayList<Port> player_ports = new ArrayList<Port>();
+		for(Port port : ports)
+		{
+			Vertex access1 = port.getVertex1();
+			Vertex access2 = port.getVertex2();
+			if(this.hasBuildingAt(player_index, access1))
+			{
+				player_ports.add(port);
+			}
+			else if (this.hasBuildingAt(player_index, access2))
+			{
+				player_ports.add(port);
+			}
+		}
+		return (Port[]) player_ports.toArray();	
 	}
 	
+	/**
+	 * 
+	 * @param player_index
+	 * @param vertex
+	 * @post true iff the player has a building at that Vertex;
+	 */
+	public boolean hasBuildingAt(int player_index, Vertex vertex) 
+	{
+		for(Building building : buildings)
+		{
+			if (building.getLocation().getNormalizedLocation().equals(vertex.getLocation().getNormalizedLocation()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * gets the building the player has at that vertex
+	 * @param player_index
+	 * @param vertex
+	 * @pre
+	 * @post returns the building the player has there or null if they have no building there
+	 */
+	public Building getBuildingAt(int player_index, Vertex vertex)
+	{
+		for(Building building : buildings)
+		{
+			if (building.getLocation().getNormalizedLocation().equals(vertex.getLocation().getNormalizedLocation()))
+			{
+				return building;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * Determines whether that edge represents a valid road placement
 	 * 
 	 * @param edge
-	 * @param player_color
+	 * @param player_index
 	 * @pre the player_color is currently playing and the edge exists in the map
 	 * @post returns true iff it is a valid road placement
 	 */
-	public boolean canBuildRoad(EdgeLocation edge, CatanColor player_color)
+	public boolean canBuildRoad(Edge edge, int player_index)
 	{
+		
 		return false;//TODO
 	}
 	
@@ -125,20 +177,23 @@ public class GameMap
 		//TODO
 	}
 	
+
+	
 	/**
-	 * Tells whether a building can be added by this player at this location
-	 * 
-	 * @param type
+	 * Tells whether the player can put a city there legally
 	 * @param location
-	 * @param player_color
-	 * @pre the player with this color is playing the game
-	 * @pre the location is on the map
-	 * @post result is True if this is a valid building placement based on existing structures on the map
+	 * @param player_index
+	 * @pre none
+	 * @post true iff they already have a settlement there
 	 */
-	public boolean canAddBuilding(PieceType type, VertexLocation location, CatanColor player_color)
+	public boolean canAddCity(Vertex location,int  player_index)
 	{
-		return false;//TODO
+		Building current_occupant = this.getBuildingAt(player_index, location);
+		if(current_occupant == null) return false;
+		Settlement example = new Settlement();
+		return (current_occupant.getClass().equals(example.getClass()));
 	}
+	
 	
 	/**
 	 * adds a Building to the Map for setup
@@ -215,8 +270,17 @@ public class GameMap
 	public int getRadius() {
 		return radius;
 	}
-	
 
+	public boolean canPutRobber(HexLocation location) 
+	{
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public boolean canAddSettlement(Vertex location, int player_index) 
+	{
+		return false;
+	}
 	
 	
 }
