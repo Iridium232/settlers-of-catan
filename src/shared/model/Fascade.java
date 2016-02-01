@@ -4,6 +4,7 @@ import java.util.*;
 
 import shared.definitions.PieceType;
 import shared.definitions.TurnStatus;
+import shared.locations.HexLocation;
 import shared.model.ports.*;
 
 /**
@@ -91,7 +92,7 @@ public class Fascade
 	{
 		GameMap game_map = game_model.getMap();
 		Player player = game_model.getPlayers()[player_index];
-		return game_map.canAddBuilding(PieceType.SETTLEMENT, location, player_index) &&
+		return game_map.canAddSettlement( location, player_index) &&
 				player.canPlaceSettlement() && (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
@@ -121,7 +122,7 @@ public class Fascade
 	{
 		GameMap game_map = game_model.getMap();
 		Player player = game_model.getPlayers()[player_index];
-		return game_map.canAddBuilding(PieceType.CITY, location, player_index) &&
+		return game_map.canAddCity(location, player_index) &&
 				player.canPlaceCity() && (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
@@ -213,6 +214,21 @@ public class Fascade
 	public void discardResources(ResourceMultiSet discard_list) throws Exception
 	{
 		return; //TODO
+	}
+	
+	/**
+	 * Says if that player can move the robber to that spot
+	 * 
+	 * @param location
+	 * @param player_index
+	 * @pre
+	 * @post true iff the terrainhex is not the ocean and the player can move the robber
+	 */
+	public boolean canPlaceRobber(HexLocation location, int player_index)
+	{
+		GameMap game_map = game_model.getMap();
+		Player player = game_model.getPlayers()[player_index];
+		return game_map.canPutRobber(location) && (game_model.getTurnStatus(player_index) == TurnStatus.MOVEROBBER);
 	}
 	
 	/**
@@ -603,6 +619,22 @@ public class Fascade
 	}
 	
 	/**
+	 * Can this player offer a trade right now?
+	 * 
+	 * @pre none
+	 * @post true iff the player can afford to offer this trade
+	 */
+	public boolean canOfferTrade(int player_index, ResourceMultiSet card_offered, ResourceMultiSet card_requested)
+	{
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		return player.canAfford(card_offered);
+	}
+	
+	/**
 	 * Can this player trade 3-to-1 on these parameters?
 	 * 
 	 * @param player
@@ -840,6 +872,49 @@ public class Fascade
 				|| canTradeAtMiscHarbor(player_index, new ResourceMultiSet());
 	}
 	
+	
+	public boolean canUseMonument(int player_index)
+	{
+		TurnTracker tt = game_model.getTurn_tracker();
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		return player.canPlayMonument() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
+	}
+	
+	public boolean canUseSoldier(int player_index)
+	{
+		TurnTracker tt = game_model.getTurn_tracker();
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		return player.canPlaySoldier() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
+	}
+	
+	public boolean canUseYearOfPlenty(int player_index)
+	{
+		TurnTracker tt = game_model.getTurn_tracker();
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		return player.canPlayYearOfPlenty() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
+	}
+	public boolean canUseRoadBuilding(int player_index)
+	{
+		TurnTracker tt = game_model.getTurn_tracker();
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		return player.canPlayRoadBuilding() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
+	}
 	
 	
 }

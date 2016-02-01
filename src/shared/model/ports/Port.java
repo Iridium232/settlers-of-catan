@@ -1,5 +1,6 @@
 package shared.model.ports;
 import shared.locations.*;
+import shared.model.Vertex;
 
 /**
  * This class represents a Port
@@ -99,5 +100,17 @@ public abstract class Port
 	 */
 	public void setRatio(int ratio) {
 		this.ratio = ratio;
+	}
+
+	public Vertex getVertex1() 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Vertex getVertex2() 
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
