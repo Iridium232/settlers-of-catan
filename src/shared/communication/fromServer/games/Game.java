@@ -1,5 +1,5 @@
 package shared.communication.fromServer.games;
-
+//This class is superfluous as it is the exact same as client.data.GameInfo.java
 /**
  * Michael Rhodes
  * CS 340
