@@ -1,4 +1,5 @@
 package shared.model.ports;
+import shared.definitions.ResourceType;
 import shared.locations.*;
 import shared.model.Vertex;
 
@@ -13,13 +14,14 @@ public abstract class Port
 	private HexLocation location;
 	private String direction;
 	private int ratio;
+	ResourceType resource;
 
 	public Port()
 	{
 		
 	}
 
-	public Port(String resourceType, int vertX, int vertY, String direction, int ratio) {
+	public Port(int vertX, int vertY, String direction, int ratio) {
 		this.location = new HexLocation(vertX, vertY);
 		this.direction = direction;
 		this.ratio = ratio;

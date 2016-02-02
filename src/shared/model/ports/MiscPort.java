@@ -10,5 +10,8 @@ import shared.model.ports.Port;
  */
 public class MiscPort extends Port 
 {
-
+    public MiscPort(int vertX, int vertY, String direction, int ratio) {
+        super(vertX, vertY, direction, ratio);
+        this.resource = null;
+    }
 }

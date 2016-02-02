@@ -22,4 +22,8 @@ public class MessageList
 	{
 		messages.add(message);		
 	}
+
+	public ArrayList<MessageLine> getMessages() {
+		return messages;
+	}
 }

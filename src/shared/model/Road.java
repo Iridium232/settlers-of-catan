@@ -11,6 +11,7 @@ public class Road
 {
 	private Edge location = null;
 	private CatanColor color = null;
+	private int owner;
 	
 	/**
 	 * @return the location
@@ -40,5 +41,13 @@ public class Road
 	public void setColor(CatanColor color) {
 		assert (this.color == null);
 		this.color = color;
+	}
+
+	public int getOwner() {
+		return owner;
+	}
+
+	public void setOwner(int owner) {
+		this.owner = owner;
 	}
 }
