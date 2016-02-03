@@ -6,15 +6,17 @@ import shared.definitions.*;
 /**
  * The vertex class represents the corners of the terrain hexes where
  * a building may be built or a port may exist. 
- * When there is no building, the getBuilding() function will return null;
- * When there is no port, the getPort() function will return null;
- * The location should never change during the game
+ * 
  */
 public class Vertex 
 {
 	private VertexLocation location = null;
-	private Port port = null;
-	private Building building = null;
+
+	public Vertex(VertexLocation vertex_location)
+	{
+		location = vertex_location;
+	}
+	
 	public VertexLocation getLocation() {
 		return location;
 	}
@@ -24,19 +26,44 @@ public class Vertex
 		this.location = location;
 	}
 	
-	public Port getPort() {
-		return port;
+	public HexLocation[] getNeigborHexLocations(TerrainHex[][] hex_pointer)
+	{
+		HexLocation[] neighbors = new HexLocation[3];
+		neighbors[0] = location.getNormalizedLocation().getHexLoc();//lower hex
+		int lowerX = neighbors[0].getX();
+		int lowerY = neighbors[0].getY();
+		neighbors[1] = hex_pointer[lowerX][lowerY - 1].getLocation();
+		if(this.getLocation().getDir() == VertexDirection.NorthEast)
+		{
+			neighbors[2] = hex_pointer[lowerX - 1][lowerY].getLocation();//Upper Left
+		}
+		else if (this.getLocation().getDir() == VertexDirection.NorthWest)
+		{
+			neighbors[2] = hex_pointer[lowerX + 1][lowerY + 1].getLocation();;//Upper Right
+		}
+		return neighbors;
 	}
 	
-	public void setPort(Port port) {
-		this.port = port;
+	public Vertex[] getneighborLocations(TerrainHex[][] hex_pointer)
+	{
+		Vertex[] neighbors = new Vertex[3];
+		HexLocation[] neighbor_hexes = getNeigborHexLocations(hex_pointer);
+		if(location.getNormalizedLocation().getDir() == VertexDirection.NorthEast)
+		{
+			neighbors[0] = new Vertex(new VertexLocation(location.getHexLoc(), VertexDirection.NorthWest));
+			neighbors[1] = new Vertex(new VertexLocation(location.getHexLoc(), VertexDirection.East));
+			neighbors[2] = new Vertex(new VertexLocation(neighbor_hexes[1], VertexDirection.East));
+		}
+		else
+		{
+			neighbors[0] = new Vertex(new VertexLocation(location.getHexLoc(), VertexDirection.NorthEast));
+			neighbors[1] = new Vertex(new VertexLocation(location.getHexLoc(), VertexDirection.West));
+			neighbors[2] = new Vertex(new VertexLocation(neighbor_hexes[1], VertexDirection.West));
+		}
+		
+		
+		
+		return neighbors;
 	}
 	
-	public Building getBuilding() {
-		return building;
-	}
-	
-	public void setBuilding(Building building) {
-		this.building = building;
-	}
 }

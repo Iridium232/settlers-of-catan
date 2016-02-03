@@ -714,14 +714,19 @@ public class Player {
      * @pre none
      * @post  Whether a settlement can be placed
      */
-    public boolean canPlaceSettlement() 
+    public boolean canPlaceSettlement(boolean initial_override) 
     {
+    	if(initial_override)//You can always play a city in the first round or the second.
+    	{
+    		return true;
+    	}
     	ResourceMultiSet settlement_cost = new ResourceMultiSet();
     	settlement_cost.setBrick(1);
     	settlement_cost.setSheep(1);
     	settlement_cost.setWheat(1);
     	settlement_cost.setWood(1);
         return resources.canAfford(settlement_cost) && settlements > 0; 
+        
     }
 
     /**

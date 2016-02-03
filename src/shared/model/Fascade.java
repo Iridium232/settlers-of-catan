@@ -48,7 +48,7 @@ public class Fascade
 	 */
 	public void buildRoadAt(int player_index, Edge edge) throws Exception
 	{
-//TODO
+		//TODO
 	}
 	
 	/**
@@ -92,8 +92,13 @@ public class Fascade
 	{
 		GameMap game_map = game_model.getMap();
 		Player player = game_model.getPlayers()[player_index];
-		return game_map.canAddSettlement( location, player_index) &&
-				player.canPlaceSettlement() && (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
+		boolean initial_override = game_model.getTurnStatus(player_index) == TurnStatus.FIRSTROUND 
+				|| game_model.getTurnStatus(player_index) == TurnStatus.SECONDROUND;
+		boolean valid_turn = game_model.getTurnStatus(player_index) == TurnStatus.PLAYING 
+				|| initial_override;
+
+		return game_map.canAddSettlement(location, player_index, initial_override) &&
+				player.canPlaceSettlement(initial_override) && (valid_turn);
 	}
 	
 	/**
@@ -895,6 +900,13 @@ public class Fascade
 		return player.canPlaySoldier() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
 	}
 	
+	/**
+	 * Says whether this player can play a year-of-plenty card right now.
+	 * @param player_index
+	 * @pre none
+	 * @post true iff the player is in the playing phase of his turn and has that card and has not 
+	 * already played another.
+	 */
 	public boolean canUseYearOfPlenty(int player_index)
 	{
 		TurnTracker tt = game_model.getTurn_tracker();
@@ -905,6 +917,14 @@ public class Fascade
 		Player player = game_model.getPlayers()[player_index];
 		return player.canPlayYearOfPlenty() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
 	}
+	
+	/**
+	 * Says whether this player can play a road_building card right now.
+	 * @param player_index
+	 * @pre none
+	 * @post true iff the player is in the playing phase of his turn and has that card and has not 
+	 * already played another.
+	 */
 	public boolean canUseRoadBuilding(int player_index)
 	{
 		TurnTracker tt = game_model.getTurn_tracker();
@@ -916,7 +936,17 @@ public class Fascade
 		return player.canPlayRoadBuilding() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
 	}
 	
-	
+	/**
+	 * Says whether this player can finish his turn right now.
+	 * @param player_index
+	 * @pre none
+	 * @post true iff the player is in the playing phase of his turn
+	 */
+	public boolean canFinishTurn(int player_index)
+	{
+		TurnTracker tt = game_model.getTurn_tracker();
+		return tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
+	}
 }
 	
 	

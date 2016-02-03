@@ -10,7 +10,8 @@ public class Edge
 {
 	private EdgeLocation location = null;
 	private EdgeDirection direction = null;
-	private Road road = null;
+	private Vertex end1;
+	private Vertex end2;
 	
 	/**
 	 * @return the location
@@ -38,18 +39,34 @@ public class Edge
 		assert this.direction == null;
 		this.direction = direction;
 	}
-	/**
-	 * @return the road
-	 */
-	public Road getRoad() {
-		return road;
-	}
+
 	/**
 	 * @param road the road to set
 	 */
-	public void setRoad(Road road) {
-		assert this.road == null;
-		this.road = road;
+
+	/**
+	 * @return the end1
+	 */
+	public Vertex getEnd1() {
+		return end1;
+	}
+	/**
+	 * @param end1 the end1 to set
+	 */
+	public void setEnd1(Vertex end1) {
+		this.end1 = end1;
+	}
+	/**
+	 * @return the end2
+	 */
+	public Vertex getEnd2() {
+		return end2;
+	}
+	/**
+	 * @param end2 the end2 to set
+	 */
+	public void setEnd2(Vertex end2) {
+		this.end2 = end2;
 	}
 	
 }

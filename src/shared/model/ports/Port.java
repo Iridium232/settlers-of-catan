@@ -11,7 +11,8 @@ import shared.model.Vertex;
 public abstract class Port 
 {
 	private HexLocation location;
-	private String direction;
+	private Vertex vertex1;
+	private Vertex vertex2;
 	private int ratio;
 
 	public Port()
@@ -19,9 +20,10 @@ public abstract class Port
 		
 	}
 
-	public Port(String resourceType, int vertX, int vertY, String direction, int ratio) {
+	public Port(Vertex vertex1, int vertX, int vertY, Vertex vertex2, int ratio) {
 		this.location = new HexLocation(vertX, vertY);
-		this.direction = direction;
+		this.vertex1 = vertex1;
+		this.vertex2 = vertex2;
 		this.ratio = ratio;
 	}
 	/**
@@ -69,8 +71,8 @@ public abstract class Port
 	 * @pre none
 	 * @post Returns a string that represents the direction of the port
 	 */
-	public String getDirection() {
-		return direction;
+	public Vertex getVertex1() {
+		return vertex1;
 	}
 
 	/**
@@ -79,8 +81,8 @@ public abstract class Port
 	 * @pre none
 	 * @post This is the string that has the direction of the port compared to the string that was passed in as a parameter
 	 */
-	public void setDirection(String direction) {
-		this.direction = direction;
+	public void setVertex1(Vertex direction) {
+		this.vertex1 = direction;
 	}
 
 	/**
@@ -102,15 +104,9 @@ public abstract class Port
 		this.ratio = ratio;
 	}
 
-	public Vertex getVertex1() 
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public Vertex getVertex2() 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return vertex2;
 	}
 }

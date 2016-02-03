@@ -16,7 +16,7 @@ import shared.model.ports.Port;
  */
 public class GameMap 
 {
-	private TerrainHex[] hexes;
+	private TerrainHex[][] hexes;
 	private Port[] ports;
 	private Road[] roads;
 	private Building[] buildings;
@@ -60,6 +60,7 @@ public class GameMap
 	public TerrainHex[] getHexesByNumber(int number) throws Exception
 	{
 		return null;
+		//TODO
 	}
 	
 	/**
@@ -139,19 +140,7 @@ public class GameMap
 		return null;
 	}
 
-	/**
-	 * Determines whether that edge represents a valid road placement
-	 * 
-	 * @param edge
-	 * @param player_index
-	 * @pre the player_color is currently playing and the edge exists in the map
-	 * @post returns true iff it is a valid road placement
-	 */
-	public boolean canBuildRoad(Edge edge, int player_index)
-	{
-		
-		return false;//TODO
-	}
+
 	
 	/**
 	 * Moves the robber to the specified hex location
@@ -239,7 +228,7 @@ public class GameMap
 	/**
 	 * @return the hexes
 	 */
-	public TerrainHex[] getHexes() {
+	public TerrainHex[][] getHexes() {
 		return hexes;
 	}
 
@@ -271,16 +260,209 @@ public class GameMap
 		return radius;
 	}
 
+	/**
+	 * 
+	 * @param location
+	 * @return
+	 */
 	public boolean canPutRobber(HexLocation location) 
 	{
 		// TODO Auto-generated method stub
 		return true;
 	}
 
-	public boolean canAddSettlement(Vertex location, int player_index) 
+	/**
+	 * 
+	 * @param location
+	 * @param player_index
+	 * @param initialOverride
+	 * @return
+	 */
+	public boolean canAddSettlement(Vertex location, int player_index, boolean initialOverride) 
 	{
-		return false;
+		//check that the spot touches land in at least 1 way.
+		boolean is_on_land = touchesLand(location);
+
+		//check that the spot is empty.
+		for (Building building : buildings)
+		{
+			if (isOnVertex(building,location))
+			{
+				return false;
+			}
+		}
+		
+		//Make sure that unless it is the inital round, the player has an incoming road
+		boolean has_incoming_road = false;
+		if(!initialOverride)
+		{
+			for(Road road : roads)
+			{
+				boolean touches_vertex = road.getLocation().getEnd1().equals(location) 
+						|| road.getLocation().getEnd2().equals(location);
+				if(road.getOwnerIndex() == player_index || touches_vertex)
+				{
+					has_incoming_road = true;
+				}
+			}
+			//check that there is a road to there unless Initial round Override
+		}
+		else
+		{
+			has_incoming_road = true;
+		}
+		
+		
+		//check that there are no buildings within 1 edge.
+		Vertex[] neigbor_vertexes = location.getneighborLocations(hexes);
+		for (Building building : buildings)
+		{
+			for(Vertex vertex: neigbor_vertexes)
+			{
+				if (isOnVertex(building, vertex))
+				{
+					return false;
+				}
+			}
+		}
+		
+		return has_incoming_road && is_on_land;
 	}
 	
+	/**
+	 * Tells whether a vertex is on land.
+	 * @param vertex
+	 * @pre none
+	 * @post returns true iff this vertex touches land in at least 1 place
+	 */
+	private boolean touchesLand(Vertex vertex)
+	{
+		HexLocation[] neighbors = vertex.getNeigborHexLocations(hexes);
+		boolean answer = false;
+		for (TerrainHex[] terrain_hex_array : hexes)
+		{
+			for (TerrainHex terrain_hex : terrain_hex_array)
+			{
+				if(neighbors[0].equals(terrain_hex.getLocation()) 
+					&& terrain_hex.getType() != HexType.WATER)
+				{
+					answer = true;
+					break;
+				}
+				if(neighbors[1].equals(terrain_hex.getLocation()) 
+					&& terrain_hex.getType() != HexType.WATER)
+				{
+					answer = true;
+					break;
+				}
+				if(neighbors[2].equals(terrain_hex.getLocation()) 
+					&& terrain_hex.getType() != HexType.WATER)
+				{
+					answer = true;
+					break;
+				}
+			}
+		}
+		return answer;
+	}
 	
+	/**
+	 * Tells whether a building is on a particular vertex
+	 * @param building
+	 * @param vertex
+	 * @pre none
+	 * @post true iff the building is on that vertex
+	 */
+	private boolean isOnVertex(Building building, Vertex vertex)
+	{
+		return building.getLocation().getNormalizedLocation()
+				.equals(vertex.getLocation().getNormalizedLocation());
+	}
+	
+	/**
+	 * Gets the building on this vertex
+	 * @param vertex
+	 * @pre none
+	 * @post returns the building on that spot or null when the place is empty
+	 */
+	private Building getBuildingOnVertex(Vertex vertex)
+	{
+		for(Building building: buildings)
+		{
+			if (building.getLocation().getNormalizedLocation()
+				.equals(vertex.getLocation().getNormalizedLocation()))
+			{
+				return building;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Determines whether that edge represents a valid road placement
+	 * 
+	 * @param edge
+	 * @param player_index
+	 * @pre the player_color is currently playing and the edge exists in the map
+	 * @post returns true iff it is a valid road placement
+	 */
+	public boolean canBuildRoad(Edge edge, int player_index)
+	{
+		//check that the spot is on land
+		Vertex side1 = edge.getEnd1();
+		Vertex side2 = edge.getEnd2();
+		if(!(this.touchesLand(side1) || touchesLand(side2)))
+		{
+			return false;//This means that the road would be over water.
+		}
+		
+		//check that there is not already a road there
+		for(Road road : roads)
+		{
+			if(road.getLocation().equals(edge))
+			{
+				return false;
+			}
+		}
+		
+		//check that there is a building OR road connecting to one of the sides
+		boolean road_to_end = false;
+		boolean building_at_end  = false;
+		
+		building_at_end = getBuildingAt(player_index, side1) != null 
+				|| getBuildingAt(player_index, side2) != null;
+		
+		road_to_end = hasRoadTo(player_index, side1)
+						|| hasRoadTo(player_index, side2);
+		
+		
+		return road_to_end || building_at_end;
+	}
+
+	/**
+	 * Tells whether this player has a road to this index
+	 * @param player_index
+	 * @param vertex
+	 * @pre none
+	 * @post true iff there is a road to this site that belongs to a player.
+	 */
+	private boolean hasRoadTo(int player_index, Vertex vertex) 
+	{
+		for (Road road: roads)
+		{
+			Vertex side1 = road.getLocation().getEnd1();
+			Vertex side2 = road.getLocation().getEnd2();
+			if((vertex.getLocation().getNormalizedLocation()
+				.equals(side1.getLocation().getNormalizedLocation())))
+			{
+				return true;
+			}
+			if((vertex.getLocation().getNormalizedLocation()
+				.equals(side2.getLocation().getNormalizedLocation())))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 }

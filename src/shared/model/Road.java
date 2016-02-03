@@ -10,7 +10,7 @@ import shared.definitions.*;
 public class Road 
 {
 	private Edge location = null;
-	private CatanColor color = null;
+	private int owner_index = -1;
 	
 	/**
 	 * @return the location
@@ -20,25 +20,25 @@ public class Road
 	}
 	
 	/**
-	 * @param location the location to set
+	 * @param owner_index to set
 	 */
-	public void setLocation(Edge location) {
+	public void setOwnerIndex(int owner_index) {
 		assert (this.location == null);
-		this.location = location;
+		this.owner_index = owner_index;
 	}
 	
 	/**
 	 * @return the color
 	 */
-	public CatanColor getColor() {
-		return color;
+	public int getOwnerIndex() {
+		return owner_index;
 	}
-	
+
 	/**
-	 * @param color the color to set
+	 * @param location the location to set
 	 */
-	public void setColor(CatanColor color) {
-		assert (this.color == null);
-		this.color = color;
+	public void setLocation(Edge location) {
+		this.location = location;
 	}
+
 }
