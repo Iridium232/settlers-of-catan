@@ -1,6 +1,12 @@
 package client.communication;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import shared.communication.toServer.games.CreateGameRequest;
 import shared.communication.toServer.games.LoadGameRequest;
@@ -33,9 +39,8 @@ public class ServerProxy implements IServerProxy {
 	@Override
 	public void login(String username, String password) {
 		// TODO Auto-generated method stub
-		Credentials login=new Credentials(username,password);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/user/login", login);
+			ClientCommunicator.getSINGLETON().login(username, password);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,9 +51,8 @@ public class ServerProxy implements IServerProxy {
 	@Override
 	public void register(String username, String password) {
 		// TODO Auto-generated method stub
-		Credentials register=new Credentials(username,password);
 		try{
-				ClientCommunicator.getSINGLETON().doPost("/user/register",register);
+				ClientCommunicator.getSINGLETON().register(username, password);;
 		} catch (Exception e){
 				e.printStackTrace();
 		}
@@ -58,8 +62,10 @@ public class ServerProxy implements IServerProxy {
 	public List<Game> getGameList() {
 		// TODO Auto-generated method stub
 		try {
-			ClientCommunicator.getSINGLETON().doGet("/games/list");
-		} catch (Exception e) {
+			JSONObject result=ClientCommunicator.getSINGLETON().gamesList();
+			Gson gee=new Gson();
+			gee.fromJson
+					} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -82,7 +88,12 @@ public class ServerProxy implements IServerProxy {
 	@Override
 	public void joinGame(String playerinfo, int id, CatanColor color) {
 		// TODO Auto-generated method stub
-		
+		try {
+			ClientCommunicator.getSINGLETON().joinGame(id, color);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -113,7 +124,8 @@ public class ServerProxy implements IServerProxy {
 	public void getModel(int id) {
 		// need to figure out how we're getting the current number from the fascade and generally how the fascade interacts with the server proxy.
 		try {
-			ClientCommunicator.getSINGLETON().doGet("/game/model");
+			JSONObject model=ClientCommunicator.getSINGLETON().doGet("/game/model");
+			ModelPopulator.populateModel(model, fascade);//add fascade to IServerProxy
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,12 +135,27 @@ public class ServerProxy implements IServerProxy {
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
-		
+		try {
+			JSONObject model=ClientCommunicator.getSINGLETON().doGet("/game/reset");
+			ModelPopulator.populateModel(model, fascade);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public List<String> getCommands() {
 		// TODO Auto-generated method stub
+		try {
+			JSONObject commands=ClientCommunicator.getSINGLETON().doGet("/game/commands");
+			Gson gson=new Gson();
+			Type t=new TypeToken<List<String>>(){}.getType();
+			List<String> commandList=gson.fromJson(commands, t);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 

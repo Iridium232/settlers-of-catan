@@ -2,6 +2,7 @@ package client.communication;
 
 import org.json.JSONObject;
 import shared.communication.toServer.user.Credentials;
+import shared.definitions.CatanColor;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -184,7 +185,7 @@ public class ClientCommunicator {
 	 * @pre the user is logged in, the player is already in the specified game or the game has space for an extra player, the ID is valid, and the color is valid
 	 * @post the player is added to the game with the desired color,
 	 */
-	public JSONObject joinGame(int ID, String color){
+	public JSONObject joinGame(int ID, CatanColor color){
 		return null;
 	}
 	
