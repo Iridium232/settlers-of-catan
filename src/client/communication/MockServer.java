@@ -2,6 +2,7 @@ package client.communication;
 
 import java.util.List;
 
+import shared.communication.toServer.game.AddAIRequest;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -189,6 +190,18 @@ public class MockServer implements IServerProxy {
 	public void offerTrade(ResourceMultiSet offer, Player receiver) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void addAIPlayer(AddAIRequest ai) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<String> getAITypes() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

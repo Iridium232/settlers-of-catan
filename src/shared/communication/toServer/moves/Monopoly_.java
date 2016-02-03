@@ -1,5 +1,7 @@
 package shared.communication.toServer.moves;
 
+import shared.definitions.ResourceType;
+
 /**
  * Michael Rhodes
  * CS 340
@@ -9,18 +11,18 @@ package shared.communication.toServer.moves;
  * Monopoly command object
  */
 public class Monopoly_ extends Command {
-    private String resource;
+    private ResourceType resource;
 
-    public Monopoly_(int playerIndex, String resource) {
+    public Monopoly_(int playerIndex, ResourceType one) {
         super("Monopoly", playerIndex);
-        this.resource = resource;
+        this.resource = one;
     }
 
-    public String getResource() {
+    public ResourceType getResource() {
         return resource;
     }
 
-    public void setResource(String resource) {
+    public void setResource(ResourceType resource) {
         this.resource = resource;
     }
 }
