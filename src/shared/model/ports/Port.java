@@ -22,11 +22,8 @@ public abstract class Port
 		
 	}
 
-<<<<<<< HEAD
 	public Port(Vertex vertex1, int vertX, int vertY, Vertex vertex2, int ratio) {
-=======
-	public Port(int vertX, int vertY, String direction, int ratio) {
->>>>>>> 2b82ccd8773a39928f31d293d77cb64036600f5f
+
 		this.location = new HexLocation(vertX, vertY);
 		this.vertex1 = vertex1;
 		this.vertex2 = vertex2;

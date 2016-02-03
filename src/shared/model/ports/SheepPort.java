@@ -2,6 +2,7 @@ package shared.model.ports;
 
 
 import shared.definitions.ResourceType;
+import shared.model.Vertex;
 
 /**
  * Class that allows trading Sheep
@@ -9,8 +10,11 @@ import shared.definitions.ResourceType;
  *
  */
 public class SheepPort extends Port {
-    public SheepPort(int vertX, int vertY, String direction, int ratio) {
-        super(vertX, vertY, direction, ratio);
-        this.resource = ResourceType.SHEEP;
-    }
+
+	public SheepPort(Vertex vertex1, int vertX, int vertY, Vertex vertex2,
+			int ratio) {
+		super(vertex1, vertX, vertY, vertex2, ratio);
+		this.resource = ResourceType.SHEEP;
+	}
+
 }
