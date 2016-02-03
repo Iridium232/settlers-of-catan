@@ -1,6 +1,7 @@
 package client.communication;
 
 import org.json.JSONObject;
+import shared.communication.toServer.user.Credentials;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,6 +42,8 @@ public class ClientCommunicator {
 	private String server_host;
 	private int server_port;
 	private Serializer serializer;
+	private String catan_cookie;
+	private String game_ID;
 
 	/**
 	 * Constructer that takes the server's host name and port as arguments
@@ -61,7 +64,9 @@ public class ClientCommunicator {
 		}
 
 		this.url_prefix = "http://" + this.server_host + ":" + this.server_port;
-		serializer = Serializer.getSINGLETON();
+		this.serializer = Serializer.getSINGLETON();
+		this.catan_cookie = null;
+		this.game_ID = null;
 	}
 
 	/**
@@ -72,8 +77,30 @@ public class ClientCommunicator {
 	 * @pre username and password are not null
 	 * @post receives the http response and sets the user cookie.
 	 */
-	public JSONObject login(String username, String password){
-		return null;
+	public void login(String username, String password) throws Exception {
+		try {
+			URL url = new URL(url_prefix + "/user/login");
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod(HTTP_POST);
+			connection.setDoOutput(true);
+			connection.connect();
+
+			Credentials credentials = new Credentials(username, password);
+
+			String serialized = serializer.serialize(credentials);
+			connection.getOutputStream().write(serialized.getBytes());
+			connection.getOutputStream().close();
+			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				String cookieStr = connection.getHeaderField("Set-cookie");
+				catan_cookie = getEncodedValue(cookieStr);
+			} else {
+				throw new Exception(String.format("doPost failed: %s (http code %d)",
+						"/user/login", connection.getResponseCode()));
+			}
+		}
+		catch (IOException e) {
+			throw new Exception(String.format("doPost failed: %s", e.getMessage()), e);
+		}
 	}
 
 	/**
@@ -84,8 +111,30 @@ public class ClientCommunicator {
 	 * @pre username and password are not null and the username isn't already in use.
 	 * @post new user account is created, receive a http response, set the user cookie
 	 */
-	public JSONObject register(String username,String password){
-		return null;
+	public void register(String username,String password) throws Exception {
+		try {
+			URL url = new URL(url_prefix + "/user/register");
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod(HTTP_POST);
+			connection.setDoOutput(true);
+			connection.connect();
+
+			Credentials credentials = new Credentials(username, password);
+
+			String serialized = serializer.serialize(credentials);
+			connection.getOutputStream().write(serialized.getBytes());
+			connection.getOutputStream().close();
+			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				String cookieStr = connection.getHeaderField("Set-cookie");
+				catan_cookie = getEncodedValue(cookieStr);
+			} else {
+				throw new Exception(String.format("doPost failed: %s (http code %d)",
+						"/user/register", connection.getResponseCode()));
+			}
+		}
+		catch (IOException e) {
+			throw new Exception(String.format("doPost failed: %s", e.getMessage()), e);
+		}
 	}
 
 	/**
@@ -93,8 +142,24 @@ public class ClientCommunicator {
 	 * @post got a list of games from the server
 	 * @return a JSON array containing a list of objects containing information about the server's games.
 	 */
-	public JSONObject gamesList(){
-		return null;
+	public JSONObject gamesList() throws Exception {
+		try {
+			URL url = new URL(url_prefix + "/games/list");
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod(HTTP_GET);
+			connection.connect();
+			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				InputStream result = connection.getInputStream();
+				return serializer.deserialize(result);
+			}
+			else {
+				throw new Exception(String.format("doGet failed: %s (http code %d)",
+						"/games/list", connection.getResponseCode()));
+			}
+		}
+		catch (IOException e) {
+			throw new Exception(String.format("doGet failed: %s", e.getMessage()), e);
+		}
 	}
 
 	/**
@@ -131,10 +196,14 @@ public class ClientCommunicator {
 	 * @post Response from the server
 	 */
 	public JSONObject doGet(String path) throws Exception {
+		if (catan_cookie == null || game_ID == null) {
+			throw new Exception("Haven't Logged in and joined a game");
+		}
 		try {
 			URL url = new URL(url_prefix + path);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 			connection.setRequestMethod(HTTP_GET);
+			connection.setRequestProperty("Cookie", cookieBuilder());
 			connection.connect();
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				InputStream result = connection.getInputStream();
@@ -158,10 +227,14 @@ public class ClientCommunicator {
 	 * @post returns an http response
 	 */
 	public JSONObject doPost(String path, Object o) throws Exception {
+		if (catan_cookie == null || game_ID == null) {
+			throw new Exception("Haven't Logged in and joined a game");
+		}
 		try {
 			URL url = new URL(url_prefix + path);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 			connection.setRequestMethod(HTTP_POST);
+			connection.setRequestProperty("Cookie", cookieBuilder());
 			connection.setDoOutput(true);
 			connection.connect();
 			String serialized = serializer.serialize(o);
@@ -178,5 +251,18 @@ public class ClientCommunicator {
 		catch (IOException e) {
 			throw new Exception(String.format("doPost failed: %s", e.getMessage()), e);
 		}
+	}
+
+	private String getEncodedValue(String cookie) {
+		return cookie.substring(cookie.indexOf('=') + 1, cookie.indexOf(';'));
+	}
+
+	private String cookieBuilder() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("catan.user=");
+		sb.append(catan_cookie);
+		sb.append("; catan.game=");
+		sb.append(game_ID);
+		return sb.toString();
 	}
 }
