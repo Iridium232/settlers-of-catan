@@ -2,6 +2,8 @@ package client.communication;
 
 import java.util.List;
 
+import shared.communication.ResourceList;
+import shared.communication.toServer.game.AddAIRequest;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -111,8 +113,9 @@ public interface IServerProxy {
 	 */
 	public String executeCommands(List<String> commands);
 	
+	public void addAIPlayer(String AiType);
 	//Move commands
-	
+	public List<String> getAITypes();
 	/**
 	 * @post the message is posted to the chat
 	 * @param message
@@ -131,13 +134,13 @@ public interface IServerProxy {
 	 * @post user no longer has the discarded resources
 	 * @param discardedCards
 	 */
-	public void discardCards(ResourceMultiSet discardedCards);
+	public void discardCards(ResourceList discardedCards);
 	
 	/**
 	 * @pre it is the users turn, the client model's status is rolling
 	 * @post client model status changes to discarding, robbing or playing
 	 */
-	public void rollNumber();
+	public void rollNumber(int number);
 	
 	/**
 	 * @pre the location is open, it is connected to a road owned by the player, 
@@ -169,7 +172,7 @@ public interface IServerProxy {
 	 * @param offer
 	 * @param receiver
 	 */
-	public void offerTrade(ResourceMultiSet offer, Player receiver);
+	public void offerTrade(ResourceList offer, Player receiver);
 	
 	/**
 	 * @pre the player has the resource they are giving, they have the correct port if ratio is <4

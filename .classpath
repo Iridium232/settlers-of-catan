@@ -5,5 +5,8 @@
 	<classpathentry exported="true" kind="lib" path="lib/java-json.jar.zip"/>
 	<classpathentry kind="lib" path="/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/java-json.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-io-2.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gson-2.2.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/java-json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
