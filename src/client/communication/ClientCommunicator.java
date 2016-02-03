@@ -185,8 +185,32 @@ public class ClientCommunicator {
 	 * @pre the user is logged in, the player is already in the specified game or the game has space for an extra player, the ID is valid, and the color is valid
 	 * @post the player is added to the game with the desired color,
 	 */
-	public JSONObject joinGame(int ID, CatanColor color){
-		return null;
+	public JSONObject joinGame(int ID, CatanColor color) throws Exception {
+		if (catan_cookie == null) {
+			throw new Exception("Haven't Logged in yet");
+		}
+		try {
+			URL url = new URL(url_prefix + "/games/join");
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod(HTTP_POST);
+			connection.setRequestProperty("Cookie", cookieForJoinBuilder());
+			connection.setDoOutput(true);
+			connection.connect();
+			String serialized = serializer.serialize(makeJoinGameRequest(ID, color));
+			connection.getOutputStream().write(serialized.getBytes());
+			connection.getOutputStream().close();
+			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				String cookieStr = connection.getHeaderField("Set-cookie");
+				game_ID = getEncodedValue(cookieStr);
+			} else {
+				throw new Exception(String.format("doPost failed: %s (http code %d)",
+						"/games/join", connection.getResponseCode()));
+			}
+		}
+		catch (IOException e) {
+			throw new Exception(String.format("doPost failed: %s", e.getMessage()), e);
+		}
+		return doGet("/game/model");
 	}
 	
 	/**
@@ -265,5 +289,46 @@ public class ClientCommunicator {
 		sb.append("; catan.game=");
 		sb.append(game_ID);
 		return sb.toString();
+	}
+
+	private String cookieForJoinBuilder() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("catan.user=");
+		sb.append(catan_cookie);
+		return sb.toString();
+	}
+
+	private JoinGameRequest makeJoinGameRequest(int id, CatanColor color) {
+		JoinGameRequest request = null;
+		switch (color) {
+			case RED:
+				request = new JoinGameRequest(id, "Red");
+				break;
+			case ORANGE:
+				request = new JoinGameRequest(id, "Orange");
+				break;
+			case YELLOW:
+				request = new JoinGameRequest(id, "Yellow");
+				break;
+			case BLUE:
+				request = new JoinGameRequest(id, "Blue");
+				break;
+			case GREEN:
+				request = new JoinGameRequest(id, "Green");
+				break;
+			case PURPLE:
+				request = new JoinGameRequest(id, "Purple");
+				break;
+			case PUCE:
+				request = new JoinGameRequest(id, "Puce");
+				break;
+			case WHITE:
+				request = new JoinGameRequest(id, "White");
+				break;
+			case BROWN:
+				request = new JoinGameRequest(id, "Brown");
+				break;
+		}
+		return request;
 	}
 }
