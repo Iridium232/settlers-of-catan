@@ -17,6 +17,7 @@ public abstract class Building
 {
 	private VertexLocation location;
 	private CatanColor color;
+	private int owner;
 	/**
 	 * @return the location
 	 */
@@ -40,5 +41,13 @@ public abstract class Building
 	 */
 	public void setColor(CatanColor color) {
 		this.color = color;
+	}
+
+	public int getOwner() {
+		return owner;
+	}
+
+	public void setOwner(int owner) {
+		this.owner = owner;
 	}
 }

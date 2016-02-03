@@ -9,7 +9,7 @@ import shared.model.MessageList;
  * Section 2
  * Team 10
  */
-public class ClientModel {
+public class ServerModel {
     private ResourceList bank;
     private MessageList chat;
     private MessageList log;
@@ -20,7 +20,7 @@ public class ClientModel {
     private int version;
     private int winner;
 
-    public ClientModel(ResourceList bank, MessageList chat, MessageList log, Map map, Player[] players,
+    public ServerModel(ResourceList bank, MessageList chat, MessageList log, Map map, Player[] players,
                        TradeOffer tradeOffer, TurnTracker turnTracker, int version, int winner) {
         this.bank = bank;
         this.chat = chat;

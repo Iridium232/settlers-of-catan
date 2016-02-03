@@ -10,7 +10,12 @@ import shared.definitions.*;
 public class Road 
 {
 	private Edge location = null;
+<<<<<<< HEAD
 	private int owner_index = -1;
+=======
+	private CatanColor color = null;
+	private int owner;
+>>>>>>> 2b82ccd8773a39928f31d293d77cb64036600f5f
 	
 	/**
 	 * @return the location
@@ -41,4 +46,14 @@ public class Road
 		this.location = location;
 	}
 
+<<<<<<< HEAD
+=======
+	public int getOwner() {
+		return owner;
+	}
+
+	public void setOwner(int owner) {
+		this.owner = owner;
+	}
+>>>>>>> 2b82ccd8773a39928f31d293d77cb64036600f5f
 }

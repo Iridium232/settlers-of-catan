@@ -1,11 +1,12 @@
 package shared.model;
 import client.data.*;
-import java.util.*;
 
+import shared.communication.toServer.games.*;
 import shared.definitions.PieceType;
 import shared.definitions.TurnStatus;
 import shared.locations.HexLocation;
 import shared.model.ports.*;
+import shared.definitions.Commands;
 
 /**
  * The Facade class handles all communication and commands to and from the game model.
@@ -39,16 +40,21 @@ public class Fascade
 	/**
 	 * Orders the construction of a road on that edge.
 	 * 
-	 * @param player
-	 * @param road_position
-	 * 
+	 * @param request
+	 *
+	 *
 	 * @pre canBuildRoad() returns true
 	 * @post a road is built for that player on that edge. The server is notified.
 	 * @post The player's resources are reduced by 1 wood and 1 brick
 	 */
-	public void buildRoadAt(int player_index, Edge edge) throws Exception
+	public DataResponse buildRoadAt(DataRequest request) throws Exception
 	{
+
 		//TODO
+
+		DataResponse response = new DataResponse(Commands.BUILD_ROAD,false);
+		return response;
+
 	}
 	
 	/**
@@ -75,9 +81,10 @@ public class Fascade
 	 * @post the player has a new development card.
 	 * @post The player's resources are reduced by 1 food and 1 ore and 1 wool
 	 */
-	public void buyDevelopmentCard(PlayerInfo player) throws Exception
+	public DataResponse buyDevelopmentCard(DataRequest player) throws Exception
 	{
-		return;//TODO
+		DataResponse response = new DataResponse(Commands.BUY_DEV_CARD,false);
+		return response;
 	}
 	
 	/**
@@ -110,15 +117,16 @@ public class Fascade
 	 * @post a settlement is built by that player on the specified location
 	 * @post The player's resources are reduced by 1 food, 1 brick, 1 wood, and 1 wool
 	 */
-	public void buildSettlement(PlayerInfo player, Vertex location) throws Exception
+	public DataResponse buildSettlement(PlayerInfo player, Vertex location) throws Exception
 	{
-		return;//TODO
+		DataResponse response = new DataResponse(Commands.BUILD_SETTLEMENT,false);
+		return response;
 	}
 	
 	/**
 	 * Can this player build a city there?
 	 * 
-	 * @param player
+	 * @param player_index
 	 * @param location
 	 * @pre None
 	 * @post result = true iff building a city on that vertex is valid 
@@ -134,16 +142,16 @@ public class Fascade
 	/**
 	 * Build a city on the Settlement that was previously there
 	 * 
-	 * @param player
-	 * @param location
+	 * @param request
 	 * @pre canBuildCity() is true
 	 * @post a City replaces the player's settlement on that spot.
 	 * @post The player's resources are reduced by 2 food and 3 ore
 	 * 
 	 */
-	public void BuildCity(PlayerInfo player, Vertex location) throws Exception
+	public DataResponse BuildCity(DataRequest request) throws Exception
 	{
-		//TODO
+		DataResponse response = new DataResponse(Commands.BUILD_CITY,false);
+		return response;
 	}
 	
 	//+++++++++++++++++++++++++++++++++++++++++++++++
@@ -173,9 +181,10 @@ public class Fascade
 	 * @post the dice are rolled and the consequences are applied to each player
 	 * and the game state is advanced to the next turn phase
 	 */
-	public int RollDice(PlayerInfo player) throws Exception
+	public DataResponse RollDice(PlayerInfo player) throws Exception
 	{
-		return -1; //TODO
+		DataResponse response = new DataResponse(Commands.ROLL_NUMBER,false);
+		return response;
 	}
 	
 	/**
@@ -216,9 +225,10 @@ public class Fascade
 	 * generated a list of half his resources to discard
 	 * @post the chosen resources are returned to the game bank
 	 */
-	public void discardResources(ResourceMultiSet discard_list) throws Exception
+	public DataResponse discardResources(ResourceMultiSet discard_list) throws Exception
 	{
-		return; //TODO
+		DataResponse response = new DataResponse(Commands.DISCARD_CARDS,false);
+		return response;
 	}
 	
 	/**
@@ -245,9 +255,10 @@ public class Fascade
 	 * @post the robber is placed on the designated
 	 *  hex and the player's turn phase is set to rob
 	 */
-	public void moveRobber(int player, TerrainHex hex) throws Exception
+	public DataResponse moveRobber(int player, TerrainHex hex) throws Exception
 	{
-		//TODO
+		DataResponse response = new DataResponse(Commands.ROB_PLAYER,false);
+		return response;
 	}
 	
 	/**
@@ -257,9 +268,10 @@ public class Fascade
 	 * @post result = an array of indexes to the players that can be robbed. 
 	 * Or an empty array if none are possible
 	 */
-	public int[] whoCanBeRobbed()
+	public DataResponse whoCanBeRobbed()
 	{
-		return null;//TODO
+		DataResponse response = new DataResponse(Commands.ROB_PLAYER,false);
+		return response;
 	}
 	
 	/**
@@ -273,9 +285,10 @@ public class Fascade
 	 * @pre robber != robbed
 	 * @post the turn phase is advanced
 	 */
-	public void rob(int robber, int robbed) throws Exception
+	public DataResponse rob(int robber, int robbed) throws Exception
 	{
-		return; //TODO
+		DataResponse response = new DataResponse(Commands.ROB_PLAYER,false);
+		return response;
 	}
 	
 	//+++++++++++++++++++++++++++++++++++++++++++++++
@@ -305,9 +318,10 @@ public class Fascade
 	 * @pre canPlayDevelopmentCard() is true 
 	 * @post the effect of the development card is applied
 	 */
-	public void playDevelopmentCard(int player, DevCardList dev_card) throws Exception
+	public DataResponse playDevelopmentCard(int player, DevCardList dev_card) throws Exception
 	{
-		//TODO
+		DataResponse response = new DataResponse(Commands.PLAY_DEV_CARD,false);
+		return response;
 	}
 	
 	/**
@@ -405,9 +419,10 @@ public class Fascade
 	 * @post the player is charged 2 wool and given the desired card
 	 * 
 	 */
-	public void tradeAtWoolHarbor(int player, ResourceMultiSet desired_card) throws Exception
+	public DataResponse tradeAtWoolHarbor(int player, ResourceMultiSet desired_card) throws Exception
 	{
-		//TODO
+		DataResponse response = new DataResponse(Commands.OFFER_TRADE,false);
+		return response;
 	}
 	
 	/**
@@ -458,9 +473,10 @@ public class Fascade
 	 * @post the player is charged 2 wood and given the desired card
 	 * 
 	 */
-	public void tradeAtWoodHarbor(int player, ResourceMultiSet desired_card) throws Exception
+	public DataResponse tradeAtWoodHarbor(int player, ResourceMultiSet desired_card) throws Exception
 	{
-		
+		DataResponse response = new DataResponse(Commands.ACCEPT_TRADE,false);
+		return response;
 	}
 	
 	/**
@@ -511,9 +527,10 @@ public class Fascade
 	 * @post the player is charged 2 ore and given the desired card
 	 * 
 	 */
-	public void tradeAtOreHarbor(int player, ResourceMultiSet desired_card) throws Exception
+	public DataResponse tradeAtOreHarbor(int player, ResourceMultiSet desired_card) throws Exception
 	{
-		
+		DataResponse response = new DataResponse(Commands.ACCEPT_TRADE,false);
+		return response;
 	}
 	
 	/**
@@ -564,9 +581,10 @@ public class Fascade
 	 * @post the player is charged 2 grain and given the desired card
 	 * 
 	 */
-	public void tradeAtWheatHarbor(int player, ResourceMultiSet desired_card) throws Exception
+	public DataResponse tradeAtWheatHarbor(int player, ResourceMultiSet desired_card) throws Exception
 	{
-		
+		DataResponse response = new DataResponse(Commands.MARITIME_TRADE,false);
+		return response;
 	}
  	
 	/**
@@ -618,9 +636,10 @@ public class Fascade
 	 * @post the player is charged 2 bricks and given the desired card
 	 * 
 	 */
-	public void tradeAtBrickHarbor(int player, ResourceMultiSet desired_card) throws Exception
+	public DataResponse tradeAtBrickHarbor(int player, ResourceMultiSet desired_card) throws Exception
 	{
-		
+		DataResponse response = new DataResponse(Commands.BRICK_TRADE,false);
+		return response;
 	}
 	
 	/**
@@ -693,9 +712,10 @@ public class Fascade
 	 * @post the player's resources are reduced by those 3 resources and increased by 1 of the desired card.
 	 * 
 	 */
-	public void tradeAtMiscHarbor(int player, ResourceMultiSet trade_in_cards, ResourceMultiSet desired_card) throws Exception
+	public DataResponse tradeAtMiscHarbor(int player, ResourceMultiSet trade_in_cards, ResourceMultiSet desired_card) throws Exception
 	{
-		
+		DataResponse response = new DataResponse(Commands.MISC_TRADE,false);
+		return response;
 	}
 	
 	/**
@@ -732,9 +752,10 @@ public class Fascade
 	 * @post the player's resources are reduced by those 4 resources and increased by 1 of the desired card.
 	 * 
 	 */
-	public void tradeFourToOne(int player, ResourceMultiSet trade_in_card, ResourceMultiSet desired_card) throws Exception
+	public DataResponse tradeFourToOne(int player, ResourceMultiSet trade_in_card, ResourceMultiSet desired_card) throws Exception
 	{
-		//TODO
+		DataResponse response = new DataResponse(Commands.ACCEPT_TRADE,false);
+		return response;
 	}
 	
 	//+++++++++++++++++++++++++++++++++++++++++++++++
@@ -760,9 +781,10 @@ public class Fascade
 	 * which must replace the current model
 	 * @post The model matches the data sent in the JSON
 	 */
-	public void updateModelFromJSON(String json_model) throws Exception
+	public DataResponse updateModelFromJSON(String json_model) throws Exception
 	{
-		//TODO
+		DataResponse response = new DataResponse(Commands.FINISH_TURN,false);
+		return response;
 	}
 	
 	/**
