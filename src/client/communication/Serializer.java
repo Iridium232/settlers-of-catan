@@ -2,6 +2,7 @@ package client.communication;
 
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -38,7 +39,13 @@ public class Serializer {
     }
 
     public JSONObject deserialize(String s) {
-        return gson.fromJson(s, JSONObject.class);
+        JSONObject result = null;
+        try {
+            result = new JSONObject(s);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public JSONObject deserialize(InputStream is) {
