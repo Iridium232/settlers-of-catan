@@ -16,7 +16,7 @@ import shared.model.ports.Port;
  */
 public class GameMap 
 {
-	private TerrainHex[][] hexes;
+	private TerrainHex[][] hexes ;
 	private Port[] ports;
 	private Road[] roads;
 	private Building[] buildings;
