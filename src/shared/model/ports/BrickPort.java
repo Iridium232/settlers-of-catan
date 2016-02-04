@@ -17,4 +17,8 @@ public class BrickPort extends Port
 		this.resource = ResourceType.BRICK;
 	}
 
+	public BrickPort() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

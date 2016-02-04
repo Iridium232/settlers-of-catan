@@ -17,4 +17,8 @@ public class SheepPort extends Port {
 		this.resource = ResourceType.SHEEP;
 	}
 
+	public SheepPort() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

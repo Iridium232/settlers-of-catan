@@ -766,6 +766,10 @@ public class Player {
         return resources.canAfford(resources);
     }
 
+    /**
+     * @pre
+     * @post
+     */
 	public boolean canBuyDevCard() 
 	{
 		ResourceMultiSet cost = new ResourceMultiSet();
@@ -773,5 +777,18 @@ public class Player {
 		cost.setWheat(1);
 		cost.setOre(1);
 		return resources.canAfford(cost);
+	}
+
+	/**
+	 * Tells whether a player can play the monopoly card 
+	 * 
+	 * @pre none
+	 * @post true iff the player hasnt played a dev card and has the monopoly card to play
+	 */
+	public boolean canPlayMonopoly() 
+	{
+    	DevCardList soldier_cost = new DevCardList();
+    	soldier_cost.setMonopoly(1);
+        return oldDevCards.includes(soldier_cost) && !playedDevCard;
 	}
 }

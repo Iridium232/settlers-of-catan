@@ -18,6 +18,23 @@ public class Fascade
 	 * This is the model
 	 */
 	private Game game_model;
+	
+	
+	/**
+	 * Changes the model when a new model was populated
+	 * @pre this new model was instantiated 
+	 * @post the fascade points to the new model and the old one
+	 * is lost. Java garbage collection will get rid of it.
+	 */
+	public void changeModel(Game game_model)
+	{
+		this.game_model = game_model;
+	}
+	
+
+	
+	
+	
 	//+++++++++++++++++++++++++++++++++++++++++++++++
 	//Purchases and Placement
 	//+++++++++++++++++++++++++++++++++++++++++++++++
@@ -911,6 +928,17 @@ public class Fascade
 		return player.canPlayMonument() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
 	}
 	
+	public boolean canUseMonopoly(int player_index)
+	{
+		TurnTracker tt = game_model.getTurn_tracker();
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		return player.canPlayMonopoly() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
+	}
+	
 	public boolean canUseSoldier(int player_index)
 	{
 		TurnTracker tt = game_model.getTurn_tracker();
@@ -969,8 +997,73 @@ public class Fascade
 		TurnTracker tt = game_model.getTurn_tracker();
 		return tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
 	}
+	
+	/**
+	 * Says whether this player can accept the offered trade.
+	 * @param player_index
+	 * @pre none
+	 * @post true iff the player is in the playing phase of his turn
+	 */
+	public boolean canAcceptTrade(int player_index, ResourceMultiSet cost, ResourceMultiSet gain)
+	{
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		boolean can_afford = player.canAfford(cost);
+		TurnTracker tt = game_model.getTurn_tracker();
+		return tt.turnStatusOf(player_index) == TurnStatus.TRADING && can_afford;
+	}
+	
+	/**
+	 * whether the player can send a message
+	 * @param player_index
+	 * @param Message
+	 * @pre none
+	 * @post returns true if this is a valid player in the game. 
+	 * All valid players may send a message at any time.
+	 */
+	public boolean canSendMessage(int player_index, String Message)
+	{
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Whether the player can discard these cards
+	 * @param player_index
+	 * @param to_discard
+	 * @pre none
+	 * @post True iff the player is in the discard phase and has these cards
+	 */
+	public boolean canDiscardCards(int player_index, ResourceMultiSet to_discard)
+	{
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		boolean can_afford = player.canAfford(to_discard);
+		TurnTracker tt = game_model.getTurn_tracker();
+		return tt.turnStatusOf(player_index) == TurnStatus.DISCARDING && can_afford;
+	}
+	
+	/**
+	 * used for testing purposes only
+	 * @pre none
+	 * @post none
+	 */
+	public Game getModel()
+	{
+		return game_model;
+	}
 }
 	
+
 	
 	
 	
