@@ -19,7 +19,17 @@ public class Fascade
 	 */
 	private Game game_model;
 	
-	public changeModel();
+	
+	/**
+	 * Changes the model when a new model was populated
+	 * @pre this new model was instantiated 
+	 * @post the fascade points to the new model and the old one
+	 * is lost. Java garbage collection will get rid of it.
+	 */
+	public void changeModel(Game game_model)
+	{
+		this.game_model = game_model;
+	}
 	
 	
 	
@@ -1011,7 +1021,17 @@ public class Fascade
 		return true;
 	}
 	
-	public boolean canDiscardCards(int player_index, )
+	public boolean canDiscardCards(int player_index, ResourceMultiSet to_discard)
+	{
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		boolean can_afford = player.canAfford(to_discard);
+		TurnTracker tt = game_model.getTurn_tracker();
+		return tt.turnStatusOf(player_index) == TurnStatus.DISCARDING && can_afford;
+	}
 }
 	
 	
