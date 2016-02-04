@@ -13,6 +13,7 @@ import shared.communication.toServer.game.AddAIRequest;
 import shared.communication.toServer.games.CreateGameRequest;
 import shared.communication.toServer.games.LoadGameRequest;
 import shared.communication.toServer.games.SaveGameRequest;
+import shared.communication.toServer.moves.AcceptTrade;
 import shared.communication.toServer.moves.BuildCity;
 import shared.communication.toServer.moves.BuildRoad;
 import shared.communication.toServer.moves.BuildSettlement;
@@ -34,6 +35,7 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.Fascade;
 import shared.model.Game;
 import shared.model.Player;
 import shared.model.ResourceMultiSet;
@@ -47,11 +49,13 @@ public class ServerProxy implements IServerProxy {
 	private int port;
 	private String path;
 	private int playerIndex;
+	private Fascade fascade;
 	@Override
-	public void ServerProxy(String host, int port) {
+	public void ServerProxy(String host, int port, Fascade f) {
 		// TODO Auto-generated method stub
 			this.host = host;
 			this.port = port;
+			this.fascade=f;
 	}
 
 	@Override
@@ -115,30 +119,6 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public void saveGame(int id, String filename) {
-		// TODO Auto-generated method stub
-		SaveGameRequest save=new SaveGameRequest(id,filename);
-		try {
-			ClientCommunicator.getSINGLETON().doPost("/games/save", save);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void loadGame(String filename) {
-		// TODO Auto-generated method stub
-		LoadGameRequest load=new LoadGameRequest(filename);
-		try {
-			ClientCommunicator.getSINGLETON().doPost(filename, load);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
 	public void getModel(int id) {
 		// need to figure out how we're getting the current number from the fascade and generally how the fascade interacts with the server proxy.
 		try {
@@ -148,45 +128,6 @@ public class ServerProxy implements IServerProxy {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-		try {
-			JSONObject model=ClientCommunicator.getSINGLETON().doGet("/game/reset");
-			ModelPopulator.populateModel(model, fascade);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public List<String> getCommands() {
-		// TODO Auto-generated method stub
-		try {
-			JSONObject commands=ClientCommunicator.getSINGLETON().doGet("/game/commands");
-			Gson gson=new Gson();
-			Type t=new TypeToken<List<String>>(){}.getType();
-			List<String> commandList=gson.fromJson(commands, t);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public String executeCommands(List<String> commands) {
-		// TODO Auto-generated method stub
-		try {
-			ClientCommunicator.getSINGLETON().doPost("/game/commands", commands);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	@Override
@@ -203,7 +144,13 @@ public class ServerProxy implements IServerProxy {
 	@Override
 	public void acceptTrade(boolean accept) {
 		// TODO Auto-generated method stub
-		
+		AcceptTrade at=new AcceptTrade(playerIndex,accept);
+		try {
+			ClientCommunicator.getSINGLETON().doPost("/moves/acceptTrade", at);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
