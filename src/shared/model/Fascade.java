@@ -31,6 +31,7 @@ public class Fascade
 		this.game_model = game_model;
 	}
 	
+
 	
 	
 	
@@ -927,6 +928,17 @@ public class Fascade
 		return player.canPlayMonument() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
 	}
 	
+	public boolean canUseMonopoly(int player_index)
+	{
+		TurnTracker tt = game_model.getTurn_tracker();
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		return player.canPlayMonopoly() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
+	}
+	
 	public boolean canUseSoldier(int player_index)
 	{
 		TurnTracker tt = game_model.getTurn_tracker();
@@ -1021,6 +1033,13 @@ public class Fascade
 		return true;
 	}
 	
+	/**
+	 * Whether the player can discard these cards
+	 * @param player_index
+	 * @param to_discard
+	 * @pre none
+	 * @post True iff the player is in the discard phase and has these cards
+	 */
 	public boolean canDiscardCards(int player_index, ResourceMultiSet to_discard)
 	{
 		if(player_index < 0 || player_index > 3)
@@ -1032,8 +1051,19 @@ public class Fascade
 		TurnTracker tt = game_model.getTurn_tracker();
 		return tt.turnStatusOf(player_index) == TurnStatus.DISCARDING && can_afford;
 	}
+	
+	/**
+	 * used for testing purposes only
+	 * @pre none
+	 * @post none
+	 */
+	public Game getModel()
+	{
+		return game_model;
+	}
 }
 	
+
 	
 	
 	
