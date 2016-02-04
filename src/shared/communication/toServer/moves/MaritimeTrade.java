@@ -40,19 +40,19 @@ public class MaritimeTrade extends Command {
         this.ratio = ratio;
     }
 
-    public String getInputResource() {
+    public ResourceType getInputResource() {
         return inputResource;
     }
 
-    public void setInputResource(String inputResource) {
+    public void setInputResource(ResourceType inputResource) {
         this.inputResource = inputResource;
     }
 
-    public String getOutputResource() {
+    public ResourceType getOutputResource() {
         return outputResource;
     }
 
-    public void setOutputResource(String outputResource) {
+    public void setOutputResource(ResourceType outputResource) {
         this.outputResource = outputResource;
     }
 }
