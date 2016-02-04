@@ -11,6 +11,8 @@ import shared.model.DevCardList;
 import shared.model.Fascade;
 import shared.model.Game;
 import shared.model.Player;
+import shared.model.ResourceMultiSet;
+import shared.model.TradeOffer;
 
 import client.communication.MockServer;
 import client.communication.ModelPopulator;
@@ -176,7 +178,33 @@ public class FascadeTest {
 	@Test
 	public void testCanUseYearOfPlenty() 
 	{
-		fail("Not yet implemented");
+		this.setupModelForTesting();
+		int active_player = 0;
+		int inactive_player = 1;
+		
+		//Should be false because it is not this player's turn
+		assertFalse(facade.canUseYearOfPlenty(inactive_player));
+		
+		//Should be false because the player does not have this card
+		assertFalse(facade.canUseYearOfPlenty(active_player));
+		
+		//Give Active Player the monopoly card
+		Game model = facade.getModel();
+		Player player= model.getPlayers()[0];
+		DevCardList cardlist = new DevCardList();
+		cardlist.setYear_of_plenty(2);
+		player.setOldDevCards(cardlist);
+		
+		
+		//SHOULD be true because this simulates him already having 
+		//the card and choosing to play it on his turn
+		assertTrue(facade.canUseYearOfPlenty(active_player));
+		
+		//Simulate another dev card was already played
+		player.setPlayedDevCard(true);
+		
+		//Should be false because the player already played on his turn.
+		assertFalse(facade.canUseYearOfPlenty(active_player));
 	}
 
 	
@@ -184,14 +212,45 @@ public class FascadeTest {
 	@Test
 	public void testCanUseRoadBuilding() 
 	{
-		fail("Not yet implemented");
+		this.setupModelForTesting();
+		int active_player = 0;
+		int inactive_player = 1;
+		
+		//Should be false because it is not this player's turn
+		assertFalse(facade.canUseRoadBuilding(inactive_player));
+		
+		//Should be false because the player does not have this card
+		assertFalse(facade.canUseRoadBuilding(active_player));
+		
+		//Give Active Player the monopoly card
+		Game model = facade.getModel();
+		Player player= model.getPlayers()[0];
+		DevCardList cardlist = new DevCardList();
+		cardlist.setRoad_building(2);
+		player.setOldDevCards(cardlist);
+		
+		
+		//SHOULD be true because this simulates him already having 
+		//the card and choosing to play it on his turn
+		assertTrue(facade.canUseRoadBuilding(active_player));
+		
+		//Simulate another dev card was already played
+		player.setPlayedDevCard(true);
+		
+		//Should be false because the player already played on his turn.
+		assertFalse(facade.canUseRoadBuilding(active_player));
 	}
 
 	//14
 	@Test
 	public void testCanFinishTurn() 
 	{
-		fail("Not yet implemented");
+		this.setupModelForTesting();
+		int active_player = 0;
+		int inactive_player = 1;
+		
+		//Should be false because it is not this player's turn
+		assertFalse(facade.canUseRoadBuilding(inactive_player));
 	}
 	
 	
@@ -199,14 +258,42 @@ public class FascadeTest {
 	@Test
 	public void testCanSendMessage() 
 	{
-		fail("Not yet implemented");
+		this.setupModelForTesting();
+		int active_player = 0;
+		int inactive_player = 1;
+		
+		for(int i = 0; i < 4; i++)
+		//Should return true because any player may send a message whenever
+		assertTrue(facade.canUseRoadBuilding(inactive_player));
 	}
 	
 	//16
 	@Test
 	public void testCanAcceptTrade() 
 	{
-		fail("Not yet implemented");
+		this.setupModelForTesting();
+		int active_player = 0;
+		int inactive_player = 1;
+		
+		Game model = facade.getModel();
+		ResourceMultiSet offer_grain = new ResourceMultiSet();
+		ResourceMultiSet offer_ore = new ResourceMultiSet();
+		ResourceMultiSet want_trees = new ResourceMultiSet();
+		ResourceMultiSet want_bricks = new ResourceMultiSet();
+		
+		offer_grain.setWheat(1);
+		offer_ore.setOre(1);
+		want_trees.setWood(1);
+		want_bricks.setBrick(1);
+		
+		TradeOffer grain_for_trees = new TradeOffer();
+		grain_for_trees.setOffer(offer_grain);
+		grain_for_trees.setReciever(1);
+		grain_for_trees.setSender(0);
+		
+		model.setTrade_offer(grain_for_trees);
+		
+		
 	}
 	
 	//17
