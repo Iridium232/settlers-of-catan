@@ -12,6 +12,20 @@ public class TurnTracker
 	private int active_player;
 	private TurnStatus status;
 	private int waiting_for_player;
+	
+	
+	/**
+	 * @return the waiting_for_player
+	 */
+	public int getWaiting_for_player() {
+		return waiting_for_player;
+	}
+	/**
+	 * @param waiting_for_player the waiting_for_player to set
+	 */
+	public void setWaiting_for_player(int waiting_for_player) {
+		this.waiting_for_player = waiting_for_player;
+	}
 	private int longest_road_player;
 	private int largest_army_player;
 	/**
