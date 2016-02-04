@@ -18,6 +18,12 @@ public class Fascade
 	 * This is the model
 	 */
 	private Game game_model;
+	
+	public changeModel();
+	
+	
+	
+	
 	//+++++++++++++++++++++++++++++++++++++++++++++++
 	//Purchases and Placement
 	//+++++++++++++++++++++++++++++++++++++++++++++++
@@ -969,6 +975,43 @@ public class Fascade
 		TurnTracker tt = game_model.getTurn_tracker();
 		return tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
 	}
+	
+	/**
+	 * Says whether this player can accept the offered trade.
+	 * @param player_index
+	 * @pre none
+	 * @post true iff the player is in the playing phase of his turn
+	 */
+	public boolean canAcceptTrade(int player_index, ResourceMultiSet cost, ResourceMultiSet gain)
+	{
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		boolean can_afford = player.canAfford(cost);
+		TurnTracker tt = game_model.getTurn_tracker();
+		return tt.turnStatusOf(player_index) == TurnStatus.TRADING && can_afford;
+	}
+	
+	/**
+	 * whether the player can send a message
+	 * @param player_index
+	 * @param Message
+	 * @pre none
+	 * @post returns true if this is a valid player in the game. 
+	 * All valid players may send a message at any time.
+	 */
+	public boolean canSendMessage(int player_index, String Message)
+	{
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean canDiscardCards(int player_index, )
 }
 	
 	

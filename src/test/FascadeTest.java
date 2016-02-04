@@ -5,33 +5,38 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import shared.model.Fascade;
+
+import client.communication.MockServer;
+import client.communication.ModelPopulator;
+
 public class FascadeTest {
 
+	MockServer server;
+	Fascade facade;
+	
+	
 	@Before
 	public void setUp()
 	{
-		//Create Server Proxy
-		//Create Local Model
-		//Sign in
-		//Create 4 accounts
-		//Sign into 4 accounts
-		//create a game
-		//sign in all players to game
-		//load into the local model
+		facade = new Fascade();
 	}
 	
 	@Test
-	public void testCanBuildRoad() {
+	public void testCanBuildRoad() 
+	{
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testCanBuyDevelopmentCard() {
+	public void testCanBuyDevelopmentCard() 
+	{
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testCanBuildSettlement() {
+	public void testCanBuildSettlement() 
+	{
 		fail("Not yet implemented");
 	}
 
@@ -85,4 +90,15 @@ public class FascadeTest {
 		fail("Not yet implemented");
 	}
 
+	@Test
+	public void testCanSendMessage() 
+	{
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testCanAcceptTrade() 
+	{
+		fail("Not yet implemented");
+	}
 }

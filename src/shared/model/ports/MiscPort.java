@@ -19,4 +19,8 @@ public class MiscPort extends Port
 		this.resource = ResourceType.MISC;
 	}
 
+	public MiscPort() {
+		// TODO Auto-generated constructor stub
+	}
+
 }
