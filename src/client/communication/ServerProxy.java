@@ -6,6 +6,8 @@ import java.util.List;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import shared.communication.ResourceList;
@@ -83,15 +85,20 @@ public class ServerProxy implements IServerProxy {
 	@Override
 	public List<Game> getGameList() {
 		// TODO Auto-generated method stub
+		List<Game> returnList=new ArrayList<Game>();
 		try {
 			JSONObject result=ClientCommunicator.getSINGLETON().gamesList();
+			List<JSONObject> gamesList=(List<JSONObject>)result.get("games");
 			Gson gee=new Gson();
-			gee.fromJson
-					} catch (Exception e) {
+			for(JSONObject j:gamesList){
+				String gg=j.toString();
+				returnList.add(gee.fromJson(gg, Game.class));
+			}
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		return returnList;
 	}
 
 	@Override
@@ -349,7 +356,8 @@ public class ServerProxy implements IServerProxy {
 	public List<String> getAITypes() {
 		// TODO Auto-generated method stub
 		try {
-			ClientCommunicator.getSINGLETON().doGet("/game/listAI");
+			JSONObject j=ClientCommunicator.getSINGLETON().doGet("/game/listAI");
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
