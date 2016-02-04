@@ -10,6 +10,7 @@ import shared.model.MessageList;
  * Team 10
  */
 public class ServerModel {
+    private DevCardList deck;
     private ResourceList bank;
     private MessageList chat;
     private MessageList log;
@@ -20,8 +21,9 @@ public class ServerModel {
     private int version;
     private int winner;
 
-    public ServerModel(ResourceList bank, MessageList chat, MessageList log, Map map, Player[] players,
-                       TradeOffer tradeOffer, TurnTracker turnTracker, int version, int winner) {
+    public ServerModel(DevCardList deck, ResourceList bank, MessageList chat, MessageList log, Map map, Player[]
+            players, TradeOffer tradeOffer, TurnTracker turnTracker, int version, int winner) {
+        this.deck = deck;
         this.bank = bank;
         this.chat = chat;
         this.log = log;
@@ -31,6 +33,14 @@ public class ServerModel {
         this.turnTracker = turnTracker;
         this.version = version;
         this.winner = winner;
+    }
+
+    public DevCardList getDeck() {
+        return deck;
+    }
+
+    public void setDeck(DevCardList deck) {
+        this.deck = deck;
     }
 
     public ResourceList getBank() {

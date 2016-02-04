@@ -37,6 +37,7 @@ public class ModelPopulator {
     }
 
     private void populateGame(ServerModel serverModel, Game newModel) {
+        populateDeck(serverModel, newModel);
         populateBank(serverModel, newModel);
         populateChat(serverModel, newModel);
         populateLog(serverModel, newModel);
@@ -48,15 +49,28 @@ public class ModelPopulator {
         newModel.setWinner(serverModel.getWinner());
     }
 
+    private void populateDeck(ServerModel serverModel, Game newModel) {
+        DevCardList deck = serverModel.getDeck();
+        shared.model.DevCardList development_bank = new shared.model.DevCardList();
+
+        development_bank.setMonument(deck.getMonument());
+        development_bank.setMonopoly(deck.getMonopoly());
+        development_bank.setSoldier(deck.getSoldier());
+        development_bank.setRoad_building(deck.getRoadBuilding());
+        development_bank.setYear_of_plenty(deck.getYearOfPlenty());
+
+        newModel.setDevelopment_bank(development_bank);
+    }
+
     private void populateBank(ServerModel serverModel, Game newModel) {
         ResourceList bank = serverModel.getBank();
-        ResourceMultiSet resource_bank = newModel.getResource_bank();
+        ResourceMultiSet resource_bank = new ResourceMultiSet(bank.getBrick(),
+                bank.getWheat(),
+                bank.getOre(),
+                bank.getWood(),
+                bank.getSheep());
 
-        resource_bank.setBrick(bank.getBrick());
-        resource_bank.setOre(bank.getOre());
-        resource_bank.setSheep(bank.getSheep());
-        resource_bank.setWheat(bank.getWheat());
-        resource_bank.setWood(bank.getWood());
+        newModel.setResource_bank(resource_bank);
     }
 
     private void populateChat(ServerModel serverModel, Game newModel) {
