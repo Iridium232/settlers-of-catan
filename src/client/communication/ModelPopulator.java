@@ -314,7 +314,9 @@ public class ModelPopulator {
         Player[] serverPlayers = serverModel.getPlayers();
 
         for (Player player : serverPlayers) {
+        	if(player == null)continue;
             shared.model.Player newPlayer = new shared.model.Player();
+            System.err.print("\nPLAYER\n");
             newPlayer.setCities(player.getCities());
             newPlayer.setColor(player.getColor());
             newPlayer.setDiscarded(player.isDiscarded());
@@ -349,6 +351,7 @@ public class ModelPopulator {
     }
 
     private void setPieceColors(Game newModel) {
+    	if(newModel.getMap().getRoads() == null)return;
         for (shared.model.Road road : newModel.getMap().getRoads()) {
             for (shared.model.Player player : newModel.getPlayers()) {
                 if (road.getOwnerIndex() == player.getPlayerIndex()) {
@@ -385,7 +388,7 @@ public class ModelPopulator {
     private void populateTradeOffer(ServerModel serverModel, Game newModel) {
         TradeOffer serverOffer = serverModel.getTradeOffer();
         shared.model.TradeOffer newOffer = new shared.model.TradeOffer();
-
+        if(serverOffer == null)return;
         newOffer.setSender(serverOffer.getSender());
         newOffer.setReciever(serverOffer.getReceiver());
 

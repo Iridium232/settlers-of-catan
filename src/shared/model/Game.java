@@ -14,7 +14,7 @@ public class Game
 	/**
 	 * Map of the board with all the pieces
 	 */
-	private GameMap map;
+	private GameMap map = new GameMap();
 	
 	/**
 	 * Info needed by the GUI
@@ -66,6 +66,14 @@ public class Game
 	 */
 	private DevCardList development_bank;
 
+	public Game()
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			players[i] = new Player();
+		}
+	}
+	
 	/**
 	 * @return the map
 	 */

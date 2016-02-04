@@ -29,6 +29,14 @@ public class FascadeTest {
 	public void setUp()
 	{
 		facade = new Fascade();
+		this.setupModelForTesting();
+		//TurnTracker Sets active player as player 0
+		Game model = facade.getModel();
+		
+		TurnTracker tracker = model.getTurn_tracker();
+		tracker.setActive_player(1);
+		tracker.setWaiting_for_player(0);
+		tracker.setStatus(TurnStatus.PLAYING);
 	}
 	
 	@Test
@@ -79,7 +87,7 @@ public class FascadeTest {
 	@Test
 	public void testCanUseMonopoly()
 	{
-		this.setupModelForTesting();
+		//this.setupModelForTesting();
 		int active_player = 0;
 		int inactive_player = 1;
 		
@@ -113,7 +121,7 @@ public class FascadeTest {
 	@Test
 	public void testCanUseMonument() 
 	{
-		this.setupModelForTesting();
+		
 		int active_player = 0;
 		int inactive_player = 1;
 		
@@ -147,7 +155,7 @@ public class FascadeTest {
 	@Test
 	public void testCanUseSoldier() 
 	{
-		this.setupModelForTesting();
+		//this.setupModelForTesting();
 		int active_player = 0;
 		int inactive_player = 1;
 		
@@ -180,7 +188,7 @@ public class FascadeTest {
 	@Test
 	public void testCanUseYearOfPlenty() 
 	{
-		this.setupModelForTesting();
+		//this.setupModelForTesting();
 		int active_player = 0;
 		int inactive_player = 1;
 		
@@ -196,7 +204,7 @@ public class FascadeTest {
 		DevCardList cardlist = new DevCardList();
 		cardlist.setYear_of_plenty(2);
 		player.setOldDevCards(cardlist);
-		
+		int a = 4 + 3;
 		
 		//SHOULD be true because this simulates him already having 
 		//the card and choosing to play it on his turn
@@ -214,7 +222,7 @@ public class FascadeTest {
 	@Test
 	public void testCanUseRoadBuilding() 
 	{
-		this.setupModelForTesting();
+		//this.setupModelForTesting();
 		int active_player = 0;
 		int inactive_player = 1;
 		
@@ -247,7 +255,7 @@ public class FascadeTest {
 	@Test
 	public void testCanFinishTurn() 
 	{
-		this.setupModelForTesting();
+		//this.setupModelForTesting();
 		int active_player = 0;
 		int inactive_player = 1;
 		Game model = facade.getModel();
@@ -274,7 +282,7 @@ public class FascadeTest {
 	@Test
 	public void testCanSendMessage() 
 	{
-		this.setupModelForTesting();
+		//this.setupModelForTesting();
 		int active_player = 0;
 		int inactive_player = 1;
 		
@@ -292,7 +300,7 @@ public class FascadeTest {
 	@Test
 	public void testCanAcceptTrade() 
 	{
-		this.setupModelForTesting();
+		//this.setupModelForTesting();
 		int active_player = 0;
 		int inactive_player = 1;
 		
@@ -334,7 +342,7 @@ public class FascadeTest {
 	@Test
 	public void testCanDiscardCards() 
 	{
-		this.setupModelForTesting();
+		//this.setupModelForTesting();
 		int active_player = 0;
 		int inactive_player = 1;
 		

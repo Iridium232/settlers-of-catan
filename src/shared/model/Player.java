@@ -54,7 +54,7 @@ public class Player {
     /**
      *  The resource cards this player has
      */
-    private ResourceMultiSet resources;
+    private ResourceMultiSet resources = new ResourceMultiSet();
     /**
      *  How many roads this player has left to play
      */
@@ -84,12 +84,12 @@ public class Player {
         this.discarded = false;
         this.name = null;
         this.monuments = 0;
-        this.newDevCards = null;
-        this.oldDevCards = null;
+        this.newDevCards = new DevCardList();
+        this.oldDevCards = new DevCardList();
         this.playerIndex = 0;
         this.playedDevCard = false;
         this.playerID = 0;
-        this.resources = null;
+        this.resources = new ResourceMultiSet();
         this.roads = 15;
         this.settlements = 5;
         this.soldiers = 0;
@@ -115,10 +115,10 @@ public class Player {
         this.cities = 4;
         this.discarded = false;
         this.monuments = 0;
-        this.newDevCards = null;
-        this.oldDevCards = null;
+        this.newDevCards = new DevCardList();
+        this.oldDevCards = new DevCardList();
         this.playedDevCard = false;
-        this.resources = null;
+        this.resources = new ResourceMultiSet();
         this.roads = 15;
         this.settlements = 5;
         this.soldiers = 0;
@@ -674,6 +674,7 @@ public class Player {
    */
   public boolean canPlayYearOfPlenty() 
   {
+	
   	DevCardList cost = new DevCardList();
   	cost.setYear_of_plenty(1);
       return oldDevCards.includes(cost) && !this.playedDevCard;

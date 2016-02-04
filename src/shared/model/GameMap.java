@@ -16,7 +16,8 @@ import shared.model.ports.Port;
  */
 public class GameMap 
 {
-	private TerrainHex[][] hexes ;
+	private static final int HEXINDEXOFFSET = 3;
+	private TerrainHex[][] hexes = new TerrainHex[7][7];
 	private Port[] ports;
 	private Road[] roads;
 	private Building[] buildings;
@@ -34,6 +35,11 @@ public class GameMap
 		
 	}
 	
+	/**
+	 * Default Constructor
+	 */
+	public GameMap() {}
+
 	/**
 	 * get players' buildings adjoining a Hex
 	 * Useful for robbing or for assigning resources
@@ -204,7 +210,8 @@ public class GameMap
 	 */
 	public void addTerrainHex(TerrainHex hex)
 	{
-		//TODO;
+		hexes[hex.getLocation().getX() + this.HEXINDEXOFFSET]
+				[hex.getLocation().getY() + this.HEXINDEXOFFSET] = hex;
 	}
 	
 	/**

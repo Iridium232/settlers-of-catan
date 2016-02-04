@@ -31,8 +31,6 @@ public class Fascade
 		this.game_model = game_model;
 	}
 	
-
-	
 	
 	
 	//+++++++++++++++++++++++++++++++++++++++++++++++
@@ -916,7 +914,13 @@ public class Fascade
 				|| canTradeAtMiscHarbor(player_index, new ResourceMultiSet());
 	}
 	
-	
+	/**
+	 * Whether the player play a monument card
+	 * @param player_index
+	 * @pre none
+	 * @post true iff the player has that card and can legally play it
+	 * @post also it is his turn
+	 */
 	public boolean canUseMonument(int player_index)
 	{
 		TurnTracker tt = game_model.getTurn_tracker();
@@ -928,6 +932,13 @@ public class Fascade
 		return player.canPlayMonument() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
 	}
 	
+	/**
+	 * Whether the player play a monopoly card
+	 * @param player_index
+	 * @pre none
+	 * @post true iff the player has that card and can legally play it
+	 * @post also it is his turn
+	 */
 	public boolean canUseMonopoly(int player_index)
 	{
 		TurnTracker tt = game_model.getTurn_tracker();
@@ -939,6 +950,14 @@ public class Fascade
 		return player.canPlayMonopoly() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
 	}
 	
+	
+	/**
+	 * Whether the player play a Soldier card
+	 * @param player_index
+	 * @pre none
+	 * @post true iff the player has that card and can legally play it
+	 * @post also it is his turn
+	 */
 	public boolean canUseSoldier(int player_index)
 	{
 		TurnTracker tt = game_model.getTurn_tracker();
