@@ -1,6 +1,7 @@
 package client.communication;
 
 import org.json.JSONObject;
+import shared.communication.toServer.games.JoinGameRequest;
 import shared.communication.toServer.user.Credentials;
 import shared.definitions.CatanColor;
 
