@@ -2,11 +2,14 @@ package client.communication;
 
 import java.util.List;
 
+import shared.communication.ResourceList;
+import shared.communication.toServer.game.AddAIRequest;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.Fascade;
 import shared.model.Game;
 import shared.model.Player;
 import shared.model.ResourceMultiSet;
@@ -24,7 +27,7 @@ public interface IServerProxy {
 	 * @param port
 	 * @return 
 	 */
-	public void ServerProxy(String host,int port);
+	public void ServerProxy(String host,int port,Fascade f);
 	
 	/**
 	 * @pre username and password are not null
@@ -66,22 +69,7 @@ public interface IServerProxy {
 	 * @param color one of the acceptable colors
 	 */
 	public void joinGame(String playerinfo, int id, CatanColor color);
-	
-	/**
-	 * @pre filename is non null and the id is for a current game
-	 * @post a save file is created on the server
-	 * @param id
-	 * @param filename
-	 */
-	public void saveGame(int id, String filename);
-	
-	/**
-	 * @pre filename exists on the server
-	 * @post the game is loaded to reflect the saved state.
-	 * @param filename
-	 */
-	public void loadGame(String filename);
-	
+
 	/**
 	 * @pre id is for an existing game
 	 * @post the model is returned in a JSON object;
@@ -89,30 +77,10 @@ public interface IServerProxy {
 	 */
 	public void getModel(int id);
 	
-	/**
-	 * @pre user is currently part of a game
-	 * @post game command history is cleared and the players still remain. 
-	 * the http response contains the current client model
-	 */
-	public void reset();
 	
-	/**
-	 * @pre user is part of a game
-	 * @post gets a http success or failure response if success contains all of the commands.
-	 * @return list of all the commands that have been executed in the game
-	 */
-	public List<String> getCommands();
-	
-	/**
-	 * @pre user is part of a game
-	 * @post the command has been executed and returned an updated model. 
-	 * @param commands
-	 * @return
-	 */
-	public String executeCommands(List<String> commands);
-	
+	public void addAIPlayer(String AiType);
 	//Move commands
-	
+	public List<String> getAITypes();
 	/**
 	 * @post the message is posted to the chat
 	 * @param message
@@ -131,13 +99,13 @@ public interface IServerProxy {
 	 * @post user no longer has the discarded resources
 	 * @param discardedCards
 	 */
-	public void discardCards(ResourceMultiSet discardedCards);
+	public void discardCards(ResourceList discardedCards);
 	
 	/**
 	 * @pre it is the users turn, the client model's status is rolling
 	 * @post client model status changes to discarding, robbing or playing
 	 */
-	public void rollNumber();
+	public void rollNumber(int number);
 	
 	/**
 	 * @pre the location is open, it is connected to a road owned by the player, 
@@ -169,7 +137,7 @@ public interface IServerProxy {
 	 * @param offer
 	 * @param receiver
 	 */
-	public void offerTrade(ResourceMultiSet offer, Player receiver);
+	public void offerTrade(ResourceList offer, Player receiver);
 	
 	/**
 	 * @pre the player has the resource they are giving, they have the correct port if ratio is <4

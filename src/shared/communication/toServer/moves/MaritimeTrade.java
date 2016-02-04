@@ -1,5 +1,7 @@
 package shared.communication.toServer.moves;
 
+import shared.definitions.ResourceType;
+
 /**
  * Michael Rhodes
  * CS 340
@@ -12,11 +14,11 @@ public class MaritimeTrade extends Command {
     /** (Optional) The ratio of the trade your doing as an integer (ie. put 3 for a 3:1 trade) */
     private int ratio;
     /** (Optional) What type of resource you're giving */
-    private String inputResource;
+    private ResourceType inputResource;
     /** (Optional) What type of resource you're getting */
-    private String outputResource;
+    private ResourceType outputResource;
 
-    public MaritimeTrade(int playerIndex, int ratio, String inputResource, String outputResource) {
+    public MaritimeTrade(int playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource) {
         super("maritimeTrade", playerIndex);
         this.ratio = ratio;
         this.inputResource = inputResource;

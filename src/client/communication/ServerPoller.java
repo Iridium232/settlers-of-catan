@@ -62,7 +62,7 @@ public class ServerPoller {
 			public void run(){
 					try{
 						int version=f.getLatestModelNum();
-						
+						server.getModel(version);
 					}catch(Exception e){
 						
 					}

@@ -2,11 +2,14 @@ package client.communication;
 
 import java.util.List;
 
+import shared.communication.ResourceList;
+import shared.communication.toServer.game.AddAIRequest;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.Fascade;
 import shared.model.Game;
 import shared.model.Player;
 import shared.model.ResourceMultiSet;
@@ -16,11 +19,15 @@ import shared.model.ResourceMultiSet;
  *
  */
 public class MockServer implements IServerProxy {
-
+	private String host;
+	private int port;
+	private String path;
+	private int playerIndex;
+	private Fascade fascade;
 	@Override
-	public void ServerProxy(String host, int port) {
+	public void ServerProxy(String host, int port,Fascade f) {
 		// TODO Auto-generated method stub
-
+		this.fascade=f;
 	}
 
 	@Override
@@ -54,39 +61,9 @@ public class MockServer implements IServerProxy {
 	}
 
 	@Override
-	public void saveGame(int id, String filename) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void loadGame(String filename) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void getModel(int id) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<String> getCommands() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String executeCommands(List<String> commands) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -187,6 +164,42 @@ public class MockServer implements IServerProxy {
 
 	@Override
 	public void offerTrade(ResourceMultiSet offer, Player receiver) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addAIPlayer(AddAIRequest ai) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<String> getAITypes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addAIPlayer(String AiType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void discardCards(ResourceList discardedCards) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void rollNumber(int number) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void offerTrade(ResourceList offer, Player receiver) {
 		// TODO Auto-generated method stub
 		
 	}

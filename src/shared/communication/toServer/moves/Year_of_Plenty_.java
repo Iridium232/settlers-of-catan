@@ -1,5 +1,7 @@
 package shared.communication.toServer.moves;
 
+import shared.definitions.ResourceType;
+
 /**
  * Michael Rhodes
  * CS 340
@@ -9,13 +11,13 @@ package shared.communication.toServer.moves;
  * Year_of_Plenty command object
  */
 public class Year_of_Plenty_ extends Command {
-    private String resource1;
-    private String resource2;
+    private ResourceType resource1;
+    private ResourceType resource2;
 
-    public Year_of_Plenty_(int playerIndex, String resource1, String resource2) {
+    public Year_of_Plenty_(int playerIndex, ResourceType one, ResourceType two) {
         super("Year_of_Plenty", playerIndex);
-        this.resource1 = resource1;
-        this.resource2 = resource2;
+        this.resource1 = one;
+        this.resource2 = two;
     }
 
     public String getResource1() {
