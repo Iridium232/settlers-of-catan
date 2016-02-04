@@ -30,7 +30,7 @@ public class ModelPopulator {
         ServerModel serverModel = gson.fromJson(o.toString(), ServerModel.class);
         Game newModel = new Game();
         mp.populateGame(serverModel, newModel);
-//        fascade.attachNewModel(newModel);
+        fascade.changeModel(newModel);
     }
 
     private ModelPopulator() {
