@@ -154,28 +154,28 @@ public class ModelPopulator {
             Vertex vertex2 = null;
             switch (serverDirection) {
                 case "NW":
-                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthWest));
-                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.West));
+                    vertex1 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.NorthWest));
+                    vertex2 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.West));
                     break;
                 case "N":
-                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthWest));
-                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthEast));
+                    vertex1 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.NorthWest));
+                    vertex2 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.NorthEast));
                     break;
                 case "NE":
-                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthEast));
-                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.East));
+                    vertex1 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.NorthEast));
+                    vertex2 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.East));
                     break;
                 case "SE":
-                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.East));
-                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthEast));
+                    vertex1 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.East));
+                    vertex2 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.SouthEast));
                     break;
                 case "S":
-                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthEast));
-                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthWest));
+                    vertex1 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.SouthEast));
+                    vertex2 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.SouthWest));
                     break;
                 case "SW":
-                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthWest));
-                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.West));
+                    vertex1 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.SouthWest));
+                    vertex2 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.West));
                     break;
             }
             if (serverResource == null) {
@@ -207,8 +207,7 @@ public class ModelPopulator {
         for (Road road : serverRoads) {
             //Values from server
             int serverOwner = road.getOwner();
-            shared.locations.EdgeLocation serverEdgeLocation = road.getLocation();
-            HexLocation serverLocation = serverEdgeLocation.getHexLoc();
+            shared.communication.fromServer.game.EdgeLocation serverLocation = road.getLocation();
             HexLocation newLocation = new HexLocation(serverLocation.getX(), serverLocation.getY());
 
             //Load values from server
@@ -218,52 +217,52 @@ public class ModelPopulator {
 
             Vertex vertex1 = null;
             Vertex vertex2 = null;
-            switch (serverEdgeLocation.getDir()) {
-                case NorthWest:
-                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthWest));
-                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.West));
+            switch (serverLocation.getDirection()) {
+                case "NW":
+                    vertex1 = new Vertex(new shared.locations.VertexLocation(newLocation, VertexDirection.NorthWest));
+                    vertex2 = new Vertex(new shared.locations.VertexLocation(newLocation, VertexDirection.West));
                     break;
-                case North:
-                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthWest));
-                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthEast));
+                case "N":
+                    vertex1 = new Vertex(new shared.locations.VertexLocation(newLocation, VertexDirection.NorthWest));
+                    vertex2 = new Vertex(new shared.locations.VertexLocation(newLocation, VertexDirection.NorthEast));
                     break;
-                case NorthEast:
-                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthEast));
-                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.East));
+                case "NE":
+                    vertex1 = new Vertex(new shared.locations.VertexLocation(newLocation, VertexDirection.NorthEast));
+                    vertex2 = new Vertex(new shared.locations.VertexLocation(newLocation, VertexDirection.East));
                     break;
-                case SouthEast:
-                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.East));
-                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthEast));
+                case "SE":
+                    vertex1 = new Vertex(new shared.locations.VertexLocation(newLocation, VertexDirection.East));
+                    vertex2 = new Vertex(new shared.locations.VertexLocation(newLocation, VertexDirection.SouthEast));
                     break;
-                case South:
-                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthEast));
-                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthWest));
+                case "S":
+                    vertex1 = new Vertex(new shared.locations.VertexLocation(newLocation, VertexDirection.SouthEast));
+                    vertex2 = new Vertex(new shared.locations.VertexLocation(newLocation, VertexDirection.SouthWest));
                     break;
-                case SouthWest:
-                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthWest));
-                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.West));
+                case "SW":
+                    vertex1 = new Vertex(new shared.locations.VertexLocation(newLocation, VertexDirection.SouthWest));
+                    vertex2 = new Vertex(new shared.locations.VertexLocation(newLocation, VertexDirection.West));
                     break;
             }
             newRoadEdge.setEnd1(vertex1);
             newRoadEdge.setEnd2(vertex2);
 
             shared.locations.EdgeLocation newEdgeLocation = null;
-            if (serverEdgeLocation.getDir().equals("NW")) {
+            if (serverLocation.getDirection().equals("NW")) {
                 newEdgeLocation = new shared.locations.EdgeLocation(newLocation, EdgeDirection.NorthWest);
                 newRoadEdge.setDirection(EdgeDirection.NorthWest);
-            } else if (serverEdgeLocation.getDir().equals("N")) {
+            } else if (serverLocation.getDirection().equals("N")) {
                 newEdgeLocation = new shared.locations.EdgeLocation(newLocation, EdgeDirection.North);
                 newRoadEdge.setDirection(EdgeDirection.North);
-            } else if (serverEdgeLocation.getDir().equals("NE")) {
+            } else if (serverLocation.getDirection().equals("NE")) {
                 newEdgeLocation = new shared.locations.EdgeLocation(newLocation, EdgeDirection.NorthEast);
                 newRoadEdge.setDirection(EdgeDirection.NorthEast);
-            } else if (serverEdgeLocation.getDir().equals("SW")) {
+            } else if (serverLocation.getDirection().equals("SW")) {
                 newEdgeLocation = new shared.locations.EdgeLocation(newLocation, EdgeDirection.SouthWest);
                 newRoadEdge.setDirection(EdgeDirection.SouthWest);
-            } else if (serverEdgeLocation.getDir().equals("S")) {
+            } else if (serverLocation.getDirection().equals("S")) {
                 newEdgeLocation = new shared.locations.EdgeLocation(newLocation, EdgeDirection.South);
                 newRoadEdge.setDirection(EdgeDirection.South);
-            } else if (serverEdgeLocation.getDir().equals("SE")) {
+            } else if (serverLocation.getDirection().equals("SE")) {
                 newEdgeLocation = new shared.locations.EdgeLocation(newLocation, EdgeDirection.SouthEast);
                 newRoadEdge.setDirection(EdgeDirection.SouthEast);
             }
@@ -282,11 +281,32 @@ public class ModelPopulator {
 
         for (VertexObject vertexObject : serverSettlements) {
             int serverOwner = vertexObject.getOwner();
-            VertexLocation serverVertexLocation = vertexObject.getLocation();
-            HexLocation serverHexLocation = serverVertexLocation.getHexLoc();
+            shared.communication.fromServer.game.VertexLocation serverLocation = vertexObject.getLocation();
 
-            VertexLocation newLocation = new VertexLocation(new HexLocation(serverHexLocation.getX(),
-                    serverHexLocation.getY()), serverVertexLocation.getDir());
+            VertexDirection direction = null;
+            switch (serverLocation.getDirection()) {
+                case "NW":
+                    direction = VertexDirection.NorthWest;
+                    break;
+                case "NE":
+                    direction = VertexDirection.NorthEast;
+                    break;
+                case "E":
+                    direction = VertexDirection.East;
+                    break;
+                case "SE":
+                    direction = VertexDirection.SouthEast;
+                    break;
+                case "SW":
+                    direction = VertexDirection.SouthWest;
+                    break;
+                case "W":
+                    direction = VertexDirection.West;
+                    break;
+            }
+
+            shared.locations.VertexLocation newLocation = new shared.locations.VertexLocation(
+                    new HexLocation(serverLocation.getX(), serverLocation.getY()), direction);
 
             Settlement newSettlement = new Settlement();
             newSettlement.setLocation(newLocation);
@@ -303,11 +323,32 @@ public class ModelPopulator {
 
         for (VertexObject vertexObject : serverCities) {
             int serverOwner = vertexObject.getOwner();
-            VertexLocation serverVertexLocation = vertexObject.getLocation();
-            HexLocation serverHexLocation = serverVertexLocation.getHexLoc();
+            shared.communication.fromServer.game.VertexLocation serverLocation = vertexObject.getLocation();
 
-            VertexLocation newLocation = new VertexLocation(new HexLocation(serverHexLocation.getX(),
-                    serverHexLocation.getY()), serverVertexLocation.getDir());
+            VertexDirection direction = null;
+            switch (serverLocation.getDirection()) {
+                case "NW":
+                    direction = VertexDirection.NorthWest;
+                    break;
+                case "NE":
+                    direction = VertexDirection.NorthEast;
+                    break;
+                case "E":
+                    direction = VertexDirection.East;
+                    break;
+                case "SE":
+                    direction = VertexDirection.SouthEast;
+                    break;
+                case "SW":
+                    direction = VertexDirection.SouthWest;
+                    break;
+                case "W":
+                    direction = VertexDirection.West;
+                    break;
+            }
+
+            shared.locations.VertexLocation newLocation = new shared.locations.VertexLocation(
+                    new HexLocation(serverLocation.getX(), serverLocation.getY()), direction);
 
             City newCity = new City();
             newCity.setLocation(newLocation);
@@ -330,6 +371,7 @@ public class ModelPopulator {
         for (Player player : serverPlayers) {
         	if(player == null)continue;
             shared.model.Player newPlayer = new shared.model.Player();
+            System.err.print("\nPLAYER\n");
             newPlayer.setCities(player.getCities());
             newPlayer.setColor(player.getColor());
             newPlayer.setDiscarded(player.isDiscarded());
@@ -407,7 +449,7 @@ public class ModelPopulator {
 
         ResourceMultiSet newMultiSet = new ResourceMultiSet();
         populateResourceMultiSet(serverOffer.getOffer(), newMultiSet);
-        newOffer.translateOffer(newMultiSet);
+        newOffer.setOffer(newMultiSet);
 
         newModel.setTrade_offer(newOffer);
     }
