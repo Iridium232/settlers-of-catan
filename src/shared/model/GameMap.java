@@ -394,6 +394,10 @@ public class GameMap
 		{
 			for (TerrainHex terrain_hex : terrain_hex_array)
 			{
+				if(terrain_hex == null)
+				{
+					continue;
+				}
 				if(neighbors[0].equals(terrain_hex.getLocation()) 
 					&& terrain_hex.getType() != HexType.WATER)
 				{
