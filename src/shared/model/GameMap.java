@@ -99,6 +99,10 @@ public class GameMap
 		ArrayList<Port> player_ports = new ArrayList<Port>();
 		for(Port port : ports)
 		{
+			if(port == null)
+			{
+				continue;
+			}
 			Vertex access1 = port.getVertex1();
 			Vertex access2 = port.getVertex2();
 			if(this.hasBuildingAt(player_index, access1))
@@ -110,7 +114,7 @@ public class GameMap
 				player_ports.add(port);
 			}
 		}
-		return (Port[]) player_ports.toArray();	
+		return player_ports.toArray(new Port[player_ports.size()]);	
 	}
 	
 	/**
@@ -255,6 +259,12 @@ public class GameMap
 	 */
 	public void addPort(Port port)
 	{
+		if (ports == null)
+		{
+			ports = new Port[1];
+			ports[0] = port;
+			return;
+		}
 		ArrayList<Port> portsAL = new ArrayList<>();
 		for (Port prt : getPorts()) {
 			if (prt != null) {
