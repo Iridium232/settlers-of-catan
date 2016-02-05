@@ -41,7 +41,7 @@ public class NumberChit
 	 */
 	public void setValue(int value) {
 		assert this.value == -1;
-		assert value >= 2;
+//		assert value >= 2;
 		assert value <= 12;
 		this.value = value;
 	}
