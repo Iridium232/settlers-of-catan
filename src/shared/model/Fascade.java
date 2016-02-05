@@ -1097,6 +1097,11 @@ public class Fascade
 		return game_model;
 	}
 	
+	public void changeModel(Game model)
+	{
+		game_model = model;
+	}
+	
 	class ModelException extends Exception{}
 }
 	
