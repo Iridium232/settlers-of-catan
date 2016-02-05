@@ -1,7 +1,7 @@
 package shared.model;
 
-import java.util.ArrayList;
-
+import shared.communication.toServer.moves.BuildSettlement;
+import shared.communication.toServer.moves.BuyDevCard;
 import shared.definitions.PieceType;
 
 /**
@@ -11,6 +11,8 @@ import shared.definitions.PieceType;
  * Dr. Woodfield
  */
 public class Player {
+
+    public BuyDevCard player_buy_devcard;
     /**
      *  How many cities this player has left to play
      */
@@ -94,6 +96,7 @@ public class Player {
         this.settlements = 5;
         this.soldiers = 0;
         this.victoryPoints = 0;
+        this.player_buy_devcard = new BuyDevCard(0);
     }
 
     /**
@@ -568,8 +571,9 @@ public class Player {
      * @pre The player must have at least 1 settlement left to play
      * @post    The number of settlements left to play is reduced by 1
      */
-    public void placeSettlement() {
+    public BuildSettlement placeSettlement() {
 
+        return null;
     }
 
     /**

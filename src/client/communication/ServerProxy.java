@@ -1,18 +1,13 @@
 package client.communication;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import shared.communication.ResourceList;
 import shared.communication.toServer.game.AddAIRequest;
 import shared.communication.toServer.games.CreateGameRequest;
-import shared.communication.toServer.games.LoadGameRequest;
-import shared.communication.toServer.games.SaveGameRequest;
 import shared.communication.toServer.moves.AcceptTrade;
 import shared.communication.toServer.moves.BuildCity;
 import shared.communication.toServer.moves.BuildRoad;
@@ -29,16 +24,14 @@ import shared.communication.toServer.moves.RobPlayer;
 import shared.communication.toServer.moves.RollNumber;
 import shared.communication.toServer.moves.Soldier_;
 import shared.communication.toServer.moves.Year_of_Plenty_;
-import shared.communication.toServer.user.Credentials;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.Fascade;
-import shared.model.Game;
+import shared.communication.fromServer.games.Game;
 import shared.model.Player;
-import shared.model.ResourceMultiSet;
 /**
  * Implements IServerProxy send requests through the client communicator to the server.
  * @author Doug
@@ -50,6 +43,11 @@ public class ServerProxy implements IServerProxy {
 	private String path;
 	private int playerIndex;
 	private Fascade fascade;
+	public ServerProxy(String host, int port, Fascade f){
+		this.host=host;
+		this.port=port;
+		this.fascade=f;
+	}
 	@Override
 	public void ServerProxy(String host, int port, Fascade f) {
 		// TODO Auto-generated method stub
@@ -59,47 +57,57 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public void login(String username, String password) {
+	public String login(String username, String password) {
 		// TODO Auto-generated method stub
 		try {
-			ClientCommunicator.getSINGLETON().login(username, password);
+			return ClientCommunicator.getSINGLETON().login(username, password);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		return "Login Failed\n";
 	}
 
 	@Override
-	public void register(String username, String password) {
+	public String register(String username, String password) {
 		// TODO Auto-generated method stub
 		try{
-				ClientCommunicator.getSINGLETON().register(username, password);;
+				return ClientCommunicator.getSINGLETON().register(username, password);
 		} catch (Exception e){
 				e.printStackTrace();
 		}
+		return "Registration Failed\n";
 	}
 
 	@Override
 	public List<Game> getGameList() {
 		// TODO Auto-generated method stub
+		List<Game> returnList=new ArrayList<Game>();
 		try {
 			JSONObject result=ClientCommunicator.getSINGLETON().gamesList();
+			List<JSONObject> gamesList=(List<JSONObject>)result.get("games");
 			Gson gee=new Gson();
-			gee.fromJson
-					} catch (Exception e) {
+			for(JSONObject j:gamesList){
+				String gg=j.toString();
+				returnList.add(gee.fromJson(gg, Game.class));
+			}
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		return returnList;
 	}
 
 	@Override
 	public Game createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
 		// TODO Auto-generated method stub
 		CreateGameRequest create= new CreateGameRequest(randomTiles,randomNumbers,randomPorts,name);
+		JSONObject result=null;
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/games/create", create);
+			result=ClientCommunicator.getSINGLETON().doPost("/games/create", create);
+			String game=result.toString();
+			Gson gee=new Gson();
+			return gee.fromJson(game, Game.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,252 +116,295 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public void joinGame(String playerinfo, int id, CatanColor color) {
+	public String joinGame(String playerinfo, int id, CatanColor color) {
 		// TODO Auto-generated method stub
+		String result="Failed\n";
 		try {
-			ClientCommunicator.getSINGLETON().joinGame(id, color);
+			result=ClientCommunicator.getSINGLETON().joinGame(id, color).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void getModel(int id) {
-		// need to figure out how we're getting the current number from the fascade and generally how the fascade interacts with the server proxy.
+	public String getModel(int id) {
+		String result=null;
 		try {
 			JSONObject model=ClientCommunicator.getSINGLETON().doGet("/game/model");
+			result=model.toString();
 			ModelPopulator.populateModel(model, fascade);//add fascade to IServerProxy
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 	
 	@Override
-	public void sendChat(String message) {
+	public String sendChat(String message) {
 		// TODO Auto-generated method stub
+		String result=null;
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/sendChat", message);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/sendChat", message).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void acceptTrade(boolean accept) {
+	public String acceptTrade(boolean accept) {
 		// TODO Auto-generated method stub
+		String result=null;
 		AcceptTrade at=new AcceptTrade(playerIndex,accept);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/acceptTrade", at);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/acceptTrade", at).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void rollNumber(int number) {
+	public String rollNumber(int number) {
 		// TODO Auto-generated method stub
+		String result=null;
 		RollNumber roll=new RollNumber(playerIndex,number);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/rollNumber", roll);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/rollNumber", roll).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void buildRoad(boolean free, EdgeLocation roadLocation) {
+	public String buildRoad(boolean free, EdgeLocation roadLocation) {
 		// TODO Auto-generated method stub
+		String result=null;
 		BuildRoad road=new BuildRoad(playerIndex,roadLocation,free);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/buildRoad", road);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/buildRoad", road).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void buildSettlement(boolean free, VertexLocation place) {
+	public String buildSettlement(boolean free, VertexLocation place) {
 		// TODO Auto-generated method stub
+		String result=null;
 		BuildSettlement settle=new BuildSettlement(playerIndex,place,free);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/buildSettlement", settle);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/buildSettlement", settle).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		}
+		return result;
+	}
 
 	@Override
-	public void buildCity(VertexLocation place) {
-		// TODO Auto-generated method stub
+	public String buildCity(VertexLocation place) {
+	// TODO Auto-generated method stub
+		String result=null;
 		BuildCity city=new BuildCity(playerIndex,place);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/buildCity", city);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/buildCity", city).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void maritimeTrade(int ratio, ResourceType input, ResourceType output) {
+	public String maritimeTrade(int ratio, ResourceType input, ResourceType output) {
 		// TODO Auto-generated method stub
+		String result=null;
 		MaritimeTrade trade=new MaritimeTrade(playerIndex,ratio,input,output);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/maritimeTrade", trade);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/maritimeTrade", trade).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void robPlayer(HexLocation location, Player victim) {
+	public String robPlayer(HexLocation location, Player victim) {
 		// TODO Auto-generated method stub
+		String result=null;
 		RobPlayer rob=new RobPlayer(playerIndex,victim.getPlayerIndex(),location);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/robPlayer", rob);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/robPlayer", rob).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void finishTurn() {
+	public String finishTurn() {
 		// TODO Auto-generated method stub
+		String result=null;
 		FinishTurn end=new FinishTurn(playerIndex);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/finishTurn", end);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/finishTurn", end).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void buyDevCard() {
+	public String buyDevCard() {
 		// TODO Auto-generated method stub
+		String result=null;
 		BuyDevCard card=new BuyDevCard(playerIndex);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/buyDevCard", card);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/buyDevCard", card).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void playSoldier(HexLocation place, Player victim) {
+	public String playSoldier(HexLocation place, Player victim) {
 		// TODO Auto-generated method stub
+		String result=null;
 		Soldier_ soldier=new Soldier_(playerIndex,victim.getPlayerIndex(),place);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/Soldier", soldier);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/Soldier", soldier).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void yearOfPlenty(ResourceType one, ResourceType two) {
+	public String yearOfPlenty(ResourceType one, ResourceType two) {
 		// TODO Auto-generated method stub
+		String result=null;
 		Year_of_Plenty_ year=new Year_of_Plenty_(playerIndex,one,two);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/Year_of_Plenty", year);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/Year_of_Plenty", year).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void RoadBuilding(EdgeLocation one, EdgeLocation two) {
+	public String RoadBuilding(EdgeLocation one, EdgeLocation two) {
 		// TODO Auto-generated method stub
+		String result=null;
 		Road_Building_ rb=new Road_Building_(playerIndex,one,two);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/Road_Building", rb);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/Road_Building", rb).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void monopoly(ResourceType one) {
+	public String monopoly(ResourceType one) {
 		// TODO Auto-generated method stub
+		String result=null;
 		Monopoly_ mono=new Monopoly_(playerIndex,one);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/Monopoly", mono);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/Monopoly", mono).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void monument() {
+	public String monument() {
 		// TODO Auto-generated method stub
+		String result=null;
 		Monument_ mon=new Monument_(playerIndex);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/Monument", mon);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/Monument", mon).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void discardCards(ResourceList discardedCards) {
+	public String discardCards(ResourceList discardedCards) {
 		// TODO Auto-generated method stub
+		String result=null;
 		DiscardCards dc=new DiscardCards(playerIndex,discardedCards);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/discardCards", dc);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/discardCards", dc).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void offerTrade(ResourceList offer, Player receiver) {
+	public String offerTrade(ResourceList offer, Player receiver) {
 		// TODO Auto-generated method stub
+		String result=null;
 		OfferTrade ot=new OfferTrade(playerIndex,offer,receiver.getPlayerIndex());
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/moves/offerTrade", ot);
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/offerTrade", ot).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void addAIPlayer(String AiType) {
+	public String addAIPlayer(String AiType) {
 		// TODO Auto-generated method stub
+		String result=null;
 		AddAIRequest ai=new AddAIRequest(AiType);
 		try {
-			ClientCommunicator.getSINGLETON().doPost("/game/addAI", ai);
+			result=ClientCommunicator.getSINGLETON().doPost("/game/addAI", ai).toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public List<String> getAITypes() {
+	public String getAITypes() {
 		// TODO Auto-generated method stub
+		String result=null;
 		try {
-			ClientCommunicator.getSINGLETON().doGet("/game/listAI");
+			JSONObject j=ClientCommunicator.getSINGLETON().doGet("/game/listAI");
+			result=j.toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 }

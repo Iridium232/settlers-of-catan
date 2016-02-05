@@ -692,9 +692,9 @@ public class FascadeTest {
 		
 		otherHexN = new Edge();
 		otherHexN.setDirection(EdgeDirection.NorthEast);
-		otherHexN.setEnd1();
-		otherHexN.setEnd2();
-		otherHexN.
+		otherHexN.setEnd1(new Vertex(new VertexLocation(byTheSea.getLocation(),VertexDirection.East)));
+		otherHexN.setEnd2(new Vertex(new VertexLocation(byTheSea.getLocation(),VertexDirection.NorthEast)));
+		otherHexN.setLocation(new EdgeLocation(this.byTheSea.getLocation(), EdgeDirection.NorthEast));
 		
 		//Add roads
 		Road road1 = new Road();

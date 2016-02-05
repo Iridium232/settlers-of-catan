@@ -1,8 +1,9 @@
 package shared.model;
 import java.util.*;
+
+import shared.communication.toServer.moves.BuildSettlement;
 import shared.locations.*;
 import shared.definitions.*;
-import shared.model.*;
 import shared.model.ports.Port;
 
 /**
@@ -164,6 +165,7 @@ public class GameMap
 	/**
 	 * Adds a Road to the map for setup
 	 * @param road
+	 * @param edge
 	 * @pre this is a valid road not already on the game map
 	 * @post the road is registered on the map
 	 */
@@ -199,8 +201,12 @@ public class GameMap
 		Settlement example = new Settlement();
 		return (current_occupant.getClass().equals(example.getClass()));
 	}
-	
-	
+
+	public void addCity(Vertex location, int player_index) {
+		//TODO
+	}
+
+
 	/**
 	 * adds a Building to the Map for setup
 	 * @param building
@@ -390,6 +396,11 @@ public class GameMap
 		
 		return has_incoming_road && is_on_land;
 	}
+
+	public void addSettlement(BuildSettlement build_settlement, int player_index){
+		//TODO
+	}
+
 	
 	/**
 	 * Tells whether a vertex is on land.

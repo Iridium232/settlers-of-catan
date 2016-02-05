@@ -1,12 +1,16 @@
 package shared.model;
+import client.catan.GameStatePanel;
 import client.data.*;
 
+import client.map.IMapController;
+
 import shared.communication.toServer.games.*;
-import shared.definitions.PieceType;
-import shared.definitions.TurnStatus;
+import shared.communication.toServer.moves.*;
+import shared.definitions.*;
 import shared.locations.HexLocation;
 import shared.model.ports.*;
-import shared.definitions.Commands;
+
+import java.util.List;
 
 /**
  * The Facade class handles all communication and commands to and from the game model.
@@ -18,24 +22,19 @@ public class Fascade
 	 * This is the model
 	 */
 	private Game game_model;
-	
-	
-	/**
-	 * Changes the model when a new model was populated
-	 * @pre this new model was instantiated 
-	 * @post the fascade points to the new model and the old one
-	 * is lost. Java garbage collection will get rid of it.
-	 */
-	public void changeModel(Game game_model)
-	{
-		this.game_model = game_model;
-	}
-	
-	
-	
+	protected IMapController map_controller;
+	private int[] player_colors;
+	protected BuyDevCard buy_devcard;
+
+	private int player_move_robber;
+	protected List<Player> players;
+	protected GameStatePanel game_state;
+
 	//+++++++++++++++++++++++++++++++++++++++++++++++
 	//Purchases and Placement
 	//+++++++++++++++++++++++++++++++++++++++++++++++
+
+
 	/**
 	 * Tells whether a player can lay a road on that edge
 	 * 
@@ -58,18 +57,27 @@ public class Fascade
 	 * @param request
 	 *
 	 *
+	 * @param player_index
 	 * @pre canBuildRoad() returns true
 	 * @post a road is built for that player on that edge. The server is notified.
 	 * @post The player's resources are reduced by 1 wood and 1 brick
 	 */
-	public DataResponse buildRoadAt(DataRequest request) throws Exception
+
+
+	public String getPlayerColorByIndex(int player_index)
 	{
+		return game_model.getPlayers()[player_index].getColor();
+	}
 
-		//TODO
-
-		DataResponse response = new DataResponse(Commands.BUILD_ROAD,false);
-		return response;
-
+	public void buildRoadAt(int player_index, Edge edge) throws Exception
+	{
+		//check for resources of the player
+		if (!this.canBuildRoad(player_index, edge))
+			throw new ModelException();
+		GameMap game_map = game_model.getMap();
+		Player player = game_model.getPlayers()[player_index];
+		game_map.addRoad(edge);
+		player.getColor();
 	}
 	
 	/**
@@ -96,10 +104,16 @@ public class Fascade
 	 * @post the player has a new development card.
 	 * @post The player's resources are reduced by 1 food and 1 ore and 1 wool
 	 */
-	public DataResponse buyDevelopmentCard(DataRequest player) throws Exception
+	public DevCardType buyDevelopmentCard(int player_index) throws Exception
 	{
-		DataResponse response = new DataResponse(Commands.BUY_DEV_CARD,false);
-		return response;
+		if (!canBuyDevelopmentCard(player_index)) throw new ModelException();
+		Player player = game_model.getPlayers()[player_index];
+		BuyDevCard player_buy = player.player_buy_devcard;
+		player_buy.buyDevCard();
+		DevCardType devcard = buy_devcard.getDevCard();
+		player_buy.giveDevCard(devcard);
+		return devcard;
+
 	}
 	
 	/**
@@ -132,10 +146,15 @@ public class Fascade
 	 * @post a settlement is built by that player on the specified location
 	 * @post The player's resources are reduced by 1 food, 1 brick, 1 wood, and 1 wool
 	 */
-	public DataResponse buildSettlement(PlayerInfo player, Vertex location) throws Exception
+	public void buildSettlement(int player_index, Vertex location) throws Exception
 	{
-		DataResponse response = new DataResponse(Commands.BUILD_SETTLEMENT,false);
-		return response;
+		if (!this.canBuildSettlement(player_index, location))
+			throw new ModelException();
+		GameMap game_map = game_model.getMap();
+		Player player = game_model.getPlayers()[player_index];
+		BuildSettlement build_settlement = player.placeSettlement();
+		game_map.addSettlement(build_settlement, player_index);
+
 	}
 	
 	/**
@@ -163,10 +182,14 @@ public class Fascade
 	 * @post The player's resources are reduced by 2 food and 3 ore
 	 * 
 	 */
-	public DataResponse BuildCity(DataRequest request) throws Exception
+	public void BuildCity(int player_index, Vertex location) throws Exception
 	{
-		DataResponse response = new DataResponse(Commands.BUILD_CITY,false);
-		return response;
+		if (!this.canBuildCity(player_index, location))
+			throw new ModelException();
+		GameMap game_map = game_model.getMap();
+		Player player = game_model.getPlayers()[player_index];
+		game_map.addCity(location, player_index);
+
 	}
 	
 	//+++++++++++++++++++++++++++++++++++++++++++++++
@@ -196,10 +219,9 @@ public class Fascade
 	 * @post the dice are rolled and the consequences are applied to each player
 	 * and the game state is advanced to the next turn phase
 	 */
-	public DataResponse RollDice(PlayerInfo player) throws Exception
+	public int RollDice(int player_index) throws Exception
 	{
-		DataResponse response = new DataResponse(Commands.ROLL_NUMBER,false);
-		return response;
+		return -1;//TODO
 	}
 	
 	/**
@@ -270,10 +292,13 @@ public class Fascade
 	 * @post the robber is placed on the designated
 	 *  hex and the player's turn phase is set to rob
 	 */
-	public DataResponse moveRobber(int player, TerrainHex hex) throws Exception
+	public void moveRobber(HexLocation location, int player_index) throws Exception
 	{
-		DataResponse response = new DataResponse(Commands.ROB_PLAYER,false);
-		return response;
+		if (!this.canPlaceRobber(location, player_index)) throw new ModelException();
+		GameMap game_map = game_model.getMap();
+		Player player = game_model.getPlayers()[player_index];
+		game_map.moveRobber(location);
+		this.player_move_robber = -1;
 	}
 	
 	/**
@@ -434,10 +459,11 @@ public class Fascade
 	 * @post the player is charged 2 wool and given the desired card
 	 * 
 	 */
-	public DataResponse tradeAtWoolHarbor(int player, ResourceMultiSet desired_card) throws Exception
-	{
-		DataResponse response = new DataResponse(Commands.OFFER_TRADE,false);
-		return response;
+	public void tradeAtWoolHarbor(int player_index, ResourceMultiSet trade_in_cards) throws Exception {
+		if (!this.canTradeAtWoodHarbor(player_index, trade_in_cards)) throw new ModelException();
+		Player player = game_model.getPlayers()[player_index];
+		GameMap map = game_model.getMap();
+		
 	}
 	
 	/**
@@ -914,13 +940,7 @@ public class Fascade
 				|| canTradeAtMiscHarbor(player_index, new ResourceMultiSet());
 	}
 	
-	/**
-	 * Whether the player play a monument card
-	 * @param player_index
-	 * @pre none
-	 * @post true iff the player has that card and can legally play it
-	 * @post also it is his turn
-	 */
+	
 	public boolean canUseMonument(int player_index)
 	{
 		TurnTracker tt = game_model.getTurn_tracker();
@@ -932,32 +952,6 @@ public class Fascade
 		return player.canPlayMonument() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
 	}
 	
-	/**
-	 * Whether the player play a monopoly card
-	 * @param player_index
-	 * @pre none
-	 * @post true iff the player has that card and can legally play it
-	 * @post also it is his turn
-	 */
-	public boolean canUseMonopoly(int player_index)
-	{
-		TurnTracker tt = game_model.getTurn_tracker();
-		if(player_index < 0 || player_index > 3)
-		{
-			return false;
-		}
-		Player player = game_model.getPlayers()[player_index];
-		return player.canPlayMonopoly() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
-	}
-	
-	
-	/**
-	 * Whether the player play a Soldier card
-	 * @param player_index
-	 * @pre none
-	 * @post true iff the player has that card and can legally play it
-	 * @post also it is his turn
-	 */
 	public boolean canUseSoldier(int player_index)
 	{
 		TurnTracker tt = game_model.getTurn_tracker();
@@ -987,6 +981,23 @@ public class Fascade
 		return player.canPlayYearOfPlenty() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
 	}
 	
+	/**
+	 * Says whether this player can play a year-of-plenty card right now.
+	 * @param player_index
+	 * @pre none
+	 * @post true iff the player is in the playing phase of his turn and has that card and has not 
+	 * already played another.
+	 */
+	public boolean canUseMonopoly(int player_index)
+	{
+		TurnTracker tt = game_model.getTurn_tracker();
+		if(player_index < 0 || player_index > 3)
+		{
+			return false;
+		}
+		Player player = game_model.getPlayers()[player_index];
+		return player.canPlayMonopoly() && tt.turnStatusOf(player_index) == TurnStatus.PLAYING;
+	}
 	/**
 	 * Says whether this player can play a road_building card right now.
 	 * @param player_index
@@ -1085,9 +1096,10 @@ public class Fascade
 	{
 		return game_model;
 	}
+	
+	class ModelException extends Exception{}
 }
 	
-
 	
 	
 	

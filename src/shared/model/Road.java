@@ -11,8 +11,10 @@ public class Road
 {
 	private Edge location = null;
 	private int owner_index = -1;
+
 	private CatanColor color = null;
-	
+	private int owner;
+
 	/**
 	 * @return the location
 	 */
@@ -42,7 +44,12 @@ public class Road
 		this.location = location;
 	}
 
-	public void setColor(CatanColor color) {
-		this.color = color;
+	public int getOwner() {
+		return owner;
 	}
+
+	public void setOwner(int owner) {
+		this.owner = owner;
+	}
+
 }

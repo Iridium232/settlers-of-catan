@@ -1,6 +1,6 @@
 package shared.model;
-import java.util.ArrayList;
 
+import shared.definitions.DevCardType;
 import shared.definitions.TurnStatus;
 import client.data.*;
 
@@ -218,7 +218,7 @@ public class Game
 	/**
 	 * @return the development_bank
 	 */
-	public DevCardList getDevelopment_bank() {
+	public DevCardType getDevelopment_bank() {
 		return development_bank;
 	}
 
