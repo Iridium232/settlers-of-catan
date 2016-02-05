@@ -31,7 +31,6 @@ public class Road
 	 * @param owner_index to set
 	 */
 	public void setOwnerIndex(int owner_index) {
-		assert (this.location == null);
 		this.owner_index = owner_index;
 	}
 	

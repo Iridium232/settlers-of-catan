@@ -21,6 +21,7 @@ public class ServerProxyTest {
 		Fascade f=new Fascade();
 		JSONObject json;
 		sp=new ServerProxy("localhost",8081,f);
+		System.out.println("its working");
 		ClientCommunicator.getSingleton("localhost", "8081");
 		try 
 		{
