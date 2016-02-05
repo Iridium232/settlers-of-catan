@@ -66,6 +66,7 @@ public class ClientCommunicator {
 		}
 
 		this.url_prefix = "http://" + this.server_host + ":" + this.server_port;
+		System.out.print("\n'"+url_prefix + "'\n");
 		this.serializer = Serializer.getSINGLETON();
 		this.catan_cookie = null;
 		this.game_ID = null;

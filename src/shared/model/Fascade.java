@@ -129,13 +129,18 @@ public class Fascade
 	{
 		GameMap game_map = game_model.getMap();
 		Player player = game_model.getPlayers()[player_index];
-		boolean initial_override = game_model.getTurnStatus(player_index) == TurnStatus.FIRSTROUND 
+		boolean initial_override = 
+				game_model.getTurnStatus(player_index) == TurnStatus.FIRSTROUND 
 				|| game_model.getTurnStatus(player_index) == TurnStatus.SECONDROUND;
-		boolean valid_turn = game_model.getTurnStatus(player_index) == TurnStatus.PLAYING 
+		boolean valid_turn = 
+				game_model.getTurnStatus(player_index) == TurnStatus.PLAYING 
 				|| initial_override;
-
-		return game_map.canAddSettlement(location, player_index, initial_override) &&
-				player.canPlaceSettlement(initial_override) && (valid_turn);
+		//check the player's resources
+		boolean player_ok = player.canPlaceSettlement(initial_override);
+		//check the map constraints
+		boolean map_ok = game_map.canAddSettlement(location, player_index, initial_override);
+		
+		return  map_ok && player_ok && valid_turn;
 	}
 	
 	/**

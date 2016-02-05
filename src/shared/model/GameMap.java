@@ -228,6 +228,7 @@ public class GameMap
 		}
 		structures.add(building);
 		buildings = (Building[]) structures.toArray();
+		
 	}
 	
 	/**
