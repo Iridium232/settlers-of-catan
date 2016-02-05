@@ -371,7 +371,6 @@ public class ModelPopulator {
         for (Player player : serverPlayers) {
         	if(player == null)continue;
             shared.model.Player newPlayer = new shared.model.Player();
-            System.err.print("\nPLAYER\n");
             newPlayer.setCities(player.getCities());
             newPlayer.setColor(player.getColor());
             newPlayer.setDiscarded(player.isDiscarded());
@@ -449,7 +448,7 @@ public class ModelPopulator {
 
         ResourceMultiSet newMultiSet = new ResourceMultiSet();
         populateResourceMultiSet(serverOffer.getOffer(), newMultiSet);
-        newOffer.setOffer(newMultiSet);
+        newOffer.translateOffer(newMultiSet);
 
         newModel.setTrade_offer(newOffer);
     }
