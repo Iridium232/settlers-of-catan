@@ -35,9 +35,10 @@ public class DevCardList
 		int other_road_building = cards.getRoad_building();
 		int other_soldier = cards.getSoldier();
 		int other_yearop = cards.getYear_of_plenty();
-		return (monopoly >= other_monopoly) && (monument >= other_monument)
+		boolean result = (monopoly >= other_monopoly) && (monument >= other_monument)
 				&& (road_building >= other_road_building) && (soldier >= other_soldier)
 				&& (year_of_plenty >= other_yearop);
+		return result;
 	}
 	
 	/**

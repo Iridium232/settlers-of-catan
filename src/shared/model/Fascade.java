@@ -1023,14 +1023,19 @@ public class Fascade
 	 * @pre none
 	 * @post true iff the player is in the playing phase of his turn
 	 */
-	public boolean canAcceptTrade(int player_index, ResourceMultiSet cost, ResourceMultiSet gain)
+	public boolean canAcceptTrade(int player_index)
 	{
 		if(player_index < 0 || player_index > 3)
 		{
 			return false;
 		}
+		TradeOffer offer = game_model.getTrade_offer();
+		if(offer == null)
+		{
+			return false;
+		}
 		Player player = game_model.getPlayers()[player_index];
-		boolean can_afford = player.canAfford(cost);
+		boolean can_afford = player.canAfford(offer.getReciever_gives());
 		TurnTracker tt = game_model.getTurn_tracker();
 		return tt.turnStatusOf(player_index) == TurnStatus.TRADING && can_afford;
 	}

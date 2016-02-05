@@ -8,13 +8,25 @@ import org.junit.Before;
 import org.junit.Test;
 
 import shared.definitions.TurnStatus;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import shared.model.DevCardList;
+import shared.model.Edge;
 import shared.model.Fascade;
 import shared.model.Game;
+import shared.model.GameMap;
 import shared.model.Player;
 import shared.model.ResourceMultiSet;
+import shared.model.Road;
+import shared.model.Settlement;
+import shared.model.TerrainHex;
 import shared.model.TradeOffer;
 import shared.model.TurnTracker;
+import shared.model.Vertex;
+import shared.model.ports.Port;
+import shared.model.ports.WheatPort;
 
 import client.communication.MockServer;
 import client.communication.ModelPopulator;
@@ -24,6 +36,9 @@ public class FascadeTest {
 	MockServer server;
 	Fascade facade;
 	
+	Edge desertSE;
+	Edge desertNE;
+	Edge otherHexN;
 	
 	@Before
 	public void setUp()
@@ -34,15 +49,137 @@ public class FascadeTest {
 		Game model = facade.getModel();
 		
 		TurnTracker tracker = model.getTurn_tracker();
-		tracker.setActive_player(1);
-		tracker.setWaiting_for_player(0);
+		tracker.setActive_player(0);
+		tracker.setWaiting_for_player(-1);
 		tracker.setStatus(TurnStatus.PLAYING);
 	}
+	
+	
+	/** \           /           \  ||      /      ~    \ 
+	 *   \_________S(0)          \_||     /         ~   \_________ 
+	 *   /         \             / ||     \     ~  ~    /         \
+	 *  /           \R(0)       /  ||    ~ \  ~    ~   /  ~ WHEAT  \
+	 * /     (0,0)   \_________/   ||   ~   \_________/S(1)*PORT ~  \__
+	 * \    Desert   /    R(1) \   ||      ~/         \* * * *      /~
+	 *  \           /R(0)       \  ||    ~ /           \* * * ~    /
+	 *   \_________/             \_||    _/             \*________/ ~
+	 *   /         \    (1,0)    / ||     \    (0,2)    /         \
+	 *  /           \           /  ||      \           /           \   ~
+	 * /             \_________/   ||       \_________/             \__
+	 * 
+	 * S(0) Settlement of Player 0
+	 * R(0) Road of Player 0
+	 * R(1) Road of Player 1
+	 * 
+	 * prepares the model for build tests
+	 * @pre none
+	 * @post the model is ready as depicted above
+	 *
+	 */
+	private void prepareModelForBuildingTests()
+	{
+		Game model = facade.getModel();
+		GameMap map = model.getMap();
+		int x = 0;
+		int y = 0;
+		TerrainHex desertHex = map.getHexes()[x][y];
+		TerrainHex otherHex = map.getHexes()[x+1][y];
+		TerrainHex hexByTheSea = map.getHexes()[x][y+2];
+		
+		
+		desertNE = new Edge();
+		desertNE.setDirection(EdgeDirection.NorthEast);
+		desertNE.setEnd1(new Vertex(new VertexLocation(desertHex.getLocation(), VertexDirection.NorthEast)));
+		desertNE.setEnd2(new Vertex(new VertexLocation(desertHex.getLocation(), VertexDirection.East)));
+		desertNE.setLocation(new EdgeLocation(desertHex.getLocation(), EdgeDirection.NorthEast));
+		
+		desertSE = new Edge();
+		desertSE.setDirection(EdgeDirection.SouthEast);
+		desertSE.setEnd1(new Vertex(new VertexLocation(desertHex.getLocation(), VertexDirection.SouthEast)));
+		desertSE.setEnd2(new Vertex(new VertexLocation(desertHex.getLocation(), VertexDirection.East)));
+		desertSE.setLocation(new EdgeLocation(desertHex.getLocation(), EdgeDirection.SouthEast));
+		
+		otherHexN = new Edge();
+		desertSE.setDirection(EdgeDirection.North);
+		desertSE.setEnd1(new Vertex(new VertexLocation(otherHex.getLocation(), VertexDirection.NorthEast)));
+		desertSE.setEnd2(new Vertex(new VertexLocation(otherHex.getLocation(), VertexDirection.NorthWest)));
+		desertSE.setLocation(new EdgeLocation(otherHex.getLocation(), EdgeDirection.North));
+		
+		Road road1 = new Road();
+		road1.setOwnerIndex(0);
+		road1.setLocation(desertNE);
+		
+		Road road2 = new Road();
+		road2.setOwnerIndex(0);
+		road2.setLocation(desertSE);
+		
+		Road road3 = new Road();
+		road3.setOwnerIndex(1);
+		road3.setLocation(otherHexN);
+		
+		try
+		{
+			map.addRoad(road1);
+			map.addRoad(road2);
+			map.addRoad(road3);
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
+		Vertex desertNEvertex = new Vertex(new VertexLocation(desertHex.getLocation(), VertexDirection.NorthEast));
+		Vertex wheatPortVertex = new Vertex(new VertexLocation(hexByTheSea.getLocation(), VertexDirection.NorthEast));
+		
+		Port wheatPort = new WheatPort();
+		
+		
+		Settlement desertSettlement = new Settlement();
+		desertSettlement.setLocation(desertNEvertex.getLocation());
+		desertSettlement.setOwner(0);
+		
+		
+		Settlement seaSettlement = new Settlement();
+		seaSettlement.setLocation(wheatPortVertex.getLocation());
+		seaSettlement.setOwner(1);
+		
+		try
+		{
+			map.addBuilding(desertSettlement);
+			map.addBuilding(seaSettlement);
+		}
+		catch(Exception e)
+		{
+			
+		}
+	}
+	
 	
 	@Test
 	public void testCanBuildRoad() 
 	{
-		fail("Not yet implemented");
+		int active_player = 0;
+		int inactive_player = 1;
+		Game model = facade.getModel();
+		Player builder = model.getPlayers()[active_player];
+		Player other_guy = model.getPlayers()[inactive_player];
+
+		
+		
+		
+		assertFalse(facade.canBuildRoad(inactive_player, edge));
+		
+		assertFalse(facade.canBuildRoad(active_player, edge));
+		
+		//set up the player's resource list
+		ResourceMultiSet resources = new ResourceMultiSet();
+		resources.setBrick(2);
+		resources.setOre(1);
+		resources.setWood(1);
+		builder.setResources(resources);
+		
+		
+		
 	}
 
 	@Test
@@ -81,8 +218,7 @@ public class FascadeTest {
 	public void testCanMaritimeTrade() {
 		fail("Not yet implemented");
 	}
-
-//***********************************************************	
+	
 	//9
 	@Test
 	public void testCanUseMonopoly()
@@ -200,11 +336,10 @@ public class FascadeTest {
 		
 		//Give Active Player the year of plenty card
 		Game model = facade.getModel();
-		Player player= model.getPlayers()[0];
+		Player player = model.getPlayers()[0];
 		DevCardList cardlist = new DevCardList();
 		cardlist.setYear_of_plenty(2);
 		player.setOldDevCards(cardlist);
-		int a = 4 + 3;
 		
 		//SHOULD be true because this simulates him already having 
 		//the card and choosing to play it on his turn
@@ -261,11 +396,11 @@ public class FascadeTest {
 		Game model = facade.getModel();
 		
 		//Should be false because it is not this player's turn
-		assertFalse(facade.canUseRoadBuilding(inactive_player));
+		assertFalse(facade.canFinishTurn(inactive_player));
 		
 		//Should be true becuase this active player is in the state where
 		//they can end their turn
-		assertTrue(facade.canUseRoadBuilding(active_player));
+		assertTrue(facade.canFinishTurn(active_player));
 		
 		//TurnTracker 
 		TurnTracker tracker = model.getTurn_tracker();
@@ -274,7 +409,7 @@ public class FascadeTest {
 		tracker.setStatus(TurnStatus.DISCARDING);
 		
 		//Should be false because we are waiting for player 1 to discard
-		assertFalse(facade.canUseRoadBuilding(active_player));
+		assertFalse(facade.canFinishTurn(active_player));
 	}
 	
 	
@@ -315,27 +450,30 @@ public class FascadeTest {
 		want_trees.setWood(1);
 		want_bricks.setBrick(1);
 		TradeOffer grain_for_trees = new TradeOffer();
-		grain_for_trees.setOffer(offer_grain);
+		grain_for_trees.setSender_gives(offer_grain);
+		grain_for_trees.setReciever_gives(want_trees);
 		grain_for_trees.setReciever(1);
 		grain_for_trees.setSender(0);
 		
 		//Should be false because there is no trade offer out there
-		assertFalse(facade.canAcceptTrade(inactive_player, want_trees, offer_grain));
-		assertFalse(facade.canAcceptTrade(active_player, want_trees, offer_grain));
-		assertFalse(facade.canAcceptTrade(2, want_trees, offer_grain));
-		assertFalse(facade.canAcceptTrade(3, want_trees, offer_grain));
+		assertFalse(facade.canAcceptTrade(inactive_player));
+		assertFalse(facade.canAcceptTrade(active_player));
+		assertFalse(facade.canAcceptTrade(2));
+		assertFalse(facade.canAcceptTrade(3));
 		
 		//Active Player Offers trade of Grain for Trees
 		model.setTrade_offer(grain_for_trees);
 		
 		//Should be true because the offer is out there to them
-		assertTrue(facade.canAcceptTrade(inactive_player, want_trees, offer_grain));
-		assertTrue(facade.canAcceptTrade(2, want_trees, offer_grain));
-		assertTrue(facade.canAcceptTrade(3, want_trees, offer_grain));
+		assertTrue(facade.canAcceptTrade(inactive_player));
+		
+		//Should be false because the offer is not to them
+		assertFalse(facade.canAcceptTrade(2));
+		assertFalse(facade.canAcceptTrade(3));
 
 		
 		//Should be false because this person sent the trade request
-		assertFalse(facade.canAcceptTrade(active_player, want_trees, offer_grain));
+		assertFalse(facade.canAcceptTrade(active_player));
 	}
 	
 	//17
