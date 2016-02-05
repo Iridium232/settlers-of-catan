@@ -183,19 +183,19 @@ public class ModelPopulator {
             if (serverResource == null) {
                 newPort = new MiscPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
                         serverRatio);
-            } else if (serverResource.equals("Wood")){
+            } else if (serverResource.equals("wood")){
                 newPort = new WoodPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
                         serverRatio);
-            } else if (serverResource.equals("Brick")){
+            } else if (serverResource.equals("brick")){
                 newPort = new BrickPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
                         serverRatio);
-            } else if (serverResource.equals("Sheep")){
+            } else if (serverResource.equals("sheep")){
                 newPort = new SheepPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
                         serverRatio);
-            } else if (serverResource.equals("Wheat")){
+            } else if (serverResource.equals("wheat")){
                 newPort = new WheatPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
                         serverRatio);
-            } else if (serverResource.equals("Ore")){
+            } else if (serverResource.equals("ore")){
                 newPort = new OrePort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
                         serverRatio);
             }
