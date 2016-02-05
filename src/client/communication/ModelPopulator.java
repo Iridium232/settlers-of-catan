@@ -127,15 +127,15 @@ public class ModelPopulator {
             newTerrainHex.setNumber(newNumber);
             if (hexResource == null) {
                 newTerrainHex.setType(HexType.DESERT);
-            } else if (hexResource.equals("Wood")){
+            } else if (hexResource.equals("wood")){
                 newTerrainHex.setType((HexType.WOOD));
-            } else if (hexResource.equals("Brick")){
+            } else if (hexResource.equals("brick")){
                 newTerrainHex.setType((HexType.BRICK));
-            } else if (hexResource.equals("Sheep")){
+            } else if (hexResource.equals("sheep")){
                 newTerrainHex.setType((HexType.SHEEP));
-            } else if (hexResource.equals("Wheat")){
+            } else if (hexResource.equals("wheat")){
                 newTerrainHex.setType((HexType.WHEAT));
-            } else if (hexResource.equals("Ore")){
+            } else if (hexResource.equals("ore")){
                 newTerrainHex.setType((HexType.ORE));
             }
             clientMap.addTerrainHex(newTerrainHex);
