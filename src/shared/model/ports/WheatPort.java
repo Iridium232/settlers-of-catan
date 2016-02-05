@@ -18,4 +18,8 @@ public class WheatPort extends Port
 		this.resource = ResourceType.WHEAT;
 	}
 
+	public WheatPort() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

@@ -16,6 +16,10 @@ public class OrePort extends Port {
 		super(vertex1, vertX, vertY, vertex2, ratio);
 		this.resource = ResourceType.ORE;
 	}
+
+	public OrePort() {
+		// TODO Auto-generated constructor stub
+	}
 	
 
 }

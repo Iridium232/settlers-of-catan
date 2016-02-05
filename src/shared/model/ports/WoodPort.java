@@ -18,4 +18,8 @@ public class WoodPort extends Port
 		this.resource = ResourceType.WOOD;
 	}
 
+	public WoodPort() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

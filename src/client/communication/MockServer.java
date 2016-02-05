@@ -1,205 +1,182 @@
 package client.communication;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import shared.communication.toServer.game.AddAIRequest;
+import shared.communication.ResourceList;
+import shared.communication.fromServer.games.EmptyPlayer;
+import shared.communication.fromServer.games.NewGame;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.model.Game;
-import shared.model.Player;
-import shared.model.ResourceMultiSet;
-/**
- * Implements the IServerProxy. returns set values used for testing.
- * @author Doug
- *
- */
+import shared.model.Fascade;
+import shared.communication.fromServer.games.Game;
+import shared.communication.fromServer.games.Player;
+
 public class MockServer implements IServerProxy {
-
+	private Fascade fascade;
 	@Override
-	public void ServerProxy(String host, int port) {
+	public void ServerProxy(String host, int port, Fascade f) {
 		// TODO Auto-generated method stub
-
+		this.fascade=f;
 	}
 
 	@Override
-	public void login(String username, String password) {
+	public String login(String username, String password) {
 		// TODO Auto-generated method stub
-
+		return "Success";
 	}
 
 	@Override
-	public void register(String username, String password) {
+	public String register(String username, String password) {
 		// TODO Auto-generated method stub
-
+		return "Success";
 	}
 
 	@Override
 	public List<Game> getGameList() {
 		// TODO Auto-generated method stub
-		return null;
+		List<Game> returnList=new ArrayList<Game>();
+		Game temp=new Game(null, 0, null);
+		returnList.add(temp);
+		return returnList;
 	}
 
 	@Override
 	public Game createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
 		// TODO Auto-generated method stub
-		return null;
+		Player[] players= new Player[4];
+		Game temp=new Game(name,1,players);
+		return temp;
 	}
 
 	@Override
-	public void joinGame(String playerinfo, int id, CatanColor color) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void saveGame(int id, String filename) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void loadGame(String filename) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void getModel(int id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<String> getCommands() {
+	public String joinGame(String playerinfo, int id, CatanColor color) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String executeCommands(List<String> commands) {
+	public String getModel(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void sendChat(String message) {
+	public String addAIPlayer(String AiType) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void acceptTrade(boolean accept) {
+	public String getAITypes() {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void rollNumber() {
+	public String sendChat(String message) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void buildRoad(boolean free, EdgeLocation roadLocation) {
+	public String acceptTrade(boolean accept) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void buildSettlement(boolean free, VertexLocation place) {
+	public String discardCards(ResourceList discardedCards) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void buildCity(VertexLocation place) {
+	public String rollNumber(int number) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void maritimeTrade(int ratio, ResourceType input, ResourceType output) {
+	public String buildRoad(boolean free, EdgeLocation roadLocation) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void robPlayer(HexLocation location, Player victim) {
+	public String buildSettlement(boolean free, VertexLocation place) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void finishTurn() {
+	public String buildCity(VertexLocation place) {
 		// TODO Auto-generated method stub
+		return null;
+	}
 
+
+	@Override
+	public String maritimeTrade(int ratio, ResourceType input, ResourceType output) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String finishTurn() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public void buyDevCard() {
+	public String buyDevCard() {
 		// TODO Auto-generated method stub
+		return null;
+	}
 
+
+	@Override
+	public String yearOfPlenty(ResourceType one, ResourceType two) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public void playSoldier(HexLocation place, Player victim) {
+	public String RoadBuilding(EdgeLocation one, EdgeLocation two) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void yearOfPlenty(ResourceType one, ResourceType two) {
+	public String monopoly(ResourceType one) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void RoadBuilding(EdgeLocation one, EdgeLocation two) {
+	public String monument() {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void monopoly(ResourceType one) {
+	public String offerTrade(ResourceList offer, shared.model.Player receiver) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void monument() {
+	public String robPlayer(HexLocation location, shared.model.Player victim) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void discardCards(ResourceMultiSet discardedCards) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void offerTrade(ResourceMultiSet offer, Player receiver) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addAIPlayer(AddAIRequest ai) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<String> getAITypes() {
+	public String playSoldier(HexLocation place, shared.model.Player victim) {
 		// TODO Auto-generated method stub
 		return null;
 	}

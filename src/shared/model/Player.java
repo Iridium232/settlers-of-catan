@@ -56,7 +56,7 @@ public class Player {
     /**
      *  The resource cards this player has
      */
-    private ResourceMultiSet resources;
+    private ResourceMultiSet resources = new ResourceMultiSet();
     /**
      *  How many roads this player has left to play
      */
@@ -86,12 +86,12 @@ public class Player {
         this.discarded = false;
         this.name = null;
         this.monuments = 0;
-        this.newDevCards = null;
-        this.oldDevCards = null;
+        this.newDevCards = new DevCardList();
+        this.oldDevCards = new DevCardList();
         this.playerIndex = 0;
         this.playedDevCard = false;
         this.playerID = 0;
-        this.resources = null;
+        this.resources = new ResourceMultiSet();
         this.roads = 15;
         this.settlements = 5;
         this.soldiers = 0;
@@ -118,10 +118,10 @@ public class Player {
         this.cities = 4;
         this.discarded = false;
         this.monuments = 0;
-        this.newDevCards = null;
-        this.oldDevCards = null;
+        this.newDevCards = new DevCardList();
+        this.oldDevCards = new DevCardList();
         this.playedDevCard = false;
-        this.resources = null;
+        this.resources = new ResourceMultiSet();
         this.roads = 15;
         this.settlements = 5;
         this.soldiers = 0;
@@ -678,6 +678,7 @@ public class Player {
    */
   public boolean canPlayYearOfPlenty() 
   {
+	
   	DevCardList cost = new DevCardList();
   	cost.setYear_of_plenty(1);
       return oldDevCards.includes(cost) && !this.playedDevCard;
@@ -770,6 +771,10 @@ public class Player {
         return resources.canAfford(resources);
     }
 
+    /**
+     * @pre
+     * @post
+     */
 	public boolean canBuyDevCard() 
 	{
 		ResourceMultiSet cost = new ResourceMultiSet();
@@ -777,5 +782,18 @@ public class Player {
 		cost.setWheat(1);
 		cost.setOre(1);
 		return resources.canAfford(cost);
+	}
+
+	/**
+	 * Tells whether a player can play the monopoly card 
+	 * 
+	 * @pre none
+	 * @post true iff the player hasnt played a dev card and has the monopoly card to play
+	 */
+	public boolean canPlayMonopoly() 
+	{
+    	DevCardList soldier_cost = new DevCardList();
+    	soldier_cost.setMonopoly(1);
+        return oldDevCards.includes(soldier_cost) && !playedDevCard;
 	}
 }

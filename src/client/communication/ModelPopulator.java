@@ -5,7 +5,6 @@ import org.json.JSONObject;
 import shared.communication.ResourceList;
 import shared.communication.fromServer.game.*;
 import shared.communication.fromServer.game.DevCardList;
-import shared.communication.fromServer.game.EdgeLocation;
 import shared.communication.fromServer.game.Port;
 import shared.communication.fromServer.game.Road;
 import shared.communication.fromServer.game.Player;
@@ -31,13 +30,14 @@ public class ModelPopulator {
         ServerModel serverModel = gson.fromJson(o.toString(), ServerModel.class);
         Game newModel = new Game();
         mp.populateGame(serverModel, newModel);
-        //fascade.attachNewModel(newModel);
+        fascade.changeModel(newModel);
     }
 
     private ModelPopulator() {
     }
 
     private void populateGame(ServerModel serverModel, Game newModel) {
+        populateDeck(serverModel, newModel);
         populateBank(serverModel, newModel);
         populateChat(serverModel, newModel);
         populateLog(serverModel, newModel);
@@ -49,15 +49,28 @@ public class ModelPopulator {
         newModel.setWinner(serverModel.getWinner());
     }
 
+    private void populateDeck(ServerModel serverModel, Game newModel) {
+        DevCardList deck = serverModel.getDeck();
+        shared.model.DevCardList development_bank = new shared.model.DevCardList();
+
+        development_bank.setMonument(deck.getMonument());
+        development_bank.setMonopoly(deck.getMonopoly());
+        development_bank.setSoldier(deck.getSoldier());
+        development_bank.setRoad_building(deck.getRoadBuilding());
+        development_bank.setYear_of_plenty(deck.getYearOfPlenty());
+
+        newModel.setDevelopment_bank(development_bank);
+    }
+
     private void populateBank(ServerModel serverModel, Game newModel) {
         ResourceList bank = serverModel.getBank();
-        ResourceMultiSet resource_bank = newModel.getResource_bank();
+        ResourceMultiSet resource_bank = new ResourceMultiSet(bank.getBrick(),
+                bank.getWheat(),
+                bank.getOre(),
+                bank.getWood(),
+                bank.getSheep());
 
-        resource_bank.setBrick(bank.getBrick());
-        resource_bank.setOre(bank.getOre());
-        resource_bank.setSheep(bank.getSheep());
-        resource_bank.setWheat(bank.getWheat());
-        resource_bank.setWood(bank.getWood());
+        newModel.setResource_bank(resource_bank);
     }
 
     private void populateChat(ServerModel serverModel, Game newModel) {
@@ -87,7 +100,6 @@ public class ModelPopulator {
         populateRoads(serverMap, clientMap);
         populateSettlements(serverMap, clientMap);
         populateCities(serverMap, clientMap);
-        clientMap.setRadius(serverMap.getRadius());
         populateRobber(serverMap, clientMap);
     }
 
@@ -138,18 +150,52 @@ public class ModelPopulator {
             String serverResource = port.getResource();
 
             shared.model.ports.Port newPort = null;
+            Vertex vertex1 = null;
+            Vertex vertex2 = null;
+            switch (serverDirection) {
+                case "NW":
+                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthWest));
+                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.West));
+                    break;
+                case "N":
+                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthWest));
+                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthEast));
+                    break;
+                case "NE":
+                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthEast));
+                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.East));
+                    break;
+                case "SE":
+                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.East));
+                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthEast));
+                    break;
+                case "S":
+                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthEast));
+                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthWest));
+                    break;
+                case "SW":
+                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthWest));
+                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.West));
+                    break;
+            }
             if (serverResource == null) {
-                newPort = new MiscPort(serverLocation.getX(), serverLocation.getY(), serverDirection, serverRatio);
+                newPort = new MiscPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
+                        serverRatio);
             } else if (serverResource.equals("Wood")){
-                newPort = new WoodPort(serverLocation.getX(), serverLocation.getY(), serverDirection, serverRatio);
+                newPort = new WoodPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
+                        serverRatio);
             } else if (serverResource.equals("Brick")){
-                newPort = new BrickPort(serverLocation.getX(), serverLocation.getY(), serverDirection, serverRatio);
+                newPort = new BrickPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
+                        serverRatio);
             } else if (serverResource.equals("Sheep")){
-                newPort = new SheepPort(serverLocation.getX(), serverLocation.getY(), serverDirection, serverRatio);
+                newPort = new SheepPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
+                        serverRatio);
             } else if (serverResource.equals("Wheat")){
-                newPort = new WheatPort(serverLocation.getX(), serverLocation.getY(), serverDirection, serverRatio);
+                newPort = new WheatPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
+                        serverRatio);
             } else if (serverResource.equals("Ore")){
-                newPort = new OrePort(serverLocation.getX(), serverLocation.getY(), serverDirection, serverRatio);
+                newPort = new OrePort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
+                        serverRatio);
             }
             clientMap.addPort(newPort);
         }
@@ -161,37 +207,69 @@ public class ModelPopulator {
         for (Road road : serverRoads) {
             //Values from server
             int serverOwner = road.getOwner();
-            EdgeLocation serverLocation = road.getLocation();
+            shared.locations.EdgeLocation serverEdgeLocation = road.getLocation();
+            HexLocation serverLocation = serverEdgeLocation.getHexLoc();
             HexLocation newLocation = new HexLocation(serverLocation.getX(), serverLocation.getY());
 
             //Load values from server
             shared.model.Road newRoad = new shared.model.Road();
 
             Edge newRoadEdge = new Edge();
+
+            Vertex vertex1 = null;
+            Vertex vertex2 = null;
+            switch (serverEdgeLocation.getDir()) {
+                case NorthWest:
+                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthWest));
+                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.West));
+                    break;
+                case North:
+                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthWest));
+                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthEast));
+                    break;
+                case NorthEast:
+                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.NorthEast));
+                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.East));
+                    break;
+                case SouthEast:
+                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.East));
+                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthEast));
+                    break;
+                case South:
+                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthEast));
+                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthWest));
+                    break;
+                case SouthWest:
+                    vertex1 = new Vertex(new VertexLocation(serverLocation, VertexDirection.SouthWest));
+                    vertex2 = new Vertex(new VertexLocation(serverLocation, VertexDirection.West));
+                    break;
+            }
+            newRoadEdge.setEnd1(vertex1);
+            newRoadEdge.setEnd2(vertex2);
+
             shared.locations.EdgeLocation newEdgeLocation = null;
-            if (serverLocation.getDirection().equals("NW")) {
+            if (serverEdgeLocation.getDir().equals("NW")) {
                 newEdgeLocation = new shared.locations.EdgeLocation(newLocation, EdgeDirection.NorthWest);
                 newRoadEdge.setDirection(EdgeDirection.NorthWest);
-            } else if (serverLocation.getDirection().equals("N")) {
+            } else if (serverEdgeLocation.getDir().equals("N")) {
                 newEdgeLocation = new shared.locations.EdgeLocation(newLocation, EdgeDirection.North);
                 newRoadEdge.setDirection(EdgeDirection.North);
-            } else if (serverLocation.getDirection().equals("NE")) {
+            } else if (serverEdgeLocation.getDir().equals("NE")) {
                 newEdgeLocation = new shared.locations.EdgeLocation(newLocation, EdgeDirection.NorthEast);
                 newRoadEdge.setDirection(EdgeDirection.NorthEast);
-            } else if (serverLocation.getDirection().equals("SW")) {
+            } else if (serverEdgeLocation.getDir().equals("SW")) {
                 newEdgeLocation = new shared.locations.EdgeLocation(newLocation, EdgeDirection.SouthWest);
                 newRoadEdge.setDirection(EdgeDirection.SouthWest);
-            } else if (serverLocation.getDirection().equals("S")) {
+            } else if (serverEdgeLocation.getDir().equals("S")) {
                 newEdgeLocation = new shared.locations.EdgeLocation(newLocation, EdgeDirection.South);
                 newRoadEdge.setDirection(EdgeDirection.South);
-            } else if (serverLocation.getDirection().equals("SE")) {
+            } else if (serverEdgeLocation.getDir().equals("SE")) {
                 newEdgeLocation = new shared.locations.EdgeLocation(newLocation, EdgeDirection.SouthEast);
                 newRoadEdge.setDirection(EdgeDirection.SouthEast);
             }
             newRoadEdge.setLocation(newEdgeLocation);
-            newRoadEdge.setRoad(newRoad);
             newRoad.setLocation(newRoadEdge);
-            newRoad.setOwner(serverOwner);
+            newRoad.setOwnerIndex(serverOwner);
             try {
                 clientMap.addRoad(newRoad);
             } catch (Exception e) {
@@ -250,7 +328,9 @@ public class ModelPopulator {
         Player[] serverPlayers = serverModel.getPlayers();
 
         for (Player player : serverPlayers) {
+        	if(player == null)continue;
             shared.model.Player newPlayer = new shared.model.Player();
+            System.err.print("\nPLAYER\n");
             newPlayer.setCities(player.getCities());
             newPlayer.setColor(player.getColor());
             newPlayer.setDiscarded(player.isDiscarded());
@@ -285,9 +365,10 @@ public class ModelPopulator {
     }
 
     private void setPieceColors(Game newModel) {
+    	if(newModel.getMap().getRoads() == null)return;
         for (shared.model.Road road : newModel.getMap().getRoads()) {
             for (shared.model.Player player : newModel.getPlayers()) {
-                if (road.getOwner() == player.getPlayerIndex()) {
+                if (road.getOwnerIndex() == player.getPlayerIndex()) {
                     if (player.getColor().equals("red")) { road.setColor(CatanColor.RED); }
                     if (player.getColor().equals("orange")) { road.setColor(CatanColor.ORANGE); }
                     if (player.getColor().equals("yellow")) { road.setColor(CatanColor.YELLOW); }
@@ -321,7 +402,7 @@ public class ModelPopulator {
     private void populateTradeOffer(ServerModel serverModel, Game newModel) {
         TradeOffer serverOffer = serverModel.getTradeOffer();
         shared.model.TradeOffer newOffer = new shared.model.TradeOffer();
-
+        if(serverOffer == null)return;
         newOffer.setSender(serverOffer.getSender());
         newOffer.setReciever(serverOffer.getReceiver());
 

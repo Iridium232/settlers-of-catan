@@ -14,7 +14,7 @@ public class Game
 	/**
 	 * Map of the board with all the pieces
 	 */
-	private GameMap map;
+	private GameMap map = new GameMap();
 	
 	/**
 	 * Info needed by the GUI
@@ -44,7 +44,7 @@ public class Game
 	/**
 	 * a list of chat messages
 	 */
-	private MessageList chat;
+	private MessageList chat = new MessageList();
 	
 	/**
 	 * a list of log messages
@@ -59,13 +59,21 @@ public class Game
 	/**
 	 * list of resource cards owned by nobody
 	 */
-	private ResourceMultiSet resource_bank;
+	private ResourceMultiSet resource_bank = new ResourceMultiSet();
 	
 	/**
 	 * list of development cards owned by nobody
 	 */
 	private DevCardList development_bank;
 
+	public Game()
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			players[i] = new Player();
+		}
+	}
+	
 	/**
 	 * @return the map
 	 */

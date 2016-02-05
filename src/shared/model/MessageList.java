@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class MessageList 
 {
-	private ArrayList<MessageLine> messages;
+	private ArrayList<MessageLine> messages = new ArrayList<MessageLine>();
 	
 	/**
 	 * Adds a message to the chat
