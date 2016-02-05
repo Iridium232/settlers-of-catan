@@ -218,7 +218,8 @@ public class Game
 	/**
 	 * @return the development_bank
 	 */
-	public DevCardType getDevelopment_bank() {
+	public DevCardList getDevelopment_bank() 
+	{
 		return development_bank;
 	}
 

@@ -107,12 +107,13 @@ public class Fascade
 	public DevCardType buyDevelopmentCard(int player_index) throws Exception
 	{
 		if (!canBuyDevelopmentCard(player_index)) throw new ModelException();
-		Player player = game_model.getPlayers()[player_index];
-		BuyDevCard player_buy = player.player_buy_devcard;
-		player_buy.buyDevCard();
-		DevCardType devcard = buy_devcard.getDevCard();
-		player_buy.giveDevCard(devcard);
-		return devcard;
+//		Player player = game_model.getPlayers()[player_index];
+//		BuyDevCard player_buy = player.player_buy_devcard;
+//		player_buy.buyDevCard();
+//		DevCardType devcard = buy_devcard.getDevCard();
+//		player_buy.giveDevCard(devcard);
+//		return devcard;
+		return null;
 
 	}
 	

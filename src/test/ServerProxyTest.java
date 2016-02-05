@@ -15,6 +15,7 @@ import shared.model.Fascade;
 public class ServerProxyTest {
 
 	private static ServerProxy sp;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		Fascade f=new Fascade();
