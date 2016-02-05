@@ -22,6 +22,11 @@ public class Road
 		return location;
 	}
 	
+	public void setColor(CatanColor color)
+	{
+		this.color = color;
+	}
+	
 	/**
 	 * @param owner_index to set
 	 */

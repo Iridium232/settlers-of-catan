@@ -542,4 +542,11 @@ public class GameMap
 		}
 		return false;
 	}
+
+	public void addRoad(Edge edge) throws Exception 
+	{
+		Road road = new Road();
+		road.setLocation(edge);
+		addRoad(road);
+	}
 }
