@@ -75,20 +75,22 @@ public class ModelPopulator {
 
     private void populateChat(ServerModel serverModel, Game newModel) {
         MessageList serverChat = serverModel.getChat();
-        MessageList clientChat = newModel.getChat();
+        MessageList clientChat = new MessageList();
 
         for (MessageLine line : serverChat.getMessages()) {
             clientChat.addMessage(line);
         }
+        newModel.setChat(clientChat);
     }
 
     private void populateLog(ServerModel serverModel, Game newModel) {
         MessageList serverLog = serverModel.getLog();
-        MessageList clientLog = newModel.getLog();
+        MessageList clientLog = new MessageList();
 
         for (MessageLine line : serverLog.getMessages()) {
             clientLog.addMessage(line);
         }
+        newModel.setLog(clientLog);
     }
 
     private void populateMap(ServerModel serverModel, Game newModel) {
