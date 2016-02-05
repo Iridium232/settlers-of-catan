@@ -1,7 +1,5 @@
 package shared.communication.fromServer.game;
 
-import shared.locations.VertexLocation;
-
 /**
  * Michael Rhodes
  * CS 340

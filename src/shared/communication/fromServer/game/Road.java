@@ -1,7 +1,5 @@
 package shared.communication.fromServer.game;
 
-import shared.locations.EdgeLocation;
-
 /**
  * Michael Rhodes
  * CS 340
