@@ -112,4 +112,9 @@ public abstract class Port
 	{
 		return vertex2;
 	}
+
+	public void setVertex2(Vertex vertex) {
+		vertex2 = vertex;
+		
+	}
 }

@@ -15,11 +15,11 @@ public class ResourceMultiSet {
      * Class constructor. Initializes each stack with 19 of its respective resource.
      */
     public ResourceMultiSet(){
-        brick=19;
-        wheat=19;
-        ore=19;
-        wood=19;
-        sheep=19;
+        brick=0;
+        wheat=0;
+        ore=0;
+        wood=0;
+        sheep=0;
     }
 
 
@@ -239,9 +239,15 @@ public class ResourceMultiSet {
 		int other_brick = trade_in_cards.getBrick();
 		int other_sheep = trade_in_cards.getSheep();
 		int other_wheat = trade_in_cards.getWheat();
-		return (this.wood >= other_wood) && (this.ore >= other_ore) 
-				&& (this.wheat >= other_wheat) && (this.sheep >= other_sheep)
-				&& (this.brick > other_brick);
+		boolean good_on_wood = (this.wood >= other_wood);
+		boolean good_on_ore = (this.ore >= other_ore);
+		boolean good_on_sheep = this.sheep >= other_sheep;
+		boolean good_on_bricks = this.brick >= other_brick;
+		boolean good_on_food = this.wheat >= other_wheat;
+		return  good_on_wood && good_on_ore && good_on_sheep
+				&& good_on_bricks && good_on_food;
+		
+		
 	}
 
 

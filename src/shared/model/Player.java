@@ -143,7 +143,8 @@ public class Player {
      */
     public boolean canAfford(ResourceMultiSet cost)
     {
-    	return resources.canAfford(cost);
+    	boolean result = resources.canAfford(cost);
+    	return result;
     }
     
     

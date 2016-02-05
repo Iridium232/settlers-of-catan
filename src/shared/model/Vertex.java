@@ -26,29 +26,29 @@ public class Vertex
 		this.location = location;
 	}
 	
-	public HexLocation[] getNeigborHexLocations(TerrainHex[][] hex_pointer)
+	public HexLocation[] getNeigborHexLocations(GameMap map_pointer)
 	{
 		HexLocation[] neighbors = new HexLocation[3];
 		neighbors[0] = location.getNormalizedLocation().getHexLoc();//lower hex
 		int lowerX = neighbors[0].getX();
 		int lowerY = neighbors[0].getY();
-		neighbors[1] = hex_pointer[lowerX][lowerY - 1].getLocation();
+		neighbors[1] = map_pointer.getHexAt(lowerX, lowerY + 1).getLocation();
 		if(this.getLocation().getDir() == VertexDirection.NorthEast)
 		{
-			neighbors[2] = hex_pointer[lowerX - 1][lowerY].getLocation();//Upper Left
+			neighbors[2] = map_pointer.getHexAt(lowerX - 1,lowerY + 1).getLocation();//Upper Left
 		}
 		else if (this.getLocation().getDir() == VertexDirection.NorthWest)
 		{
-			neighbors[2] = hex_pointer[lowerX + 1][lowerY + 1].getLocation();;//Upper Right
+			neighbors[2] = map_pointer.getHexAt(lowerX + 1,lowerY).getLocation();//Upper Right
 		}
 		return neighbors;
 	}
 	
-	public Vertex[] getneighborLocations(TerrainHex[][] hex_pointer)
+	public Vertex[] getneighborLocations(GameMap map_pointer)
 	{
 		Vertex[] neighbors = new Vertex[3];
-		HexLocation[] neighbor_hexes = getNeigborHexLocations(hex_pointer);
-		if(location.getNormalizedLocation().getDir() == VertexDirection.NorthEast)
+		HexLocation[] neighbor_hexes = getNeigborHexLocations(map_pointer);
+		if(location.getNormalizedLocation().getDir().equals(VertexDirection.NorthEast))
 		{
 			neighbors[0] = new Vertex(new VertexLocation(location.getHexLoc(), VertexDirection.NorthWest));
 			neighbors[1] = new Vertex(new VertexLocation(location.getHexLoc(), VertexDirection.East));

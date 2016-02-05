@@ -290,7 +290,7 @@ public class Fascade
 	}
 	
 	/**
-	 * Rob the indicated player of a random specified card
+	 * Rob the indicated player of a random card
 	 * 
 	 * @param robber
 	 * @param robbed
@@ -570,7 +570,7 @@ public class Fascade
 		}
 		catch (Exception e)
 		{
-			System.err.print("Port list not found!");
+			System.err.print("Port list not found!" + e.getMessage());
 			return false;
 		}
 		boolean matching_port = false;
@@ -670,7 +670,7 @@ public class Fascade
 			return false;
 		}
 		Player player = game_model.getPlayers()[player_index];
-		return player.canAfford(card_offered);
+		return player.canAfford(card_offered) && (game_model.getTurnStatus(player_index) == TurnStatus.TRADING);
 	}
 	
 	/**
