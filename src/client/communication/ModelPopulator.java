@@ -449,7 +449,7 @@ public class ModelPopulator {
 
         ResourceMultiSet newMultiSet = new ResourceMultiSet();
         populateResourceMultiSet(serverOffer.getOffer(), newMultiSet);
-        newOffer.setOffer(newMultiSet);
+        newOffer.translateOffer(newMultiSet);
 
         newModel.setTrade_offer(newOffer);
     }
