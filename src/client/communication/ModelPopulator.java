@@ -407,22 +407,42 @@ public class ModelPopulator {
     }
 
     private void setPieceColors(Game newModel) {
-    	if(newModel.getMap().getRoads() == null)return;
+        setRoadColors(newModel);
+        setBuildingColors(newModel);
+    }
+
+    private void setRoadColors(Game newModel) {
+        if(newModel.getMap().getRoads() == null)return;
         for (shared.model.Road road : newModel.getMap().getRoads()) {
             for (shared.model.Player player : newModel.getPlayers()) {
                 if (road.getOwnerIndex() == player.getPlayerIndex()) {
-                    if (player.getColor().equals("red")) { road.setColor(CatanColor.RED); }
-                    if (player.getColor().equals("orange")) { road.setColor(CatanColor.ORANGE); }
-                    if (player.getColor().equals("yellow")) { road.setColor(CatanColor.YELLOW); }
-                    if (player.getColor().equals("blue")) { road.setColor(CatanColor.BLUE); }
-                    if (player.getColor().equals("green")) { road.setColor(CatanColor.GREEN); }
-                    if (player.getColor().equals("purple")) { road.setColor(CatanColor.PURPLE); }
-                    if (player.getColor().equals("puce")) { road.setColor(CatanColor.PUCE); }
-                    if (player.getColor().equals("white")) { road.setColor(CatanColor.WHITE); }
-                    if (player.getColor().equals("brown")) { road.setColor(CatanColor.BROWN); }
+                    road.setColor(getCatanColor(player));
                 }
             }
         }
+    }
+
+    private void setBuildingColors(Game newModel) {
+        if(newModel.getMap().getBuildings() == null)return;
+        for (shared.model.Building bldg : newModel.getMap().getBuildings()) {
+            for (shared.model.Player player : newModel.getPlayers()) {
+                if (bldg.getOwner() == player.getPlayerIndex()) {
+                    bldg.setColor(getCatanColor(player));
+                }
+            }
+        }
+    }
+
+    private CatanColor getCatanColor(shared.model.Player player) {
+        if (player.getColor().equals("red")) return CatanColor.RED;
+        if (player.getColor().equals("orange")) return CatanColor.ORANGE;
+        if (player.getColor().equals("yellow")) return CatanColor.YELLOW;
+        if (player.getColor().equals("blue")) return CatanColor.BLUE;
+        if (player.getColor().equals("green")) return CatanColor.GREEN;
+        if (player.getColor().equals("purple")) return CatanColor.PURPLE;
+        if (player.getColor().equals("puce")) return CatanColor.PUCE;
+        if (player.getColor().equals("white")) return CatanColor.WHITE;
+        return CatanColor.BROWN;
     }
 
     private void populateResourceMultiSet(ResourceList serverList, ResourceMultiSet newSet) {
