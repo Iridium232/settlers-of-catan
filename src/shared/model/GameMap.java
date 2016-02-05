@@ -1,9 +1,8 @@
 package shared.model;
 import java.util.*;
-
-import shared.communication.toServer.moves.BuildSettlement;
 import shared.locations.*;
 import shared.definitions.*;
+import shared.model.*;
 import shared.model.ports.Port;
 
 /**
@@ -19,9 +18,9 @@ public class GameMap
 {
 	private static final int HEXINDEXOFFSET = 3;
 	private TerrainHex[][] hexes = new TerrainHex[7][7];
-	private Port[] ports = null;
-	private Road[] roads = null;
-	private Building[] buildings = null;
+	private Port[] ports;
+	private Road[] roads;
+	private Building[] buildings;
 	private Robber robber = new Robber();
 	private int radius;
 	
@@ -39,7 +38,11 @@ public class GameMap
 	/**
 	 * Default Constructor
 	 */
-	public GameMap() {}
+	public GameMap() {
+		ports = new Port[0];
+		roads = new Road[0];
+		buildings = new Building[0];
+	}
 
 	/**
 	 * get players' buildings adjoining a Hex
@@ -165,27 +168,26 @@ public class GameMap
 	/**
 	 * Adds a Road to the map for setup
 	 * @param road
-	 * @param edge
 	 * @pre this is a valid road not already on the game map
 	 * @post the road is registered on the map
 	 */
 	public void addRoad(Road edge) throws Exception
 	{
-		if(roads == null)
-		{
-			roads = new Road[1];
-			roads[0] = edge;
-			return;
+		ArrayList<Road> roadsAL = new ArrayList<>();
+		for (Road rd : getRoads()) {
+			if (rd != null) {
+				roadsAL.add(rd);
+			}
 		}
-		ArrayList<Road> allocator = new ArrayList<Road>();
-		for(Road road : roads)
-		{
-			allocator.add(road);
-			
+		roadsAL.add(edge);
+		Road[] temp = new Road[roadsAL.size()];
+		for (int i = 0; i < roadsAL.size(); i++) {
+			temp[i] = roadsAL.get(i);
 		}
-		allocator.add(edge);
-		roads = allocator.toArray(roads);
+		this.roads = temp;
 	}
+	
+
 	
 	/**
 	 * Tells whether the player can put a city there legally
@@ -201,12 +203,8 @@ public class GameMap
 		Settlement example = new Settlement();
 		return (current_occupant.getClass().equals(example.getClass()));
 	}
-
-	public void addCity(Vertex location, int player_index) {
-		//TODO
-	}
-
-
+	
+	
 	/**
 	 * adds a Building to the Map for setup
 	 * @param building
@@ -215,19 +213,18 @@ public class GameMap
 	 */
 	public void addBuilding(Building building) throws Exception
 	{
-		if(buildings == null)
-		{
-			buildings = new Building[1];
-			buildings[0] = building;
-			return;
+		ArrayList<Building> buildingsAL = new ArrayList<>();
+		for (Building bldg : getBuildings()) {
+			if (bldg != null) {
+				buildingsAL.add(bldg);
+			}
 		}
-		ArrayList<Building> structures = new ArrayList<Building>();
-		for(Building structure : buildings)
-		{
-			structures.add(structure);
+		buildingsAL.add(building);
+		Building[] temp = new Building[buildingsAL.size()];
+		for (int i = 0; i < buildingsAL.size(); i++) {
+			temp[i] = buildingsAL.get(i);
 		}
-		structures.add(building);
-		buildings = (Building[]) structures.toArray();
+		this.buildings = temp;
 	}
 	
 	/**
@@ -251,24 +248,18 @@ public class GameMap
 	 */
 	public void addPort(Port port)
 	{
-		if(port == null)
-		{
-			System.err.print("\nWARNING: Null port rejected");
-			return;
+		ArrayList<Port> portsAL = new ArrayList<>();
+		for (Port prt : getPorts()) {
+			if (prt != null) {
+				portsAL.add(prt);
+			}
 		}
-		if(ports == null)
-		{
-			ports = new Port[1];
-			ports[0] = port;
-			return;
+		portsAL.add(port);
+		Port[] temp = new Port[portsAL.size()];
+		for (int i = 0; i < portsAL.size(); i++) {
+			temp[i] = portsAL.get(i);
 		}
-		ArrayList<shared.model.ports.Port> puertos = new ArrayList<Port>();
-		for(Port puerto : puertos)
-		{
-			puertos.add(puerto);
-		}
-		puertos.add(port);
-		ports = puertos.toArray(ports);
+		this.ports = temp;
 	}
 
 	/**
@@ -276,11 +267,6 @@ public class GameMap
 	 */
 	public Robber getRobber() {
 		return robber;
-	}
-	
-	public TerrainHex getHexAt(int x, int y)
-	{
-		return 	hexes[x + this.HEXINDEXOFFSET][y + this.HEXINDEXOFFSET];
 	}
 
 	/**
@@ -338,11 +324,6 @@ public class GameMap
 	 */
 	public boolean canAddSettlement(Vertex location, int player_index, boolean initialOverride) 
 	{
-		if(location == null)
-		{
-			return false;
-		}
-		
 		//check that the spot touches land in at least 1 way.
 		boolean is_on_land = touchesLand(location);
 
@@ -361,11 +342,6 @@ public class GameMap
 		{
 			for(Road road : roads)
 			{
-				if(road == null)
-				{
-					System.err.print("NULL ROAD!");
-					continue;
-				}
 				boolean touches_vertex = road.getLocation().getEnd1().equals(location) 
 						|| road.getLocation().getEnd2().equals(location);
 				if(road.getOwnerIndex() == player_index || touches_vertex)
@@ -382,7 +358,7 @@ public class GameMap
 		
 		
 		//check that there are no buildings within 1 edge.
-		Vertex[] neigbor_vertexes = location.getneighborLocations(this);
+		Vertex[] neigbor_vertexes = location.getneighborLocations(hexes);
 		for (Building building : buildings)
 		{
 			for(Vertex vertex: neigbor_vertexes)
@@ -396,11 +372,6 @@ public class GameMap
 		
 		return has_incoming_road && is_on_land;
 	}
-
-	public void addSettlement(BuildSettlement build_settlement, int player_index){
-		//TODO
-	}
-
 	
 	/**
 	 * Tells whether a vertex is on land.
@@ -410,16 +381,12 @@ public class GameMap
 	 */
 	private boolean touchesLand(Vertex vertex)
 	{
-		HexLocation[] neighbors = vertex.getNeigborHexLocations(this);
+		HexLocation[] neighbors = vertex.getNeigborHexLocations(hexes);
 		boolean answer = false;
 		for (TerrainHex[] terrain_hex_array : hexes)
 		{
 			for (TerrainHex terrain_hex : terrain_hex_array)
 			{
-				if (terrain_hex == null)
-				{
-					continue;
-				}
 				if(neighbors[0].equals(terrain_hex.getLocation()) 
 					&& terrain_hex.getType() != HexType.WATER)
 				{
@@ -541,12 +508,5 @@ public class GameMap
 			}
 		}
 		return false;
-	}
-
-	public void addRoad(Edge edge) throws Exception 
-	{
-		Road road = new Road();
-		road.setLocation(edge);
-		addRoad(road);
 	}
 }
