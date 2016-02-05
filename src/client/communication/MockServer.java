@@ -79,12 +79,6 @@ public class MockServer implements IServerProxy {
 	}
 
 	@Override
-	public void rollNumber() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void buildRoad(boolean free, EdgeLocation roadLocation) {
 		// TODO Auto-generated method stub
 
@@ -157,25 +151,7 @@ public class MockServer implements IServerProxy {
 	}
 
 	@Override
-	public void discardCards(ResourceMultiSet discardedCards) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void offerTrade(ResourceMultiSet offer, Player receiver) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addAIPlayer(AddAIRequest ai) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<String> getAITypes() {
+	public String getAITypes() {
 		// TODO Auto-generated method stub
 		return null;
 	}

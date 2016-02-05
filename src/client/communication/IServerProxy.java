@@ -3,7 +3,6 @@ package client.communication;
 import java.util.List;
 
 import shared.communication.ResourceList;
-import shared.communication.toServer.game.AddAIRequest;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -12,7 +11,6 @@ import shared.locations.VertexLocation;
 import shared.model.Fascade;
 import shared.model.Game;
 import shared.model.Player;
-import shared.model.ResourceMultiSet;
 
 /**
  * A proxy server that can be implemented to either speak with the server or just return values for testing purposes.
@@ -80,7 +78,7 @@ public interface IServerProxy {
 	
 	public void addAIPlayer(String AiType);
 	//Move commands
-	public List<String> getAITypes();
+	public String getAITypes();
 	/**
 	 * @post the message is posted to the chat
 	 * @param message

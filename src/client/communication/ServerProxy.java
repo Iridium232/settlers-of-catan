@@ -353,15 +353,17 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public List<String> getAITypes() {
+	public String getAITypes() {
 		// TODO Auto-generated method stub
+		String result=null;
 		try {
 			JSONObject j=ClientCommunicator.getSINGLETON().doGet("/game/listAI");
-			
+			result=j.toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 }
