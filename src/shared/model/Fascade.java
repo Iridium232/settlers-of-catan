@@ -72,12 +72,12 @@ public class Fascade
 	public void buildRoadAt(int player_index, Edge edge) throws Exception
 	{
 		//check for resources of the player
-		if (!this.canBuildRoad(player_index, edge))
-			throw new ModelException();
-		GameMap game_map = game_model.getMap();
-		Player player = game_model.getPlayers()[player_index];
-		game_map.addRoad(edge);
-		player.getColor();
+//		if (!this.canBuildRoad(player_index, edge))
+//			throw new ModelException();
+//		GameMap game_map = game_model.getMap();
+//		Player player = game_model.getPlayers()[player_index];
+//		game_map.addRoad(edge);
+//		player.getColor();
 	}
 	
 	/**
@@ -154,12 +154,12 @@ public class Fascade
 	 */
 	public void buildSettlement(int player_index, Vertex location) throws Exception
 	{
-		if (!this.canBuildSettlement(player_index, location))
-			throw new ModelException();
-		GameMap game_map = game_model.getMap();
-		Player player = game_model.getPlayers()[player_index];
-		BuildSettlement build_settlement = player.placeSettlement();
-		game_map.addSettlement(build_settlement, player_index);
+//		if (!this.canBuildSettlement(player_index, location))
+//			throw new ModelException();
+//		GameMap game_map = game_model.getMap();
+//		Player player = game_model.getPlayers()[player_index];
+//		BuildSettlement build_settlement = player.placeSettlement();
+//		game_map.addSettlement(build_settlement, player_index);
 
 	}
 	
@@ -190,11 +190,11 @@ public class Fascade
 	 */
 	public void BuildCity(int player_index, Vertex location) throws Exception
 	{
-		if (!this.canBuildCity(player_index, location))
-			throw new ModelException();
-		GameMap game_map = game_model.getMap();
-		Player player = game_model.getPlayers()[player_index];
-		game_map.addCity(location, player_index);
+//		if (!this.canBuildCity(player_index, location))
+//			throw new ModelException();
+//		GameMap game_map = game_model.getMap();
+//		Player player = game_model.getPlayers()[player_index];
+//		game_map.addCity(location, player_index);
 
 	}
 	
