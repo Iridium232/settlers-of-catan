@@ -241,6 +241,12 @@ public class GameMap
 				[hex.getLocation().getY() + this.HEXINDEXOFFSET] = hex;
 	}
 	
+	public TerrainHex getHexAt(int x, int y)
+	{
+		return hexes[x + this.HEXINDEXOFFSET]
+				[y + this.HEXINDEXOFFSET];
+	}
+	
 	/**
 	 * Adds a port to the map for setup
 	 * @param port
@@ -510,4 +516,6 @@ public class GameMap
 		}
 		return false;
 	}
+	
+	
 }
