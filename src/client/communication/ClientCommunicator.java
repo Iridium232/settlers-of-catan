@@ -20,7 +20,7 @@ public class ClientCommunicator {
 
 //******************************************* Static Fields/Methods *************************************************//
 	private static final String DEFAULT_SERVER_HOST = "localhost";
-	private static final int DEFAULT_SERVER_PORT = 5555;
+	private static final int DEFAULT_SERVER_PORT = 8081;
 	private static final String HTTP_GET = "GET";
 	private static final String HTTP_POST = "POST";
 	private static ClientCommunicator SINGLETON;
@@ -83,13 +83,13 @@ public class ClientCommunicator {
 	public String login(String username, String password) throws Exception {
 		try {
 			URL url = new URL(url_prefix + "/user/login");
+			System.out.println(url);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 			connection.setRequestMethod(HTTP_POST);
 			connection.setDoOutput(true);
 			connection.connect();
 
 			Credentials credentials = new Credentials(username, password);
-
 			String serialized = serializer.serialize(credentials);
 			connection.getOutputStream().write(serialized.getBytes());
 			connection.getOutputStream().close();
