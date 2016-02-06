@@ -37,18 +37,18 @@ public class ServerProxyTest {
 			return;
 		}
 		ModelPopulator.populateModel(json,f);
-	//	sp.register("bob", "bob");
+		//sp.register("Pete", "pete");
 	}
 	
 	@Test
 	public void testLogin() {
-		String result=sp.login("bob", "bob");
-		assertEquals (result,"200");
+		String result=sp.login("Pete", "pete");
+		assertEquals (result,"OK");
 	}
 	
 	@Test
 	public void testRegister() {
-		String result=sp.register("greg", "bob");
+		String result=sp.register("Brrrrr", "bddd");
 		System.out.println(result);
 		assertEquals("200",result);
 	}

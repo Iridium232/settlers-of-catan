@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="1" failures="0" hostname="jeyrey-Inspiron-7347" name="FascadeTest" skipped="0" tests="1" time="0.0" timestamp="2016-02-06T03:19:14">
+<testsuite errors="1" failures="0" hostname="jeyrey-Inspiron-7347" name="UnitTest" skipped="0" tests="1" time="0.0" timestamp="2016-02-06T03:19:16">
   <properties>
     <property name="java.vendor" value="Oracle Corporation" />
     <property name="java.lib.dir" value="lib" />
@@ -59,7 +59,7 @@
     <property name="java.vm.vendor" value="Oracle Corporation" />
     <property name="java.images" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/images" />
     <property name="java.runtime.name" value="OpenJDK Runtime Environment" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner FascadeTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter,/home/jeyrey/CS340/Settlers/SettlersOfCatan/test_reports/TEST-FascadeTest.txt formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/jeyrey/CS340/Settlers/SettlersOfCatan/test_reports/TEST-FascadeTest.xml crashfile=/home/jeyrey/CS340/Settlers/SettlersOfCatan/junitvmwatcher4341832384492020401.properties propsfile=/home/jeyrey/CS340/Settlers/SettlersOfCatan/junit7641283384748069178.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner UnitTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter,/home/jeyrey/CS340/Settlers/SettlersOfCatan/test_reports/TEST-UnitTest.txt formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/jeyrey/CS340/Settlers/SettlersOfCatan/test_reports/TEST-UnitTest.xml crashfile=/home/jeyrey/CS340/Settlers/SettlersOfCatan/junitvmwatcher5126330060409915434.properties propsfile=/home/jeyrey/CS340/Settlers/SettlersOfCatan/junit851070762666086734.properties" />
     <property name="java.class.path" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/junit-4.11.jar:/home/jeyrey/CS340/Settlers/SettlersOfCatan/java/dist:/usr/share/ant/lib/junit.jar:/usr/share/java/ant-launcher-1.9.4.jar:/usr/share/ant/lib/ant.jar:/usr/share/ant/lib/ant-junit.jar:/usr/share/ant/lib/ant-junit4.jar" />
     <property name="ant.version" value="Apache Ant(TM) version 1.9.4 compiled on January 27 2015" />
     <property name="TSTAMP" value="2019" />
@@ -90,7 +90,7 @@
     <property name="ant.project.invoked-targets" value="test" />
     <property name="javadoc.dir" value="docs/java" />
   </properties>
-  <error message="FascadeTest" type="java.lang.ClassNotFoundException">java.lang.ClassNotFoundException: FascadeTest
+  <error message="UnitTest" type="java.lang.ClassNotFoundException">java.lang.ClassNotFoundException: UnitTest
 	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
 	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
 	at java.security.AccessController.doPrivileged(Native Method)

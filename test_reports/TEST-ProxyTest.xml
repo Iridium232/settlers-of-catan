@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="1" failures="0" hostname="jeyrey-Inspiron-7347" name="ProxyTest" skipped="0" tests="1" time="0.0" timestamp="2016-02-06T02:17:02">
+<testsuite errors="1" failures="0" hostname="jeyrey-Inspiron-7347" name="ProxyTest" skipped="0" tests="1" time="0.0" timestamp="2016-02-06T03:19:15">
   <properties>
     <property name="java.vendor" value="Oracle Corporation" />
     <property name="java.lib.dir" value="lib" />
@@ -59,10 +59,10 @@
     <property name="java.vm.vendor" value="Oracle Corporation" />
     <property name="java.images" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/images" />
     <property name="java.runtime.name" value="OpenJDK Runtime Environment" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ProxyTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter,/home/jeyrey/CS340/Settlers/SettlersOfCatan/test_reports/TEST-ProxyTest.txt formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/jeyrey/CS340/Settlers/SettlersOfCatan/test_reports/TEST-ProxyTest.xml crashfile=/home/jeyrey/CS340/Settlers/SettlersOfCatan/junitvmwatcher2198795454421291360.properties propsfile=/home/jeyrey/CS340/Settlers/SettlersOfCatan/junit6215682270974471442.properties" />
-    <property name="java.class.path" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/commons-io-2.4.jar:/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/gson-2.2.4.jar:/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/hamcrest-core-1.3.jar:/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/java-json.jar:/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/junit-4.11.jar:/usr/share/ant/lib/junit.jar:/usr/share/java/ant-launcher-1.9.4.jar:/usr/share/ant/lib/ant.jar:/usr/share/ant/lib/ant-junit.jar:/usr/share/ant/lib/ant-junit4.jar" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ProxyTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter,/home/jeyrey/CS340/Settlers/SettlersOfCatan/test_reports/TEST-ProxyTest.txt formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/jeyrey/CS340/Settlers/SettlersOfCatan/test_reports/TEST-ProxyTest.xml crashfile=/home/jeyrey/CS340/Settlers/SettlersOfCatan/junitvmwatcher4959715107874563698.properties propsfile=/home/jeyrey/CS340/Settlers/SettlersOfCatan/junit6104823041901322076.properties" />
+    <property name="java.class.path" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/junit-4.11.jar:/home/jeyrey/CS340/Settlers/SettlersOfCatan/java/dist:/usr/share/ant/lib/junit.jar:/usr/share/java/ant-launcher-1.9.4.jar:/usr/share/ant/lib/ant.jar:/usr/share/ant/lib/ant-junit.jar:/usr/share/ant/lib/ant-junit4.jar" />
     <property name="ant.version" value="Apache Ant(TM) version 1.9.4 compiled on January 27 2015" />
-    <property name="TSTAMP" value="1917" />
+    <property name="TSTAMP" value="2019" />
     <property name="java.build" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/java/build" />
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
     <property name="ant.file.type" value="file" />

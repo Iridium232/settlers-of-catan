@@ -28,8 +28,11 @@
     <property name="junit.lib" value="lib/junit-4.11.jar"/>
     <property name="server.jar.file" value="${demo.dir}/server.jar"/>
     <property name="client.jar.file" value="${demo.dir}/client.jar"/>
+	<property name="test.jar.file" value="${java.dir}/dist/catan_tests.jar"/>
+	<property name="test.jar" value="${java.dir}/dist/"/>
     <property name="junit.jar.file" value="${junitlib.dir}/junit.jar"/>
-  
+	<property name="executable-full-path" location="${test.jar}"/>
+	<property name="external" value="lib/external-libs.jar"/>
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
     
@@ -38,7 +41,13 @@
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
-	<path id="application" location="test" />
+	<path id="classpath.base"/>
+	<path id="classpath.test">
+	      <pathelement location="lib/junit-4.11.jar" />
+	      <pathelement location="java/dist/test" />
+	      <pathelement location="java/dist" />
+	      <path refid="classpath.base" />
+	</path>
 
 	<!-- TARGETS -->
 	<!-- ******* -->
@@ -59,21 +68,37 @@
     	<mkdir dir="test_reports"/>
     	
         <junit printsummary="yes" haltonfailure="no" showoutput="yes">
-            <classpath>
-                <path refid="java.lib.classpath"/>
-                <path refid="application"/>
-            </classpath>
+            <classpath refid="classpath.test" />
+
             
             <formatter type="plain"/>
             <formatter type="xml"/>
         	
             <batchtest fork="yes" todir="test_reports">
-                <fileset dir="src/test" includes="*Test.java"/>
+                <fileset dir="src/test" includes="**/*Test.java"/>
             </batchtest>
         	
         </junit>
     </target>
     
+	<target name="test2" description="Runs the demo client">
+		<java classname="test.UnitTest">
+			<classpath>
+				<path refid="${test.jar}"/>
+			</classpath>
+				
+		</java>
+	</target>
+	
+	<target name="test3" depends="package" description="compiles, packages, and runs the student client">
+		<java jar="${java.dist}/catan-tests.jar" dir="${java.dist}" fork="yes">
+			<sysproperty key="com.sun.management.jmxremote" value=""/>
+			<assertions>
+				<enable/>
+			</assertions>
+		</java>
+	</target>
+	
 	<target name="client" description="Runs the demo client">
 		<java jar="${client.jar.file}" fork="true" dir="${demo.dir}">
 			<assertions>
@@ -123,6 +148,14 @@
 		<delete dir="${java.dist}"/>
 	</target>
     
+	<target name="compiletests" depends="init" description="compile the source " >
+		<javac srcdir="${java.src}/test" destdir="${java.build}/test" debug="true" includeantruntime="true">
+			<classpath refid="java.lib.classpath" />
+		</javac>
+	</target>
+	
+	
+	
 	<target name="compile" depends="init" description="compile the source " >
 		<javac srcdir="${java.src}" destdir="${java.build}" debug="true" includeantruntime="true">
 			<classpath refid="java.lib.classpath" />
@@ -147,6 +180,23 @@
 				<attribute name="Main-Class" value="client.main.Catan"/>
 				<attribute name="Class-Path" 
 					value="lib/gson-2.2.4.jar" />
+			</manifest>
+		</jar>
+		
+		<!--
+		Package of jars idea from http://stackoverflow.com/questions/10929438/create-jar-with-custom-manifest-with-multiple-libraries-in-classpath
+		-->
+        <jar jarfile="${external}">
+            <zipgroupfileset dir="lib/">
+                <include name="**/*.jar"/>
+            </zipgroupfileset>
+        </jar>
+		
+ 		<jar jarfile="${java.dist}/catan-tests.jar" basedir="${java.build}">
+			<manifest>
+				<attribute name="Main-Class" value="test.UnitTest"/>
+				<attribute name="Class-Path" 
+					value="${external}"/>
 			</manifest>
 		</jar>
  		<jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
@@ -180,5 +230,8 @@
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>
   
+	
+	
+	
 </project>
 
