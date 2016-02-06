@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="1" failures="0" hostname="jeyrey-Inspiron-7347" name="FascadeTest" skipped="0" tests="1" time="0.0" timestamp="2016-02-06T02:17:02">
+  <properties>
+    <property name="java.vendor" value="Oracle Corporation" />
+    <property name="java.lib.dir" value="lib" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="os.name" value="Linux" />
+    <property name="yuidoc.dir" value="docs/javascript" />
+    <property name="sun.boot.class.path" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/resources.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jsse.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jce.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/charsets.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rhino.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jfr.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/classes" />
+    <property name="TODAY" value="February 5 2016" />
+    <property name="sun.desktop" value="gnome" />
+    <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+    <property name="ant.home" value="/usr/share/ant" />
+    <property name="java.runtime.version" value="1.7.0_95-b00" />
+    <property name="demo.dir" value="demo" />
+    <property name="dest.dir" value="docs" />
+    <property name="user.name" value="jeyrey" />
+    <property name="web.arg" value="gameplay" />
+    <property name="user.language" value="en" />
+    <property name="ant.file.Demo Server" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/build.xml" />
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64" />
+    <property name="options.arg" value="ug" />
+    <property name="ant.project.default-target" value="server" />
+    <property name="ant.project.name" value="Demo Server" />
+    <property name="DSTAMP" value="20160205" />
+    <property name="java.version" value="1.7.0_95" />
+    <property name="user.timezone" value="" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/endorsed" />
+    <property name="sun.cpu.isalist" value="" />
+    <property name="sun.jnu.encoding" value="UTF-8" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="file.separator" value="/" />
+    <property name="ant.file.type.Demo Server" value="file" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="java.class.version" value="51.0" />
+    <property name="user.country" value="US" />
+    <property name="java.home" value="/usr/lib/jvm/java-7-openjdk-amd64/jre" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="ant.file" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/build.xml" />
+    <property name="os.version" value="3.19.0-49-generic" />
+    <property name="java.dist" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/java/dist" />
+    <property name="junit.lib" value="lib/junit-4.11.jar" />
+    <property name="path.separator" value=":" />
+    <property name="java.vm.version" value="24.95-b01" />
+    <property name="port.arg" value="8081" />
+    <property name="ant.library.dir" value="/usr/share/ant/lib" />
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit" />
+    <property name="server.jar.file" value="demo/server.jar" />
+    <property name="java.lib" value="lib" />
+    <property name="javascript.dir" value="gameplay/js" />
+    <property name="user.home" value="/home/jeyrey" />
+    <property name="java.specification.vendor" value="Oracle Corporation" />
+    <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib" />
+    <property name="java.vendor.url" value="http://java.oracle.com/" />
+    <property name="java.vm.vendor" value="Oracle Corporation" />
+    <property name="java.images" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/images" />
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner FascadeTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter,/home/jeyrey/CS340/Settlers/SettlersOfCatan/test_reports/TEST-FascadeTest.txt formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/jeyrey/CS340/Settlers/SettlersOfCatan/test_reports/TEST-FascadeTest.xml crashfile=/home/jeyrey/CS340/Settlers/SettlersOfCatan/junitvmwatcher597418605651979586.properties propsfile=/home/jeyrey/CS340/Settlers/SettlersOfCatan/junit5189814015260887059.properties" />
+    <property name="java.class.path" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/commons-io-2.4.jar:/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/gson-2.2.4.jar:/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/hamcrest-core-1.3.jar:/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/java-json.jar:/home/jeyrey/CS340/Settlers/SettlersOfCatan/lib/junit-4.11.jar:/usr/share/ant/lib/junit.jar:/usr/share/java/ant-launcher-1.9.4.jar:/usr/share/ant/lib/ant.jar:/usr/share/ant/lib/ant-junit.jar:/usr/share/ant/lib/ant-junit4.jar" />
+    <property name="ant.version" value="Apache Ant(TM) version 1.9.4 compiled on January 27 2015" />
+    <property name="TSTAMP" value="1917" />
+    <property name="java.build" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/java/build" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="ant.file.type" value="file" />
+    <property name="java.vm.specification.version" value="1.7" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="java.dir" value="java" />
+    <property name="java.io.tmpdir" value="/tmp" />
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment" />
+    <property name="os.arch" value="amd64" />
+    <property name="java.ext.dirs" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/ext:/usr/java/packages/lib/ext" />
+    <property name="user.dir" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan" />
+    <property name="junit.jar.file" value="${junitlib.dir}/junit.jar" />
+    <property name="line.separator" value="&#xa;" />
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM" />
+    <property name="basedir" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan" />
+    <property name="java.src" value="/home/jeyrey/CS340/Settlers/SettlersOfCatan/src" />
+    <property name="ant.java.version" value="1.7" />
+    <property name="ant.core.lib" value="/usr/share/ant/lib/ant.jar" />
+    <property name="client.jar.file" value="demo/client.jar" />
+    <property name="file.encoding" value="UTF-8" />
+    <property name="java.specification.version" value="1.7" />
+    <property name="java.src.dir" value="java/src" />
+    <property name="ant.project.invoked-targets" value="test" />
+    <property name="javadoc.dir" value="docs/java" />
+  </properties>
+  <error message="FascadeTest" type="java.lang.ClassNotFoundException">java.lang.ClassNotFoundException: FascadeTest
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:195)
+</error>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

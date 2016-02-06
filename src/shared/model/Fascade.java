@@ -452,7 +452,7 @@ public class Fascade
 			}
 		}
 		return player.canAfford(trade_in_cards) && matching_port
-				&& (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
+				&& (game_model.getTurnStatus(player_index) == TurnStatus.TRADING);
 	}
 	
 	/**
@@ -507,7 +507,7 @@ public class Fascade
 			}
 		}
 		return player.canAfford(trade_in_cards) && matching_port
-				&& (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
+				&& (game_model.getTurnStatus(player_index) == TurnStatus.TRADING);
 	}
 	
 	/**
@@ -561,7 +561,7 @@ public class Fascade
 			}
 		}
 		return player.canAfford(trade_in_cards) && matching_port 
-				&& (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
+				&& (game_model.getTurnStatus(player_index) == TurnStatus.TRADING);
 	}
 	
 	/**
@@ -615,7 +615,7 @@ public class Fascade
 			}
 		}
 		return player.canAfford(trade_in_cards) && matching_port 
-				&& (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
+				&& (game_model.getTurnStatus(player_index) == TurnStatus.TRADING);
 	}
 	
 	/**
@@ -670,7 +670,7 @@ public class Fascade
 			}
 		}
 		return player.canAfford(trade_in_cards) && matching_port 
-				&& (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
+				&& (game_model.getTurnStatus(player_index) == TurnStatus.TRADING);
 	}
 	
 	/**
@@ -744,7 +744,7 @@ public class Fascade
 			}
 		}
 		return player.canAfford(trade_in_cards) && matching_port 
-				&& (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
+				&& (game_model.getTurnStatus(player_index) == TurnStatus.TRADING);
 	}
 	
 	/**
@@ -784,7 +784,7 @@ public class Fascade
 		}
 		Player player = game_model.getPlayers()[player_index];
 		return player.canAfford(trade_in_cards) && (game_model.getTurnStatus(player_index) 
-				== TurnStatus.PLAYING);
+				== TurnStatus.TRADING);
 	}
 	
 	/**
@@ -938,12 +938,14 @@ public class Fascade
 	 */
 	public boolean canMaritimeTrade(int player_index)
 	{
-		return this.canTradeAtBrickHarbor(player_index, new ResourceMultiSet())
+		boolean harbors_good =  this.canTradeAtBrickHarbor(player_index, new ResourceMultiSet())
 				|| canTradeAtWoolHarbor(player_index, new ResourceMultiSet())
 				|| canTradeAtWheatHarbor(player_index, new ResourceMultiSet())
 				|| canTradeAtOreHarbor(player_index, new ResourceMultiSet())
 				|| canTradeAtWoodHarbor(player_index, new ResourceMultiSet())
 				|| canTradeAtMiscHarbor(player_index, new ResourceMultiSet());
+		return harbors_good && game_model.getTurn_tracker()
+				.turnStatusOf(player_index) == TurnStatus.TRADING;
 	}
 	
 	

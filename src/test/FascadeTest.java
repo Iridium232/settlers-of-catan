@@ -285,6 +285,10 @@ public class FascadeTest {
 		int inactive_player = 1;
 		Game model = facade.getModel();
 		
+		TurnTracker tracker = model.getTurn_tracker();
+		tracker.setActive_player(1);
+		tracker.setStatus(TurnStatus.TRADING);
+		
 		//Should be false because this player has no port connection
 		assertFalse(facade.canMaritimeTrade(0));
 		
@@ -514,13 +518,9 @@ public class FascadeTest {
 		//Setup trade values
 		Game model = facade.getModel();
 		ResourceMultiSet offer_grain = new ResourceMultiSet();
-		ResourceMultiSet offer_ore = new ResourceMultiSet();
 		ResourceMultiSet want_trees = new ResourceMultiSet();
-		ResourceMultiSet want_bricks = new ResourceMultiSet();
 		offer_grain.setWheat(1);
-		offer_ore.setOre(1);
 		want_trees.setWood(1);
-		want_bricks.setBrick(1);
 		TradeOffer grain_for_trees = new TradeOffer();
 		grain_for_trees.setSender_gives(offer_grain);
 		grain_for_trees.setReciever_gives(want_trees);
@@ -536,8 +536,20 @@ public class FascadeTest {
 		//Active Player Offers trade of Grain for Trees
 		model.setTrade_offer(grain_for_trees);
 		
+		//Should be false because they cannot afford it
+		assertFalse(facade.canAcceptTrade(inactive_player));
+		
+		model.getPlayers()[1].setResources(want_trees);
+		
+		//TurnTracker knows we are waiting for Player 1 to respond
+		TurnTracker tracker = model.getTurn_tracker();
+		tracker.setActive_player(1);
+		tracker.setWaiting_for_player(0);
+		tracker.setStatus(TurnStatus.TRADING);
+		
 		//Should be true because the offer is out there to them
 		assertTrue(facade.canAcceptTrade(inactive_player));
+		
 		
 		//Should be false because the offer is not to them
 		assertFalse(facade.canAcceptTrade(2));

@@ -11,10 +11,12 @@
     <!-- Input folders -->
     <property name="java.dir" value="java"/>
     <property name="java.src.dir" value="${java.dir}/src"/>
-    <property name="java.lib.dir" value="${java.dir}/lib"/>
+    <property name="java.lib.dir" value="lib"/>
+	<property name="java.lib" value="lib"/>
     <!-- JavaScript source folder -->
     <property name="javascript.dir" value="gameplay/js"/>
     
+	
     <!-- Base output folder -->
     <property name="dest.dir" value="docs"/>
     <!-- Javadoc output folder -->
@@ -23,8 +25,10 @@
     <property name="yuidoc.dir" value="${dest.dir}/javascript"/>
     <!-- Jar file path/name from here -->
 	<property name="demo.dir" value="demo"/>
+    <property name="junit.lib" value="lib/junit-4.11.jar"/>
     <property name="server.jar.file" value="${demo.dir}/server.jar"/>
     <property name="client.jar.file" value="${demo.dir}/client.jar"/>
+    <property name="junit.jar.file" value="${junitlib.dir}/junit.jar"/>
   
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
@@ -34,6 +38,7 @@
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
+	<path id="application" location="test" />
 
 	<!-- TARGETS -->
 	<!-- ******* -->
@@ -48,6 +53,26 @@
 			</assertions>
 		</java>
 	</target>
+	
+    <target name="test" depends="package">
+    	
+    	<mkdir dir="test_reports"/>
+    	
+        <junit printsummary="yes" haltonfailure="no" showoutput="yes">
+            <classpath>
+                <path refid="java.lib.classpath"/>
+                <path refid="application"/>
+            </classpath>
+            
+            <formatter type="plain"/>
+            <formatter type="xml"/>
+        	
+            <batchtest fork="yes" todir="test_reports">
+                <fileset dir="src/test" includes="*Test.java"/>
+            </batchtest>
+        	
+        </junit>
+    </target>
     
 	<target name="client" description="Runs the demo client">
 		<java jar="${client.jar.file}" fork="true" dir="${demo.dir}">
@@ -81,11 +106,11 @@
     -->
 
   	<property name="java.dir" location="java"/>
-	<property name="java.src" location="${java.dir}/src"/>
-	<property name="java.images" location="${java.dir}/images"/>
+	<property name="java.src" location="src"/>
+	<property name="java.images" location="images"/>
 	<property name="java.build" location="${java.dir}/build"/>
 	<property name="java.dist" location="${java.dir}/dist"/>
-	<property name="java.lib" location="${java.dir}/lib"/>
+
  
 	<target name="init" description="create build directories">
 		<tstamp/>

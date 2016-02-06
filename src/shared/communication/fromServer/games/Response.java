@@ -5,5 +5,5 @@ package shared.communication.fromServer.games;
  * This class transfer data returned by the server
  */
 public class Response {
-    return
+    
 }
