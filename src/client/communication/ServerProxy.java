@@ -47,6 +47,7 @@ public class ServerProxy implements IServerProxy {
 		this.host=host;
 		this.port=port;
 		this.fascade=f;
+		ClientCommunicator.getSingleton(host, Integer.toString(port));
 	}
 	@Override
 	public void ServerProxy(String host, int port, Fascade f) {

@@ -19,8 +19,14 @@ import client.communication.ClientCommunicator;
 import client.communication.ModelPopulator;
 import client.communication.ServerProxy;
 import shared.communication.fromServer.games.Game;
+import shared.communication.toServer.game.Commands;
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.model.Fascade;
+import shared.model.Player;
 
 public class ServerProxyTest {
 
@@ -42,19 +48,18 @@ public class ServerProxyTest {
 //			return;
 //		}
 //		ModelPopulator.populateModel(json,f);
-	//	sp.register("bob", "bob");
+//		sp.register("bob", "bob");
 	}
-	
+	@Ignore
 	@Test
 	public void testLogin() {
-		String result=sp.login("Pete", "pete");
+		String result=sp.login("bob", "bob");
 		assertEquals (result,"200");
 	}
 	@Ignore
 	@Test
 	public void testRegister() {
-		String result=sp.register("greg", "bob");
-		System.out.println(result);
+		String result=sp.register("Greg", "greg");
 		assertEquals("200",result);
 	}
 	@Ignore
@@ -77,8 +82,7 @@ public class ServerProxyTest {
 	@Test
 	public void testJoinGame() {
 		String test=sp.joinGame("Bob", 3, CatanColor.RED);
-		
-		fail("Not yet implemented");
+		assert(!test.isEmpty());
 	}
 
 	@Test
@@ -138,24 +142,125 @@ public class ServerProxyTest {
 
 	@Test
 	public void testPlaySoldier() {
-		fail("Not yet implemented");
+		FileReader fr;
+		StringBuilder sb=new StringBuilder();
+		String line;
+		try {
+			fr = new FileReader("commands.txt");
+			BufferedReader br=new BufferedReader(fr);
+			while((line=br.readLine())!=null){
+				sb.append(line);
+			}
+			sp.login("Pete", "pete");
+			sp.joinGame("Pete", 0, CatanColor.RED);
+			ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
+			ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
+			Player v=new Player();
+			v.setPlayerIndex(2);
+			String mon=sp.playSoldier(new HexLocation(-1,1), v);
+			assert(!mon.isEmpty());
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	@Test
 	public void testYearOfPlenty() {
-		fail("Not yet implemented");
+		FileReader fr;
+		StringBuilder sb=new StringBuilder();
+		String line;
+		try {
+			fr = new FileReader("commands.txt");
+			BufferedReader br=new BufferedReader(fr);
+			while((line=br.readLine())!=null){
+				sb.append(line);
+			}
+			sp.login("Mark", "mark");
+			sp.joinGame("Pete", 0, CatanColor.RED);
+			ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
+			ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
+			String mon=sp.yearOfPlenty(ResourceType.WHEAT, ResourceType.ORE);
+			assert(!mon.isEmpty());
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testRoadBuilding() {
-		fail("Not yet implemented");
+		FileReader fr;
+		StringBuilder sb=new StringBuilder();
+		String line;
+		try {
+			fr = new FileReader("commands.txt");
+			BufferedReader br=new BufferedReader(fr);
+			while((line=br.readLine())!=null){
+				sb.append(line);
+			}
+			sp.login("Pete", "pete");
+			sp.joinGame("Pete", 0, CatanColor.RED);
+			ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
+			ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
+			EdgeLocation one=new EdgeLocation(new HexLocation(0,0),EdgeDirection.SouthEast);
+			EdgeLocation two=new EdgeLocation(new HexLocation(2,1),EdgeDirection.South);
+			String mon=sp.RoadBuilding(one, two);
+			assert(!mon.isEmpty());
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testMonopoly() {
-		fail("Not yet implemented");
+		FileReader fr;
+		StringBuilder sb=new StringBuilder();
+		String line;
+		try {
+			fr = new FileReader("commands.txt");
+			BufferedReader br=new BufferedReader(fr);
+			while((line=br.readLine())!=null){
+				sb.append(line);
+			}
+			sp.login("Mark", "mark");
+			sp.joinGame("Pete", 0, CatanColor.RED);
+			ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
+			ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
+			String mon=sp.monopoly(ResourceType.BRICK);
+			assert(!mon.isEmpty());
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	@Ignore
+	
 	@Test
 	public void testMonument() {
 		FileReader fr;
@@ -167,23 +272,22 @@ public class ServerProxyTest {
 			while((line=br.readLine())!=null){
 				sb.append(line);
 			}
+			sp.login("Pete", "pete");
+			sp.joinGame("Pete", 0, CatanColor.RED);
+			ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
+			ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
+			String mon=sp.monument();
+			assert(!mon.isEmpty());
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		try {
-			sp.login("Pete", "pete");
-			sp.joinGame("pete", 0, CatanColor.RED);
-			ClientCommunicator.getSINGLETON().doPost("/game/commands", sb.toString());
-			System.out.print(sp.monument().toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		fail("Not yet implemented");
 	}
 
 	@Test

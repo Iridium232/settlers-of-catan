@@ -245,7 +245,27 @@ public class ClientCommunicator {
 			throw new Exception(String.format("doGet failed: %s", e.getMessage()), e);
 		}
 	}
-	
+	public JSONObject sendCommand(String path, String s) throws Exception{
+		if (catan_cookie == null || game_ID == null) {
+			throw new Exception("Haven't Logged in and joined a game");
+		}
+		try {
+			URL url = new URL(url_prefix + path);
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod(HTTP_POST);
+			connection.setRequestProperty("Cookie", cookieBuilder());
+			connection.setDoOutput(true);
+			connection.connect();
+			connection.getOutputStream().write(s.getBytes());
+			connection.getOutputStream().close();
+			InputStream result = connection.getInputStream();
+			return serializer.deserialize(result);			
+		}
+		catch (IOException e) {
+			return null;
+//			throw new Exception(String.format("doPost failed: %s", e.getMessage()), e);
+		}
+	}
 	/**
 	 * 
 	 * @param o
@@ -304,31 +324,31 @@ public class ClientCommunicator {
 		JoinGameRequest request = null;
 		switch (color) {
 			case RED:
-				request = new JoinGameRequest(id, "Red");
+				request = new JoinGameRequest(id, "red");
 				break;
 			case ORANGE:
-				request = new JoinGameRequest(id, "Orange");
+				request = new JoinGameRequest(id, "orange");
 				break;
 			case YELLOW:
-				request = new JoinGameRequest(id, "Yellow");
+				request = new JoinGameRequest(id, "yellow");
 				break;
 			case BLUE:
-				request = new JoinGameRequest(id, "Blue");
+				request = new JoinGameRequest(id, "blue");
 				break;
 			case GREEN:
-				request = new JoinGameRequest(id, "Green");
+				request = new JoinGameRequest(id, "green");
 				break;
 			case PURPLE:
-				request = new JoinGameRequest(id, "Purple");
+				request = new JoinGameRequest(id, "purple");
 				break;
 			case PUCE:
-				request = new JoinGameRequest(id, "Puce");
+				request = new JoinGameRequest(id, "puce");
 				break;
 			case WHITE:
-				request = new JoinGameRequest(id, "White");
+				request = new JoinGameRequest(id, "white");
 				break;
 			case BROWN:
-				request = new JoinGameRequest(id, "Brown");
+				request = new JoinGameRequest(id, "brown");
 				break;
 		}
 		return request;

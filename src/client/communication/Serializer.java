@@ -1,10 +1,13 @@
 package client.communication;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.awt.Window.Type;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
