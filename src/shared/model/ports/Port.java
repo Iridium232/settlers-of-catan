@@ -11,11 +11,11 @@ import shared.model.Vertex;
  */
 public abstract class Port 
 {
-	private HexLocation location;
-	private Vertex vertex1;
-	private Vertex vertex2;
-	private int ratio;
-	private ResourceType resource;
+	protected HexLocation location;
+	protected Vertex vertex1;
+	protected Vertex vertex2;
+	protected int ratio;
+	protected ResourceType resource;
 
 	public Port()
 	{
