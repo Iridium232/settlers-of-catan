@@ -117,4 +117,12 @@ public abstract class Port
 		vertex2 = vertex;
 		
 	}
+
+	public ResourceType getResource() {
+		return resource;
+	}
+
+	public void setResource(ResourceType resource) {
+		this.resource = resource;
+	}
 }

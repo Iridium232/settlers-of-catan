@@ -127,15 +127,15 @@ public class ModelPopulator {
             newTerrainHex.setNumber(newNumber);
             if (hexResource == null) {
                 newTerrainHex.setType(HexType.DESERT);
-            } else if (hexResource.equals("Wood")){
+            } else if (hexResource.equals("wood")){
                 newTerrainHex.setType((HexType.WOOD));
-            } else if (hexResource.equals("Brick")){
+            } else if (hexResource.equals("brick")){
                 newTerrainHex.setType((HexType.BRICK));
-            } else if (hexResource.equals("Sheep")){
+            } else if (hexResource.equals("sheep")){
                 newTerrainHex.setType((HexType.SHEEP));
-            } else if (hexResource.equals("Wheat")){
+            } else if (hexResource.equals("wheat")){
                 newTerrainHex.setType((HexType.WHEAT));
-            } else if (hexResource.equals("Ore")){
+            } else if (hexResource.equals("ore")){
                 newTerrainHex.setType((HexType.ORE));
             }
             clientMap.addTerrainHex(newTerrainHex);
@@ -183,19 +183,19 @@ public class ModelPopulator {
             if (serverResource == null) {
                 newPort = new MiscPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
                         serverRatio);
-            } else if (serverResource.equals("Wood")){
+            } else if (serverResource.equals("wood")){
                 newPort = new WoodPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
                         serverRatio);
-            } else if (serverResource.equals("Brick")){
+            } else if (serverResource.equals("brick")){
                 newPort = new BrickPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
                         serverRatio);
-            } else if (serverResource.equals("Sheep")){
+            } else if (serverResource.equals("sheep")){
                 newPort = new SheepPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
                         serverRatio);
-            } else if (serverResource.equals("Wheat")){
+            } else if (serverResource.equals("wheat")){
                 newPort = new WheatPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
                         serverRatio);
-            } else if (serverResource.equals("Ore")){
+            } else if (serverResource.equals("ore")){
                 newPort = new OrePort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
                         serverRatio);
             }
@@ -407,22 +407,42 @@ public class ModelPopulator {
     }
 
     private void setPieceColors(Game newModel) {
-    	if(newModel.getMap().getRoads() == null)return;
+        setRoadColors(newModel);
+        setBuildingColors(newModel);
+    }
+
+    private void setRoadColors(Game newModel) {
+        if(newModel.getMap().getRoads() == null)return;
         for (shared.model.Road road : newModel.getMap().getRoads()) {
             for (shared.model.Player player : newModel.getPlayers()) {
                 if (road.getOwnerIndex() == player.getPlayerIndex()) {
-                    if (player.getColor().equals("red")) { road.setColor(CatanColor.RED); }
-                    if (player.getColor().equals("orange")) { road.setColor(CatanColor.ORANGE); }
-                    if (player.getColor().equals("yellow")) { road.setColor(CatanColor.YELLOW); }
-                    if (player.getColor().equals("blue")) { road.setColor(CatanColor.BLUE); }
-                    if (player.getColor().equals("green")) { road.setColor(CatanColor.GREEN); }
-                    if (player.getColor().equals("purple")) { road.setColor(CatanColor.PURPLE); }
-                    if (player.getColor().equals("puce")) { road.setColor(CatanColor.PUCE); }
-                    if (player.getColor().equals("white")) { road.setColor(CatanColor.WHITE); }
-                    if (player.getColor().equals("brown")) { road.setColor(CatanColor.BROWN); }
+                    road.setColor(getCatanColor(player));
                 }
             }
         }
+    }
+
+    private void setBuildingColors(Game newModel) {
+        if(newModel.getMap().getBuildings() == null)return;
+        for (shared.model.Building bldg : newModel.getMap().getBuildings()) {
+            for (shared.model.Player player : newModel.getPlayers()) {
+                if (bldg.getOwner() == player.getPlayerIndex()) {
+                    bldg.setColor(getCatanColor(player));
+                }
+            }
+        }
+    }
+
+    private CatanColor getCatanColor(shared.model.Player player) {
+        if (player.getColor().equals("red")) return CatanColor.RED;
+        if (player.getColor().equals("orange")) return CatanColor.ORANGE;
+        if (player.getColor().equals("yellow")) return CatanColor.YELLOW;
+        if (player.getColor().equals("blue")) return CatanColor.BLUE;
+        if (player.getColor().equals("green")) return CatanColor.GREEN;
+        if (player.getColor().equals("purple")) return CatanColor.PURPLE;
+        if (player.getColor().equals("puce")) return CatanColor.PUCE;
+        if (player.getColor().equals("white")) return CatanColor.WHITE;
+        return CatanColor.BROWN;
     }
 
     private void populateResourceMultiSet(ResourceList serverList, ResourceMultiSet newSet) {

@@ -56,6 +56,7 @@ public class Serializer {
             e.printStackTrace();
         }
         String result = writer.toString();
+        System.out.println(result);
         return deserialize(result);
     }
 }

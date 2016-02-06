@@ -60,7 +60,7 @@ public class ServerProxy implements IServerProxy {
 	public String login(String username, String password) {
 		// TODO Auto-generated method stub
 		try {
-			return ClientCommunicator.getSINGLETON().login(username, password);
+			return Integer.toString(ClientCommunicator.getSINGLETON().login(username, password));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -72,7 +72,7 @@ public class ServerProxy implements IServerProxy {
 	public String register(String username, String password) {
 		// TODO Auto-generated method stub
 		try{
-				return ClientCommunicator.getSINGLETON().register(username, password);
+				return Integer.toString(ClientCommunicator.getSINGLETON().register(username, password));
 		} catch (Exception e){
 				e.printStackTrace();
 		}

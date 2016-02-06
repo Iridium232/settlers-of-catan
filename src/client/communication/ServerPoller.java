@@ -39,22 +39,22 @@ public class ServerPoller {
 		}
 	}
 	
-	private static void setComm(ClientCommunicator c){
+	public static void setComm(ClientCommunicator c){
 		comm=c;
 	}
 	
-	private static void setServer(IServerProxy s){
+	public static void setServer(IServerProxy s){
 		server=s;
 	}
 	
-	private static void setFascade(Fascade fas){
+	public static void setFascade(Fascade fas){
 		f=fas;
 	}
 	/**
 	 * @pre the poller is not already running
 	 * @post the poller will start calling the server.
 	 */
-	private static void Start(){
+	public static void Start(){
 		poller = new Timer(true);
 		poller.scheduleAtFixedRate(new TimerTask(){
 			
@@ -73,7 +73,7 @@ public class ServerPoller {
 	/**
 	 * @post the poller will stop calling the server
 	 */
-	private static void Stop(){
+	public static void Stop(){
 		
 	}
 }

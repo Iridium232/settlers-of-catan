@@ -66,7 +66,6 @@ public class ClientCommunicator {
 		}
 
 		this.url_prefix = "http://" + this.server_host + ":" + this.server_port;
-		System.out.print("\n'"+url_prefix + "'\n");
 		this.serializer = Serializer.getSINGLETON();
 		this.catan_cookie = null;
 		this.game_ID = null;
@@ -80,10 +79,9 @@ public class ClientCommunicator {
 	 * @pre username and password are not null
 	 * @post receives the http response and sets the user cookie.
 	 */
-	public String login(String username, String password) throws Exception {
+	public int login(String username, String password) throws Exception {
 		try {
 			URL url = new URL(url_prefix + "/user/login");
-			System.out.println(url);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 			connection.setRequestMethod(HTTP_POST);
 			connection.setDoOutput(true);
@@ -96,7 +94,7 @@ public class ClientCommunicator {
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				String cookieStr = connection.getHeaderField("Set-cookie");
 				catan_cookie = getEncodedValue(cookieStr);
-				return connection.getResponseMessage();
+				return connection.getResponseCode();
 			} else {
 				throw new Exception(String.format("doPost failed: %s (http code %d)",
 						"/user/login", connection.getResponseCode()));
@@ -115,7 +113,7 @@ public class ClientCommunicator {
 	 * @pre username and password are not null and the username isn't already in use.
 	 * @post new user account is created, receive a http response, set the user cookie
 	 */
-	public String register(String username,String password) throws Exception {
+	public int register(String username,String password) throws Exception {
 		try {
 			URL url = new URL(url_prefix + "/user/register");
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
@@ -131,7 +129,7 @@ public class ClientCommunicator {
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				String cookieStr = connection.getHeaderField("Set-cookie");
 				catan_cookie = getEncodedValue(cookieStr);
-				return connection.getResponseMessage();
+				return connection.getResponseCode();
 			} else {
 				throw new Exception(String.format("doPost failed: %s (http code %d)",
 						"/user/register", connection.getResponseCode()));
