@@ -74,9 +74,16 @@ public class ServerProxyTest {
 	
 	@Test
 	public void testCreateGame() {
+		try {
+			sp.login("Pete", "pete");
+			sp.joinGame("pete", 0, CatanColor.RED);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Game test=sp.createGame("testGame", false, false, false);
-		assert(test.getPlayers().length==0);
-		assert(test.getTitle()=="testGame");
+		assert(test.getPlayers()[0].getName()==null);
+		assert(test.getTitle().equals("testGame"));
 		assert(test.getId()!=0);		
 	}
 	
