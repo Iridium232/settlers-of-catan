@@ -355,33 +355,9 @@ public class MockServer implements IServerProxy {
 				"    ],\n" +
 				"    \"roads\": [\n" +
 				"      {\n" +
-				"        \"owner\": 1,\n" +
-				"        \"location\": {\n" +
-				"          \"direction\": \"S\",\n" +
-				"          \"x\": -1,\n" +
-				"          \"y\": -1\n" +
-				"        }\n" +
-				"      },\n" +
-				"      {\n" +
-				"        \"owner\": 3,\n" +
-				"        \"location\": {\n" +
-				"          \"direction\": \"SW\",\n" +
-				"          \"x\": -1,\n" +
-				"          \"y\": 1\n" +
-				"        }\n" +
-				"      },\n" +
-				"      {\n" +
-				"        \"owner\": 3,\n" +
-				"        \"location\": {\n" +
-				"          \"direction\": \"SW\",\n" +
-				"          \"x\": 2,\n" +
-				"          \"y\": -2\n" +
-				"        }\n" +
-				"      },\n" +
-				"      {\n" +
 				"        \"owner\": 2,\n" +
 				"        \"location\": {\n" +
-				"          \"direction\": \"S\",\n" +
+				"          \"direction\": \"SW\",\n" +
 				"          \"x\": 1,\n" +
 				"          \"y\": -1\n" +
 				"        }\n" +
@@ -389,21 +365,13 @@ public class MockServer implements IServerProxy {
 				"      {\n" +
 				"        \"owner\": 0,\n" +
 				"        \"location\": {\n" +
-				"          \"direction\": \"S\",\n" +
-				"          \"x\": 0,\n" +
-				"          \"y\": 1\n" +
+				"          \"direction\": \"SE\",\n" +
+				"          \"x\": -1,\n" +
+				"          \"y\": -1\n" +
 				"        }\n" +
 				"      },\n" +
 				"      {\n" +
 				"        \"owner\": 2,\n" +
-				"        \"location\": {\n" +
-				"          \"direction\": \"S\",\n" +
-				"          \"x\": 0,\n" +
-				"          \"y\": 0\n" +
-				"        }\n" +
-				"      },\n" +
-				"      {\n" +
-				"        \"owner\": 1,\n" +
 				"        \"location\": {\n" +
 				"          \"direction\": \"SW\",\n" +
 				"          \"x\": -2,\n" +
@@ -411,11 +379,35 @@ public class MockServer implements IServerProxy {
 				"        }\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"owner\": 0,\n" +
+				"        \"owner\": 3,\n" +
 				"        \"location\": {\n" +
-				"          \"direction\": \"SW\",\n" +
-				"          \"x\": 2,\n" +
+				"          \"direction\": \"S\",\n" +
+				"          \"x\": -2,\n" +
 				"          \"y\": 0\n" +
+				"        }\n" +
+				"      },\n" +
+				"      {\n" +
+				"        \"owner\": 3,\n" +
+				"        \"location\": {\n" +
+				"          \"direction\": \"SE\",\n" +
+				"          \"x\": -1,\n" +
+				"          \"y\": 0\n" +
+				"        }\n" +
+				"      },\n" +
+				"      {\n" +
+				"        \"owner\": 1,\n" +
+				"        \"location\": {\n" +
+				"          \"direction\": \"SE\",\n" +
+				"          \"x\": 0,\n" +
+				"          \"y\": -2\n" +
+				"        }\n" +
+				"      },\n" +
+				"      {\n" +
+				"        \"owner\": 1,\n" +
+				"        \"location\": {\n" +
+				"          \"direction\": \"N\",\n" +
+				"          \"x\": -1,\n" +
+				"          \"y\": -1\n" +
 				"        }\n" +
 				"      }\n" +
 				"    ],\n" +
@@ -424,24 +416,8 @@ public class MockServer implements IServerProxy {
 				"      {\n" +
 				"        \"owner\": 3,\n" +
 				"        \"location\": {\n" +
-				"          \"direction\": \"SW\",\n" +
-				"          \"x\": -1,\n" +
-				"          \"y\": 1\n" +
-				"        }\n" +
-				"      },\n" +
-				"      {\n" +
-				"        \"owner\": 3,\n" +
-				"        \"location\": {\n" +
 				"          \"direction\": \"SE\",\n" +
-				"          \"x\": 1,\n" +
-				"          \"y\": -2\n" +
-				"        }\n" +
-				"      },\n" +
-				"      {\n" +
-				"        \"owner\": 2,\n" +
-				"        \"location\": {\n" +
-				"          \"direction\": \"SW\",\n" +
-				"          \"x\": 0,\n" +
+				"          \"x\": -1,\n" +
 				"          \"y\": 0\n" +
 				"        }\n" +
 				"      },\n" +
@@ -455,6 +431,22 @@ public class MockServer implements IServerProxy {
 				"      },\n" +
 				"      {\n" +
 				"        \"owner\": 1,\n" +
+				"        \"location\": {\n" +
+				"          \"direction\": \"E\",\n" +
+				"          \"x\": 0,\n" +
+				"          \"y\": -2\n" +
+				"        }\n" +
+				"      },\n" +
+				"      {\n" +
+				"        \"owner\": 0,\n" +
+				"        \"location\": {\n" +
+				"          \"direction\": \"SE\",\n" +
+				"          \"x\": -1,\n" +
+				"          \"y\": -1\n" +
+				"        }\n" +
+				"      },\n" +
+				"      {\n" +
+				"        \"owner\": 2,\n" +
 				"        \"location\": {\n" +
 				"          \"direction\": \"SW\",\n" +
 				"          \"x\": -2,\n" +
@@ -462,27 +454,19 @@ public class MockServer implements IServerProxy {
 				"        }\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"owner\": 0,\n" +
+				"        \"owner\": 3,\n" +
 				"        \"location\": {\n" +
-				"          \"direction\": \"SE\",\n" +
-				"          \"x\": 0,\n" +
-				"          \"y\": 1\n" +
+				"          \"direction\": \"SW\",\n" +
+				"          \"x\": -2,\n" +
+				"          \"y\": 0\n" +
 				"        }\n" +
 				"      },\n" +
 				"      {\n" +
 				"        \"owner\": 1,\n" +
 				"        \"location\": {\n" +
-				"          \"direction\": \"SW\",\n" +
+				"          \"direction\": \"NW\",\n" +
 				"          \"x\": -1,\n" +
 				"          \"y\": -1\n" +
-				"        }\n" +
-				"      },\n" +
-				"      {\n" +
-				"        \"owner\": 0,\n" +
-				"        \"location\": {\n" +
-				"          \"direction\": \"SW\",\n" +
-				"          \"x\": 2,\n" +
-				"          \"y\": 0\n" +
 				"        }\n" +
 				"      }\n" +
 				"    ],\n" +
@@ -575,9 +559,9 @@ public class MockServer implements IServerProxy {
 				"    {\n" +
 				"      \"resources\": {\n" +
 				"        \"brick\": 0,\n" +
-				"        \"wood\": 1,\n" +
-				"        \"sheep\": 1,\n" +
-				"        \"wheat\": 1,\n" +
+				"        \"wood\": 0,\n" +
+				"        \"sheep\": 0,\n" +
+				"        \"wheat\": 0,\n" +
 				"        \"ore\": 0\n" +
 				"      },\n" +
 				"      \"oldDevCards\": {\n" +
@@ -594,26 +578,26 @@ public class MockServer implements IServerProxy {
 				"        \"roadBuilding\": 0,\n" +
 				"        \"monument\": 0\n" +
 				"      },\n" +
-				"      \"roads\": 13,\n" +
+				"      \"roads\": 14,\n" +
 				"      \"cities\": 4,\n" +
-				"      \"settlements\": 3,\n" +
+				"      \"settlements\": 4,\n" +
 				"      \"soldiers\": 0,\n" +
-				"      \"victoryPoints\": 2,\n" +
+				"      \"victoryPoints\": 1,\n" +
 				"      \"monuments\": 0,\n" +
 				"      \"playedDevCard\": false,\n" +
 				"      \"discarded\": false,\n" +
-				"      \"playerID\": 0,\n" +
+				"      \"playerID\": 10,\n" +
 				"      \"playerIndex\": 0,\n" +
-				"      \"name\": \"Sam\",\n" +
+				"      \"name\": \"Pete\",\n" +
 				"      \"color\": \"orange\"\n" +
 				"    },\n" +
 				"    {\n" +
 				"      \"resources\": {\n" +
 				"        \"brick\": 1,\n" +
 				"        \"wood\": 0,\n" +
-				"        \"sheep\": 1,\n" +
+				"        \"sheep\": 0,\n" +
 				"        \"wheat\": 0,\n" +
-				"        \"ore\": 1\n" +
+				"        \"ore\": 0\n" +
 				"      },\n" +
 				"      \"oldDevCards\": {\n" +
 				"        \"yearOfPlenty\": 0,\n" +
@@ -637,16 +621,16 @@ public class MockServer implements IServerProxy {
 				"      \"monuments\": 0,\n" +
 				"      \"playedDevCard\": false,\n" +
 				"      \"discarded\": false,\n" +
-				"      \"playerID\": 1,\n" +
+				"      \"playerID\": -2,\n" +
 				"      \"playerIndex\": 1,\n" +
-				"      \"name\": \"Brooke\",\n" +
+				"      \"name\": \"Miguel\",\n" +
 				"      \"color\": \"blue\"\n" +
 				"    },\n" +
 				"    {\n" +
 				"      \"resources\": {\n" +
 				"        \"brick\": 0,\n" +
 				"        \"wood\": 1,\n" +
-				"        \"sheep\": 1,\n" +
+				"        \"sheep\": 0,\n" +
 				"        \"wheat\": 1,\n" +
 				"        \"ore\": 0\n" +
 				"      },\n" +
@@ -672,17 +656,17 @@ public class MockServer implements IServerProxy {
 				"      \"monuments\": 0,\n" +
 				"      \"playedDevCard\": false,\n" +
 				"      \"discarded\": false,\n" +
-				"      \"playerID\": 10,\n" +
+				"      \"playerID\": -3,\n" +
 				"      \"playerIndex\": 2,\n" +
-				"      \"name\": \"Pete\",\n" +
+				"      \"name\": \"Steve\",\n" +
 				"      \"color\": \"red\"\n" +
 				"    },\n" +
 				"    {\n" +
 				"      \"resources\": {\n" +
 				"        \"brick\": 0,\n" +
-				"        \"wood\": 1,\n" +
-				"        \"sheep\": 1,\n" +
-				"        \"wheat\": 0,\n" +
+				"        \"wood\": 0,\n" +
+				"        \"sheep\": 0,\n" +
+				"        \"wheat\": 1,\n" +
 				"        \"ore\": 1\n" +
 				"      },\n" +
 				"      \"oldDevCards\": {\n" +
@@ -707,39 +691,15 @@ public class MockServer implements IServerProxy {
 				"      \"monuments\": 0,\n" +
 				"      \"playedDevCard\": false,\n" +
 				"      \"discarded\": false,\n" +
-				"      \"playerID\": 11,\n" +
+				"      \"playerID\": -4,\n" +
 				"      \"playerIndex\": 3,\n" +
-				"      \"name\": \"Mark\",\n" +
-				"      \"color\": \"green\"\n" +
+				"      \"name\": \"Scott\",\n" +
+				"      \"color\": \"puce\"\n" +
 				"    }\n" +
 				"  ],\n" +
 				"  \"log\": {\n" +
 				"    \"lines\": [\n" +
 				"      {\n" +
-				"        \"source\": \"Sam\",\n" +
-				"        \"message\": \"Sam built a road\"\n" +
-				"      },\n" +
-				"      {\n" +
-				"        \"source\": \"Sam\",\n" +
-				"        \"message\": \"Sam built a settlement\"\n" +
-				"      },\n" +
-				"      {\n" +
-				"        \"source\": \"Sam\",\n" +
-				"        \"message\": \"Sam's turn just ended\"\n" +
-				"      },\n" +
-				"      {\n" +
-				"        \"source\": \"Brooke\",\n" +
-				"        \"message\": \"Brooke built a road\"\n" +
-				"      },\n" +
-				"      {\n" +
-				"        \"source\": \"Brooke\",\n" +
-				"        \"message\": \"Brooke built a settlement\"\n" +
-				"      },\n" +
-				"      {\n" +
-				"        \"source\": \"Brooke\",\n" +
-				"        \"message\": \"Brooke's turn just ended\"\n" +
-				"      },\n" +
-				"      {\n" +
 				"        \"source\": \"Pete\",\n" +
 				"        \"message\": \"Pete built a road\"\n" +
 				"      },\n" +
@@ -752,64 +712,76 @@ public class MockServer implements IServerProxy {
 				"        \"message\": \"Pete's turn just ended\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Mark\",\n" +
-				"        \"message\": \"Mark built a road\"\n" +
+				"        \"source\": \"Miguel\",\n" +
+				"        \"message\": \"Miguel built a road\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Mark\",\n" +
-				"        \"message\": \"Mark built a settlement\"\n" +
+				"        \"source\": \"Miguel\",\n" +
+				"        \"message\": \"Miguel built a settlement\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Mark\",\n" +
-				"        \"message\": \"Mark's turn just ended\"\n" +
+				"        \"source\": \"Miguel\",\n" +
+				"        \"message\": \"Miguel's turn just ended\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Mark\",\n" +
-				"        \"message\": \"Mark built a road\"\n" +
+				"        \"source\": \"Steve\",\n" +
+				"        \"message\": \"Steve built a road\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Mark\",\n" +
-				"        \"message\": \"Mark built a settlement\"\n" +
+				"        \"source\": \"Steve\",\n" +
+				"        \"message\": \"Steve built a settlement\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Mark\",\n" +
-				"        \"message\": \"Mark's turn just ended\"\n" +
+				"        \"source\": \"Steve\",\n" +
+				"        \"message\": \"Steve's turn just ended\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Pete\",\n" +
-				"        \"message\": \"Pete built a road\"\n" +
+				"        \"source\": \"Scott\",\n" +
+				"        \"message\": \"Scott built a road\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Pete\",\n" +
-				"        \"message\": \"Pete built a settlement\"\n" +
+				"        \"source\": \"Scott\",\n" +
+				"        \"message\": \"Scott built a settlement\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Pete\",\n" +
-				"        \"message\": \"Pete's turn just ended\"\n" +
+				"        \"source\": \"Scott\",\n" +
+				"        \"message\": \"Scott's turn just ended\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Brooke\",\n" +
-				"        \"message\": \"Brooke built a road\"\n" +
+				"        \"source\": \"Scott\",\n" +
+				"        \"message\": \"Scott built a road\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Brooke\",\n" +
-				"        \"message\": \"Brooke built a settlement\"\n" +
+				"        \"source\": \"Scott\",\n" +
+				"        \"message\": \"Scott built a settlement\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Brooke\",\n" +
-				"        \"message\": \"Brooke's turn just ended\"\n" +
+				"        \"source\": \"Scott\",\n" +
+				"        \"message\": \"Scott's turn just ended\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Sam\",\n" +
-				"        \"message\": \"Sam built a road\"\n" +
+				"        \"source\": \"Steve\",\n" +
+				"        \"message\": \"Steve built a road\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Sam\",\n" +
-				"        \"message\": \"Sam built a settlement\"\n" +
+				"        \"source\": \"Steve\",\n" +
+				"        \"message\": \"Steve built a settlement\"\n" +
 				"      },\n" +
 				"      {\n" +
-				"        \"source\": \"Sam\",\n" +
-				"        \"message\": \"Sam's turn just ended\"\n" +
+				"        \"source\": \"Steve\",\n" +
+				"        \"message\": \"Steve's turn just ended\"\n" +
+				"      },\n" +
+				"      {\n" +
+				"        \"source\": \"Miguel\",\n" +
+				"        \"message\": \"Miguel built a road\"\n" +
+				"      },\n" +
+				"      {\n" +
+				"        \"source\": \"Miguel\",\n" +
+				"        \"message\": \"Miguel built a settlement\"\n" +
+				"      },\n" +
+				"      {\n" +
+				"        \"source\": \"Miguel\",\n" +
+				"        \"message\": \"Miguel's turn just ended\"\n" +
 				"      }\n" +
 				"    ]\n" +
 				"  },\n" +
@@ -818,19 +790,19 @@ public class MockServer implements IServerProxy {
 				"  },\n" +
 				"  \"bank\": {\n" +
 				"    \"brick\": 23,\n" +
-				"    \"wood\": 21,\n" +
-				"    \"sheep\": 20,\n" +
+				"    \"wood\": 23,\n" +
+				"    \"sheep\": 24,\n" +
 				"    \"wheat\": 22,\n" +
-				"    \"ore\": 22\n" +
+				"    \"ore\": 23\n" +
 				"  },\n" +
 				"  \"turnTracker\": {\n" +
-				"    \"status\": \"Rolling\",\n" +
+				"    \"status\": \"SecondRound\",\n" +
 				"    \"currentTurn\": 0,\n" +
 				"    \"longestRoad\": -1,\n" +
 				"    \"largestArmy\": -1\n" +
 				"  },\n" +
 				"  \"winner\": -1,\n" +
-				"  \"version\": 0\n" +
+				"  \"version\": 21\n" +
 				"}";
 	}
 
