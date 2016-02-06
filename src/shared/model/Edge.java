@@ -23,7 +23,7 @@ public class Edge
 	 * @param location the location to set
 	 */
 	public void setLocation(EdgeLocation location) {
-		assert this.location ==null;
+		//assert this.location ==null;
 		this.location = location;
 	}
 	/**
@@ -36,7 +36,7 @@ public class Edge
 	 * @param direction the direction to set
 	 */
 	public void setDirection(EdgeDirection direction) {
-		assert this.direction == null;
+		//assert this.direction == null;
 		this.direction = direction;
 	}
 
