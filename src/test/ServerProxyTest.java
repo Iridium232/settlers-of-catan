@@ -2,14 +2,19 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import client.communication.ClientCommunicator;
 import client.communication.ModelPopulator;
 import client.communication.ServerProxy;
+import shared.communication.fromServer.games.Game;
+import shared.definitions.CatanColor;
 import shared.model.Fascade;
 
 public class ServerProxyTest {
@@ -21,7 +26,6 @@ public class ServerProxyTest {
 		Fascade f=new Fascade();
 		JSONObject json;
 		sp=new ServerProxy("localhost",8081,f);
-		System.out.println("its working");
 		ClientCommunicator.getSingleton("localhost", "8081");
 		try 
 		{
@@ -33,34 +37,40 @@ public class ServerProxyTest {
 			return;
 		}
 		ModelPopulator.populateModel(json,f);
-		
+	//	sp.register("bob", "bob");
 	}
-
+	
 	@Test
 	public void testLogin() {
 		String result=sp.login("bob", "bob");
-		System.out.println(result);
-		assertTrue (result=="Success");
+		assertEquals (result,"200");
 	}
 	
 	@Test
 	public void testRegister() {
-		String result=sp.login("doug", "bob");
-		assertTrue(result=="Success");
+		String result=sp.register("greg", "bob");
+		System.out.println(result);
+		assertEquals("200",result);
 	}
 
 	@Test
 	public void testGetGameList() {
-		fail("Not yet implemented");
+		List<Game> result=sp.getGameList();
+		assert(!result.isEmpty());
 	}
 
 	@Test
 	public void testCreateGame() {
-		fail("Not yet implemented");
+		Game test=sp.createGame("testGame", false, false, false);
+		assert(test.getPlayers().length==0);
+		assert(test.getTitle()=="testGame");
+		assert(test.getId()!=0);
 	}
 
 	@Test
 	public void testJoinGame() {
+		String test=sp.joinGame("Bob", 3, CatanColor.RED);
+		
 		fail("Not yet implemented");
 	}
 
