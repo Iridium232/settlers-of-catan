@@ -83,7 +83,7 @@ public interface IServerProxy {
 	 * @post the message is posted to the chat
 	 * @param message
 	 */
-	public String sendChat(String message);
+	public String sendChat(int playerIndex,String message);
 	
 	/**
 	 * @pre A trade has been offered, if you accept is true the user has the required resources

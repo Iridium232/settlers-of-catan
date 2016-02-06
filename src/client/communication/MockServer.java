@@ -87,7 +87,7 @@ public class MockServer implements IServerProxy {
 	}
 
 	@Override
-	public String sendChat(String message) {
+	public String sendChat(int playerIndex,String message) {
 		// TODO Auto-generated method stub
 		return null;
 	}

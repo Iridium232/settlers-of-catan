@@ -22,6 +22,7 @@ import shared.communication.toServer.moves.OfferTrade;
 import shared.communication.toServer.moves.Road_Building_;
 import shared.communication.toServer.moves.RobPlayer;
 import shared.communication.toServer.moves.RollNumber;
+import shared.communication.toServer.moves.SendChat;
 import shared.communication.toServer.moves.Soldier_;
 import shared.communication.toServer.moves.Year_of_Plenty_;
 import shared.definitions.CatanColor;
@@ -144,17 +145,16 @@ public class ServerProxy implements IServerProxy {
 	}
 	
 	@Override
-	public String sendChat(String message) {
-		// TODO Auto-generated method stub
+	public String sendChat(int playerIndex, String content) {
+		SendChat chat = new SendChat(playerIndex, content);
 		String result=null;
 		try {
-			result=ClientCommunicator.getSINGLETON().doPost("/moves/sendChat", message).toString();
+			result=ClientCommunicator.getSINGLETON().doPost("/moves/sendChat", chat).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
-	}
+}
 
 	@Override
 	public String acceptTrade(boolean accept) {
