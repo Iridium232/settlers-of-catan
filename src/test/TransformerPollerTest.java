@@ -3,7 +3,6 @@ package test;
 import client.communication.MockServer;
 import client.communication.ModelPopulator;
 import client.communication.ServerPoller;
-import client.communication.ServerProxy;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -26,7 +25,7 @@ import shared.model.ports.*;
  * Team 10
  */
 public class TransformerPollerTest {
-    MockServer server;
+    MockServer mockServer;
     Fascade fascade;
     String strModel;
     Game model;
@@ -192,11 +191,42 @@ public class TransformerPollerTest {
         assertEquals(0, model.getChat().getMessages().size());
     }
 
-//    @Test
-//    public void testPollerDifferingVersion() {
-//        ServerPoller poller = ServerPoller.getServerPoller();
-//
-//    }
+    @Test
+    public void testPollerMatchingVersion() throws InterruptedException {
+        mockServer = new MockServer();
+        mockServer.ServerProxy("localHost", 8081, fascade);
+        ServerPoller.getServerPoller();
+        ServerPoller.setFascade(fascade);
+        ServerPoller.setServer(mockServer);
+        fascade.changeModel(new Game());
+
+        //Simulate sending a matching version number. Should not change the model.
+        fascade.getModel().setVersion(0);
+        ServerPoller.Start();
+        Thread.sleep(3000); //Pause to let poller do its thing
+        ServerPoller.Stop();
+        assertNull(fascade.getModel().getPlayers()[1].getName());
+        assertEquals(0, fascade.getModel().getVersion());
+    }
+
+    @Test
+    public void testPollerDifferingVersion() throws InterruptedException {
+        mockServer = new MockServer();
+        mockServer.ServerProxy("localHost", 8081, fascade);
+        ServerPoller.getServerPoller();
+        ServerPoller.setFascade(fascade);
+        ServerPoller.setServer(mockServer);
+        fascade.changeModel(new Game());
+
+        //Simulate sending a differing version number. Should return an updated model.
+        fascade.getModel().setVersion(1);
+        ServerPoller.Start();
+        Thread.sleep(3000); //Pause to let poller do its thing
+        ServerPoller.Stop();
+        assertNotNull(fascade.getModel().getPlayers()[1].getName());
+        assertEquals("Miguel", fascade.getModel().getPlayers()[1].getName());
+        assertEquals(21, fascade.getModel().getVersion());
+    }
 
     private String getStrModel() {
         return "{\n" +
