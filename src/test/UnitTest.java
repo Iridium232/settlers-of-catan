@@ -12,8 +12,8 @@ public class UnitTest
 		
 		String[] testClasses = new String[] {
 			"test.FascadeTest",
-			"test.TransformerPollerTest"
-			
+			"test.TransformerPollerTest",
+			"test.ServerProxyTest"
 			};
 		org.junit.runner.JUnitCore.main(testClasses);
 		//"test.TransformerPollerTest""test.ServerProxyTest"

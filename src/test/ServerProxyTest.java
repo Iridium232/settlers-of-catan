@@ -123,7 +123,7 @@ public class ServerProxyTest {
 		try {
 			sp.login("Pete", "pete");
 			sp.joinGame("pete", 0, CatanColor.RED);
-			test = sp.sendChat(10, "I am testing sendChat");
+			test = sp.sendChat(2, "I am testing sendChat");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
