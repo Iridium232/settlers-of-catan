@@ -61,36 +61,9 @@
 				<enable/>
 			</assertions>
 		</java>
-	</target>
+	</target> 
 	
-    <target name="test" depends="package">
-    	
-    	<mkdir dir="test_reports"/>
-    	
-        <junit printsummary="yes" haltonfailure="no" showoutput="yes">
-            <classpath refid="classpath.test" />
-
-            
-            <formatter type="plain"/>
-            <formatter type="xml"/>
-        	
-            <batchtest fork="yes" todir="test_reports">
-                <fileset dir="src/test" includes="**/*Test.java"/>
-            </batchtest>
-        	
-        </junit>
-    </target>
-    
-	<target name="test2" description="Runs the demo client">
-		<java classname="test.UnitTest">
-			<classpath>
-				<path refid="${test.jar}"/>
-			</classpath>
-				
-		</java>
-	</target>
-	
-	<target name="test3" depends="package" description="compiles, packages, and runs the student client">
+	<target name="test" depends="package" description="compiles, packages, and runs the student client">
 		<java jar="${java.dist}/catan-tests.jar" dir="${java.dist}" fork="yes">
 			<sysproperty key="com.sun.management.jmxremote" value=""/>
 			<assertions>
