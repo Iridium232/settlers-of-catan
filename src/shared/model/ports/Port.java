@@ -15,7 +15,7 @@ public abstract class Port
 	private Vertex vertex1;
 	private Vertex vertex2;
 	private int ratio;
-	ResourceType resource;
+	private ResourceType resource;
 
 	public Port()
 	{
