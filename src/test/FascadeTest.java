@@ -233,7 +233,7 @@ public class FascadeTest {
 		//TurnTracker 
 		TurnTracker tracker = model.getTurn_tracker();
 		tracker.setActive_player(0);
-		tracker.setStatus(TurnStatus.MOVEROBBER);
+		tracker.setStatus(TurnStatus.MOVEROBBER, active_player);
 		
 		
 		//Should be true because this active player is in the state where
