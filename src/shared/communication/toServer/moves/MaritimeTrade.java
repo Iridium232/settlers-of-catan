@@ -1,5 +1,6 @@
 package shared.communication.toServer.moves;
 
+import shared.definitions.Commands;
 import shared.definitions.ResourceType;
 
 /**
@@ -18,15 +19,17 @@ public class MaritimeTrade extends Command {
     /** (Optional) What type of resource you're getting */
     private ResourceType outputResource;
 
+    public MaritimeTrade(){super();};
+    
     public MaritimeTrade(int playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource) {
-        super("maritimeTrade", playerIndex);
+        super(Commands.MARITIME_TRADE, playerIndex);
         this.ratio = ratio;
         this.inputResource = inputResource;
         this.outputResource = outputResource;
     }
 
     public MaritimeTrade(int playerIndex) {
-        super("maritimeTrade", playerIndex);
+        super(Commands.MARITIME_TRADE, playerIndex);
         this.ratio = 0;
         this.inputResource = null;
         this.outputResource = null;

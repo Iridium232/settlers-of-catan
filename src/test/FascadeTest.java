@@ -24,10 +24,10 @@ import shared.model.Road;
 import shared.model.Settlement;
 import shared.model.TerrainHex;
 import shared.model.TradeOffer;
-import shared.model.TurnTracker;
 import shared.model.Vertex;
 import shared.model.ports.Port;
 import shared.model.ports.WheatPort;
+import shared.model.states.TurnTracker;
 
 import client.communication.MockServer;
 import client.communication.ModelPopulator;

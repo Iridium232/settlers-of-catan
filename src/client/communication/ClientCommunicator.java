@@ -245,7 +245,9 @@ public class ClientCommunicator {
 			throw new Exception(String.format("doGet failed: %s", e.getMessage()), e);
 		}
 	}
-	public JSONObject sendCommand(String path, String s) throws Exception{
+	
+	public JSONObject sendCommand(String path, String s) throws Exception
+	{
 		if (catan_cookie == null || game_ID == null) {
 			throw new Exception("Haven't Logged in and joined a game");
 		}

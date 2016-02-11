@@ -1,6 +1,6 @@
 package shared.communication.toServer.moves;
 
-import com.sun.org.apache.regexp.internal.RESyntaxException;
+//import com.sun.org.apache.regexp.internal.RESyntaxException;
 import shared.definitions.ResourceType;
 
 /**

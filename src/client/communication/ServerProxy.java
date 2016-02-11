@@ -30,6 +30,7 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.locations.VertexLocationForSending;
 import shared.model.Fascade;
 import shared.communication.fromServer.games.Game;
 import shared.model.Player;
@@ -67,7 +68,7 @@ public class ServerProxy implements IServerProxy {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "Login Failed\n";
+		return "FAILED\n";
 	}
 
 	@Override
@@ -78,7 +79,7 @@ public class ServerProxy implements IServerProxy {
 		} catch (Exception e){
 				e.printStackTrace();
 		}
-		return "Registration Failed\n";
+		return "FAILED\n";
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public class ServerProxy implements IServerProxy {
 				returnList.add(gee.fromJson(gg, Game.class));
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			returnList = null;
 			e.printStackTrace();
 		}
 		return returnList;
@@ -120,11 +121,11 @@ public class ServerProxy implements IServerProxy {
 	@Override
 	public String joinGame(String playerinfo, int id, CatanColor color) {
 		// TODO Auto-generated method stub
-		String result="Failed\n";
+		String result="FAILED\n";
 		try {
 			result=ClientCommunicator.getSINGLETON().joinGame(id, color).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -138,7 +139,7 @@ public class ServerProxy implements IServerProxy {
 			result=model.toString();
 			ModelPopulator.populateModel(model, fascade);//add fascade to IServerProxy
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -159,12 +160,12 @@ public class ServerProxy implements IServerProxy {
 	@Override
 	public String acceptTrade(boolean accept) {
 		// TODO Auto-generated method stub
-		String result=null;
+		String result="FAILED\n";
 		AcceptTrade at=new AcceptTrade(playerIndex,accept);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/acceptTrade", at).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -178,7 +179,7 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/rollNumber", roll).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -192,7 +193,7 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/buildRoad", road).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -206,21 +207,21 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/buildSettlement", settle).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
 	}
 
 	@Override
-	public String buildCity(VertexLocation place) {
+	public String buildCity(shared.locations.VertexLocation place) {
 	// TODO Auto-generated method stub
 		String result=null;
-		BuildCity city=new BuildCity(playerIndex,place);
+		BuildCity city=new BuildCity(playerIndex,new shared.communication.toServer.moves.VertexLocation(place.getHexLoc(),place.getDir()));
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/buildCity", city).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -228,13 +229,13 @@ public class ServerProxy implements IServerProxy {
 
 	@Override
 	public String maritimeTrade(int ratio, ResourceType input, ResourceType output) {
-		// TODO Auto-generated method stub
+		
 		String result=null;
 		MaritimeTrade trade=new MaritimeTrade(playerIndex,ratio,input,output);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/maritimeTrade", trade).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -248,7 +249,7 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/robPlayer", rob).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -262,21 +263,22 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/finishTurn", end).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
 	}
 
 	@Override
-	public String buyDevCard() {
-		// TODO Auto-generated method stub
+	public String buyDevCard() 
+	{
+
 		String result=null;
 		BuyDevCard card=new BuyDevCard(playerIndex);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/buyDevCard", card).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -290,7 +292,7 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/Soldier", soldier).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -304,7 +306,7 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/Year_of_Plenty", year).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -318,7 +320,7 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/Road_Building", rb).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -332,7 +334,7 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/Monopoly", mono).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -346,7 +348,7 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/Monument", mon).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -360,7 +362,7 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/discardCards", dc).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -374,7 +376,7 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/offerTrade", ot).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -388,7 +390,7 @@ public class ServerProxy implements IServerProxy {
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/game/addAI", ai).toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;
@@ -402,7 +404,7 @@ public class ServerProxy implements IServerProxy {
 			JSONObject j=ClientCommunicator.getSINGLETON().doGet("/game/listAI");
 			result=j.toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			result="FAILED\n";
 			e.printStackTrace();
 		}
 		return result;

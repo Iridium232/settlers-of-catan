@@ -1,6 +1,5 @@
 package shared.communication.toServer.moves;
 
-import shared.locations.VertexLocation;
 
 /**
  * Michael Rhodes

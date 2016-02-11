@@ -1,12 +1,14 @@
 package shared.communication.toServer.moves;
 
+//import shared.definitions.String;
+
 /**
  * Michael Rhodes
  * CS 340
  * Section 2
  * Team 10
  *
- * abstract class for command objects
+ * abstract String for command Strings
  */
 public abstract class Command {
     /** String representing the command */
@@ -14,12 +16,14 @@ public abstract class Command {
     /** Who's sending this command (0-3) */
     private int playerIndex;
 
-    public Command(String type, int playerIndex) {
-        this.type = type;
+    public Command(String maritimeTrade, int playerIndex) {
+        this.type = maritimeTrade;
         this.playerIndex = playerIndex;
     }
 
-    public String getType() {
+    public Command() {}
+
+	public String getType() {
         return type;
     }
 

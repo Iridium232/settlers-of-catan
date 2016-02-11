@@ -477,7 +477,7 @@ public class ModelPopulator {
 
     private void populateTurnTracker(ServerModel serverModel, Game newModel) {
         TurnTracker serverTracker = serverModel.getTurnTracker();
-        shared.model.TurnTracker newTracker = new shared.model.TurnTracker();
+        shared.model.states.TurnTracker newTracker = new shared.model.states.TurnTracker();
 
         newTracker.setActive_player(serverTracker.getCurrentTurn());
         newTracker.setLargest_army_player(serverTracker.getLargestArmy());

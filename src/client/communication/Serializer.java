@@ -47,6 +47,7 @@ public class Serializer {
             result = new JSONObject(s);
         } catch (JSONException e) {
             e.printStackTrace();
+            System.out.print("\nCould not deserialize " +s+ "\n");
         }
         return result;
     }
@@ -59,7 +60,7 @@ public class Serializer {
             e.printStackTrace();
         }
         String result = writer.toString();
-        System.out.println(result);
+        //System.out.println(result);
         return deserialize(result);
     }
 }

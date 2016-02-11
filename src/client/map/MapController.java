@@ -4,17 +4,28 @@ import java.util.*;
 
 import shared.definitions.*;
 import shared.locations.*;
+import shared.model.Fascade;
 import client.base.*;
 import client.data.*;
 
 
 /**
- * Implementation for the map controller
+ * Implementation for the map controller.
+ * Holds the Rob view.
+ * Also has a pointer to the facade of the model.
  */
 public class MapController extends Controller implements IMapController {
 	
 	private IRobView robView;
+	private Fascade model;
 	
+
+	/**
+	 * Map Controller Constructor
+	 * @param view
+	 * @param robView
+	 * @post creates a map controller tied to the GUI views
+	 */
 	public MapController(IMapView view, IRobView robView) {
 		
 		super(view);
@@ -24,18 +35,13 @@ public class MapController extends Controller implements IMapController {
 		initFromModel();
 	}
 	
-	public IMapView getView() {
-		
-		return (IMapView)super.getView();
-	}
-	
-	private IRobView getRobView() {
-		return robView;
-	}
-	private void setRobView(IRobView robView) {
-		this.robView = robView;
-	}
-	
+	/**
+	 * Builds the map view from information in the model
+	 * 
+	 * @pre none
+	 * @post the model's information is displayed in the map view
+	 * 
+	 */
 	protected void initFromModel() {
 		
 		//<temp>
@@ -103,41 +109,110 @@ public class MapController extends Controller implements IMapController {
 		//</temp>
 	}
 
+	/**
+	 * Checks with the model to see if the player can place a road
+	 * at the specified edge.
+	 * 
+	 * @param edgeLoc
+	 * 
+	 * @pre none
+	 * @post result = true iff the model says this is valid
+	 * 
+	 */
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		
 		return true;
 	}
 
+	/**
+	 * Checks with the model to see if the player can place a settlement
+	 * at the specified spot.
+	 * 
+	 * @param vertLoc
+	 * 
+	 * @pre none
+	 * @post result = true iff the model says this is valid
+	 * 
+	 */
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
 		
 		return true;
 	}
 
+	/**
+	 * Checks with the model to see if the player can place a city
+	 * at the specified spot.
+	 * 
+	 * @param vertLoc
+	 * 
+	 * @pre none
+	 * @post result = true iff the model says this is valid
+	 * 
+	 */
 	public boolean canPlaceCity(VertexLocation vertLoc) {
 		
 		return true;
 	}
 
+	/**
+	 * Checks with the model to see if the player can place the robber
+	 * at the specified spot.
+	 * 
+	 * @param hexLoc
+	 * 
+	 * @pre none
+	 * @post result = facade.canPlaceRobber(hexLoc)
+	 * 
+	 */
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		
 		return true;
 	}
 
+	/**
+	 * The Player chose to place a road at this edge
+	 * 
+	 * @pre the model says they can put a road there
+	 * @post the map shows a road on that edge
+	 * 
+	 */
 	public void placeRoad(EdgeLocation edgeLoc) {
 		
 		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
 	}
 
+	/**
+	 * The Player chose to place a settlement at this vertex
+	 * 
+	 * @pre the model says they can put a settlement there
+	 * @post the map shows a settlement on that vertex
+	 * 
+	 */
 	public void placeSettlement(VertexLocation vertLoc) {
 		
 		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
 	}
 
+	/**
+	 * The Player chose to place a city at this vertex
+	 * 
+	 * @pre the model says they can put a city there
+	 * @post the map shows a city on that vertex
+	 * 
+	 */
 	public void placeCity(VertexLocation vertLoc) {
 		
 		getView().placeCity(vertLoc, CatanColor.ORANGE);
 	}
 
+	/**
+	 * The Player chose where to put the robber
+	 * 
+	 * @pre the player rolled a seven and so gets to move the robber
+	 * @pre the player clicked on this hexlocation
+	 * @post the robber is on the place that the user clicked
+	 * 
+	 */
 	public void placeRobber(HexLocation hexLoc) {
 		
 		getView().placeRobber(hexLoc);
@@ -145,26 +220,93 @@ public class MapController extends Controller implements IMapController {
 		getRobView().showModal();
 	}
 	
-	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
+	/**
+	 * The Player is placing a piece
+	 * 
+	 * @pre the player has decided to play a piece
+	 * @post the map shows options of placement for that piece.
+	 * 
+	 */
+	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) 
+	{	
 		
 		getView().startDrop(pieceType, CatanColor.ORANGE, true);
 	}
 	
-	public void cancelMove() {
+	/**
+	 * The Player is no longer placing a piece
+	 * 
+	 * @pre the player was placing a piece
+	 * @post the map no longer shows options of placement for that piece.
+	 * 
+	 */
+	public void cancelMove() 
+	{
 		
 	}
 	
-	public void playSoldierCard() {	
-		
+	/**
+	 * The Soldier Card was played. The map should not do anything.
+	 * 
+	 * @pre the soldier card was played
+	 * @post nothing
+	 * 
+	 */
+	public void playSoldierCard() 
+	{	
+		return;
 	}
 	
+	/**
+	 * The Road-Building Card is played so the player needs to choose 2 places to build a road
+	 * 
+	 * @pre
+	 * @post
+	 * 
+	 */
 	public void playRoadBuildingCard() {	
 		
 	}
 	
+	/**
+	 * The active player robs the other player
+	 * 
+	 * @pre the player rolled a seven and moved the robber and chose to rob this
+	 * player
+	 * @post all are informed that this player was robbed and the robbing player
+	 * gets the resource
+	 */
 	public void robPlayer(RobPlayerInfo victim) {	
 		
 	}
 	
+	//*****************************GETTERS AND SETTERS***************************************
+	
+	public IMapView getView() {
+		
+		return (IMapView)super.getView();
+	}
+	
+	private IRobView getRobView() {
+		return robView;
+	}
+	
+	private void setRobView(IRobView robView) {
+		this.robView = robView;
+	}
+	
+	/**
+	 * @return the model
+	 */
+	public Fascade getModel() {
+		return model;
+	}
+
+	/**
+	 * @param model the model to set
+	 */
+	public void setModel(Fascade model) {
+		this.model = model;
+	}
 }
 

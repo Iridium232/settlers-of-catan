@@ -2,6 +2,7 @@ package shared.model;
 
 import shared.definitions.DevCardType;
 import shared.definitions.TurnStatus;
+import shared.model.states.TurnTracker;
 import client.data.*;
 
 /**
