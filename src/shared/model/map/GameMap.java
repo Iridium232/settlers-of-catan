@@ -2,7 +2,6 @@ package shared.model.map;
 import java.util.*;
 import shared.locations.*;
 import shared.definitions.*;
-import shared.model.*;
 import shared.model.map.buildings.Building;
 import shared.model.map.buildings.Settlement;
 import shared.model.player.ResourceMultiSet;
@@ -244,14 +243,14 @@ public class GameMap
 	 */
 	public void addTerrainHex(TerrainHex hex)
 	{
-		hexes[hex.getLocation().getX() + this.HEXINDEXOFFSET]
-				[hex.getLocation().getY() + this.HEXINDEXOFFSET] = hex;
+		hexes[hex.getLocation().getX() + GameMap.HEXINDEXOFFSET]
+				[hex.getLocation().getY() + GameMap.HEXINDEXOFFSET] = hex;
 	}
 	
 	public TerrainHex getHexAt(int x, int y)
 	{
-		return hexes[x + this.HEXINDEXOFFSET]
-				[y + this.HEXINDEXOFFSET];
+		return hexes[x + GameMap.HEXINDEXOFFSET]
+				[y + GameMap.HEXINDEXOFFSET];
 	}
 	
 	/**
@@ -453,7 +452,7 @@ public class GameMap
 	 * @pre none
 	 * @post returns the building on that spot or null when the place is empty
 	 */
-	private Building getBuildingOnVertex(Vertex vertex)
+	public Building getBuildingOnVertex(Vertex vertex)
 	{
 		for(Building building: buildings)
 		{

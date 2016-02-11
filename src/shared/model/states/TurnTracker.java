@@ -12,7 +12,7 @@ public class TurnTracker
 	private boolean first_round;
 	private boolean second_round;
 	private int active_player;
-	private IState[] player_states;
+	private IState state;
 	private int longest_road_player;
 	private int largest_army_player;
 	
@@ -30,11 +30,7 @@ public class TurnTracker
 		active_player = 0;
 		largest_army_player = -1;
 		longest_road_player = -1;
-		player_states = new IState[4];
-		player_states[0] = new FirstRoundState();
-		player_states[1] = new WaitingState();
-		player_states[2] = new WaitingState();
-		player_states[3] = new WaitingState();
+		state = new FirstRoundState();
 	}
 	
 	//*****************************************METHODS*******************************************************************
@@ -75,14 +71,11 @@ public class TurnTracker
 	 * @pre Advance Active Player method called this function
 	 * @post the States are advanced
 	 */
-	private void advanceStates() throws Exception
+	public void advanceState() throws Exception
 	{
 		int index = 0;
-		for(IState state: player_states)
-		{
-			state.finishPhase(this, index);
-			index++;
-		}
+		state.finishPhase(this, index);
+
 	}
 	
 	/**
@@ -93,7 +86,7 @@ public class TurnTracker
 	 */
 	public TurnStatus turnStatusOf(int player_index)
 	{
-		return player_states[player_index].getState();
+		return state.getState();
 	}
 	//***********************************Getters and Setters***********************************************************
 	/**
@@ -177,11 +170,11 @@ public class TurnTracker
 		{
 			if(i == active_player)
 			{
-				player_states[i] = active_state;
+				state = active_state;
 			}
 			else
 			{
-				player_states[i] = new WaitingState();
+				state = new WaitingState();
 			}
 		}
 	}

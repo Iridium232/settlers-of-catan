@@ -1,7 +1,5 @@
 package shared.model.map;
 import shared.locations.*;
-import shared.model.ports.Port;
-import shared.definitions.*;
 
 /**
  * The vertex class represents the corners of the terrain hexes where
