@@ -12,7 +12,7 @@ import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
+import shared.communication.fromServer.game.VertexLocation;
 import shared.model.Fascade;
 import shared.communication.fromServer.games.Game;
 import shared.communication.fromServer.games.Player;
