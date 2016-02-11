@@ -13,6 +13,7 @@ import shared.communication.fromServer.game.TurnTracker;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.TurnStatus;
+import shared.communication.fromServer.game.VertexLocation;
 import shared.locations.*;
 import shared.model.*;
 import shared.model.ports.*;

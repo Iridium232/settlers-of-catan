@@ -1,6 +1,7 @@
 package client.communication;
 
 import java.util.ArrayList;
+import shared.communication.fromServer.game.VertexLocation;
 import java.util.List;
 import org.json.JSONObject;
 
@@ -29,7 +30,6 @@ import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
 import shared.locations.VertexLocationForSending;
 import shared.model.Fascade;
 import shared.communication.fromServer.games.Game;
@@ -214,10 +214,10 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String buildCity(shared.locations.VertexLocation place) {
+	public String buildCity(VertexLocation place) {
 	// TODO Auto-generated method stub
 		String result=null;
-		BuildCity city=new BuildCity(playerIndex,new shared.communication.toServer.moves.VertexLocation(place.getHexLoc(),place.getDir()));
+		BuildCity city=new BuildCity(playerIndex, place);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/buildCity", city).toString();
 		} catch (Exception e) {
