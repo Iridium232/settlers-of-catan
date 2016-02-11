@@ -287,7 +287,7 @@ public class Fascade
 	{
 		GameMap game_map = game_model.getMap();
 		Player player = game_model.getPlayers()[player_index];
-		return game_map.canPutRobber(location) && (game_model.getTurnStatus(player_index) == TurnStatus.MOVEROBBER);
+		return game_map.canPutRobber(location) && (game_model.getTurnStatus(player_index) == TurnStatus.ROBBING);
 	}
 	
 	/**

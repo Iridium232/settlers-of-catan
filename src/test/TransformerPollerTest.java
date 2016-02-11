@@ -180,7 +180,7 @@ public class TransformerPollerTest {
 
     @Test
     public void testTurnTracker() {
-        assertEquals(TurnStatus.ROLLING, model.getTurn_tracker().getStatus());
+        assertEquals(TurnStatus.ROLLING, model.getTurn_tracker().turnStatusOf(0));
         assertEquals(0, model.getTurn_tracker().getActive_player());
     }
 

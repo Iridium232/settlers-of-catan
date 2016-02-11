@@ -56,7 +56,6 @@ public class FascadeTest {
 		
 		TurnTracker tracker = model.getTurn_tracker();
 		tracker.setActive_player(0);
-		tracker.setWaiting_for_player(-1);
 		tracker.setStatus(TurnStatus.PLAYING);
 		
 		prepareModelForBuildingTests();
@@ -233,7 +232,7 @@ public class FascadeTest {
 		//TurnTracker 
 		TurnTracker tracker = model.getTurn_tracker();
 		tracker.setActive_player(0);
-		tracker.setStatus(TurnStatus.MOVEROBBER, active_player);
+		tracker.setStatus(TurnStatus.ROBBING);
 		
 		
 		//Should be true because this active player is in the state where
@@ -265,7 +264,6 @@ public class FascadeTest {
 		//TurnTracker 
 		TurnTracker tracker = model.getTurn_tracker();
 		tracker.setActive_player(0);
-		tracker.setWaiting_for_player(-1);
 		tracker.setStatus(TurnStatus.TRADING);
 		
 		//Should be true becuase this active player is in the state where
@@ -481,7 +479,6 @@ public class FascadeTest {
 		//TurnTracker 
 		TurnTracker tracker = model.getTurn_tracker();
 		tracker.setActive_player(1);
-		tracker.setWaiting_for_player(0);
 		tracker.setStatus(TurnStatus.DISCARDING);
 		
 		//Should be false because we are waiting for player 1 to discard
@@ -544,7 +541,6 @@ public class FascadeTest {
 		//TurnTracker knows we are waiting for Player 1 to respond
 		TurnTracker tracker = model.getTurn_tracker();
 		tracker.setActive_player(1);
-		tracker.setWaiting_for_player(0);
 		tracker.setStatus(TurnStatus.TRADING);
 		
 		//Should be true because the offer is out there to them
@@ -582,7 +578,6 @@ public class FascadeTest {
 		//TurnTracker knows we are waiting for Player 1 to discard
 		TurnTracker tracker = model.getTurn_tracker();
 		tracker.setActive_player(1);
-		tracker.setWaiting_for_player(0);
 		tracker.setStatus(TurnStatus.DISCARDING);
 		
 		//Player 1 has 4 brick and 4 ore

@@ -86,9 +86,10 @@ public class TurnTracker
 	}
 	
 	/**
-	 * 
+	 * gets the turn state of the specified player by index
 	 * @param player_index
-	 * @return
+	 * @pre none
+	 * @post result is the turn state of the player
 	 */
 	public TurnStatus turnStatusOf(int player_index)
 	{
@@ -135,4 +136,53 @@ public class TurnTracker
 		this.largest_army_player = largest_army_player;
 	}
 	
+	/**
+	 * Supports translation from JSON to Inheritance for the Populator
+	 * @param status
+	 * @pre none
+	 * @post the turns are set up as expected
+	 */
+	public void setStatus(TurnStatus status)
+	{
+		IState active_state = new PlayingState(); 
+		switch(status)
+		{
+			
+			case DISCARDING:
+				active_state = new DiscardState();
+				break;
+			case PLAYING:
+				active_state = new PlayingState();
+				break;
+			case TRADING:
+				active_state = new TradingState();
+				break;
+			case FIRSTROUND:
+				active_state = new FirstRoundState();
+				break;
+			case SECONDROUND:
+				active_state = new SecondRoundState();
+				break;
+			case ROBBING:
+				active_state = new RobbingState();
+				break;
+			case WAITING:
+				active_state = new WaitingState();
+				break;
+			case ROLLING:
+				active_state = new RollingState();
+				break;
+		}
+		for(int i = 0; i < 4; i++)
+		{
+			if(i == active_player)
+			{
+				player_states[i] = active_state;
+			}
+			else
+			{
+				player_states[i] = new WaitingState();
+			}
+		}
+	}
 }

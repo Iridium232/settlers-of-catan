@@ -28,7 +28,7 @@ import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
+import shared.communication.fromServer.game.VertexLocation;
 import shared.model.Fascade;
 import shared.model.Player;
 
@@ -235,7 +235,7 @@ public class ServerProxyTest {
 			sp.joinGame("Pete", 0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
-			String mon=sp.buildCity(new VertexLocation(new HexLocation(2,1),VertexDirection.SouthWest));
+			String mon=sp.buildCity(new VertexLocation(VertexDirection.SouthWest,2,1));
 			assertFalse(mon.equals("FAILED\n"));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
@@ -264,7 +264,7 @@ public class ServerProxyTest {
 			sp.joinGame("Pete", 0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
-			String mon=sp.buildCity(new VertexLocation(new HexLocation(0,0),VertexDirection.SouthWest));
+			String mon=sp.buildCity(new VertexLocation(VertexDirection.SouthWest, 0, 0));
 			assertFalse(mon.equals("FAILED\n"));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
