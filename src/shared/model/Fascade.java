@@ -8,6 +8,14 @@ import shared.communication.toServer.games.*;
 import shared.communication.toServer.moves.*;
 import shared.definitions.*;
 import shared.locations.HexLocation;
+import shared.model.map.Edge;
+import shared.model.map.GameMap;
+import shared.model.map.Vertex;
+import shared.model.messages.MessageLine;
+import shared.model.player.DevCardList;
+import shared.model.player.Player;
+import shared.model.player.ResourceMultiSet;
+import shared.model.player.TradeOffer;
 import shared.model.ports.*;
 import shared.model.states.TurnTracker;
 

@@ -4,18 +4,24 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 import shared.communication.ResourceList;
 import shared.communication.fromServer.game.*;
-import shared.communication.fromServer.game.DevCardList;
 import shared.communication.fromServer.game.Port;
-import shared.communication.fromServer.game.Road;
-import shared.communication.fromServer.game.Player;
 import shared.communication.fromServer.game.TradeOffer;
-import shared.communication.fromServer.game.TurnTracker;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.TurnStatus;
 import shared.communication.fromServer.game.VertexLocation;
 import shared.locations.*;
 import shared.model.*;
+import shared.model.map.Edge;
+import shared.model.map.GameMap;
+import shared.model.map.NumberChit;
+import shared.model.map.TerrainHex;
+import shared.model.map.Vertex;
+import shared.model.map.buildings.City;
+import shared.model.map.buildings.Settlement;
+import shared.model.messages.MessageLine;
+import shared.model.messages.MessageList;
+import shared.model.player.ResourceMultiSet;
 import shared.model.ports.*;
 
 /**
@@ -52,7 +58,7 @@ public class ModelPopulator {
 
     private void populateDeck(ServerModel serverModel, Game newModel) {
         DevCardList deck = serverModel.getDeck();
-        shared.model.DevCardList development_bank = new shared.model.DevCardList();
+        shared.model.player.DevCardList development_bank = new shared.model.player.DevCardList();
 
         development_bank.setMonument(deck.getMonument());
         development_bank.setMonopoly(deck.getMonopoly());
@@ -214,7 +220,7 @@ public class ModelPopulator {
             HexLocation newLocation = new HexLocation(serverLocation.getX(), serverLocation.getY());
 
             //Load values from server
-            shared.model.Road newRoad = new shared.model.Road();
+            shared.model.map.Road newRoad = new shared.model.map.Road();
 
             Edge newRoadEdge = new Edge();
 
@@ -373,7 +379,7 @@ public class ModelPopulator {
 
         for (Player player : serverPlayers) {
         	if(player == null)continue;
-            shared.model.Player newPlayer = new shared.model.Player();
+            shared.model.player.Player newPlayer = new shared.model.player.Player();
             newPlayer.setCities(player.getCities());
             newPlayer.setColor(player.getColor());
             newPlayer.setDiscarded(player.isDiscarded());
@@ -392,11 +398,11 @@ public class ModelPopulator {
             populateResourceMultiSet(serverList, newMultiSet);
 
             DevCardList serverOldList = player.getOldDevCards();
-            shared.model.DevCardList newOldList = new shared.model.DevCardList();
+            shared.model.player.DevCardList newOldList = new shared.model.player.DevCardList();
             populateDevCardList(serverOldList, newOldList);
 
             DevCardList serverNewList = player.getNewDevCards();
-            shared.model.DevCardList newNewList = new shared.model.DevCardList();
+            shared.model.player.DevCardList newNewList = new shared.model.player.DevCardList();
             populateDevCardList(serverNewList, newNewList);
 
             newPlayer.setResources(newMultiSet);
@@ -414,8 +420,8 @@ public class ModelPopulator {
 
     private void setRoadColors(Game newModel) {
         if(newModel.getMap().getRoads() == null)return;
-        for (shared.model.Road road : newModel.getMap().getRoads()) {
-            for (shared.model.Player player : newModel.getPlayers()) {
+        for (shared.model.map.Road road : newModel.getMap().getRoads()) {
+            for (shared.model.player.Player player : newModel.getPlayers()) {
                 if (road.getOwnerIndex() == player.getPlayerIndex()) {
                     road.setColor(getCatanColor(player));
                 }
@@ -425,8 +431,8 @@ public class ModelPopulator {
 
     private void setBuildingColors(Game newModel) {
         if(newModel.getMap().getBuildings() == null)return;
-        for (shared.model.Building bldg : newModel.getMap().getBuildings()) {
-            for (shared.model.Player player : newModel.getPlayers()) {
+        for (shared.model.map.buildings.Building bldg : newModel.getMap().getBuildings()) {
+            for (shared.model.player.Player player : newModel.getPlayers()) {
                 if (bldg.getOwner() == player.getPlayerIndex()) {
                     bldg.setColor(getCatanColor(player));
                 }
@@ -434,7 +440,7 @@ public class ModelPopulator {
         }
     }
 
-    private CatanColor getCatanColor(shared.model.Player player) {
+    private CatanColor getCatanColor(shared.model.player.Player player) {
         if (player.getColor().equals("red")) return CatanColor.RED;
         if (player.getColor().equals("orange")) return CatanColor.ORANGE;
         if (player.getColor().equals("yellow")) return CatanColor.YELLOW;
@@ -454,7 +460,7 @@ public class ModelPopulator {
         newSet.setWood(serverList.getWood());
     }
 
-    private void populateDevCardList(DevCardList serverList, shared.model.DevCardList newList) {
+    private void populateDevCardList(DevCardList serverList, shared.model.player.DevCardList newList) {
         newList.setMonopoly(serverList.getMonopoly());
         newList.setMonument(serverList.getMonument());
         newList.setRoad_building(serverList.getRoadBuilding());
@@ -464,7 +470,7 @@ public class ModelPopulator {
 
     private void populateTradeOffer(ServerModel serverModel, Game newModel) {
         TradeOffer serverOffer = serverModel.getTradeOffer();
-        shared.model.TradeOffer newOffer = new shared.model.TradeOffer();
+        shared.model.player.TradeOffer newOffer = new shared.model.player.TradeOffer();
         if(serverOffer == null)return;
         newOffer.setSender(serverOffer.getSender());
         newOffer.setReciever(serverOffer.getReceiver());

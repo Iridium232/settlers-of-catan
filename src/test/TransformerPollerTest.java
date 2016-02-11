@@ -16,6 +16,10 @@ import shared.definitions.TurnStatus;
 import shared.locations.EdgeDirection;
 import shared.locations.VertexDirection;
 import shared.model.*;
+import shared.model.map.buildings.Building;
+import shared.model.map.buildings.City;
+import shared.model.map.buildings.Settlement;
+import shared.model.player.Player;
 import shared.model.ports.*;
 
 /**

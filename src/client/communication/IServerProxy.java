@@ -10,7 +10,7 @@ import shared.locations.HexLocation;
 import shared.communication.fromServer.game.VertexLocation;
 import shared.model.Fascade;
 import shared.communication.fromServer.games.Game;
-import shared.model.Player;
+import shared.model.player.Player;
 
 /**
  * A proxy server that can be implemented to either speak with the server or just return values for testing purposes.

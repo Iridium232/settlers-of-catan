@@ -174,19 +174,19 @@ public class MockServer implements IServerProxy {
 	}
 
 	@Override
-	public String offerTrade(ResourceList offer, shared.model.Player receiver) {
+	public String offerTrade(ResourceList offer, shared.model.player.Player receiver) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String robPlayer(HexLocation location, shared.model.Player victim) {
+	public String robPlayer(HexLocation location, shared.model.player.Player victim) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String playSoldier(HexLocation place, shared.model.Player victim) {
+	public String playSoldier(HexLocation place, shared.model.player.Player victim) {
 		// TODO Auto-generated method stub
 		return null;
 	}

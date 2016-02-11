@@ -4,7 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import shared.model.Fascade;
-import shared.model.Player;
+import shared.model.player.Player;
 
 /**
  * 

@@ -1,7 +1,7 @@
 package shared.model.ports;
 import shared.definitions.ResourceType;
 import shared.locations.*;
-import shared.model.Vertex;
+import shared.model.map.Vertex;
 
 /**
  * This class represents a Port

@@ -2,6 +2,12 @@ package shared.model;
 
 import shared.definitions.DevCardType;
 import shared.definitions.TurnStatus;
+import shared.model.map.GameMap;
+import shared.model.messages.MessageList;
+import shared.model.player.DevCardList;
+import shared.model.player.Player;
+import shared.model.player.ResourceMultiSet;
+import shared.model.player.TradeOffer;
 import shared.model.states.TurnTracker;
 import client.data.*;
 

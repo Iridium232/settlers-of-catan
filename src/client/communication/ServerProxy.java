@@ -33,7 +33,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocationForSending;
 import shared.model.Fascade;
 import shared.communication.fromServer.games.Game;
-import shared.model.Player;
+import shared.model.player.Player;
 /**
  * Implements IServerProxy send requests through the client communicator to the server.
  * @author Doug

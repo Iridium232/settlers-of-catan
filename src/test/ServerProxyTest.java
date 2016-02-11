@@ -30,7 +30,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.communication.fromServer.game.VertexLocation;
 import shared.model.Fascade;
-import shared.model.Player;
+import shared.model.player.Player;
 
 public class ServerProxyTest {
 

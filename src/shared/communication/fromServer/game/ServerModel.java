@@ -1,7 +1,7 @@
 package shared.communication.fromServer.game;
 
 import shared.communication.ResourceList;
-import shared.model.MessageList;
+import shared.model.messages.MessageList;
 
 /**
  * Michael Rhodes
