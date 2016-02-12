@@ -170,6 +170,9 @@ public class FascadeTest {
 		Game model = facade.getModel();
 		Player builder = model.getPlayers()[active_player];
 
+		TurnTracker tracker = model.getTurn_tracker();
+		tracker.setActive_player(0);
+		tracker.setStatus(TurnStatus.PLAYING);
 		
 		//Should be false because it is not his turn
 		assertFalse(facade.canBuildCity(inactive_player, desertSE.getEnd1()));
@@ -290,7 +293,7 @@ public class FascadeTest {
 		//Should be false because this player has no port connection
 		assertFalse(facade.canMaritimeTrade(0));
 		
-		//Should be false because this player has a port connection
+		//Should be true because this player has a port connection
 		assertTrue(facade.canMaritimeTrade(1));
 		
 	}
@@ -540,7 +543,7 @@ public class FascadeTest {
 		
 		//TurnTracker knows we are waiting for Player 1 to respond
 		TurnTracker tracker = model.getTurn_tracker();
-		tracker.setActive_player(1);
+		tracker.setActive_player(0);
 		tracker.setStatus(TurnStatus.TRADING);
 		
 		//Should be true because the offer is out there to them

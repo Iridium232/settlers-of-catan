@@ -86,7 +86,12 @@ public class TurnTracker
 	 */
 	public TurnStatus turnStatusOf(int player_index)
 	{
-		return state.getState();
+		if(player_index != active_player)
+		{
+			return TurnStatus.WAITING;
+		}
+		TurnStatus result = state.getState();
+		return result;
 	}
 	//***********************************Getters and Setters***********************************************************
 	/**
@@ -166,16 +171,6 @@ public class TurnTracker
 				active_state = new RollingState();
 				break;
 		}
-		for(int i = 0; i < 4; i++)
-		{
-			if(i == active_player)
-			{
-				state = active_state;
-			}
-			else
-			{
-				state = new WaitingState();
-			}
-		}
+		state = active_state;
 	}
 }

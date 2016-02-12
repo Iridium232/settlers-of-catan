@@ -19,8 +19,7 @@ public class RollingState implements IState
 	@Override
 	public TurnStatus getState() 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return TurnStatus.ROLLING;
 	}
 
 	/**

@@ -1064,8 +1064,10 @@ public class Fascade
 		}
 		Player player = game_model.getPlayers()[player_index];
 		boolean can_afford = player.canAfford(offer.getReciever_gives());
+		boolean is_to_this_player = (offer.getReciever() == player_index);
 		TurnTracker tt = game_model.getTurn_tracker();
-		return tt.turnStatusOf(player_index) == TurnStatus.TRADING && can_afford;
+		return tt.turnStatusOf(player_index) == TurnStatus.WAITING && can_afford
+				&& is_to_this_player;
 	}
 	
 	/**

@@ -15,13 +15,13 @@ public class MaritimeTrade extends Command {
     /** (Optional) The ratio of the trade your doing as an integer (ie. put 3 for a 3:1 trade) */
     private int ratio;
     /** (Optional) What type of resource you're giving */
-    private ResourceType inputResource;
+    private String inputResource;
     /** (Optional) What type of resource you're getting */
-    private ResourceType outputResource;
+    private String outputResource;
 
     public MaritimeTrade(){super();};
     
-    public MaritimeTrade(int playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource) {
+    public MaritimeTrade(int playerIndex, int ratio, String inputResource, String outputResource) {
         super(Commands.MARITIME_TRADE, playerIndex);
         this.ratio = ratio;
         this.inputResource = inputResource;
@@ -43,19 +43,19 @@ public class MaritimeTrade extends Command {
         this.ratio = ratio;
     }
 
-    public ResourceType getInputResource() {
+    public String getInputResource() {
         return inputResource;
     }
 
-    public void setInputResource(ResourceType inputResource) {
+    public void setInputResource(String inputResource) {
         this.inputResource = inputResource;
     }
 
-    public ResourceType getOutputResource() {
+    public String getOutputResource() {
         return outputResource;
     }
 
-    public void setOutputResource(ResourceType outputResource) {
+    public void setOutputResource(String outputResource) {
         this.outputResource = outputResource;
     }
 }

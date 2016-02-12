@@ -18,7 +18,7 @@ public class FirstRoundState implements IState
 	@Override
 	public TurnStatus getState() 
 	{
-		return shared.definitions.TurnStatus.PLAYING;
+		return shared.definitions.TurnStatus.FIRSTROUND;
 	}
 
 	/**
