@@ -62,12 +62,20 @@ public class LoginController extends Controller implements ILoginController {
 		return loginAction;
 	}
 
+	/**
+	 * Displays the login view
+	 */
 	@Override
 	public void start() {
 		
 		getLoginView().showModal();
 	}
 
+	/**
+	 * Called when the user clicks the "Sign in" button in the login view
+	 * Should close the login view and show the main window
+	 * Should communicate with the model and log in the user by calling login on the model facade
+	 */
 	@Override
 	public void signIn() {
 		
@@ -79,6 +87,11 @@ public class LoginController extends Controller implements ILoginController {
 		loginAction.execute();
 	}
 
+	/**
+	 * Called when the user clicks the "Register" button in the login view
+	 * Should close the login view and show the main window
+	 * Should communicate with the model and register the user by calling register ont the model facade
+	 */
 	@Override
 	public void register() {
 		
