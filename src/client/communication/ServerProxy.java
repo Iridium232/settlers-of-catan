@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import shared.communication.ResourceList;
+import shared.communication.ResourceTranslator;
 import shared.communication.toServer.game.AddAIRequest;
 import shared.communication.toServer.games.CreateGameRequest;
 import shared.communication.toServer.moves.AcceptTrade;
@@ -231,7 +232,8 @@ public class ServerProxy implements IServerProxy {
 	public String maritimeTrade(int ratio, ResourceType input, ResourceType output) {
 		
 		String result=null;
-		MaritimeTrade trade=new MaritimeTrade(playerIndex,ratio,input,output);
+		MaritimeTrade trade=new MaritimeTrade(playerIndex,ratio,
+				ResourceTranslator.translate(input),ResourceTranslator.translate(output));
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/maritimeTrade", trade).toString();
 		} catch (Exception e) {
@@ -291,7 +293,8 @@ public class ServerProxy implements IServerProxy {
 		Soldier_ soldier=new Soldier_(playerIndex,victim.getPlayerIndex(),place);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/Soldier", soldier).toString();
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			result="FAILED\n";
 			e.printStackTrace();
 		}
@@ -302,7 +305,8 @@ public class ServerProxy implements IServerProxy {
 	public String yearOfPlenty(ResourceType one, ResourceType two) {
 		// TODO Auto-generated method stub
 		String result=null;
-		Year_of_Plenty_ year=new Year_of_Plenty_(playerIndex,one,two);
+		Year_of_Plenty_ year=new Year_of_Plenty_(playerIndex,
+				ResourceTranslator.translate(one),ResourceTranslator.translate(two));
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/Year_of_Plenty", year).toString();
 		} catch (Exception e) {
@@ -330,7 +334,7 @@ public class ServerProxy implements IServerProxy {
 	public String monopoly(ResourceType one) {
 		// TODO Auto-generated method stub
 		String result=null;
-		Monopoly_ mono=new Monopoly_(playerIndex,one);
+		Monopoly_ mono=new Monopoly_(playerIndex,ResourceTranslator.translate(one));
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/Monopoly", mono).toString();
 		} catch (Exception e) {

@@ -11,18 +11,18 @@ import shared.definitions.ResourceType;
  * Monopoly command object
  */
 public class Monopoly_ extends Command {
-    private ResourceType resource;
+    private String resource;
 
-    public Monopoly_(int playerIndex, ResourceType one) {
+    public Monopoly_(int playerIndex, String one) {
         super("Monopoly", playerIndex);
         this.resource = one;
     }
 
-    public ResourceType getResource() {
+    public String getResource() {
         return resource;
     }
 
-    public void setResource(ResourceType resource) {
+    public void setResource(String resource) {
         this.resource = resource;
     }
 }
