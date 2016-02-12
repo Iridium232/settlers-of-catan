@@ -24,7 +24,9 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		
 		return (IGameHistoryView)super.getView();
 	}
-	
+	/**
+	 * @post The Game history display will display upto the last 8 moves that have been made
+	 */
 	private void initFromModel() {
 		
 		//<temp>

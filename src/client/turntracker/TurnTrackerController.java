@@ -21,7 +21,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		
 		return (ITurnTrackerView)super.getView();
 	}
-
+/**
+ * @pre it is the players turn
+ * @post changes the current turn and displays the roll view for the next player
+ */
 	@Override
 	public void endTurn() {
 

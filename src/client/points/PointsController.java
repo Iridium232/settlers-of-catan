@@ -29,14 +29,20 @@ public class PointsController extends Controller implements IPointsController {
 		
 		return (IPointsView)super.getView();
 	}
-	
+	/**
+	 * @pre a player has accumulated 10 points
+	 * @post display the game finished screen
+	 * @return
+	 */
 	public IGameFinishedView getFinishedView() {
 		return finishedView;
 	}
 	public void setFinishedView(IGameFinishedView finishedView) {
 		this.finishedView = finishedView;
 	}
-
+/**
+ * @post initializes the player info based on the model
+ */
 	private void initFromModel() {
 		//<temp>		
 		getPointsView().setPoints(5);
