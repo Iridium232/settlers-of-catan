@@ -33,7 +33,10 @@ public class RollController extends Controller implements IRollController {
 	public IRollView getRollView() {
 		return (IRollView)getView();
 	}
-	
+	/**
+	 * @pre it is the players turn
+	 * @post simulates a roll of the dice and displays the result and distributes the required cards.
+	 */
 	@Override
 	public void rollDice() {
 

@@ -32,17 +32,26 @@ public class DiscardController extends Controller implements IDiscardController 
 	public IWaitView getWaitView() {
 		return waitView;
 	}
-
+/**
+ * @pre has already decreased the amount for this resourcetype
+ * @post counter for specified ResourceType is increased by 1
+ */
 	@Override
 	public void increaseAmount(ResourceType resource) {
 		
 	}
-
+/**
+ * @pre count for this ResourceType is at least 1
+ * @post count for this ResourceType is decreased by 1
+ */
 	@Override
 	public void decreaseAmount(ResourceType resource) {
 		
 	}
-
+/**
+ * @pre the player no longer has more than half the cards they started with
+ * @post the ResourceTypes selected are decremented.
+ */
 	@Override
 	public void discard() {
 		
