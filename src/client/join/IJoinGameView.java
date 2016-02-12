@@ -8,14 +8,12 @@ import client.data.*;
  */
 public interface IJoinGameView extends IOverlayView
 {
-	
+
 	/**
 	 * Sets the list of available games to be displayed
-	 * 
-	 * @param games
-	 *            Array of games to be displayed
-	 * @param localPlayer
-	 *            Information about the local player
+	 *
+	 * @param games       Array of games to be displayed
+	 * @param localPlayer Information about the local player
 	 */
 	void setGames(GameInfo[] games, PlayerInfo localPlayer);
 	

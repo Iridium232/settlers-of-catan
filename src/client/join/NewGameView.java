@@ -29,6 +29,9 @@ public class NewGameView extends OverlayView implements INewGameView
     private JCheckBox chkRandHexes = null;
     private JCheckBox chkRandPorts = null;
 
+    /**
+     * Instantiates a new New game view.
+     */
     public NewGameView()
     {
 

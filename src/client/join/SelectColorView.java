@@ -33,7 +33,10 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 	private JButton cancelButton;
 
 	private int selButton = 0;
-			
+
+	/**
+	 * Instantiates a new Select color view.
+	 */
 	public SelectColorView() {
 
 		this.setOpaque(true);

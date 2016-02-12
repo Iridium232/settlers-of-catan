@@ -9,21 +9,19 @@ import shared.definitions.*;
  */
 public interface ISelectColorView extends IOverlayView
 {
-	
+
 	/**
 	 * Enables or disables the specified color. Colors that are already taken by
 	 * other users should be disabled. Available colors should be enabled.
-	 * 
-	 * @param color
-	 *            The color being enabled or disabled
-	 * @param enable
-	 *            Whether or not the color should be enabled
+	 *
+	 * @param color  The color being enabled or disabled
+	 * @param enable Whether or not the color should be enabled
 	 */
 	void setColorEnabled(CatanColor color, boolean enable);
-	
+
 	/**
 	 * Returns the color selected by the user
-	 * 
+	 *
 	 * @return The color selected by the user
 	 */
 	CatanColor getSelectedColor();
