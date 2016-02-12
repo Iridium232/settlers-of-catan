@@ -64,7 +64,7 @@ public class ServerProxyTest {
 	@Test
 	public void testRegister(){
 		Random rand = new Random(System.currentTimeMillis());
-		String result=sp.register(Integer.toString(rand.nextInt(12)), "greg");
+		String result=sp.register( "a" + Integer.toString(rand.nextInt(12)), Integer.toString(rand.nextInt(12)));
 		assertEquals(result,"200");
 	}
 	
