@@ -1,40 +1,24 @@
 package client.communication;
 
-import java.util.ArrayList;
-import shared.communication.fromServer.game.VertexLocation;
-import java.util.List;
-import org.json.JSONObject;
-
 import com.google.gson.Gson;
+import org.json.JSONObject;
 import shared.communication.ResourceList;
 import shared.communication.ResourceTranslator;
+import shared.communication.fromServer.game.VertexLocation;
+import shared.communication.fromServer.games.Game;
 import shared.communication.toServer.game.AddAIRequest;
 import shared.communication.toServer.games.CreateGameRequest;
-import shared.communication.toServer.moves.AcceptTrade;
-import shared.communication.toServer.moves.BuildCity;
-import shared.communication.toServer.moves.BuildRoad;
-import shared.communication.toServer.moves.BuildSettlement;
-import shared.communication.toServer.moves.BuyDevCard;
-import shared.communication.toServer.moves.DiscardCards;
-import shared.communication.toServer.moves.FinishTurn;
-import shared.communication.toServer.moves.MaritimeTrade;
-import shared.communication.toServer.moves.Monopoly_;
-import shared.communication.toServer.moves.Monument_;
-import shared.communication.toServer.moves.OfferTrade;
-import shared.communication.toServer.moves.Road_Building_;
-import shared.communication.toServer.moves.RobPlayer;
-import shared.communication.toServer.moves.RollNumber;
-import shared.communication.toServer.moves.SendChat;
-import shared.communication.toServer.moves.Soldier_;
-import shared.communication.toServer.moves.Year_of_Plenty_;
+import shared.communication.toServer.moves.*;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
-import shared.locations.VertexLocationForSending;
 import shared.model.Fascade;
-import shared.communication.fromServer.games.Game;
 import shared.model.player.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 /**
  * Implements IServerProxy send requests through the client communicator to the server.
  * @author Doug
@@ -130,6 +114,16 @@ public class ServerProxy implements IServerProxy {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@Override
+	public void loadGame(String file_name) {
+		//Todo auto-generated method stub
+	}
+
+	@Override
+	public void saveGame(UUID game_id, String file_name){
+		//Todo auto-generated method stub
 	}
 
 	@Override

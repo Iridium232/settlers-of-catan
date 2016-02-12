@@ -1,8 +1,10 @@
 package client.communication;
 
 import java.util.List;
+import java.util.UUID;
 
 import shared.communication.ResourceList;
+import shared.communication.toServer.moves.Command;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -11,6 +13,8 @@ import shared.communication.fromServer.game.VertexLocation;
 import shared.model.Fascade;
 import shared.communication.fromServer.games.Game;
 import shared.model.player.Player;
+import shared.exceptions.JoinExceptions;
+import shared.model.exceptions.ModelException;
 
 /**
  * A proxy server that can be implemented to either speak with the server or just return values for testing purposes.
@@ -44,9 +48,11 @@ public interface IServerProxy {
 	public String register(String username, String password);
 	
 	/**
+	 * @pre 1 game need to be activated
 	 * @post a list of all the current games on the server is returned
 	 */
 	public List<Game> getGameList();
+
 	
 	/**
 	 * @pre none of the parameters are null
@@ -57,8 +63,8 @@ public interface IServerProxy {
 	 * @param randomPorts
 	 * @return
 	 */
-	public Game createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts);
-
+	public Game createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts)
+		throws JoinExceptions;
 	/**
 	 * @pre user is logged in, a game with the id exists, the color is a valid color
 	 * @post the user is added to the game and the board is updated to show that
@@ -66,16 +72,32 @@ public interface IServerProxy {
 	 * @param id the game ID
 	 * @param color one of the acceptable colors
 	 */
-	public String joinGame(String playerinfo, int id, CatanColor color);
-
+	public String joinGame(String playerinfo, int id, CatanColor color)
+		throws JoinExceptions;
 	/**
 	 * @pre id is for an existing game
 	 * @post the model is returned in a JSON object;
 	 * @param model
 	 */
 	public String getModel(int id);
-	
-	
+
+	/**
+	 * @pre game file_name must not be empty string
+	 * @post a game is saved with a name file_name
+	 */
+	public void saveGame(UUID game_id, String file_name)
+		throws JoinExceptions;
+	/**
+	 *@pre a game must exist with correct file_name parameter
+	 *@post game is loaded
+	*/
+	public void loadGame(String file_name)
+		throws JoinExceptions;
+
+
+
+
+
 	public String addAIPlayer(String AiType);
 	//Move commands
 	public String getAITypes();

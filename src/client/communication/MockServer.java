@@ -1,21 +1,20 @@
 package client.communication;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import shared.communication.ResourceList;
-import shared.communication.fromServer.games.EmptyPlayer;
-import shared.communication.fromServer.games.NewGame;
+import shared.communication.fromServer.game.VertexLocation;
+import shared.communication.fromServer.games.Game;
+import shared.communication.fromServer.games.Player;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
-import shared.communication.fromServer.game.VertexLocation;
 import shared.model.Fascade;
-import shared.communication.fromServer.games.Game;
-import shared.communication.fromServer.games.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class MockServer implements IServerProxy {
 	private Fascade fascade;
@@ -46,6 +45,8 @@ public class MockServer implements IServerProxy {
 		return returnList;
 	}
 
+
+
 	@Override
 	public Game createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
 		// TODO Auto-generated method stub
@@ -60,6 +61,8 @@ public class MockServer implements IServerProxy {
 		return null;
 	}
 
+
+
 	@Override
 	public String getModel(int id) {
 		if (id != 0) {
@@ -73,6 +76,17 @@ public class MockServer implements IServerProxy {
 		}
 		return null;
 	}
+
+	@Override
+	public void loadGame(String s) {
+		//Todo auto-generated method stub
+	}
+
+	@Override
+	public void saveGame(UUID game_id, String file_name){
+		//Todo auto-generated method stub
+	}
+
 
 	@Override
 	public String addAIPlayer(String AiType) {
