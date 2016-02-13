@@ -1,4 +1,5 @@
 package shared.model;
+import client.base.IController;
 import client.catan.GameStatePanel;
 import client.data.*;
 
@@ -17,8 +18,10 @@ import shared.model.player.Player;
 import shared.model.player.ResourceMultiSet;
 import shared.model.player.TradeOffer;
 import shared.model.ports.*;
+import shared.model.states.IState;
 import shared.model.states.TurnTracker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +37,7 @@ public class Fascade
 	protected IMapController map_controller;
 	private int[] player_colors;
 	protected BuyDevCard buy_devcard;
+	private ArrayList<IController> observers;
 
 	private int player_move_robber;
 	protected List<Player> players;
@@ -1116,11 +1120,41 @@ public class Fascade
 		return game_model;
 	}
 	
+	/**
+	 * 
+	 * Points the facade to a new model
+	 * 
+	 * @pre the model was updated
+	 * @post the facasde points to this new model
+	 */
 	public void changeModel(Game model)
 	{
 		game_model = model;
+		notifyObservers();
 	}
 	
+	public void addObserver(IController controller)
+	{
+		observers.add(controller);
+	}
+	
+	/**
+	 * 
+	 * Tells all observers to update to the current model
+	 * 
+	 * @pre the model was updated
+	 * @post all observers know to query for the new model information
+	 */
+	public void notifyObservers()
+	{
+		//foreach (IController observer: observers)
+		//{}
+	}
+	
+	/**
+	 * Exception thrown in the model do-methods
+	 *
+	 */
 	class ModelException extends Exception{}
 }
 	
