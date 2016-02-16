@@ -181,7 +181,7 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String buildRoad(boolean free, EdgeLocation roadLocation) {
+	public String buildRoad(boolean free, shared.communication.EdgeLocation roadLocation) {
 		// TODO Auto-generated method stub
 		String result=null;
 		BuildRoad road=new BuildRoad(playerIndex,roadLocation,free);

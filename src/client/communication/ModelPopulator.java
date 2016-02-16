@@ -2,14 +2,13 @@ package client.communication;
 
 import com.google.gson.Gson;
 import org.json.JSONObject;
-import shared.communication.ResourceList;
+import shared.communication.*;
 import shared.communication.fromServer.game.*;
 import shared.communication.fromServer.game.Port;
 import shared.communication.fromServer.game.TradeOffer;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.TurnStatus;
-import shared.communication.fromServer.game.VertexLocation;
 import shared.locations.*;
 import shared.model.*;
 import shared.model.map.Edge;
@@ -216,7 +215,7 @@ public class ModelPopulator {
         for (Road road : serverRoads) {
             //Values from server
             int serverOwner = road.getOwner();
-            shared.communication.fromServer.game.EdgeLocation serverLocation = road.getLocation();
+            shared.communication.EdgeLocation serverLocation = road.getLocation();
             HexLocation newLocation = new HexLocation(serverLocation.getX(), serverLocation.getY());
 
             //Load values from server

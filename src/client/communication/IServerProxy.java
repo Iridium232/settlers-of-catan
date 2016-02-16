@@ -134,7 +134,7 @@ public interface IServerProxy {
 	 * @param free is the placement part of setup
 	 * @param location where the road will be placed
 	 */
-	public String buildRoad(boolean free, EdgeLocation roadLocation);
+	public String buildRoad(boolean free, shared.communication.EdgeLocation roadLocation);
 	
 	/**
 	 * @pre the location is open, it is not on water, it is connected to a road unless during setup, player has the required resources, it is not adjacent to another settlement.

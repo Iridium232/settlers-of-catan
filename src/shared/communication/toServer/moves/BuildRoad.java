@@ -1,6 +1,7 @@
 package shared.communication.toServer.moves;
 
-import shared.locations.EdgeLocation;
+
+import shared.communication.EdgeLocation;
 
 /**
  * Michael Rhodes
