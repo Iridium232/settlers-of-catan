@@ -235,7 +235,7 @@ public class ServerProxyTest {
 			sp.joinGame("Pete", 0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
-			String mon=sp.buildCity(new VertexLocation(VertexDirection.SouthWest,2,1));
+			String mon=sp.buildSettlement(true, new VertexLocation("NE", 0, 0));
 			assertFalse(mon.equals("FAILED\n"));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
