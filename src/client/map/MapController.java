@@ -6,7 +6,9 @@ import shared.definitions.*;
 import shared.locations.*;
 import shared.model.Fascade;
 import shared.model.map.Edge;
+import shared.model.map.Vertex;
 import client.base.*;
+import client.control.IObserver;
 import client.control.Reference;
 import client.data.*;
 
@@ -16,7 +18,7 @@ import client.data.*;
  * Holds the Rob view.
  * Also has a pointer to the facade of the model.
  */
-public class MapController extends Controller implements IMapController {
+public class MapController extends Controller implements IMapController, IObserver {
 	
 	private IRobView robView;
 	private Fascade model;
@@ -37,6 +39,7 @@ public class MapController extends Controller implements IMapController {
 		client_info = reference;
 		model = facade;
 		initFromModel();
+		model.addObserver(this);
 	}
 	
 	/**
@@ -139,9 +142,10 @@ public class MapController extends Controller implements IMapController {
 	 * @post result = true iff the model says this is valid
 	 * 
 	 */
-	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-		
-		return true;
+	public boolean canPlaceSettlement(VertexLocation vertLoc) 
+	{
+		Vertex vertex = new Vertex(vertLoc);
+		return model.canBuildSettlement(client_info.player_index, vertex);
 	}
 
 	/**
@@ -154,9 +158,10 @@ public class MapController extends Controller implements IMapController {
 	 * @post result = true iff the model says this is valid
 	 * 
 	 */
-	public boolean canPlaceCity(VertexLocation vertLoc) {
-		
-		return true;
+	public boolean canPlaceCity(VertexLocation vertLoc) 
+	{
+		Vertex vertex = new Vertex(vertLoc);
+		return model.canBuildCity(client_info.player_index, vertex);
 	}
 
 	/**
@@ -169,9 +174,9 @@ public class MapController extends Controller implements IMapController {
 	 * @post result = facade.canPlaceRobber(hexLoc)
 	 * 
 	 */
-	public boolean canPlaceRobber(HexLocation hexLoc) {
-		
-		return true;
+	public boolean canPlaceRobber(HexLocation hexLoc) 
+	{
+		return model.canPlaceRobber(hexLoc, client_info.player_index);
 	}
 
 	/**
@@ -193,8 +198,8 @@ public class MapController extends Controller implements IMapController {
 	 * @post the map shows a settlement on that vertex
 	 * 
 	 */
-	public void placeSettlement(VertexLocation vertLoc) {
-		
+	public void placeSettlement(VertexLocation vertLoc) 
+	{
 		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
 	}
 
@@ -205,8 +210,8 @@ public class MapController extends Controller implements IMapController {
 	 * @post the map shows a city on that vertex
 	 * 
 	 */
-	public void placeCity(VertexLocation vertLoc) {
-		
+	public void placeCity(VertexLocation vertLoc) 
+	{
 		getView().placeCity(vertLoc, CatanColor.ORANGE);
 	}
 
@@ -218,7 +223,8 @@ public class MapController extends Controller implements IMapController {
 	 * @post the robber is on the place that the user clicked
 	 * 
 	 */
-	public void placeRobber(HexLocation hexLoc) {
+	public void placeRobber(HexLocation hexLoc) 
+	{
 		
 		getView().placeRobber(hexLoc);
 		
@@ -285,6 +291,14 @@ public class MapController extends Controller implements IMapController {
 		
 	}
 	
+	
+	@Override
+	public void ObservableChanged() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
 	//*****************************GETTERS AND SETTERS***************************************
 	
 	public IMapView getView() {
@@ -313,5 +327,7 @@ public class MapController extends Controller implements IMapController {
 	public void setModel(Fascade model) {
 		this.model = model;
 	}
+
+
 }
 

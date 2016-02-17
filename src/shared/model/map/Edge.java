@@ -13,10 +13,44 @@ public class Edge
 	private Vertex end1;
 	private Vertex end2;
 	
+	public Edge(){}
+	
 	public Edge(EdgeLocation edgeLoc)
 	{
 		location = edgeLoc;
-		
+		direction = location.getDir();
+		HexLocation tile = location.getHexLoc();
+		VertexDirection end1direction = null;
+		VertexDirection end2direction = null;
+		switch(edgeLoc.getDir())
+		{
+			case North:
+				end1direction = VertexDirection.NorthEast;
+				end2direction = VertexDirection.NorthWest;
+				break;
+			case South:
+				end1direction = VertexDirection.SouthEast;
+				end2direction = VertexDirection.SouthWest;
+				break;
+			case NorthWest:
+				end1direction = VertexDirection.West;
+				end2direction = VertexDirection.NorthWest;
+				break;
+			case NorthEast:
+				end1direction = VertexDirection.NorthEast;
+				end2direction = VertexDirection.East;
+				break;
+			case SouthEast:
+				end1direction = VertexDirection.East;
+				end2direction = VertexDirection.SouthEast;
+				break;
+			case SouthWest:
+				end1direction = VertexDirection.West;
+				end2direction = VertexDirection.SouthWest;
+				break;
+		}
+		end1 = new Vertex(new VertexLocation(tile, end1direction));
+		end2 = new Vertex(new VertexLocation(tile, end2direction));
 	}
 	
 	/**
