@@ -1,4 +1,4 @@
-package shared.communication.fromServer.game;
+package shared.communication;
 
 /**
  * Michael Rhodes

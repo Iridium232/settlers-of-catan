@@ -67,9 +67,9 @@ public class ServerProxyTest {
 		String result=sp.register( "a" + Integer.toString(rand.nextInt(12)), Integer.toString(rand.nextInt(12)));
 		assertEquals(result,"200");
 	}
-	
+
 	@Test
-	public void testGetGameList() 
+	public void testGetGameList()
 	{
 		try {
 			sp.login("Pete", "pete");
