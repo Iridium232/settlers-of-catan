@@ -13,6 +13,12 @@ public class Edge
 	private Vertex end1;
 	private Vertex end2;
 	
+	public Edge(EdgeLocation edgeLoc)
+	{
+		location = edgeLoc;
+		
+	}
+	
 	/**
 	 * @return the location
 	 */

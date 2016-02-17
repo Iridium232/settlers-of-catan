@@ -5,7 +5,9 @@ import java.util.*;
 import shared.definitions.*;
 import shared.locations.*;
 import shared.model.Fascade;
+import shared.model.map.Edge;
 import client.base.*;
+import client.control.Reference;
 import client.data.*;
 
 
@@ -18,7 +20,7 @@ public class MapController extends Controller implements IMapController {
 	
 	private IRobView robView;
 	private Fascade model;
-	
+	private Reference client_info;
 
 	/**
 	 * Map Controller Constructor
@@ -26,12 +28,14 @@ public class MapController extends Controller implements IMapController {
 	 * @param robView
 	 * @post creates a map controller tied to the GUI views
 	 */
-	public MapController(IMapView view, IRobView robView) {
-		
+	public MapController(IMapView view, IRobView robView, 
+			Fascade facade, Reference reference) 
+	{
 		super(view);
 		
 		setRobView(robView);
-		
+		client_info = reference;
+		model = facade;
 		initFromModel();
 	}
 	
@@ -119,9 +123,10 @@ public class MapController extends Controller implements IMapController {
 	 * @post result = true iff the model says this is valid
 	 * 
 	 */
-	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		
-		return true;
+	public boolean canPlaceRoad(EdgeLocation edgeLoc) 
+	{
+		Edge edge = new Edge();
+		return model.canBuildRoad(client_info.player_index, edge);
 	}
 
 	/**
