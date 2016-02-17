@@ -1,5 +1,6 @@
 package client.communication;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import shared.communication.toServer.games.JoinGameRequest;
 import shared.communication.toServer.user.Credentials;
@@ -7,8 +8,12 @@ import shared.definitions.CatanColor;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -145,7 +150,7 @@ public class ClientCommunicator {
 	 * @post got a list of games from the server
 	 * @return a JSON array containing a list of objects containing information about the server's games.
 	 */
-	public JSONObject gamesList() throws Exception {
+	public List<JSONObject> gamesList() throws Exception {
 		try {
 			URL url = new URL(url_prefix + "/games/list");
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
@@ -153,7 +158,19 @@ public class ClientCommunicator {
 			connection.connect();
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				InputStream result = connection.getInputStream();
-				return serializer.deserialize(result);
+				StringWriter writer = new StringWriter();
+				try {
+					IOUtils.copy(result, writer);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				String resultStr = writer.toString();
+				List<String> resultList = stringToListOfGames(resultStr);
+				List<JSONObject> resultAsJSONs = new ArrayList<>();
+				for (String s : resultList) {
+					resultAsJSONs.add(new JSONObject(s));
+				}
+				return resultAsJSONs;
 			}
 			else {
 				throw new Exception(String.format("doGet failed: %s (http code %d)",
@@ -245,9 +262,7 @@ public class ClientCommunicator {
 			throw new Exception(String.format("doGet failed: %s", e.getMessage()), e);
 		}
 	}
-	
-	public JSONObject sendCommand(String path, String s) throws Exception
-	{
+	public JSONObject sendCommand(String path, String s) throws Exception{
 		if (catan_cookie == null || game_ID == null) {
 			throw new Exception("Haven't Logged in and joined a game");
 		}
@@ -354,5 +369,22 @@ public class ClientCommunicator {
 				break;
 		}
 		return request;
+	}
+
+	private List<String> stringToListOfGames(String param) {
+		List<String> splitStrings = Arrays.asList(param.split("\\}\\]\\},"));
+		for (int i = 0; i < splitStrings.size() - 1; i++) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(splitStrings.get(i));
+			sb.append("}]}");
+			splitStrings.set(i, sb.toString());
+		}
+		splitStrings.set(0, splitStrings.get(0).substring(1));
+
+		int lastElementIndex = splitStrings.size()-1;
+		String lastElement = splitStrings.get(lastElementIndex);
+		String lastElementFixed = lastElement.substring(0, lastElement.length() - 1);
+		splitStrings.set(lastElementIndex, lastElementFixed);
+		return splitStrings;
 	}
 }

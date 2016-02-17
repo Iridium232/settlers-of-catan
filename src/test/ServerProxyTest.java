@@ -67,9 +67,9 @@ public class ServerProxyTest {
 		String result=sp.register( "a" + Integer.toString(rand.nextInt(12)), Integer.toString(rand.nextInt(12)));
 		assertEquals(result,"200");
 	}
-	
+
 	@Test
-	public void testGetGameList() 
+	public void testGetGameList()
 	{
 		try {
 			sp.login("Pete", "pete");
@@ -213,7 +213,7 @@ public class ServerProxyTest {
 			sp.joinGame("Pete", 0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
-			String mon=sp.buildRoad(true, new EdgeLocation(new HexLocation(0,0),EdgeDirection.SouthEast));
+			String mon=sp.buildRoad(true, new shared.communication.EdgeLocation(0, 0, "SE"));
 			assertFalse(mon.equals("FAILED\n"));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -235,7 +235,7 @@ public class ServerProxyTest {
 			sp.joinGame("Pete", 0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
-			String mon=sp.buildCity(new VertexLocation(VertexDirection.SouthWest,2,1));
+			String mon=sp.buildSettlement(true, new VertexLocation("NE", 0, 0));
 			assertFalse(mon.equals("FAILED\n"));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block

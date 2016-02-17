@@ -72,15 +72,14 @@ public class ServerProxy implements IServerProxy {
 		// TODO Auto-generated method stub
 		List<Game> returnList=new ArrayList<Game>();
 		try {
-			JSONObject result=ClientCommunicator.getSINGLETON().gamesList();
-			List<JSONObject> gamesList=(List<JSONObject>)result.get("games");
+			List<JSONObject> result=ClientCommunicator.getSINGLETON().gamesList();
 			Gson gee=new Gson();
-			for(JSONObject j:gamesList){
+			for(JSONObject j:result){
 				String gg=j.toString();
 				returnList.add(gee.fromJson(gg, Game.class));
 			}
 		} catch (Exception e) {
-			returnList = null;
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return returnList;
@@ -181,7 +180,7 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String buildRoad(boolean free, EdgeLocation roadLocation) {
+	public String buildRoad(boolean free, shared.communication.EdgeLocation roadLocation) {
 		// TODO Auto-generated method stub
 		String result=null;
 		BuildRoad road=new BuildRoad(playerIndex,roadLocation,free);
