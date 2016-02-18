@@ -58,14 +58,14 @@ public class ServerProxyTest {
 	@Test
 	public void testLogin() {
 		String result=sp.login("Pete", "pete");
-		assertEquals (result,"200");
+		assertEquals ("200",result);
 	}
 	
 	@Test
 	public void testRegister(){
 		Random rand = new Random(System.currentTimeMillis());
 		String result=sp.register( "a" + Integer.toString(rand.nextInt(12)), Integer.toString(rand.nextInt(12)));
-		assertEquals(result,"200");
+		assertEquals("200",result);
 	}
 
 	@Test
@@ -473,10 +473,8 @@ public class ServerProxyTest {
 			}
 			sp.login("Pete", "pete");
 			sp.joinGame("Pete", 0, CatanColor.RED);
-			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
-			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
-			EdgeLocation one=new EdgeLocation(new HexLocation(0,0),EdgeDirection.SouthEast);
-			EdgeLocation two=new EdgeLocation(new HexLocation(2,1),EdgeDirection.South);
+			shared.communication.EdgeLocation one=new shared.communication.EdgeLocation(0, 0, "SE");
+			shared.communication.EdgeLocation two=new shared.communication.EdgeLocation(2, 1, "S");
 			String mon=sp.RoadBuilding(one, two);
 			assertFalse(mon.equals("FAILED\n"));
 		} catch (FileNotFoundException e1) {
