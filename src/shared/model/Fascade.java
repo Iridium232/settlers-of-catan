@@ -37,7 +37,7 @@ public class Fascade
 	protected IMapController map_controller;
 	private int[] player_colors;
 	protected BuyDevCard buy_devcard;
-	private ArrayList<IController> observers;
+	private ArrayList<IController> observers = new ArrayList<IController>();
 
 	private int player_move_robber;
 	protected List<Player> players;

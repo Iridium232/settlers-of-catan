@@ -42,7 +42,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		client_info = reference;
 		model = facade;
 		initFromModel();
-		model.addObserver(this);
+		
 		updateMap();
 		proxy = client_info.proxy;
 	}
@@ -349,6 +349,11 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void setModel(Fascade model) {
 		this.model = model;
+	}
+
+	public void register() 
+	{
+		model.addObserver(this);
 	}
 
 

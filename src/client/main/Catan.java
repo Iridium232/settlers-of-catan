@@ -2,7 +2,10 @@ package client.main;
 
 import javax.swing.*;
 
+import shared.model.Fascade;
+
 import client.catan.*;
+import client.control.Reference;
 import client.login.*;
 import client.join.*;
 import client.misc.*;
@@ -25,7 +28,10 @@ public class Catan extends JFrame
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		catanPanel = new CatanPanel();
+		Reference reference = new Reference();
+		Fascade facade = new Fascade();
+		
+		catanPanel = new CatanPanel(reference, facade);
 		this.setContentPane(catanPanel);
 		
 		display();

@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import shared.definitions.ResourceType;
+import shared.model.Fascade;
+import client.control.Reference;
 import client.discard.DiscardController;
 import client.discard.DiscardView;
 import client.misc.WaitView;
@@ -31,12 +33,17 @@ public class CatanPanel extends JPanel
 	private RollResultView rollResultView;
 	private RollController rollController;
 	
-	public CatanPanel()
+	private Reference reference;
+	private Fascade facade;
+	
+	public CatanPanel(Reference ref, Fascade facade)
 	{
+		this.facade = facade;
+		this.reference = ref;
 		this.setLayout(new BorderLayout());
 		
 		titlePanel = new TitlePanel();
-		midPanel = new MidPanel();
+		midPanel = new MidPanel(ref, facade);
 		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel());
 		rightPanel = new RightPanel(midPanel.getMapController());
 		
