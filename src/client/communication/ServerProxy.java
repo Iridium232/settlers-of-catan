@@ -310,7 +310,7 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String RoadBuilding(EdgeLocation one, EdgeLocation two) {
+	public String RoadBuilding(shared.communication.EdgeLocation one, shared.communication.EdgeLocation two) {
 		// TODO Auto-generated method stub
 		String result=null;
 		Road_Building_ rb=new Road_Building_(playerIndex,one,two);

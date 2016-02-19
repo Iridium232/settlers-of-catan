@@ -170,7 +170,7 @@ public class MockServer implements IServerProxy {
 	}
 
 	@Override
-	public String RoadBuilding(EdgeLocation one, EdgeLocation two) {
+	public String RoadBuilding(shared.communication.EdgeLocation one, shared.communication.EdgeLocation two) {
 		// TODO Auto-generated method stub
 		return null;
 	}
