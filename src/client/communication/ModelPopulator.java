@@ -56,7 +56,7 @@ public class ModelPopulator {
     }
 
     private void populateDeck(ServerModel serverModel, Game newModel) {
-        DevCardList deck = serverModel.getDeck();
+    	shared.communication.fromServer.game.DevCardList deck = serverModel.getDeck();
         shared.model.player.DevCardList development_bank = new shared.model.player.DevCardList();
 
         development_bank.setMonument(deck.getMonument());
@@ -151,7 +151,7 @@ public class ModelPopulator {
     private void populatePorts(Map serverMap, GameMap clientMap) {
         Port[] serverPorts = serverMap.getPorts();
 
-        for (Port port : serverPorts) {
+        for (shared.communication.fromServer.game.Port port : serverPorts) {
             HexLocation serverLocation = port.getLocation();
             String serverDirection = port.getDirection();
             int serverRatio = port.getRatio();
@@ -210,9 +210,9 @@ public class ModelPopulator {
     }
 
     private void populateRoads(Map serverMap, GameMap clientMap) {
-        Road[] serverRoads = serverMap.getRoads();
+    	shared.communication.fromServer.game.Road[] serverRoads = serverMap.getRoads();
 
-        for (Road road : serverRoads) {
+        for (shared.communication.fromServer.game.Road road : serverRoads) {
             //Values from server
             int serverOwner = road.getOwner();
             shared.communication.EdgeLocation serverLocation = road.getLocation();
@@ -374,9 +374,9 @@ public class ModelPopulator {
     }
 
     private void populatePlayers(ServerModel serverModel, Game newModel) {
-        Player[] serverPlayers = serverModel.getPlayers();
+    	shared.communication.fromServer.game.Player[] serverPlayers = serverModel.getPlayers();
 
-        for (Player player : serverPlayers) {
+        for (shared.communication.fromServer.game.Player player : serverPlayers) {
         	if(player == null)continue;
             shared.model.player.Player newPlayer = new shared.model.player.Player();
             newPlayer.setCities(player.getCities());
@@ -396,11 +396,11 @@ public class ModelPopulator {
             ResourceMultiSet newMultiSet = new ResourceMultiSet();
             populateResourceMultiSet(serverList, newMultiSet);
 
-            DevCardList serverOldList = player.getOldDevCards();
+            shared.communication.fromServer.game.DevCardList serverOldList = player.getOldDevCards();
             shared.model.player.DevCardList newOldList = new shared.model.player.DevCardList();
             populateDevCardList(serverOldList, newOldList);
 
-            DevCardList serverNewList = player.getNewDevCards();
+            shared.communication.fromServer.game.DevCardList serverNewList = player.getNewDevCards();
             shared.model.player.DevCardList newNewList = new shared.model.player.DevCardList();
             populateDevCardList(serverNewList, newNewList);
 
@@ -459,7 +459,7 @@ public class ModelPopulator {
         newSet.setWood(serverList.getWood());
     }
 
-    private void populateDevCardList(DevCardList serverList, shared.model.player.DevCardList newList) {
+    private void populateDevCardList(shared.communication.fromServer.game.DevCardList serverList, shared.model.player.DevCardList newList) {
         newList.setMonopoly(serverList.getMonopoly());
         newList.setMonument(serverList.getMonument());
         newList.setRoad_building(serverList.getRoadBuilding());
@@ -482,7 +482,7 @@ public class ModelPopulator {
     }
 
     private void populateTurnTracker(ServerModel serverModel, Game newModel) {
-        TurnTracker serverTracker = serverModel.getTurnTracker();
+    	shared.communication.fromServer.game.TurnTracker serverTracker = serverModel.getTurnTracker();
         shared.model.states.TurnTracker newTracker = new shared.model.states.TurnTracker();
 
         newTracker.setActive_player(serverTracker.getCurrentTurn());

@@ -2,12 +2,14 @@ package client.map;
 
 import java.util.*;
 
+import shared.communication.fromServer.games.Player;
 import shared.definitions.*;
 import shared.locations.*;
 import shared.model.Fascade;
 import shared.model.map.Edge;
 import shared.model.map.Vertex;
 import client.base.*;
+import client.communication.IServerProxy;
 import client.control.IObserver;
 import client.control.Reference;
 import client.data.*;
@@ -23,6 +25,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	private IRobView robView;
 	private Fascade model;
 	private Reference client_info;
+	private IServerProxy proxy;
 
 	/**
 	 * Map Controller Constructor
@@ -40,6 +43,8 @@ public class MapController extends Controller implements IMapController, IObserv
 		model = facade;
 		initFromModel();
 		model.addObserver(this);
+		updateMap();
+		proxy = client_info.proxy;
 	}
 	
 	/**
@@ -188,7 +193,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void placeRoad(EdgeLocation edgeLoc) {
 		
-		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		getView().placeRoad(edgeLoc, client_info.player_color);
 	}
 
 	/**
@@ -200,7 +205,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void placeSettlement(VertexLocation vertLoc) 
 	{
-		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+		getView().placeSettlement(vertLoc, client_info.player_color);
 	}
 
 	/**
@@ -212,7 +217,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void placeCity(VertexLocation vertLoc) 
 	{
-		getView().placeCity(vertLoc, CatanColor.ORANGE);
+		getView().placeCity(vertLoc, client_info.player_color);
 	}
 
 	/**
@@ -271,11 +276,12 @@ public class MapController extends Controller implements IMapController, IObserv
 	/**
 	 * The Road-Building Card is played so the player needs to choose 2 places to build a road
 	 * 
-	 * @pre
-	 * @post
+	 * @pre 
+	 * @post 
 	 * 
 	 */
-	public void playRoadBuildingCard() {	
+	public void playRoadBuildingCard() 
+	{	
 		
 	}
 	
@@ -287,18 +293,35 @@ public class MapController extends Controller implements IMapController, IObserv
 	 * @post all are informed that this player was robbed and the robbing player
 	 * gets the resource
 	 */
-	public void robPlayer(RobPlayerInfo victim) {	
+	public void robPlayer(RobPlayerInfo victim) 
+	{	
+		Player player = new Player("2","2", client_info.player_index);
 		
+		
+		//proxy.robPlayer(  , 0);
 	}
 	
-	
+	/**
+	 * This method is called by the facade when there has been a change made.
+	 * 
+	 * @pre the model changed
+	 * @post the GUI represents the data in the model.
+	 */
 	@Override
 	public void ObservableChanged() 
 	{
-		// TODO Auto-generated method stub
-		
+		updateMap();
 	}
 	
+	/**
+	 * Asks the model for all of the information to draw the current map.
+	 */
+	private void updateMap() 
+	{
+		
+		
+	}
+
 	//*****************************GETTERS AND SETTERS***************************************
 	
 	public IMapView getView() {
