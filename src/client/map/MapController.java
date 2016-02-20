@@ -7,7 +7,13 @@ import shared.definitions.*;
 import shared.locations.*;
 import shared.model.Fascade;
 import shared.model.map.Edge;
+import shared.model.map.Road;
+import shared.model.map.Robber;
+import shared.model.map.TerrainHex;
 import shared.model.map.Vertex;
+import shared.model.map.buildings.City;
+import shared.model.map.buildings.Settlement;
+import shared.model.states.IState;
 import client.base.*;
 import client.communication.IServerProxy;
 import client.control.IObserver;
@@ -24,8 +30,9 @@ public class MapController extends Controller implements IMapController, IObserv
 	
 	private IRobView robView;
 	private Fascade model;
-	private Reference client_info;
+	private Reference reference;
 	private IServerProxy proxy;
+	private IState model_state;
 
 	/**
 	 * Map Controller Constructor
@@ -39,12 +46,12 @@ public class MapController extends Controller implements IMapController, IObserv
 		super(view);
 		
 		setRobView(robView);
-		client_info = reference;
+		reference = reference;
 		model = facade;
 		initFromModel();
 		
 		updateMap();
-		proxy = client_info.proxy;
+		proxy = reference.proxy;
 	}
 	
 	/**
@@ -54,71 +61,52 @@ public class MapController extends Controller implements IMapController, IObserv
 	 * @post the model's information is displayed in the map view
 	 * 
 	 */
-	protected void initFromModel() {
-		
-		//<temp>
-		
-		Random rand = new Random();
-
-		for (int x = 0; x <= 3; ++x) {
-			
-			int maxY = 3 - x;			
-			for (int y = -3; y <= maxY; ++y) {				
-				int r = rand.nextInt(HexType.values().length);
-				HexType hexType = HexType.values()[r];
-				HexLocation hexLoc = new HexLocation(x, y);
-				getView().addHex(hexLoc, hexType);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-						CatanColor.RED);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-						CatanColor.BLUE);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-						CatanColor.ORANGE);
-				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
-			}
-			
-			if (x != 0) {
-				int minY = x - 3;
-				for (int y = minY; y <= 3; ++y) {
-					int r = rand.nextInt(HexType.values().length);
-					HexType hexType = HexType.values()[r];
-					HexLocation hexLoc = new HexLocation(-x, y);
-					getView().addHex(hexLoc, hexType);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-							CatanColor.RED);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-							CatanColor.BLUE);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-							CatanColor.ORANGE);
-					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
+	protected void initFromModel() 
+	{
+		TerrainHex[][] hex_grid = model.getHexes();
+		if(hex_grid != null)
+		{
+			for(TerrainHex[] hex_list : hex_grid)
+			{
+				for(TerrainHex hex : hex_list)
+				{
+					getView().addHex(hex.getLocation(), hex.getType());
+					getView().addNumber(hex.getLocation(), hex.getNumber().getValue());
 				}
 			}
 		}
 		
-		PortType portType = PortType.BRICK;
-		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
 		
-		getView().placeRobber(new HexLocation(0, 0));
+		Road[] road_list = model.getRoads();
+		if(road_list != null)
+		{
+			for (Road road : road_list)
+			{
+				getView().placeRoad(road.getLocation().getLocation(), road.getColor());
+			}
+		}
 		
-		getView().addNumber(new HexLocation(-2, 0), 2);
-		getView().addNumber(new HexLocation(-2, 1), 3);
-		getView().addNumber(new HexLocation(-2, 2), 4);
-		getView().addNumber(new HexLocation(-1, 0), 5);
-		getView().addNumber(new HexLocation(-1, 1), 6);
-		getView().addNumber(new HexLocation(1, -1), 8);
-		getView().addNumber(new HexLocation(1, 0), 9);
-		getView().addNumber(new HexLocation(2, -2), 10);
-		getView().addNumber(new HexLocation(2, -1), 11);
-		getView().addNumber(new HexLocation(2, 0), 12);
+		City[] city_list = model.getCities();
+		if(city_list != null)
+		{
+			for (City city : city_list)
+			{
+				getView().placeCity(city.getLocation().getNormalizedLocation(), city.getColor());
+			}
+		}
 		
-		//</temp>
+		Settlement[] settlement_list = model.getSettlements();
+		if (settlement_list != null)
+		{
+			for (Settlement settlement: settlement_list)
+			{
+				getView().placeSettlement(settlement.getLocation().getNormalizedLocation(),
+						settlement.getColor());
+			}
+		}
+		
+		Robber robber = model.getRobber();
+		getView().placeRobber(robber.getLocation());
 	}
 
 	/**
@@ -131,10 +119,10 @@ public class MapController extends Controller implements IMapController, IObserv
 	 * @post result = true iff the model says this is valid
 	 * 
 	 */
-	public boolean canPlaceRoad(EdgeLocation edgeLoc) 
+	public boolean canPlaceRoad(shared.locations.EdgeLocation edgeLoc) 
 	{
 		Edge edge = new Edge();
-		return model.canBuildRoad(client_info.player_index, edge);
+		return model.canBuildRoad(reference.player_index, edge);
 	}
 
 	/**
@@ -147,10 +135,10 @@ public class MapController extends Controller implements IMapController, IObserv
 	 * @post result = true iff the model says this is valid
 	 * 
 	 */
-	public boolean canPlaceSettlement(VertexLocation vertLoc) 
+	public boolean canPlaceSettlement(shared.locations.VertexLocation vertLoc) 
 	{
 		Vertex vertex = new Vertex(vertLoc);
-		return model.canBuildSettlement(client_info.player_index, vertex);
+		return model.canBuildSettlement(reference.player_index, vertex);
 	}
 
 	/**
@@ -163,10 +151,10 @@ public class MapController extends Controller implements IMapController, IObserv
 	 * @post result = true iff the model says this is valid
 	 * 
 	 */
-	public boolean canPlaceCity(VertexLocation vertLoc) 
+	public boolean canPlaceCity(shared.locations.VertexLocation vertLoc) 
 	{
 		Vertex vertex = new Vertex(vertLoc);
-		return model.canBuildCity(client_info.player_index, vertex);
+		return model.canBuildCity(reference.player_index, vertex);
 	}
 
 	/**
@@ -179,9 +167,9 @@ public class MapController extends Controller implements IMapController, IObserv
 	 * @post result = facade.canPlaceRobber(hexLoc)
 	 * 
 	 */
-	public boolean canPlaceRobber(HexLocation hexLoc) 
+	public boolean canPlaceRobber(shared.locations.HexLocation hexLoc) 
 	{
-		return model.canPlaceRobber(hexLoc, client_info.player_index);
+		return model.canPlaceRobber(hexLoc, reference.player_index);
 	}
 
 	/**
@@ -191,9 +179,12 @@ public class MapController extends Controller implements IMapController, IObserv
 	 * @post the map shows a road on that edge
 	 * 
 	 */
-	public void placeRoad(EdgeLocation edgeLoc) {
-		
-		getView().placeRoad(edgeLoc, client_info.player_color);
+	public void placeRoad(shared.locations.EdgeLocation edgeLoc) 
+	{
+		shared.communication.EdgeLocation sending_edge = 
+				new shared.communication.EdgeLocation(edgeLoc.getHexLoc()
+						.getX(),edgeLoc.getHexLoc().getY(), edgeLoc.getDir());
+		getView().placeRoad(edgeLoc, reference.player_color);
 	}
 
 	/**
@@ -203,9 +194,15 @@ public class MapController extends Controller implements IMapController, IObserv
 	 * @post the map shows a settlement on that vertex
 	 * 
 	 */
-	public void placeSettlement(VertexLocation vertLoc) 
+	public void placeSettlement(shared.locations.VertexLocation vertLoc) 
 	{
-		getView().placeSettlement(vertLoc, client_info.player_color);
+		shared.communication.fromServer.game.VertexLocation sending_location = 
+				new shared.communication.fromServer.game.VertexLocation(vertLoc.getDir(),
+						vertLoc.getHexLoc().getX(), vertLoc.getHexLoc().getY());
+		boolean free = model_state.getState() == TurnStatus.FIRSTROUND;
+		free = free && model_state.getState() == TurnStatus.SECONDROUND;
+		reference.proxy.buildSettlement(free, sending_location);
+		getView().placeSettlement(vertLoc, reference.player_color);
 	}
 
 	/**
@@ -215,9 +212,13 @@ public class MapController extends Controller implements IMapController, IObserv
 	 * @post the map shows a city on that vertex
 	 * 
 	 */
-	public void placeCity(VertexLocation vertLoc) 
+	public void placeCity(shared.locations.VertexLocation vertLoc) 
 	{
-		getView().placeCity(vertLoc, client_info.player_color);
+		shared.communication.fromServer.game.VertexLocation sending_location = 
+				new shared.communication.fromServer.game.VertexLocation(vertLoc.getDir(),
+						vertLoc.getHexLoc().getX(), vertLoc.getHexLoc().getY());
+		reference.proxy.buildCity(sending_location);
+		getView().placeCity(vertLoc, reference.player_color);
 	}
 
 	/**
@@ -228,9 +229,11 @@ public class MapController extends Controller implements IMapController, IObserv
 	 * @post the robber is on the place that the user clicked
 	 * 
 	 */
-	public void placeRobber(HexLocation hexLoc) 
+	public void placeRobber(shared.locations.HexLocation hexLoc) 
 	{
 		
+		//reference.proxy.robPlayer(hexLoc, victim);
+		//TODO get victim that they choose
 		getView().placeRobber(hexLoc);
 		
 		getRobView().showModal();
@@ -245,8 +248,8 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) 
 	{	
-		
-		getView().startDrop(pieceType, CatanColor.ORANGE, true);
+		//TODO is this right?
+		getView().startDrop(pieceType, reference.player_color, !isFree);
 	}
 	
 	/**
@@ -258,18 +261,19 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void cancelMove() 
 	{
-		
+		//TODO
 	}
 	
 	/**
-	 * The Soldier Card was played. The map should not do anything.
+	 * The Soldier Card was played. The map should allow a robbing.
 	 * 
 	 * @pre the soldier card was played
-	 * @post nothing
+	 * @post the 
 	 * 
 	 */
 	public void playSoldierCard() 
 	{	
+		//TODO
 		return;
 	}
 	
@@ -282,7 +286,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void playRoadBuildingCard() 
 	{	
-		
+		//TODO
 	}
 	
 	/**
@@ -295,10 +299,10 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void robPlayer(RobPlayerInfo victim) 
 	{	
-		Player player = new Player("2","2", client_info.player_index);
+		Player player = new Player("2","2", reference.player_index);
 		
-		
-		//proxy.robPlayer(  , 0);
+		//TODO
+		//reference.proxy.robPlayer(location, victim);
 	}
 	
 	/**
@@ -315,13 +319,27 @@ public class MapController extends Controller implements IMapController, IObserv
 	
 	/**
 	 * Asks the model for all of the information to draw the current map.
+	 * 
+	 * @pre none
+	 * @post the view represents the model's info
 	 */
 	private void updateMap() 
 	{
-		
-		
+		this.initFromModel();
 	}
 
+	
+
+	/**
+	 * Registers this observer with the observable model facade
+	 * 
+	 * @pre this controller was recently initialized
+	 * @post this controller is registered with the model observable
+	 */
+	public void register() 
+	{
+		model.addObserver(this);
+	}
 	//*****************************GETTERS AND SETTERS***************************************
 	
 	public IMapView getView() {
@@ -340,21 +358,19 @@ public class MapController extends Controller implements IMapController, IObserv
 	/**
 	 * @return the model
 	 */
-	public Fascade getModel() {
+	public Fascade getModel() 
+	{
 		return model;
 	}
 
 	/**
 	 * @param model the model to set
 	 */
-	public void setModel(Fascade model) {
+	public void setModel(Fascade model) 
+	{
 		this.model = model;
 	}
 
-	public void register() 
-	{
-		model.addObserver(this);
-	}
 
 
 }

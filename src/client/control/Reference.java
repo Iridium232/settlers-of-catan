@@ -8,4 +8,5 @@ public class Reference
 	public int player_index;
 	public CatanColor player_color;
 	public IServerProxy proxy;
+	
 }

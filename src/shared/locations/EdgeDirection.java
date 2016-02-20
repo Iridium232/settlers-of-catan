@@ -17,6 +17,14 @@ public enum EdgeDirection
 		SouthWest.opposite = NorthEast;
 	}
 	
+	private String[] strings = {"NW","N", "NE", "SE", "S", "SW"};
+	
+	@Override
+	public String toString()
+	{
+		return strings[this.ordinal()];
+	}
+	
 	public EdgeDirection getOppositeDirection()
 	{
 		return opposite;

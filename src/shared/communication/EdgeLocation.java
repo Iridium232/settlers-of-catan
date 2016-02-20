@@ -1,5 +1,7 @@
 package shared.communication;
 
+import shared.locations.EdgeDirection;
+
 /**
  * Michael Rhodes
  * CS 340
@@ -17,7 +19,14 @@ public class EdgeLocation {
         this.direction = direction;
     }
 
-    public int getX() {
+    public EdgeLocation(int x, int y, EdgeDirection dir) 
+    {
+		this.x = x;
+		this.y = y;
+		this.direction = dir.toString();
+	}
+
+	public int getX() {
         return x;
     }
 
