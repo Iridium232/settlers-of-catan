@@ -1,13 +1,22 @@
 package shared.model;
+
 import client.base.IController;
 import client.catan.GameStatePanel;
-import client.data.*;
-
+import client.communication.IServerProxy;
 import client.map.IMapController;
-
-import shared.communication.toServer.games.*;
-import shared.communication.toServer.moves.*;
-import shared.definitions.*;
+import org.json.Cookie;
+import shared.communication.toServer.moves.BuyDevCard;
+import shared.dataTransfer.cookie.CookieResponse;
+import shared.dataTransfer.cookie.UserCookie;
+import shared.dataTransfer.request.DataTransferRequest;
+import shared.dataTransfer.response.DataResponse;
+import shared.dataTransfer.response.DataTransferResponse;
+import shared.dataTransfer.response.LoginResponse;
+import shared.dataTransfer.response.RegisterResponse;
+import shared.definitions.Commands;
+import shared.definitions.DevCardType;
+import shared.definitions.RestMethods;
+import shared.definitions.TurnStatus;
 import shared.locations.HexLocation;
 import shared.model.map.Edge;
 import shared.model.map.GameMap;
@@ -18,9 +27,9 @@ import shared.model.player.Player;
 import shared.model.player.ResourceMultiSet;
 import shared.model.player.TradeOffer;
 import shared.model.ports.*;
-import shared.model.states.IState;
 import shared.model.states.TurnTracker;
 
+import java.rmi.ServerException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,15 +47,18 @@ public class Fascade
 	private int[] player_colors;
 	protected BuyDevCard buy_devcard;
 	private ArrayList<IController> observers = new ArrayList<IController>();
-
+	private IServerProxy serverProxy;
 	private int player_move_robber;
 	protected List<Player> players;
 	protected GameStatePanel game_state;
+	private Cookie playerCookie = null;
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++
 	//Purchases and Placement
 	//+++++++++++++++++++++++++++++++++++++++++++++++
 
+
+	
 
 	/**
 	 * Tells whether a player can lay a road on that edge
@@ -1156,10 +1168,34 @@ public class Fascade
 	 *
 	 */
 	class ModelException extends Exception{}
+
+
+/* Do Methods */
+
+
+	public DataTransferResponse doLogin(DataTransferRequest credentials) throws ServerException {
+		CookieResponse responseData = new LoginResponse("", false);
+		Cookie cookie = new UserCookie();
+		serverProxy.send(Commands.USER_LOGIN, credentials, responseData, RestMethods.POST, cookie);
+		responseData.setCookie(cookie);
+		return responseData;
+	}
+
+	public DataTransferResponse doRegister(DataTransferRequest credentials) throws ServerException {
+		CookieResponse responseData = new RegisterResponse("", false);
+		Cookie cookie = new UserCookie();
+		serverProxy.send(Commands.USER_REGISTER, credentials, responseData, RestMethods.POST, cookie);
+		responseData.setCookie(cookie);
+		return responseData;
+	}
+
+	public void setPlayerCookie(Cookie playerCookie) {
+		this.playerCookie= playerCookie;
+	}
+
 }
-	
-	
-	
+
+
 	
 	
 	
