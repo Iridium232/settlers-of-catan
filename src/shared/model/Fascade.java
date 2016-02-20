@@ -11,7 +11,13 @@ import shared.definitions.*;
 import shared.locations.HexLocation;
 import shared.model.map.Edge;
 import shared.model.map.GameMap;
+import shared.model.map.Road;
+import shared.model.map.Robber;
+import shared.model.map.TerrainHex;
 import shared.model.map.Vertex;
+import shared.model.map.buildings.Building;
+import shared.model.map.buildings.City;
+import shared.model.map.buildings.Settlement;
 import shared.model.messages.MessageLine;
 import shared.model.player.DevCardList;
 import shared.model.player.Player;
@@ -174,6 +180,11 @@ public class Fascade
 //		BuildSettlement build_settlement = player.placeSettlement();
 //		game_map.addSettlement(build_settlement, player_index);
 
+	}
+	
+	public IState getState()
+	{
+		return game_model.getTurn_tracker().getState();
 	}
 	
 	/**
@@ -1156,6 +1167,53 @@ public class Fascade
 	 *
 	 */
 	class ModelException extends Exception{}
+
+//===============================Getters and Setters=====================================
+	
+	public Robber getRobber() 
+	{
+		return game_model.getMap().getRobber();
+	}
+
+	public Settlement[] getSettlements() 
+	{
+		Building[] buildings =  game_model.getMap().getBuildings();
+		ArrayList<Settlement> settlements = new ArrayList<Settlement>();
+		Settlement example = new Settlement();
+		for(Building building: buildings)
+		{
+			if (building.getClass().equals(example))
+			{
+				settlements.add((Settlement) building);
+			}
+		}
+		return settlements.toArray(new Settlement[settlements.size()]);
+	}
+	
+	public City[] getCities()
+	{
+		Building[] buildings =  game_model.getMap().getBuildings();
+		ArrayList<City> cities = new ArrayList<City>();
+		City example = new City();
+		for(Building building: buildings)
+		{
+			if (building.getClass().equals(example))
+			{
+				cities.add((City) building);
+			}
+		}
+		return cities.toArray(new City[cities.size()]);
+	}
+	
+	public Road[] getRoads()
+	{
+		return game_model.getMap().getRoads();
+	}
+	
+	public TerrainHex[][] getHexes()
+	{
+		return game_model.getMap().getHexes();
+	}
 }
 	
 	

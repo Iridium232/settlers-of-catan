@@ -135,6 +135,14 @@ public class TurnTracker
 	}
 	
 	/**
+	 * Get the state
+	 */
+	public IState getState()
+	{
+		return state;
+	}
+	
+	/**
 	 * Supports translation from JSON to Inheritance for the Populator
 	 * @param status
 	 * @pre none

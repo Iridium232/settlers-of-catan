@@ -31,6 +31,12 @@ public class Catan extends JFrame
 		Reference reference = new Reference();
 		Fascade facade = new Fascade();
 		
+		//Send the facade to the model populator
+		//start up the poller
+		
+		//
+		
+		
 		catanPanel = new CatanPanel(reference, facade);
 		this.setContentPane(catanPanel);
 		
@@ -49,6 +55,8 @@ public class Catan extends JFrame
 	
 	public static void main(final String[] args)
 	{
+		
+		
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
