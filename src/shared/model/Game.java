@@ -2,6 +2,9 @@ package shared.model;
 
 import shared.definitions.TurnStatus;
 import shared.model.map.GameMap;
+import shared.model.map.Road;
+import shared.model.map.Robber;
+import shared.model.map.TerrainHex;
 import shared.model.messages.MessageList;
 import shared.model.player.DevCardList;
 import shared.model.player.Player;
@@ -295,6 +298,21 @@ public class Game
 	public TurnStatus getTurnStatus(int player)
 	{
 		return turn_tracker.turnStatusOf(player);
+	}
+
+	public TerrainHex[][] getHexes() 
+	{
+		return map.getHexes();
+	}
+
+	public Road[] getRoads() 
+	{
+		return map.getRoads();
+	}
+
+	public Robber getRobber() 
+	{
+		return map.getRobber();
 	}
 	
 }
