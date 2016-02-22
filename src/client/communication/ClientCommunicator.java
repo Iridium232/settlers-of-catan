@@ -1,5 +1,6 @@
 package client.communication;
 
+import client.control.Reference;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import shared.communication.toServer.games.JoinGameRequest;
@@ -51,6 +52,7 @@ public class ClientCommunicator {
 	private Serializer serializer;
 	private String catan_cookie;
 	private String game_ID;
+	private Reference ref;
 
 	/**
 	 * Constructor that takes the server's host name and port as arguments
@@ -74,6 +76,7 @@ public class ClientCommunicator {
 		this.serializer = Serializer.getSINGLETON();
 		this.catan_cookie = null;
 		this.game_ID = null;
+		this.ref = Reference.GET_SINGLETON();
 	}
 
 	/**
@@ -99,6 +102,7 @@ public class ClientCommunicator {
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				String cookieStr = connection.getHeaderField("Set-cookie");
 				catan_cookie = getEncodedValue(cookieStr);
+				ref.setName(username);
 				return connection.getResponseCode();
 			} else {
 				throw new Exception(String.format("doPost failed: %s (http code %d)",
@@ -134,6 +138,7 @@ public class ClientCommunicator {
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				String cookieStr = connection.getHeaderField("Set-cookie");
 				catan_cookie = getEncodedValue(cookieStr);
+				ref.setName(username);
 				return connection.getResponseCode();
 			} else {
 				throw new Exception(String.format("doPost failed: %s (http code %d)",
