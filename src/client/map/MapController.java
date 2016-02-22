@@ -40,14 +40,13 @@ public class MapController extends Controller implements IMapController, IObserv
 	 * @param robView
 	 * @post creates a map controller tied to the GUI views
 	 */
-	public MapController(IMapView view, IRobView robView, 
-			Fascade facade, Reference reference) 
+	public MapController(IMapView view, IRobView robView) 
 	{
 		super(view);
 		
 		setRobView(robView);
-		reference = reference;
-		model = facade;
+		reference = Reference.GET_SINGLETON();
+		model = reference.getFascade();
 		initFromModel();
 		
 		updateMap();
@@ -106,7 +105,10 @@ public class MapController extends Controller implements IMapController, IObserv
 		}
 		
 		Robber robber = model.getRobber();
-		getView().placeRobber(robber.getLocation());
+		if(robber!= null)
+		{
+			getView().placeRobber(robber.getLocation());
+		}
 	}
 
 	/**
@@ -260,7 +262,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void cancelMove() 
 	{
-		
+		//Do nothing
 	}
 	
 	/**

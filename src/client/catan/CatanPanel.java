@@ -32,18 +32,14 @@ public class CatanPanel extends JPanel
 	private RollView rollView;
 	private RollResultView rollResultView;
 	private RollController rollController;
+
 	
-	private Reference reference;
-	private Fascade facade;
-	
-	public CatanPanel(Reference ref, Fascade facade)
+	public CatanPanel()
 	{
-		this.facade = facade;
-		this.reference = ref;
 		this.setLayout(new BorderLayout());
 		
 		titlePanel = new TitlePanel();
-		midPanel = new MidPanel(ref, facade);
+		midPanel = new MidPanel();
 		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel());
 		rightPanel = new RightPanel(midPanel.getMapController());
 		

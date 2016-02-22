@@ -68,7 +68,8 @@ public class Catan extends JFrame
 		String port = "8088";
 		if(args.length > 0)
 		{
-			host = args[0].substring(1);
+			host = args[0];
+			System.out.print("Running client on host: http://" + host + ".\n");
 		}
 		else
 		{
@@ -76,7 +77,8 @@ public class Catan extends JFrame
 		}
 		if(args.length > 1)
 		{
-			port = args[1].substring(1);
+			port = args[1];
+			System.out.print("Port: " + port +".\n");
 		}
 		else
 		{
