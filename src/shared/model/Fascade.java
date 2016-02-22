@@ -1201,6 +1201,10 @@ public class Fascade
 
 	public City[] getCities() 
 	{
+		if(game_model == null)
+		{
+			return null;
+		}
 		Building[] buildings = game_model.getMap().getBuildings();
 		ArrayList<City> cities = new ArrayList<City>();
 		City example = new City();
@@ -1216,6 +1220,10 @@ public class Fascade
 	
 	public Settlement[] getSettlements() 
 	{
+		if(game_model == null)
+		{
+			return null;
+		}
 		Building[] buildings = game_model.getMap().getBuildings();
 		ArrayList<Settlement> settlements = new ArrayList<Settlement>();
 		Settlement example = new Settlement();
@@ -1231,16 +1239,28 @@ public class Fascade
 
 	public TerrainHex[][] getHexes()
 	{
+		if(game_model == null)
+		{
+			return null;
+		}
 		return game_model.getHexes();
 	}
 
 	public Road[] getRoads() 
 	{
+		if(game_model == null)
+		{
+			return null;
+		}
 		return game_model.getRoads();
 	}
 
 	public Robber getRobber() 
 	{
+		if(game_model == null)
+		{
+			return null;
+		}
 		return game_model.getRobber();
 	}
 

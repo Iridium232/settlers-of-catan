@@ -8,7 +8,7 @@ public class Reference
 {
 	private static Reference SINGLETON;
 
-	private static Reference GET_SINGLETON() {
+	public static Reference GET_SINGLETON() {
 		if (SINGLETON == null) {
 			SINGLETON = new Reference();
 		}
@@ -23,6 +23,8 @@ public class Reference
 	public int player_index;
 	public CatanColor player_color;
 	public IServerProxy proxy;
+	public int port;
+	public String host;
 
 	public Fascade getFascade() {
 		return fascade;
@@ -62,5 +64,25 @@ public class Reference
 
 	public void setProxy(IServerProxy proxy) {
 		this.proxy = proxy;
+	}
+
+	public void setPort(Integer integer) 
+	{
+		this.port = integer;
+		
+	}
+	public void setHost(String host)
+	{
+		this.host = host;
+	}
+
+	public String getHost() 
+	{
+		return host;
+	}
+
+	public String getPort() 
+	{
+		return Integer.toString(port);
 	}
 }

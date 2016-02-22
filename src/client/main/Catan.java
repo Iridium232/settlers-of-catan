@@ -25,16 +25,14 @@ public class Catan extends JFrame
 	
 	private CatanPanel catanPanel;
 	
-	public Catan()
+	public Catan(String host, int port)
 	{
-		String host = "";
-		int port = 8088;
 		client.base.OverlayView.setWindow(this);
 		
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		Reference reference = new Reference();
+		Reference reference = Reference.GET_SINGLETON();
 		Fascade facade = new Fascade();
 		IServerProxy proxy = new ServerProxy(host , port , facade);
 		
@@ -44,7 +42,7 @@ public class Catan extends JFrame
 		ServerPoller.setComm(ClientCommunicator.getSingleton(host,Integer.toString(port)));
 		ServerPoller.Start();
 
-		reference.proxy = proxy;
+		reference.setProxy(proxy);
 		
 		
 		catanPanel = new CatanPanel(reference, facade);
@@ -65,7 +63,28 @@ public class Catan extends JFrame
 	
 	public static void main(final String[] args)
 	{
-		
+		Reference.GET_SINGLETON();
+		String host = "localhost";
+		String port = "8088";
+		if(args.length > 0)
+		{
+			host = args[0].substring(1);
+		}
+		else
+		{
+			System.out.print("\nNo host specified. Using default 'localhost'.");
+		}
+		if(args.length > 1)
+		{
+			port = args[1].substring(1);
+		}
+		else
+		{
+			System.out.print("\nNo port specified. Using default '8088'.");
+		}
+		Reference reference = Reference.GET_SINGLETON();
+		reference.setPort(new Integer(port));
+		reference.setHost("http://" + host);
 		
 		try
 		{
@@ -79,7 +98,8 @@ public class Catan extends JFrame
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
-				new Catan();
+				Reference reference = Reference.GET_SINGLETON();
+				new Catan(new String(reference.getHost()),new Integer(reference.getPort()));
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
