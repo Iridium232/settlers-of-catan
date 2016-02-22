@@ -45,7 +45,7 @@ public class Catan extends JFrame
 		reference.setProxy(proxy);
 		
 		
-		catanPanel = new CatanPanel(reference, facade);
+		catanPanel = new CatanPanel();
 		this.setContentPane(catanPanel);
 		
 		display();
