@@ -1,32 +1,35 @@
 package shared.model;
+
 import client.base.IController;
 import client.catan.GameStatePanel;
-import client.data.*;
-
+import client.communication.IServerProxy;
 import client.map.IMapController;
-
-import shared.communication.toServer.games.*;
-import shared.communication.toServer.moves.*;
-import shared.definitions.*;
+import org.json.Cookie;
+import shared.communication.toServer.moves.BuyDevCard;
+import shared.dataTransfer.cookie.CookieResponse;
+import shared.dataTransfer.cookie.UserCookie;
+import shared.dataTransfer.request.DataTransferRequest;
+import shared.dataTransfer.response.DataResponse;
+import shared.dataTransfer.response.DataTransferResponse;
+import shared.dataTransfer.response.LoginResponse;
+import shared.dataTransfer.response.RegisterResponse;
+import shared.definitions.Commands;
+import shared.definitions.DevCardType;
+import shared.definitions.RestMethods;
+import shared.definitions.TurnStatus;
 import shared.locations.HexLocation;
 import shared.model.map.Edge;
 import shared.model.map.GameMap;
-import shared.model.map.Road;
-import shared.model.map.Robber;
-import shared.model.map.TerrainHex;
 import shared.model.map.Vertex;
-import shared.model.map.buildings.Building;
-import shared.model.map.buildings.City;
-import shared.model.map.buildings.Settlement;
 import shared.model.messages.MessageLine;
 import shared.model.player.DevCardList;
 import shared.model.player.Player;
 import shared.model.player.ResourceMultiSet;
 import shared.model.player.TradeOffer;
 import shared.model.ports.*;
-import shared.model.states.IState;
 import shared.model.states.TurnTracker;
 
+import java.rmi.ServerException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,15 +47,18 @@ public class Fascade
 	private int[] player_colors;
 	protected BuyDevCard buy_devcard;
 	private ArrayList<IController> observers = new ArrayList<IController>();
-
+	private IServerProxy serverProxy;
 	private int player_move_robber;
 	protected List<Player> players;
 	protected GameStatePanel game_state;
+	private Cookie playerCookie = null;
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++
 	//Purchases and Placement
 	//+++++++++++++++++++++++++++++++++++++++++++++++
 
+
+	
 
 	/**
 	 * Tells whether a player can lay a road on that edge
@@ -180,11 +186,6 @@ public class Fascade
 //		BuildSettlement build_settlement = player.placeSettlement();
 //		game_map.addSettlement(build_settlement, player_index);
 
-	}
-	
-	public IState getState()
-	{
-		return game_model.getTurn_tracker().getState();
 	}
 	
 	/**
@@ -1168,56 +1169,33 @@ public class Fascade
 	 */
 	class ModelException extends Exception{}
 
-//===============================Getters and Setters=====================================
-	
-	public Robber getRobber() 
-	{
-		return game_model.getMap().getRobber();
+
+/* Do Methods */
+
+
+	public DataTransferResponse doLogin(DataTransferRequest credentials) throws ServerException {
+		CookieResponse responseData = new LoginResponse("", false);
+		Cookie cookie = new UserCookie();
+		serverProxy.send(Commands.USER_LOGIN, credentials, responseData, RestMethods.POST, cookie);
+		responseData.setCookie(cookie);
+		return responseData;
 	}
 
-	public Settlement[] getSettlements() 
-	{
-		Building[] buildings =  game_model.getMap().getBuildings();
-		ArrayList<Settlement> settlements = new ArrayList<Settlement>();
-		Settlement example = new Settlement();
-		for(Building building: buildings)
-		{
-			if (building.getClass().equals(example))
-			{
-				settlements.add((Settlement) building);
-			}
-		}
-		return settlements.toArray(new Settlement[settlements.size()]);
+	public DataTransferResponse doRegister(DataTransferRequest credentials) throws ServerException {
+		CookieResponse responseData = new RegisterResponse("", false);
+		Cookie cookie = new UserCookie();
+		serverProxy.send(Commands.USER_REGISTER, credentials, responseData, RestMethods.POST, cookie);
+		responseData.setCookie(cookie);
+		return responseData;
 	}
-	
-	public City[] getCities()
-	{
-		Building[] buildings =  game_model.getMap().getBuildings();
-		ArrayList<City> cities = new ArrayList<City>();
-		City example = new City();
-		for(Building building: buildings)
-		{
-			if (building.getClass().equals(example))
-			{
-				cities.add((City) building);
-			}
-		}
-		return cities.toArray(new City[cities.size()]);
+
+	public void setPlayerCookie(Cookie playerCookie) {
+		this.playerCookie= playerCookie;
 	}
-	
-	public Road[] getRoads()
-	{
-		return game_model.getMap().getRoads();
-	}
-	
-	public TerrainHex[][] getHexes()
-	{
-		return game_model.getMap().getHexes();
-	}
+
 }
-	
-	
-	
+
+
 	
 	
 	

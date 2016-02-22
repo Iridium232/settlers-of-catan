@@ -1,15 +1,15 @@
 package client.main;
 
-import javax.swing.*;
-
+import client.base.IAction;
+import client.catan.CatanPanel;
+import client.control.Reference;
+import client.join.*;
+import client.login.LoginController;
+import client.login.LoginView;
+import client.misc.MessageView;
 import shared.model.Fascade;
 
-import client.catan.*;
-import client.control.Reference;
-import client.login.*;
-import client.join.*;
-import client.misc.*;
-import client.base.*;
+import javax.swing.*;
 
 /**
  * Main entry point for the Catan program
@@ -99,9 +99,14 @@ public class Catan extends JFrame
 				
 				LoginView loginView = new LoginView();
 				MessageView loginMessageView = new MessageView();
-				LoginController loginController = new LoginController(
-																	  loginView,
-																	  loginMessageView);
+				LoginController loginController = null;
+				try {
+					loginController = new LoginController(
+							loginView,
+							loginMessageView);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				loginController.setLoginAction(new IAction() {
 					@Override
 					public void execute()

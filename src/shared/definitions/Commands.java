@@ -5,6 +5,11 @@ package shared.definitions;
  */
 public class Commands {
     public static final String
+            USER_LOGIN = "user/login",
+            USER_REGISTER = "user/register",
+            GAMES_LIST = "games/list",
+            GAMES_CREATE = "games/create",
+            GAMES_JOIN = "games/join",
             ROLL_NUMBER = "rollNumber",
             ROB_PLAYER = "robPlayer",
             FINISH_TURN = "finishTurn",

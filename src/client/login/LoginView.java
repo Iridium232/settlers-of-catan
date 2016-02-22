@@ -1,29 +1,17 @@
 package client.login;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import client.base.OverlayView;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import client.base.*;
-import java.awt.GridLayout;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.rmi.ServerException;
 
 /**
  * Implementation for the login view, which lets the user create a new account
@@ -145,7 +133,11 @@ public class LoginView extends OverlayView implements ILoginView
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            getController().signIn();
+            try {
+                getController().signIn();
+            } catch (ServerException e1) {
+                e1.printStackTrace();
+            }
         }
     };
 
@@ -260,7 +252,11 @@ public class LoginView extends OverlayView implements ILoginView
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    getController().signIn();
+                    try {
+                        getController().signIn();
+                    } catch (ServerException e1) {
+                        e1.printStackTrace();
+                    }
                 }
 
             });
@@ -361,7 +357,11 @@ public class LoginView extends OverlayView implements ILoginView
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    getController().register();
+                    try {
+                        getController().register();
+                    } catch (ServerException e1) {
+                        e1.printStackTrace();
+                    }
                 }
 
             });
