@@ -1182,7 +1182,7 @@ public class Fascade
 	public DataTransferResponse doLogin(DataTransferRequest credentials) throws ServerException {
 		CookieResponse responseData = new LoginResponse("", false);
 		Cookie cookie = new UserCookie();
-		serverProxy.send(Commands.USER_LOGIN, credentials, responseData, RestMethods.POST, cookie);
+		//serverProxy.send(Commands.USER_LOGIN, credentials, responseData, RestMethods.POST, cookie);
 		responseData.setCookie(cookie);
 		return responseData;
 	}
@@ -1190,7 +1190,7 @@ public class Fascade
 	public DataTransferResponse doRegister(DataTransferRequest credentials) throws ServerException {
 		CookieResponse responseData = new RegisterResponse("", false);
 		Cookie cookie = new UserCookie();
-		serverProxy.send(Commands.USER_REGISTER, credentials, responseData, RestMethods.POST, cookie);
+		//serverProxy.send(Commands.USER_REGISTER, credentials, responseData, RestMethods.POST, cookie);
 		responseData.setCookie(cookie);
 		return responseData;
 	}

@@ -2,6 +2,11 @@ package client.main;
 
 import client.base.IAction;
 import client.catan.CatanPanel;
+import client.communication.ClientCommunicator;
+import client.communication.IServerProxy;
+import client.communication.ModelPopulator;
+import client.communication.ServerPoller;
+import client.communication.ServerProxy;
 import client.control.Reference;
 import client.join.*;
 import client.login.LoginController;
@@ -22,7 +27,8 @@ public class Catan extends JFrame
 	
 	public Catan()
 	{
-		
+		String host = "";
+		int port = 8088;
 		client.base.OverlayView.setWindow(this);
 		
 		this.setTitle("Settlers of Catan");
@@ -30,11 +36,15 @@ public class Catan extends JFrame
 		
 		Reference reference = new Reference();
 		Fascade facade = new Fascade();
+		IServerProxy proxy = new ServerProxy(host , port , facade);
 		
-		//Send the facade to the model populator
-		//start up the poller
-		
-		//
+		ServerPoller.getServerPoller();
+		ServerPoller.setFascade(facade);
+		ServerPoller.setServer(proxy);
+		ServerPoller.setComm(ClientCommunicator.getSingleton(host,Integer.toString(port)));
+		ServerPoller.Start();
+
+		reference.proxy = proxy;
 		
 		
 		catanPanel = new CatanPanel(reference, facade);
