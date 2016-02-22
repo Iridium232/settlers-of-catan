@@ -2,6 +2,7 @@ package client.map;
 
 import shared.definitions.*;
 import shared.locations.*;
+import shared.model.Fascade;
 import client.base.*;
 
 /**
@@ -92,5 +93,12 @@ public interface IMapView extends IView
 	 */
 	void startDrop(PieceType pieceType, CatanColor pieceColor,
 				   boolean isCancelAllowed);
+
+	/**
+	 * Gets the map component
+	 * @return
+	 */
+	MapComponent getMap();
+
 }
 

@@ -248,7 +248,6 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) 
 	{	
-		//TODO is this right?
 		getView().startDrop(pieceType, reference.player_color, !isFree);
 	}
 	
@@ -261,7 +260,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void cancelMove() 
 	{
-		//TODO
+		
 	}
 	
 	/**
@@ -273,7 +272,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void playSoldierCard() 
 	{	
-		//TODO
+		this.startMove(PieceType.ROBBER, false, false);
 		return;
 	}
 	
@@ -286,7 +285,10 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void playRoadBuildingCard() 
 	{	
-		//TODO
+		this.startMove(PieceType.ROAD, true, false);
+		
+		this.startMove(PieceType.ROAD, true, false);
+		//Send off the info to the controller
 	}
 	
 	/**
@@ -299,10 +301,11 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void robPlayer(RobPlayerInfo victim) 
 	{	
-		Player player = new Player("2","2", reference.player_index);
+		//shared.model.player.Player victim_player = new shared.model.player.Player(
+		//		victim.getName(), victim.getColor().toString(), victim.getId());
+		shared.locations.HexLocation location = getView().getMap().getRobber();
 		
-		//TODO
-		//reference.proxy.robPlayer(location, victim);
+		//reference.proxy.robPlayer(location, victim_player);
 	}
 	
 	/**

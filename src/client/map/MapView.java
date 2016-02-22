@@ -307,6 +307,12 @@ public class MapView extends PanelView implements IMapView
 			}
 		}
 	}
+
+	@Override
+	public MapComponent getMap() 
+	{
+		return map;
+	}
 	
 }
 
