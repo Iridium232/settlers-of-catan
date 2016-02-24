@@ -1,5 +1,6 @@
 package client.communication;
 
+import client.control.Reference;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 import shared.communication.*;
@@ -37,6 +38,7 @@ public class ModelPopulator {
         Game newModel = new Game();
         mp.populateGame(serverModel, newModel);
         fascade.changeModel(newModel);
+        Reference.GET_SINGLETON().setFascade(fascade);
     }
 
     private ModelPopulator() {
@@ -391,6 +393,12 @@ public class ModelPopulator {
             newPlayer.setSettlements(player.getSettlements());
             newPlayer.setSoldiers(player.getSoldiers());
             newPlayer.setVictoryPoints(player.getVictoryPoints());
+
+            //Instantiate Reference
+            if (player.getName().equals(Reference.GET_SINGLETON().getName())) {
+                Reference.GET_SINGLETON().setPlayer_index(player.getPlayerIndex());
+                Reference.GET_SINGLETON().setPlayer_color(getCatanColor(newPlayer));
+            }
 
             ResourceList serverList = player.getResources();
             ResourceMultiSet newMultiSet = new ResourceMultiSet();
