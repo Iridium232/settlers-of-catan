@@ -1,13 +1,17 @@
 package client.turntracker;
 
+import client.control.IObserver;
 import shared.definitions.CatanColor;
 import client.base.*;
+import shared.model.Fascade;
+
+import javax.xml.parsers.FactoryConfigurationError;
 
 
 /**
  * Implementation for the turn tracker controller
  */
-public class TurnTrackerController extends Controller implements ITurnTrackerController {
+public class TurnTrackerController extends Controller implements ITurnTrackerController, IObserver {
 
 	public TurnTrackerController(ITurnTrackerView view) {
 		
@@ -31,10 +35,11 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 	
 	private void initFromModel() {
-		//<temp>
-		getView().setLocalPlayerColor(CatanColor.RED);
-		//</temp>
 	}
 
+	@Override
+	public void ObservableChanged(Fascade fascade) {
+
+	}
 }
 

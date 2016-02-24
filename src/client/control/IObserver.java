@@ -1,6 +1,8 @@
 package client.control;
 
-public interface IObserver 
+import shared.model.Fascade;
+
+public interface IObserver
 {
-	public void ObservableChanged();
+	public void ObservableChanged(Fascade fascade);
 }
