@@ -77,6 +77,11 @@ public class ClientCommunicator {
 		this.catan_cookie = null;
 		this.game_ID = null;
 		this.ref = Reference.GET_SINGLETON();
+		
+		if(server_host.contains("http://"))
+		{
+			url_prefix = url_prefix.substring(7); 
+		}
 	}
 
 	/**

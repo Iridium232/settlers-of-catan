@@ -3,6 +3,8 @@ package client.login;
 import client.base.Controller;
 import client.base.IAction;
 import client.communication.ClientCommunicator;
+import client.communication.IServerProxy;
+import client.control.Reference;
 import client.data.PlayerInfo;
 import client.misc.IMessageView;
 import shared.communication.toServer.user.Credentials;
@@ -22,7 +24,7 @@ import java.rmi.ServerException;
  */
 public class LoginController extends Controller implements ILoginController {
 
-	private ClientCommunicator clientCommunicator;
+	private IServerProxy proxy;
 	private Fascade clientFascade;
 	private IMessageView messageView;
 	private IAction loginAction;
@@ -38,18 +40,19 @@ public class LoginController extends Controller implements ILoginController {
 
 		super(view);
 		
+		Reference reference = Reference.GET_SINGLETON();
 		this.messageView = messageView;
-		clientCommunicator = clientCommunicator.getSINGLETON();
-		this.clientFascade = clientFascade;
+		this.proxy = reference.getProxy();
+		this.clientFascade = reference.getFascade();
 	}
 	
-	public ILoginView getLoginView() {
-		
+	public ILoginView getLoginView() 
+	{
 		return (ILoginView)super.getView();
 	}
 	
-	public IMessageView getMessageView() {
-		
+	public IMessageView getMessageView() 
+	{
 		return messageView;
 	}
 	
@@ -58,8 +61,8 @@ public class LoginController extends Controller implements ILoginController {
 	 * 
 	 * @param value The action to be executed when the user logs in
 	 */
-	public void setLoginAction(IAction value) {
-		
+	public void setLoginAction(IAction value) 
+	{	
 		loginAction = value;
 	}
 	
@@ -68,8 +71,8 @@ public class LoginController extends Controller implements ILoginController {
 	 * 
 	 * @return The action to be executed when the user logs in
 	 */
-	public IAction getLoginAction() {
-		
+	public IAction getLoginAction() 
+	{	
 		return loginAction;
 	}
 
@@ -77,8 +80,8 @@ public class LoginController extends Controller implements ILoginController {
 	 * Displays the login view
 	 */
 	@Override
-	public void start() {
-		
+	public void start() 
+	{
 		getLoginView().showModal();
 	}
 
@@ -88,8 +91,8 @@ public class LoginController extends Controller implements ILoginController {
 	 * Should communicate with the model and log in the user by calling login on the model facade
 	 */
 	@Override
-	public void signIn() throws ServerException {
-
+	public void signIn() throws ServerException 
+	{
 		this.doOperation(getLoginView().getLoginUsername(), getLoginView().getLoginPassword(), Operation.LOGIN);
 	}
 
@@ -102,7 +105,8 @@ public class LoginController extends Controller implements ILoginController {
 	 * Should communicate with the model and register the user by calling register ont the model facade
 	 */
 	@Override
-	public void register() throws ServerException {
+	public void register() throws ServerException 
+	{
 
 		// TODO: register new user (which, if successful, also logs them in)
 		String username = getLoginView().getRegisterUsername();
@@ -118,66 +122,48 @@ public class LoginController extends Controller implements ILoginController {
 		}
 	}
 
-	private Credentials prepareCredentials(String username, String password) {
-		Credentials credentials = null;
-		try {
-			credentials = new Credentials(new PlayerName(username), new Password(password));
-		} catch (InvalidNameException | InvalidPasswordException e) {
-		}
-		return credentials;
-	}
-
-	private void doOperation(String givenUsername, String givenPassword, Operation operation) throws ServerException {
+	private void doOperation(String givenUsername, String givenPassword,
+			Operation operation) throws ServerException 
+	{
 		Boolean success = false;
 		String messageTitle = "";
 		String message = "";
 		String username = givenUsername;
 		String password = givenPassword;
-		Credentials credentials = null;
-		DataTransferResponse response = null;
-		PlayerInfo newLocalPlayer = null;
-
-		credentials = prepareCredentials(username, password);
-		if (credentials != null) {
-			try {
-				switch (operation) {
-					case LOGIN:
-						response = clientFascade.doLogin(credentials);
-						break;
-					case REGISTER:
-						response = clientFascade.doRegister(credentials);
-						break;
-					default:
-						// an error occurred with the server
-						response = new LoginResponse("Failed to Login", true);
-						break;
-				}
-				if (!response.isBad) {
-					success = true;
-				} else {
-					messageTitle = "Error!";
-					message = response.getResponseBody();
-				}
-			} catch (ServerException e) {
-				e.printStackTrace();
-				messageTitle = "Error!";
-				message = "Internal Server Error";
-			}
-		} else {
-			messageTitle = "Warning!";
-			message = "Invalid Username or Password.";
+		boolean response = false;
+		switch (operation) 
+		{	
+			case LOGIN:
+				response = proxy.login(username, password).equals("FAILED\n") ? false: true;
+				break;
+			case REGISTER:
+				response = proxy.login(username, password).equals("FAILED\n") ? false: true;
+				break;
+			default:
+				// an error occurred with the server
+				response = false;
+				break;
+		}
+		if (response) 
+		{
+			success = true;
+		} 
+		else 
+		{
+			messageTitle = "Error!";
+			message = "Invalid Username or Password";
 		}
 
-		if (success) {
+		if (success) 
+		{
 			// If login succeeded
-			clientFascade.setPlayerCookie(((CookieResponse) response).getCookie());
 			getLoginView().closeModal();
 			loginAction.execute();
-		} else {
-			messageView.setMessage(message);
-			messageView.setTitle(messageTitle);
-			messageView.showModal();
-		}
+		} 
+		messageView.setMessage(message);
+		messageView.setTitle(messageTitle);
+		messageView.showModal();
+
 	}
 
 }

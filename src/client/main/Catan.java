@@ -43,7 +43,7 @@ public class Catan extends JFrame
 		ServerPoller.Start();
 
 		reference.setProxy(proxy);
-		
+		reference.setFascade(facade);
 		
 		catanPanel = new CatanPanel();
 		this.setContentPane(catanPanel);
@@ -65,7 +65,7 @@ public class Catan extends JFrame
 	{
 		Reference.GET_SINGLETON();
 		String host = "localhost";
-		String port = "8088";
+		String port = "8081";
 		if(args.length > 0)
 		{
 			host = args[0];
@@ -82,7 +82,7 @@ public class Catan extends JFrame
 		}
 		else
 		{
-			System.out.print("\nNo port specified. Using default '8088'.");
+			System.out.print("\nNo port specified. Using default '8081'.");
 		}
 		Reference reference = Reference.GET_SINGLETON();
 		reference.setPort(new Integer(port));

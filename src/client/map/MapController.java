@@ -62,6 +62,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	protected void initFromModel() 
 	{
+		if(model == null){return;}
 		TerrainHex[][] hex_grid = model.getHexes();
 		if(hex_grid != null)
 		{
