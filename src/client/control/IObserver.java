@@ -4,5 +4,5 @@ import shared.model.Fascade;
 
 public interface IObserver
 {
-	public void ObservableChanged(Fascade fascade);
+	public void ObservableChanged();
 }

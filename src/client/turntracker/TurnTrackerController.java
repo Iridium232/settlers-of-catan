@@ -38,7 +38,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 
 	@Override
-	public void ObservableChanged(Fascade fascade) {
+	public void ObservableChanged() {
 
 	}
 }
