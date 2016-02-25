@@ -1,6 +1,7 @@
 package client.join;
 
 import client.base.*;
+import client.communication.IServerProxy;
 import client.control.Reference;
 import client.data.PlayerInfo;
 import shared.definitions.CatanColor;
@@ -64,11 +65,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	}
 
 	/**
-	 * Generates a AI to add to player list
+	 * Generates an AI to add to player list
 	 */
 	@Override
 	public void addAI() {
-
+		IServerProxy sp = Reference.GET_SINGLETON().getProxy();
+		sp.addAIPlayer("LARGEST_ARMY");
 	}
 
 	private CatanColor getCatanColor(shared.model.player.Player player) {
