@@ -1,12 +1,16 @@
 package client.points;
 
 import client.base.*;
+import client.control.IObserver;
+import client.control.Reference;
+import shared.model.Game;
+import shared.model.player.Player;
 
 
 /**
  * Implementation for the points controller
  */
-public class PointsController extends Controller implements IPointsController {
+public class PointsController extends Controller implements IPointsController, IObserver {
 
 	private IGameFinishedView finishedView;
 	
@@ -46,6 +50,31 @@ public class PointsController extends Controller implements IPointsController {
 	private void initFromModel() {
 		getPointsView().setPoints(0);
 	}
-	
+
+	@Override
+	public void ObservableChanged() {
+		Reference r = Reference.GET_SINGLETON();
+		Game model = r.getFascade().getModel();
+		Player localPlayer = null;
+		for (Player player : model.getPlayers()) {
+			if (player.getPlayerIndex() == r.getPlayer_index()) {
+				localPlayer = player;
+			}
+		}
+
+		if (localPlayer == null) return;
+		for (Player player : model.getPlayers()) {
+			if (player.getVictoryPoints() >= 10) {
+				boolean isLocalPlayer = false;
+				if (player.getPlayerIndex() == localPlayer.getPlayerIndex()) {
+					isLocalPlayer = true;
+				}
+				getFinishedView().setWinner(player.getName(), isLocalPlayer);
+				return;
+			}
+		}
+
+		getPointsView().setPoints(localPlayer.getVictoryPoints());
+	}
 }
 
