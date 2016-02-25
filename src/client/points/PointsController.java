@@ -44,9 +44,7 @@ public class PointsController extends Controller implements IPointsController {
  * @post initializes the player info based on the model
  */
 	private void initFromModel() {
-		//<temp>		
-		getPointsView().setPoints(5);
-		//</temp>
+		getPointsView().setPoints(0);
 	}
 	
 }
