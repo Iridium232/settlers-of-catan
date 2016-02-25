@@ -1,6 +1,13 @@
 package client.join;
 
 import client.base.*;
+import client.control.Reference;
+import client.data.PlayerInfo;
+import shared.definitions.CatanColor;
+import shared.model.Fascade;
+import shared.model.player.Player;
+
+import java.util.ArrayList;
 
 
 /**
@@ -25,18 +32,31 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	}
 
 	/**
-	 * make a list of the players from the currernt game
+	 * make a list of the players from the current game
 	 * getView().setPlayers(list)
 	 * getView().setAIChoices(AI if so)
 	 * showModal
 	 */
 	@Override
 	public void start() {
+		Fascade f = Reference.GET_SINGLETON().getFascade();
+		ArrayList<PlayerInfo> playerInfos = new ArrayList<>();
+		for (Player player : f.getModel().getPlayers()) {
+			PlayerInfo playerInfo = new PlayerInfo();
+			playerInfo.setName(player.getName());
+			playerInfo.setColor(getCatanColor(player));
+			playerInfo.setId(player.getPlayerID());
+			playerInfo.setPlayerIndex(player.getPlayerIndex());
+			playerInfos.add(playerInfo);
+		}
+		String[] AIValues = { "LARGEST_ARMY" };
 		try {
-			getView().setPlayers(null);
-			getView().setAIChoices(null);
+			getView().setPlayers((PlayerInfo[])playerInfos.toArray());
+			getView().setAIChoices(AIValues);
 			getView().showModal();
-			getView().closeModal();
+			if (playerInfos.size() == 4) {
+				getView().closeModal();
+			}
 		}
 		catch (Exception e){
 			e.printStackTrace();
@@ -49,8 +69,18 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void addAI() {
 
-		// TEMPORARY
-		getView().closeModal();
+	}
+
+	private CatanColor getCatanColor(shared.model.player.Player player) {
+		if (player.getColor().equals("red")) return CatanColor.RED;
+		if (player.getColor().equals("orange")) return CatanColor.ORANGE;
+		if (player.getColor().equals("yellow")) return CatanColor.YELLOW;
+		if (player.getColor().equals("blue")) return CatanColor.BLUE;
+		if (player.getColor().equals("green")) return CatanColor.GREEN;
+		if (player.getColor().equals("purple")) return CatanColor.PURPLE;
+		if (player.getColor().equals("puce")) return CatanColor.PUCE;
+		if (player.getColor().equals("white")) return CatanColor.WHITE;
+		return CatanColor.BROWN;
 	}
 
 }
