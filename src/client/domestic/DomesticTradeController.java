@@ -212,6 +212,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void ObservableChanged() {
+		Game model = Reference.GET_SINGLETON().getFascade().getModel();
+		if (model.getTrade_offer() != null) {
+			if (model.getTrade_offer().getReciever() == Reference.GET_SINGLETON().getPlayer_index()) {
+				getAcceptOverlay().showModal();
+			}
+		}
 	}
 
 	private int resourceCount(ResourceType resource) {
