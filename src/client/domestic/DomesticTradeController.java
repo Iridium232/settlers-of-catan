@@ -2,6 +2,7 @@ package client.domestic;
 
 import client.control.IObserver;
 import client.control.Reference;
+import client.data.PlayerInfo;
 import shared.communication.ResourceList;
 import shared.definitions.*;
 import client.base.*;
@@ -11,6 +12,7 @@ import shared.model.player.Player;
 import shared.model.player.ResourceMultiSet;
 
 import java.sql.Ref;
+import java.util.ArrayList;
 
 
 /**
@@ -33,9 +35,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private String wheat_offer_type;
 	private String sheep_offer_type;
 	private String ore_offer_type;
-
-	private int sendResourceCount;
-	private int receiveResourceCount;
 
 	private int targetPlayer;
 
@@ -68,9 +67,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		wheat_offer_type = "none";
 		sheep_offer_type = "none";
 		ore_offer_type = "none";
-
-		sendResourceCount = 0;
-		receiveResourceCount = 0;
 
 		targetPlayer = -1;
 	}
@@ -109,7 +105,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
  */
 	@Override
 	public void startTrade() {
-
+		getTradeOverlay().setPlayers(getPlayerInfos());
 		getTradeOverlay().showModal();
 	}
 /**
@@ -412,9 +408,42 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private void checkOkToTrade() {
 		if (targetPlayer != -1 && nonZerosInOffer()) {
 			getTradeOverlay().setTradeEnabled(true);
+			getTradeOverlay().setStateMessage("Trade!");
+		} else if (nonZerosInOffer() && targetPlayer == -1) {
+			getTradeOverlay().setTradeEnabled(false);
+			getTradeOverlay().setStateMessage("Choose with whom you want to trade");
 		} else {
 			getTradeOverlay().setTradeEnabled(false);
+			getTradeOverlay().setStateMessage("Select the resources you want to trade");
 		}
+	}
+
+	private CatanColor getCatanColor(shared.model.player.Player player) {
+		if (player.getColor().equals("red")) return CatanColor.RED;
+		if (player.getColor().equals("orange")) return CatanColor.ORANGE;
+		if (player.getColor().equals("yellow")) return CatanColor.YELLOW;
+		if (player.getColor().equals("blue")) return CatanColor.BLUE;
+		if (player.getColor().equals("green")) return CatanColor.GREEN;
+		if (player.getColor().equals("purple")) return CatanColor.PURPLE;
+		if (player.getColor().equals("puce")) return CatanColor.PUCE;
+		if (player.getColor().equals("white")) return CatanColor.WHITE;
+		return CatanColor.BROWN;
+	}
+
+	private PlayerInfo[] getPlayerInfos() {
+		ArrayList<PlayerInfo> playerInfos = new ArrayList<>();
+		Game model = Reference.GET_SINGLETON().getFascade().getModel();
+		for (Player player : model.getPlayers()) {
+			PlayerInfo playerInfo = new PlayerInfo();
+
+			playerInfo.setName(player.getName());
+			playerInfo.setColor(getCatanColor(player));
+			playerInfo.setId(player.getPlayerID());
+			playerInfo.setPlayerIndex(player.getPlayerIndex());
+
+			playerInfos.add(playerInfo);
+		}
+		return (PlayerInfo[])playerInfos.toArray();
 	}
 }
 
