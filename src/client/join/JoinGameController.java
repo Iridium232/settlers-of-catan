@@ -2,9 +2,13 @@ package client.join;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import shared.communication.fromServer.games.Game;
+import shared.communication.fromServer.games.Player;
 import shared.definitions.CatanColor;
 import shared.exceptions.JoinExceptions;
 import client.base.*;
@@ -148,15 +152,22 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			GameInfo thisgame = new GameInfo();
 			thisgame.setId(game.getId());
 			thisgame.setTitle(game.getTitle());
+			for(Player player : game.getPlayers())
+			{
+				PlayerInfo player_info = new PlayerInfo(player);
+				player_info.setColor(player.getColor());
+				if(!(player.color == null))thisgame.addPlayer(new PlayerInfo(player));
+			}
 			games[counter] = thisgame;
 			counter++;
 		}
 		
+		Reference ref = Reference.GET_SINGLETON();
+		
 		PlayerInfo ourguy = new PlayerInfo();
-		ourguy.setColor(null);
-		ourguy.setId(-1);
-		ourguy.setName("DEFAULT_NAME");
-		ourguy.setPlayerIndex(-1);
+		
+		ourguy.setId(ref.player_id);
+		ourguy.setName(ref.name);
 		
 		getJoinGameView().setGames(games, ourguy);
 		getJoinGameView().showModal();
@@ -215,16 +226,22 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			GameInfo thisgame = new GameInfo();
 			thisgame.setId(game.getId());
 			thisgame.setTitle(game.getTitle());
+			for(Player player : game.getPlayers())
+			{
+				PlayerInfo player_info = new PlayerInfo(player);
+				player_info.setColor(player.getColor());
+				if(!(player.color == null))thisgame.addPlayer(player_info);
+			}
 			games[counter] = thisgame;
 			counter++;
 		}
 		
-		PlayerInfo ourguy = new PlayerInfo();
-		ourguy.setColor(null);
-		ourguy.setId(-1);
-		ourguy.setName("DEFAULT_NAME");
-		ourguy.setPlayerIndex(-1);
+		Reference ref = Reference.GET_SINGLETON();
 		
+		PlayerInfo ourguy = new PlayerInfo();
+		
+		ourguy.setId(ref.player_id);
+		ourguy.setName(ref.name);
 		
 		getNewGameView().closeModal();
 		getJoinGameView().setGames(games, ourguy);
@@ -242,8 +259,20 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) 
 	{
-
+		
+		Reference ref = Reference.GET_SINGLETON();
+		ref.game_id = game.getId();
+		if(game.getPlayers().size() > 3)
+		{
+			return;//the game is full
+		}
+		ref.player_index = game.getPlayers().size() + 1;
+		for(PlayerInfo player_info: game.getPlayers())
+		{
+			getSelectColorView().setColorEnabled(player_info.getColor(), false);
+		}
 		getSelectColorView().showModal();
+		//this.joinGame(getSelectColorView().getSelectedColor());
 	}
 
 	/**
@@ -263,13 +292,32 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void joinGame(CatanColor color) 
 	{
 		Reference ref = Reference.GET_SINGLETON();
-		JSONObject model = ref.proxy.joinGame(ref.player_id, color);
-		ModelPopulator.populateModel(model, ref.getFascade());
-		// If join succeeded
-		Reference.GET_SINGLETON().player_color = color;
-		getSelectColorView().closeModal();
-		getJoinGameView().closeModal();
-		joinAction.execute();
+		JSONObject model;
+		try 
+		{
+			String model_string =ref.proxy.joinGame(ref.game_id, color);
+			model = new JSONObject(model_string);
+			if(model.equals("FAILED\n"))
+			{
+				throw new JoinExceptions("Join Refused by server");
+			}
+			ModelPopulator.populateModel(model, ref.getFascade());
+			// If join succeeded
+			Reference.GET_SINGLETON().player_color = color;
+			getSelectColorView().closeModal();
+			getJoinGameView().closeModal();
+			System.out.print("\n\nJoin Game Success\n" + model_string);
+			joinAction.execute();
+		} 
+		catch (JSONException | JoinExceptions e) 
+		{
+			String error = "Sorry, Failed to Join Game. Please try again or contact your system administrator.";
+			this.messageView.setTitle("Join Failed");
+			this.messageView.setMessage(error);
+			System.err.print("ERROR: FAILED TO JOIN GAME");
+			e.printStackTrace();
+			this.messageView.showModal();
+		}
 	}
 
 }

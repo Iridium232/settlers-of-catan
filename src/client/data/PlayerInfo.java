@@ -1,5 +1,6 @@
 package client.data;
 
+import shared.communication.fromServer.games.Player;
 import shared.definitions.*;
 
 /**
@@ -30,6 +31,23 @@ public class PlayerInfo
 		setColor(CatanColor.WHITE);
 	}
 	
+	public PlayerInfo(Player player) 
+	{
+		this.id = player.getId();
+		this.playerIndex = -1; //????
+		this.name = player.getName();
+		
+	}
+	public void setColor(String colorname)
+	{
+		if(colorname == null)
+		{
+			System.err.print("WARNING: Null color!");
+			return;
+		}
+		this.color = PlayerInfo.getCatanColor((colorname.toLowerCase()));
+	}
+
 	public int getId()
 	{
 		return id;
@@ -90,6 +108,18 @@ public class PlayerInfo
 		final PlayerInfo other = (PlayerInfo) obj;
 		
 		return this.id == other.id;
+	}
+	
+	private static CatanColor getCatanColor(String color) {
+		if (color.equals("red")) return CatanColor.RED;
+		if (color.equals("orange")) return CatanColor.ORANGE;
+		if (color.equals("yellow")) return CatanColor.YELLOW;
+		if (color.equals("blue")) return CatanColor.BLUE;
+		if (color.equals("green")) return CatanColor.GREEN;
+		if (color.equals("purple")) return CatanColor.PURPLE;
+		if (color.equals("puce")) return CatanColor.PUCE;
+		if (color.equals("white")) return CatanColor.WHITE;
+		return CatanColor.BROWN;
 	}
 }
 

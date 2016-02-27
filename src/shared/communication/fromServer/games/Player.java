@@ -7,7 +7,7 @@ package shared.communication.fromServer.games;
  * Team 10
  */
 public class Player {
-    private String color;
+    public String color;
     private String name;
     private int id;
 

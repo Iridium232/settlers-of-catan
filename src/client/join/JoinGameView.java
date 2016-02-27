@@ -208,5 +208,11 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 			}
 		}
 	};
+	public GameInfo[] getGames()
+	{
+		return this.games;
+	}
+	
+	
 }
 
