@@ -56,7 +56,7 @@ public class MockServer implements IServerProxy {
 	}
 
 	@Override
-	public String joinGame(String playerinfo, int id, CatanColor color) {
+	public String joinGame(int id, CatanColor color) {
 		// TODO Auto-generated method stub
 		return null;
 	}
