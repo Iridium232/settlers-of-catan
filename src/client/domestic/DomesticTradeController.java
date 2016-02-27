@@ -218,6 +218,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				getAcceptOverlay().showModal();
 			}
 		}
+		getTradeView().enableDomesticTrade(setButtonStatus());
 	}
 
 	private int resourceCount(ResourceType resource) {
@@ -450,6 +451,27 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			playerInfos.add(playerInfo);
 		}
 		return (PlayerInfo[])playerInfos.toArray();
+	}
+
+	private boolean setButtonStatus() {
+		Reference r = Reference.GET_SINGLETON();
+		Game model = r.getFascade().getModel();
+		Player localPlayer = null;
+		for (Player player : model.getPlayers()) {
+			if (player.getPlayerIndex() == r.getPlayer_index()) {
+				localPlayer = player;
+			}
+		}
+		if (localPlayer == null) return false;
+
+		if (getOwnedCount(ResourceType.BRICK, localPlayer) > 0 ||
+				getOwnedCount(ResourceType.WOOD, localPlayer) > 0 ||
+				getOwnedCount(ResourceType.WHEAT, localPlayer) > 0 ||
+				getOwnedCount(ResourceType.SHEEP, localPlayer) > 0 ||
+				getOwnedCount(ResourceType.ORE, localPlayer) > 0) {
+			return true;
+		}
+		return false;
 	}
 }
 
