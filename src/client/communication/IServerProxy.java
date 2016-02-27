@@ -72,7 +72,7 @@ public interface IServerProxy {
 	 * @param id the game ID
 	 * @param color one of the acceptable colors
 	 */
-	public String joinGame(String playerinfo, int id, CatanColor color)
+	public String joinGame(int id, CatanColor color)
 		throws JoinExceptions;
 	/**
 	 * @pre id is for an existing game

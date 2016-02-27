@@ -103,7 +103,7 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String joinGame(String playerinfo, int id, CatanColor color) {
+	public String joinGame(int id, CatanColor color) {
 		// TODO Auto-generated method stub
 		String result="FAILED\n";
 		try {
