@@ -1,14 +1,17 @@
 package client.join;
 
-import java.util.List;
-
+import client.base.Controller;
+import client.base.IAction;
+import client.control.Reference;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
+import client.main.Catan;
+import client.misc.IMessageView;
 import shared.communication.fromServer.games.Game;
 import shared.definitions.CatanColor;
 import shared.exceptions.JoinExceptions;
-import client.base.*;
-import client.control.Reference;
-import client.data.*;
-import client.misc.*;
+
+import java.util.List;
 
 
 /**
@@ -240,8 +243,23 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void startJoinGame(GameInfo game) 
 	{
 
+		PlayerInfo ourguy = new PlayerInfo();
+		ourguy.setColor(null);
+		ourguy.setId(-1);
+		ourguy.setName("DEFAULT_NAME");
+		ourguy.setPlayerIndex(-1);
+		//List<PlayerInfo> playerlist = Reference.GET_SINGLETON().proxy.joinGame();
+		//GameInfo[] player = new GameInfo[playerlist.size()];
+
 		getSelectColorView().showModal();
+		for (PlayerInfo playerInfo : game.getPlayers()) {
+			if (!playerInfo.equals(ourguy)) {
+				getSelectColorView().setColorEnabled(ourguy.getColor(), false);
+			}
+		}
 	}
+
+
 
 	/**
 	 * Cancel to join a game
@@ -258,10 +276,43 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void joinGame(CatanColor color) {
-		
+		Catan catan = null;
+		Boolean request = false;
+
+		PlayerInfo ourguy = new PlayerInfo();
+		ourguy.setColor(color);
+		ourguy.setId(-1);
+		ourguy.setName("DEFAULT_NAME");
+		ourguy.setPlayerIndex(-1);
+
+		try
+		{
+
+			Reference.GET_SINGLETON().proxy.joinGame(ourguy.getName(), ourguy.getId(), ourguy.getColor());
+		}
+		catch (JoinExceptions e)
+		{
+			e.printStackTrace();
+		}
+
 		// If join succeeded
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
+
+		//Refresh game list
+		List<Game> gamelist = Reference.GET_SINGLETON().proxy.getGameList();
+		GameInfo[] games = new GameInfo[gamelist.size()];
+		int counter = 0;
+		for(Game game: gamelist)
+		{
+			GameInfo thisgame = new GameInfo();
+			thisgame.setId(game.getId());
+			thisgame.setTitle(game.getTitle());
+			counter++;
+			games[counter] = thisgame;
+		}
+
+
 		joinAction.execute();
 	}
 
