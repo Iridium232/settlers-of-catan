@@ -73,7 +73,7 @@ public class ServerProxyTest {
 	{
 		try {
 			sp.login("Pete", "pete");
-			sp.joinGame("pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 		} catch (Exception e) {
 			assertTrue(false);
 		}
@@ -85,7 +85,7 @@ public class ServerProxyTest {
 	public void testCreateGame() {
 		try {
 			sp.login("Pete", "pete");
-			sp.joinGame("pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -99,12 +99,12 @@ public class ServerProxyTest {
 	public void testJoinGame() {
 		try {
 			sp.login("Pete", "pete");
-			sp.joinGame("pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}
-		String test=sp.joinGame("Bob", 3, CatanColor.RED);
+		String test=sp.joinGame(3, CatanColor.RED);
 		assertFalse(test.equals("FAILED\n"));
 	}
 
@@ -113,7 +113,7 @@ public class ServerProxyTest {
         String result = "";
         try {
             sp.login("Pete", "pete");
-            sp.joinGame("pete", 0, CatanColor.RED);
+            sp.joinGame(0, CatanColor.RED);
             //ClientCommunicator.getSINGLETON().doPost("/game/commands", sb.toString());
             result = sp.getModel(0);
         } catch (Exception e) {
@@ -128,7 +128,7 @@ public class ServerProxyTest {
 		String test = null;
 		try {
 			sp.login("Pete", "pete");
-			sp.joinGame("pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 			test = sp.sendChat(2, "I am testing sendChat");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -160,7 +160,7 @@ public class ServerProxyTest {
         String result = "";
         try {
             sp.login("Pete", "pete");
-            sp.joinGame("pete", 0, CatanColor.RED);
+            sp.joinGame(0, CatanColor.RED);
             //ClientCommunicator.getSINGLETON().doPost("/game/commands", sb.toString());
             sp.finishTurn();
             result = sp.acceptTrade(true);
@@ -193,7 +193,7 @@ public class ServerProxyTest {
         String result = "";
         try {
             sp.login("Pete", "pete");
-            sp.joinGame("pete", 0, CatanColor.RED);
+            sp.joinGame(0, CatanColor.RED);
             //ClientCommunicator.getSINGLETON().doPost("/game/commands", sb.toString());
             
             result = sp.rollNumber(3);
@@ -210,7 +210,7 @@ public class ServerProxyTest {
 	public void testBuildRoad() {
 		try {
 			sp.login("Pete", "pete");
-			sp.joinGame("Pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.buildRoad(true, new shared.communication.EdgeLocation(0, 0, "SE"));
@@ -232,7 +232,7 @@ public class ServerProxyTest {
 				sb.append(line);
 			}
 			sp.login("Pete", "pete");
-			sp.joinGame("Pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.buildSettlement(true, new VertexLocation("NE", 0, 0));
@@ -261,7 +261,7 @@ public class ServerProxyTest {
 				sb.append(line);
 			}
 			sp.login("Pete", "pete");
-			sp.joinGame("Pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.buildCity(new VertexLocation(VertexDirection.SouthWest, 0, 0));
@@ -290,7 +290,7 @@ public class ServerProxyTest {
 				sb.append(line);
 			}
 			sp.login("Pete", "pete");
-			sp.joinGame("Pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.maritimeTrade(2, ResourceType.BRICK, ResourceType.ORE);
@@ -318,7 +318,7 @@ public class ServerProxyTest {
 				sb.append(line);
 			}
 			sp.login("Pete", "pete");
-			sp.joinGame("Pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			Player v=new Player();
@@ -357,7 +357,7 @@ public class ServerProxyTest {
         String result = "";
         try {
             sp.login("Pete", "pete");
-            sp.joinGame("pete", 0, CatanColor.RED);
+            sp.joinGame(0, CatanColor.RED);
             //ClientCommunicator.getSINGLETON().doPost("/game/commands", sb.toString());
             sp.finishTurn();
             result = sp.finishTurn();
@@ -382,7 +382,7 @@ public class ServerProxyTest {
 				sb.append(line);
 			}
 			sp.login("Pete", "pete");
-			sp.joinGame("Pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.buyDevCard();
@@ -411,7 +411,7 @@ public class ServerProxyTest {
 				sb.append(line);
 			}
 			sp.login("Pete", "pete");
-			sp.joinGame("Pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			Player v=new Player();
@@ -443,7 +443,7 @@ public class ServerProxyTest {
 				sb.append(line);
 			}
 			sp.login("Mark", "mark");
-			sp.joinGame("Pete", 0, CatanColor.BLUE);
+			sp.joinGame(0, CatanColor.BLUE);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.yearOfPlenty(ResourceType.WHEAT, ResourceType.ORE);
@@ -472,7 +472,7 @@ public class ServerProxyTest {
 				sb.append(line);
 			}
 			sp.login("Pete", "pete");
-			sp.joinGame("Pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 			shared.communication.EdgeLocation one=new shared.communication.EdgeLocation(0, 0, "SE");
 			shared.communication.EdgeLocation two=new shared.communication.EdgeLocation(2, 1, "S");
 			String mon=sp.RoadBuilding(one, two);
@@ -501,7 +501,7 @@ public class ServerProxyTest {
 				sb.append(line);
 			}
 			sp.login("Mark", "mark");
-			sp.joinGame("Pete", 0, CatanColor.BLUE);
+			sp.joinGame(0, CatanColor.BLUE);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.monopoly(ResourceType.BRICK);
@@ -530,7 +530,7 @@ public class ServerProxyTest {
 				sb.append(line);
 			}
 			sp.login("Pete", "pete");
-			sp.joinGame("Pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.monument();
@@ -559,7 +559,7 @@ public class ServerProxyTest {
 				sb.append(line);
 			}
 			sp.login("Pete", "pete");
-			sp.joinGame("Pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			ResourceList rl=new ResourceList(1, 0, 0, 0, 0);
@@ -589,7 +589,7 @@ public class ServerProxyTest {
 				sb.append(line);
 			}
 			sp.login("Pete", "pete");
-			sp.joinGame("Pete", 0, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			ResourceList rl=new ResourceList(0,1,0,-1,0);
