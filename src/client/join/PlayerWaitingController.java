@@ -54,7 +54,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		}
 		String[] AIValues = { "LARGEST_ARMY" };
 		try {
-			getView().setPlayers((PlayerInfo[])playerInfos.toArray());
+			getView().setPlayers(convertToArray(playerInfos));
 			getView().setAIChoices(AIValues);
 			getView().showModal();
 			if (playerInfos.size() == 4) {
@@ -85,6 +85,16 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		if (player.getColor().equals("puce")) return CatanColor.PUCE;
 		if (player.getColor().equals("white")) return CatanColor.WHITE;
 		return CatanColor.BROWN;
+	}
+
+	private PlayerInfo[] convertToArray(ArrayList<PlayerInfo> playerInfos) {
+		PlayerInfo[] newArray = new PlayerInfo[playerInfos.size()];
+		int index = 0;
+		for (PlayerInfo playerInfo : playerInfos) {
+			newArray[index] = playerInfo;
+			index++;
+		}
+		return newArray;
 	}
 
 }
