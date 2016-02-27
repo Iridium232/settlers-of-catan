@@ -2,10 +2,13 @@ package client.join;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import shared.communication.fromServer.games.Game;
 import shared.definitions.CatanColor;
 import shared.exceptions.JoinExceptions;
 import client.base.*;
+import client.communication.ModelPopulator;
 import client.control.Reference;
 import client.data.*;
 import client.misc.*;
@@ -257,9 +260,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * call join game on server
 	 */
 	@Override
-	public void joinGame(CatanColor color) {
-		
+	public void joinGame(CatanColor color) 
+	{
+		Reference ref = Reference.GET_SINGLETON();
+		JSONObject model = ref.proxy.joinGame(ref.player_id, color);
+		ModelPopulator.populateModel(model, ref.getFascade());
 		// If join succeeded
+		Reference.GET_SINGLETON().player_color = color;
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
 		joinAction.execute();
