@@ -40,8 +40,11 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	@Override
 	public void endTurn() {
 		try {
-			Reference.GET_SINGLETON().getFascade().getModel().getTurn_tracker().advanceActivePlayer();
-			Reference.GET_SINGLETON().getFascade().getModel().getTurn_tracker().advanceState();
+			Fascade f = Reference.GET_SINGLETON().getFascade();
+			if (f.canFinishTurn(Reference.GET_SINGLETON().getPlayer_index())) {
+				Reference.GET_SINGLETON().getProxy().finishTurn();
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
