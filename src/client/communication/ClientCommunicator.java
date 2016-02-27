@@ -301,8 +301,10 @@ public class ClientCommunicator {
 	 * @post returns an http response
 	 */
 	public JSONObject doPost(String path, Object o) throws Exception {
-		if (catan_cookie == null || game_ID == null) {
-			throw new Exception("Haven't Logged in and joined a game");
+		if (!path.equals("/games/create")) {
+			if (catan_cookie == null || game_ID == null) {
+				throw new Exception("Haven't Logged in and joined a game");
+			}
 		}
 		try {
 			URL url = new URL(url_prefix + path);
@@ -396,5 +398,14 @@ public class ClientCommunicator {
 		String lastElementFixed = lastElement.substring(0, lastElement.length() - 1);
 		splitStrings.set(lastElementIndex, lastElementFixed);
 		return splitStrings;
+	}
+
+	private int getPlayerID(String encoding) {
+		String[] pieces = encoding.split("playerID%22%3A");
+		char token = pieces[1].charAt(0);
+		while (token != '%') {
+
+		}
+		return 0;
 	}
 }

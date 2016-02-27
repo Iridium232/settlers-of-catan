@@ -25,6 +25,8 @@ public class Reference
 	public IServerProxy proxy;
 	public int port;
 	public String host;
+	public int game_id;
+	public int player_id;
 
 	public Fascade getFascade() {
 		return fascade;
@@ -84,5 +86,21 @@ public class Reference
 	public String getPort() 
 	{
 		return Integer.toString(port);
+	}
+
+	public int getGame_id() {
+		return game_id;
+	}
+
+	public void setGame_id(int game_id) {
+		this.game_id = game_id;
+	}
+
+	public int getPlayer_id() {
+		return player_id;
+	}
+
+	public void setPlayer_id(int player_id) {
+		this.player_id = player_id;
 	}
 }
