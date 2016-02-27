@@ -108,6 +108,7 @@ public class ClientCommunicator {
 				String cookieStr = connection.getHeaderField("Set-cookie");
 				catan_cookie = getEncodedValue(cookieStr);
 				ref.setName(username);
+				ref.setPlayer_id(getPlayerID(cookieStr));
 				return connection.getResponseCode();
 			} else {
 				throw new Exception(String.format("doPost failed: %s (http code %d)",
@@ -215,6 +216,7 @@ public class ClientCommunicator {
 	 * @post the player is added to the game with the desired color,
 	 */
 	public JSONObject joinGame(int ID, CatanColor color) throws Exception {
+		ref.setGame_id(ID);
 		if (catan_cookie == null) {
 			throw new Exception("Haven't Logged in yet");
 		}
@@ -402,10 +404,13 @@ public class ClientCommunicator {
 
 	private int getPlayerID(String encoding) {
 		String[] pieces = encoding.split("playerID%22%3A");
-		char token = pieces[1].charAt(0);
+		StringBuilder sb = new StringBuilder();
+		int index = 0;
+		char token = pieces[1].charAt(index);
 		while (token != '%') {
-
+			sb.append(token);
+			token = pieces[1].charAt(++index);
 		}
-		return 0;
+		return Integer.parseInt(sb.toString());
 	}
 }
