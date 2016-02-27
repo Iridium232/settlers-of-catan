@@ -42,13 +42,15 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void start() {
 		Fascade f = Reference.GET_SINGLETON().getFascade();
 		ArrayList<PlayerInfo> playerInfos = new ArrayList<>();
-		for (Player player : f.getModel().getPlayers()) {
-			PlayerInfo playerInfo = new PlayerInfo();
-			playerInfo.setName(player.getName());
-			playerInfo.setColor(getCatanColor(player));
-			playerInfo.setId(player.getPlayerID());
-			playerInfo.setPlayerIndex(player.getPlayerIndex());
-			playerInfos.add(playerInfo);
+		if (f.getModel() != null) {
+			for (Player player : f.getModel().getPlayers()) {
+				PlayerInfo playerInfo = new PlayerInfo();
+				playerInfo.setName(player.getName());
+				playerInfo.setColor(getCatanColor(player));
+				playerInfo.setId(player.getPlayerID());
+				playerInfo.setPlayerIndex(player.getPlayerIndex());
+				playerInfos.add(playerInfo);
+			}
 		}
 		String[] AIValues = { "LARGEST_ARMY" };
 		try {
