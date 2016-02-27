@@ -288,7 +288,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		try
 		{
 
-			Reference.GET_SINGLETON().proxy.joinGame(ourguy.getName(), ourguy.getId(), ourguy.getColor());
+			Reference.GET_SINGLETON().proxy.joinGame(ourguy.getId(), ourguy.getColor());
 		}
 		catch (JoinExceptions e)
 		{
