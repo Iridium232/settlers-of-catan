@@ -137,7 +137,7 @@ public class LoginController extends Controller implements ILoginController {
 				response = proxy.login(username, password).equals("FAILED\n") ? false: true;
 				break;
 			case REGISTER:
-				response = proxy.login(username, password).equals("FAILED\n") ? false: true;
+				response = proxy.register(username, password).equals("FAILED\n") ? false: true;
 				break;
 			default:
 				// an error occurred with the server
@@ -160,9 +160,12 @@ public class LoginController extends Controller implements ILoginController {
 			getLoginView().closeModal();
 			loginAction.execute();
 		} 
-		messageView.setMessage(message);
-		messageView.setTitle(messageTitle);
-		messageView.showModal();
+		else
+		{
+			messageView.setMessage(message);
+			messageView.setTitle(messageTitle);
+			messageView.showModal();
+		}
 
 	}
 

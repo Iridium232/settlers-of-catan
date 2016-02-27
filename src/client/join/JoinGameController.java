@@ -1,7 +1,12 @@
 package client.join;
 
+import java.util.List;
+
+import shared.communication.fromServer.games.Game;
 import shared.definitions.CatanColor;
+import shared.exceptions.JoinExceptions;
 import client.base.*;
+import client.control.Reference;
 import client.data.*;
 import client.misc.*;
 
@@ -59,8 +64,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 *
 	 * @param value The action to be executed when the user joins a game
 	 */
-	public void setJoinAction(IAction value) {
-		
+	public void setJoinAction(IAction value) 
+	{	
 		joinAction = value;
 	}
 
@@ -130,8 +135,27 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * get the interface for overlay views joinGame
 	 */
 	@Override
-	public void start() {
+	public void start() 
+	{
+		List<Game> gamelist = Reference.GET_SINGLETON().proxy.getGameList();
+		GameInfo[] games = new GameInfo[gamelist.size()];
+		int counter = 0;
+		for(Game game: gamelist)
+		{
+			GameInfo thisgame = new GameInfo();
+			thisgame.setId(game.getId());
+			thisgame.setTitle(game.getTitle());
+			games[counter] = thisgame;
+			counter++;
+		}
 		
+		PlayerInfo ourguy = new PlayerInfo();
+		ourguy.setColor(null);
+		ourguy.setId(-1);
+		ourguy.setName("DEFAULT_NAME");
+		ourguy.setPlayerIndex(-1);
+		
+		getJoinGameView().setGames(games, ourguy);
 		getJoinGameView().showModal();
 	}
 
@@ -139,8 +163,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * get interface for overlay views newGame
 	 */
 	@Override
-	public void startCreateNewGame() {
-		
+	public void startCreateNewGame() 
+	{	
 		getNewGameView().showModal();
 	}
 
@@ -162,9 +186,46 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 
 	@Override
-	public void createNewGame() {
+	public void createNewGame() 
+	{
+		//Create new game
+		boolean randomhexes = getNewGameView().getRandomlyPlaceHexes();
+		boolean randomnumbers = getNewGameView().getRandomlyPlaceNumbers();
+		boolean randomports = getNewGameView().getUseRandomPorts();
+		String title = getNewGameView().getTitle();
+		
+		try 
+		{
+			Reference.GET_SINGLETON().proxy.createGame(title, randomhexes, randomnumbers, randomports);
+		} 
+		catch (JoinExceptions e) 
+		{
+			e.printStackTrace();
+		}
+		
+		//Refresh game list
+		List<Game> gamelist = Reference.GET_SINGLETON().proxy.getGameList();
+		GameInfo[] games = new GameInfo[gamelist.size()];
+		int counter = 0;
+		for(Game game: gamelist)
+		{
+			GameInfo thisgame = new GameInfo();
+			thisgame.setId(game.getId());
+			thisgame.setTitle(game.getTitle());
+			games[counter] = thisgame;
+			counter++;
+		}
+		
+		PlayerInfo ourguy = new PlayerInfo();
+		ourguy.setColor(null);
+		ourguy.setId(-1);
+		ourguy.setName("DEFAULT_NAME");
+		ourguy.setPlayerIndex(-1);
+		
 		
 		getNewGameView().closeModal();
+		getJoinGameView().setGames(games, ourguy);
+		
 	}
 
 
@@ -176,7 +237,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * if it is true,call JoinGame related with the color that player already picked
 	 */
 	@Override
-	public void startJoinGame(GameInfo game) {
+	public void startJoinGame(GameInfo game) 
+	{
 
 		getSelectColorView().showModal();
 	}
