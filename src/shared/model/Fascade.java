@@ -3,6 +3,7 @@ package shared.model;
 import client.base.IController;
 import client.catan.GameStatePanel;
 import client.communication.IServerProxy;
+import client.control.IObserver;
 import client.map.IMapController;
 import org.json.Cookie;
 import shared.communication.toServer.moves.BuyDevCard;
@@ -52,7 +53,7 @@ public class Fascade
 	protected IMapController map_controller;
 	private int[] player_colors;
 	protected BuyDevCard buy_devcard;
-	private ArrayList<IController> observers = new ArrayList<IController>();
+	private ArrayList<IObserver> observers = new ArrayList<IObserver>();
 	private IServerProxy serverProxy;
 	private int player_move_robber;
 	protected List<Player> players;
@@ -1151,9 +1152,9 @@ public class Fascade
 		notifyObservers();
 	}
 	
-	public void addObserver(IController controller)
+	public void addObserver(IObserver observer)
 	{
-		observers.add(controller);
+		observers.add(observer);
 	}
 	
 	/**
@@ -1165,8 +1166,9 @@ public class Fascade
 	 */
 	public void notifyObservers()
 	{
-		//foreach (IController observer: observers)
-		//{}
+		for (IObserver observer : observers) {
+			observer.ObservableChanged();
+		}
 	}
 	
 	/**
