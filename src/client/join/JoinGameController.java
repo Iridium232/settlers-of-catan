@@ -1,21 +1,14 @@
 package client.join;
 
-import java.util.List;
-
-import javax.swing.JOptionPane;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import client.base.Controller;
 import client.base.IAction;
 import client.communication.ModelPopulator;
 import client.control.Reference;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
-import client.main.Catan;
 import client.misc.IMessageView;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 import shared.communication.fromServer.games.Game;
 import shared.communication.fromServer.games.Player;
 import shared.definitions.CatanColor;
@@ -268,10 +261,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		System.out.print("\nJoining a game with " + game.getPlayers().size() + " players.");
 		Reference ref = Reference.GET_SINGLETON();
 		ref.game_id = game.getId();
-		if(game.getPlayers().size() > 3)
-		{
-			return;//the game is full
-		}
+	//	if(game.getPlayers().size() > 3)
+	//	{
+	//		if ()
+	//		return;//the game is full
+	//	}
 		ref.player_index = game.getPlayers().size() + 1;
 		for(PlayerInfo player_info: game.getPlayers())
 		{
