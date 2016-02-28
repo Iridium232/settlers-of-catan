@@ -2,6 +2,7 @@ package client.join;
 
 import client.base.*;
 import client.communication.IServerProxy;
+import client.control.IObserver;
 import client.control.Reference;
 import client.data.PlayerInfo;
 import shared.definitions.CatanColor;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Implementation for the player waiting controller
  */
-public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
+public class PlayerWaitingController extends Controller implements IPlayerWaitingController, IObserver {
 
 	/**
 	 * Instantiates a new Player waiting controller.
@@ -44,12 +45,14 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		ArrayList<PlayerInfo> playerInfos = new ArrayList<>();
 		if (f.getModel() != null) {
 			for (Player player : f.getModel().getPlayers()) {
-				PlayerInfo playerInfo = new PlayerInfo();
-				playerInfo.setName(player.getName());
-				playerInfo.setColor(getCatanColor(player));
-				playerInfo.setId(player.getPlayerID());
-				playerInfo.setPlayerIndex(player.getPlayerIndex());
-				playerInfos.add(playerInfo);
+				if (player.getName() != null) {
+					PlayerInfo playerInfo = new PlayerInfo();
+					playerInfo.setName(player.getName());
+					playerInfo.setColor(getCatanColor(player));
+					playerInfo.setId(player.getPlayerID());
+					playerInfo.setPlayerIndex(player.getPlayerIndex());
+					playerInfos.add(playerInfo);
+				}
 			}
 		}
 		String[] AIValues = { "LARGEST_ARMY" };
@@ -73,6 +76,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void addAI() {
 		IServerProxy sp = Reference.GET_SINGLETON().getProxy();
 		sp.addAIPlayer("LARGEST_ARMY");
+		ObservableChanged();
 	}
 
 	private CatanColor getCatanColor(shared.model.player.Player player) {
@@ -85,6 +89,36 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		if (player.getColor().equals("puce")) return CatanColor.PUCE;
 		if (player.getColor().equals("white")) return CatanColor.WHITE;
 		return CatanColor.BROWN;
+	}
+
+	@Override
+	public void ObservableChanged() {
+		Fascade f = Reference.GET_SINGLETON().getFascade();
+		ArrayList<PlayerInfo> playerInfos = new ArrayList<>();
+		if (f.getModel() != null) {
+			for (Player player : f.getModel().getPlayers()) {
+				if (player.getName() != null) {
+					PlayerInfo playerInfo = new PlayerInfo();
+					playerInfo.setName(player.getName());
+					playerInfo.setColor(getCatanColor(player));
+					playerInfo.setId(player.getPlayerID());
+					playerInfo.setPlayerIndex(player.getPlayerIndex());
+					playerInfos.add(playerInfo);
+				}
+			}
+		}
+		String[] AIValues = { "LARGEST_ARMY" };
+		try {
+			getView().setPlayers(convertToArray(playerInfos));
+			getView().setAIChoices(AIValues);
+			getView().showModal();
+			if (playerInfos.size() == 4) {
+				getView().closeModal();
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	private PlayerInfo[] convertToArray(ArrayList<PlayerInfo> playerInfos) {
