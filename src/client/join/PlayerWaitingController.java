@@ -76,7 +76,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void addAI() {
 		IServerProxy sp = Reference.GET_SINGLETON().getProxy();
 		sp.addAIPlayer("LARGEST_ARMY");
-		ObservableChanged();
 	}
 
 	private CatanColor getCatanColor(shared.model.player.Player player) {

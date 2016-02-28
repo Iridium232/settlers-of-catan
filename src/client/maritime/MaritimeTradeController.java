@@ -142,7 +142,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		if (bank.getOre() > 0) {
 			available.add(ResourceType.ORE);
 		}
-		return (ResourceType[])available.toArray();
+		return convertToArray(available);
 	}
 
 	private ResourceType[] getTradeable() {
@@ -175,7 +175,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 				localPlayer.getResources().getOre() >= 4) {
 			tradeables.add(ResourceType.ORE);
 		}
-		return (ResourceType[])tradeables.toArray();
+		return convertToArray(tradeables);
 	}
 
 	private int getOwnedCount(ResourceType resource, Player localPlayer) {
@@ -279,6 +279,16 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			return true;
 		}
 		return false;
+	}
+
+	private ResourceType[] convertToArray(ArrayList<ResourceType> resourceTypes) {
+		ResourceType[] newArray = new ResourceType[resourceTypes.size()];
+		int index = 0;
+		for (ResourceType playerInfo : resourceTypes) {
+			newArray[index] = playerInfo;
+			index++;
+		}
+		return newArray;
 	}
 }
 
