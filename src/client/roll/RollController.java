@@ -1,20 +1,13 @@
 package client.roll;
 
-import java.util.Random;
-
-import client.control.IObserver;
-import client.control.Reference;
-import shared.definitions.TurnStatus;
-import shared.model.Game;
 import client.base.*;
 
 
 /**
  * Implementation for the roll controller
  */
-public class RollController extends Controller implements IRollController, IObserver {
-	private Reference r=Reference.GET_SINGLETON();
-	private Game model=r.getFascade().getModel();
+public class RollController extends Controller implements IRollController {
+
 	private IRollResultView resultView;
 
 	/**
@@ -46,20 +39,8 @@ public class RollController extends Controller implements IRollController, IObse
 	 */
 	@Override
 	public void rollDice() {
-		Random rand=new Random();
-		final int result=rand.nextInt(6)+rand.nextInt(6)+2;
-		getResultView().setRollValue(result);
-		getResultView().showModal();
-		Reference.GET_SINGLETON().getProxy().rollNumber(result);
-		Reference.GET_SINGLETON().getProxy().getModel(Reference.GET_SINGLETON().getFascade().getLatestModelNum());
-	}
 
-	@Override
-	public void ObservableChanged() {
-		// TODO Auto-generated method stub
-		if(model.getTurn_tracker().getActive_player() ==r.getPlayer_index()&&model.getTurnStatus(r.getPlayer_index())==TurnStatus.ROLLING){
-			 getRollView().showModal();
-		}
+		getResultView().showModal();
 	}
 
 }
