@@ -25,6 +25,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public PlayerWaitingController(IPlayerWaitingView view) {
 
 		super(view);
+
+		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 
 	@Override

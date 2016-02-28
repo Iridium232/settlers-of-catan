@@ -37,6 +37,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private String ore_offer_type;
 
 	private int targetPlayer;
+	private boolean playersSet;
 
 
 	/**
@@ -69,6 +70,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		ore_offer_type = "none";
 
 		targetPlayer = -1;
+		playersSet = false;
+
+		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 	
 	public IDomesticTradeView getTradeView() {
@@ -105,7 +109,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
  */
 	@Override
 	public void startTrade() {
-		getTradeOverlay().setPlayers(getPlayerInfos());
+		if (!playersSet) {
+			getTradeOverlay().setPlayers(getPlayerInfos());
+			playersSet = true;
+		}
+		getTradeOverlay().setStateMessage("Select the resources you want to trade");
 		getTradeOverlay().showModal();
 	}
 /**
@@ -114,8 +122,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
  */
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
+		adjustRecourceOffer(resource, -1);
 		int amount = resourceCount(resource);
-		getTradeOverlay().setResourceAmount(resource, String.valueOf(--amount));
+		getTradeOverlay().setResourceAmount(resource, String.valueOf(amount));
 		if (amount == 0) {
 			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
 		}
@@ -127,18 +136,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
  */
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
+		adjustRecourceOffer(resource, 1);
 		int amount = resourceCount(resource);
-		getTradeOverlay().setResourceAmount(resource, String.valueOf(++amount));
+		getTradeOverlay().setResourceAmount(resource, String.valueOf(amount));
 
 		Reference r = Reference.GET_SINGLETON();
 		Game model = r.getFascade().getModel();
-		Player localPlayer = null;
-		for (Player player : model.getPlayers()) {
-			if (player.getPlayerIndex() == r.getPlayer_index()) {
-				localPlayer = player;
-			}
-		}
-		if (localPlayer == null) return;
+		Player localPlayer = getLocalPlayer();
 
 		int owned = getOwnedCount(resource, localPlayer);
 
@@ -176,6 +180,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
 		setOfferType(resource, "receive");
+		getTradeOverlay().setResourceAmount(resource, "0");
+		getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
 	}
 /**
  * @post the selected send resource is highlighted
@@ -183,6 +189,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void setResourceToSend(ResourceType resource) {
 		setOfferType(resource, "send");
+		getTradeOverlay().setResourceAmount(resource, "0");
+		if (getOwnedCount(resource, getLocalPlayer()) > 0) {
+			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+		} else {
+			getTradeOverlay().setResourceAmountChangeEnabled(resource, false, false);
+		}
 	}
 /**
  * @pre the resourcetype is highlighted
@@ -195,9 +207,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 /**
  * @post closes the trade overlay
  */
-	@Override
+@Override
 	public void cancelTrade() {
-
+		getTradeOverlay().reset();
 		getTradeOverlay().closeModal();
 	}
 /**
@@ -441,6 +453,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		ArrayList<PlayerInfo> playerInfos = new ArrayList<>();
 		Game model = Reference.GET_SINGLETON().getFascade().getModel();
 		for (Player player : model.getPlayers()) {
+			if (player.getPlayerIndex() == Reference.GET_SINGLETON().getPlayer_index()) {
+				continue;
+			}
 			PlayerInfo playerInfo = new PlayerInfo();
 
 			playerInfo.setName(player.getName());
@@ -456,13 +471,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private boolean setButtonStatus() {
 		Reference r = Reference.GET_SINGLETON();
 		Game model = r.getFascade().getModel();
-		Player localPlayer = null;
-		for (Player player : model.getPlayers()) {
-			if (player.getPlayerIndex() == r.getPlayer_index()) {
-				localPlayer = player;
-			}
-		}
-		if (localPlayer == null) return false;
+		Player localPlayer = getLocalPlayer();
 
 		if (getOwnedCount(ResourceType.BRICK, localPlayer) > 0 ||
 				getOwnedCount(ResourceType.WOOD, localPlayer) > 0 ||
@@ -482,6 +491,39 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			index++;
 		}
 		return newArray;
+	}
+
+	private Player getLocalPlayer() {
+		Reference r = Reference.GET_SINGLETON();
+		Game model = r.getFascade().getModel();
+		Player localPlayer = null;
+		for (Player player : model.getPlayers()) {
+			if (player.getPlayerIndex() == r.getPlayer_index()) {
+				localPlayer = player;
+			}
+		}
+
+		return localPlayer;
+	}
+
+	private void adjustRecourceOffer(ResourceType resource, int amount) {
+		switch (resource) {
+			case BRICK:
+				brick_offer += amount;
+				break;
+			case WOOD:
+				wood_offer += amount;
+				break;
+			case WHEAT:
+				wheat_offer += amount;
+				break;
+			case SHEEP:
+				sheep_offer += amount;
+				break;
+			case ORE:
+				ore_offer += amount;
+				break;
+		}
 	}
 }
 

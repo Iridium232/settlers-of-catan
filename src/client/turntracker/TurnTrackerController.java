@@ -26,6 +26,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		playerInitialized = false;
 		
 		initFromModel();
+		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 	
 	@Override
@@ -58,7 +59,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		Reference r = Reference.GET_SINGLETON();
 		Game model = r.getFascade().getModel();
 		if (!playerInitialized) {
-			getView().initializePlayer(r.getPlayer_index(), r.getName(), r.getPlayer_color());
+			for (Player player : model.getPlayers()) {
+				getView().initializePlayer(player.getPlayerIndex(), player.getName(), getCatanColor(player));
+			}
 			getView().setLocalPlayerColor(r.getPlayer_color());
 			playerInitialized = true;
 		}
@@ -120,6 +123,18 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				break;
 		}
 		getView().updateGameState(label, enable);
+	}
+
+	private CatanColor getCatanColor(shared.model.player.Player player) {
+		if (player.getColor().equals("red")) return CatanColor.RED;
+		if (player.getColor().equals("orange")) return CatanColor.ORANGE;
+		if (player.getColor().equals("yellow")) return CatanColor.YELLOW;
+		if (player.getColor().equals("blue")) return CatanColor.BLUE;
+		if (player.getColor().equals("green")) return CatanColor.GREEN;
+		if (player.getColor().equals("purple")) return CatanColor.PURPLE;
+		if (player.getColor().equals("puce")) return CatanColor.PUCE;
+		if (player.getColor().equals("white")) return CatanColor.WHITE;
+		return CatanColor.BROWN;
 	}
 }
 

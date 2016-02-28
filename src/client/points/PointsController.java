@@ -27,6 +27,8 @@ public class PointsController extends Controller implements IPointsController, I
 		setFinishedView(finishedView);
 		
 		initFromModel();
+
+		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 	
 	public IPointsView getPointsView() {

@@ -27,6 +27,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		super(tradeView);
 
 		setTradeOverlay(tradeOverlay);
+		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 	
 	public IMaritimeTradeView getTradeView() {
@@ -48,6 +49,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void startTrade() {
 		getTradeOverlay().setStateMessage("Trade!");
+		getTradeOverlay().setTradeEnabled(false);
 		getTradeOverlay().showGiveOptions(getTradeable());
 		getTradeOverlay().hideGetOptions();
 		getTradeOverlay().showModal();
