@@ -162,7 +162,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			{
 				PlayerInfo player_info = new PlayerInfo(player);
 				player_info.setColor(player.getColor());
-				if(!(player.color == null))thisgame.addPlayer(new PlayerInfo(player));
+				if(!(player.color == null))thisgame.addPlayer(player_info);
 			}
 			games[counter] = thisgame;
 			counter++;
@@ -265,7 +265,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) 
 	{
-		
+		System.out.print("\nJoining a game with " + game.getPlayers().size() + " players.");
 		Reference ref = Reference.GET_SINGLETON();
 		ref.game_id = game.getId();
 		if(game.getPlayers().size() > 3)
@@ -275,6 +275,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ref.player_index = game.getPlayers().size() + 1;
 		for(PlayerInfo player_info: game.getPlayers())
 		{
+			if(player_info.getColor() == null)continue;
 			getSelectColorView().setColorEnabled(player_info.getColor(), false);
 		}
 		getSelectColorView().showModal();
@@ -331,7 +332,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			Reference.GET_SINGLETON().player_color = color;
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
-			System.out.print("\n\nJoin Game Success\n" + model_string);
+			System.out.print("\n\nJoin Game Success\n" + model_string + "\n");
 			joinAction.execute();
 		} 
 		catch (JSONException | JoinExceptions e) 
@@ -342,6 +343,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			System.err.print("ERROR: FAILED TO JOIN GAME");
 			e.printStackTrace();
 			this.messageView.showModal();
+			getSelectColorView().closeModal();
 		}
 /*
 	public void joinGame(CatanColor color) {
