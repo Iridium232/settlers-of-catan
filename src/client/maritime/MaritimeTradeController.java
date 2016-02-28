@@ -120,7 +120,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void ObservableChanged() {
-
+		getTradeView().enableMaritimeTrade(setButtonStatus());
 	}
 
 	private ResourceType[] getAvailable() {
@@ -262,6 +262,23 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 				break;
 		}
 		return amount;
+	}
+
+	private boolean setButtonStatus() {
+		Reference r = Reference.GET_SINGLETON();
+		Game model = r.getFascade().getModel();
+		Player localPlayer = null;
+		for (Player player : model.getPlayers()) {
+			if (player.getPlayerIndex() == r.getPlayer_index()) {
+				localPlayer = player;
+			}
+		}
+		if (localPlayer == null) return false;
+
+		if (getTradeable().length > 0) {
+			return true;
+		}
+		return false;
 	}
 }
 

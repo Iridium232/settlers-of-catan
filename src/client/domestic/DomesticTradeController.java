@@ -450,7 +450,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 			playerInfos.add(playerInfo);
 		}
-		return (PlayerInfo[])playerInfos.toArray();
+		return convertToArray(playerInfos);
 	}
 
 	private boolean setButtonStatus() {
@@ -472,6 +472,16 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			return true;
 		}
 		return false;
+	}
+
+	private PlayerInfo[] convertToArray(ArrayList<PlayerInfo> playerInfos) {
+		PlayerInfo[] newArray = new PlayerInfo[playerInfos.size()];
+		int index = 0;
+		for (PlayerInfo playerInfo : playerInfos) {
+			newArray[index] = playerInfo;
+			index++;
+		}
+		return newArray;
 	}
 }
 
