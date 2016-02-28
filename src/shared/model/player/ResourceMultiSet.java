@@ -251,5 +251,29 @@ public class ResourceMultiSet {
 	}
 
 
+	public int size() {
+		// TODO Auto-generated method stub
+		return brick+ore+sheep+wheat+wood;
+	}
+
+
+	public int getAmount(ResourceType resource) {
+		// TODO Auto-generated method stub
+		switch (resource){
+		case BRICK:
+			return brick;
+		case ORE:
+			return ore;
+		case SHEEP:
+			return sheep;
+		case WHEAT:
+			return wheat;
+		case WOOD:
+			return wood;
+		default: return 0;
+		}
+	}
+
+
 
 }

@@ -2,13 +2,15 @@ package client.devcards;
 
 import shared.definitions.ResourceType;
 import client.base.*;
+import client.control.IObserver;
+import client.control.Reference;
 
 
 /**
  * "Dev card" controller implementation
  */
-public class DevCardController extends Controller implements IDevCardController {
-
+public class DevCardController extends Controller implements IDevCardController, IObserver {
+	private Reference r=Reference.GET_SINGLETON();
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
 	private IAction roadAction;
@@ -86,7 +88,7 @@ public class DevCardController extends Controller implements IDevCardController 
  */
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
-		
+		r.getProxy().monopoly(resource);
 	}
 /**
  * @pre the player has a monument card
@@ -94,7 +96,7 @@ public class DevCardController extends Controller implements IDevCardController 
  */
 	@Override
 	public void playMonumentCard() {
-		
+		r.getProxy().monument();
 	}
 /**
  * @pre the player has a roadbuilding card
@@ -120,8 +122,14 @@ public class DevCardController extends Controller implements IDevCardController 
  */
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		
+		r.getProxy().yearOfPlenty(resource1, resource2);
 	}
+
+@Override
+public void ObservableChanged() {
+	// TODO Auto-generated method stub
+	
+}
 
 }
 
