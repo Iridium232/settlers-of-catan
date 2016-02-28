@@ -44,6 +44,9 @@ public class Serializer {
     public JSONObject deserialize(String s) {
         JSONObject result = null;
         try {
+            if (s.equals("Success")) {
+                return new JSONObject().put("Success", s);
+            }
             result = new JSONObject(s);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -60,7 +63,6 @@ public class Serializer {
             e.printStackTrace();
         }
         String result = writer.toString();
-        //System.out.println(result);
         return deserialize(result);
     }
 }
