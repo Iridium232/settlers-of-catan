@@ -96,7 +96,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		Fascade f = Reference.GET_SINGLETON().getFascade();
 		ArrayList<PlayerInfo> playerInfos = new ArrayList<>();
 		if (f.getModel() != null) {
-			for (Player player : f.getModel().getPlayers()) {
+			Player[] players = f.getModel().getPlayers();
+			for (Player player : players) {
 				if (player.getName() != null) {
 					PlayerInfo playerInfo = new PlayerInfo();
 					playerInfo.setName(player.getName());

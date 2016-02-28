@@ -1,5 +1,6 @@
 package client.communication;
 
+import client.control.Reference;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 import shared.communication.ResourceList;
@@ -386,6 +387,7 @@ public class ServerProxy implements IServerProxy {
 		AddAIRequest ai=new AddAIRequest(AiType);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/game/addAI", ai).toString();
+			this.getModel(Reference.GET_SINGLETON().getFascade().getLatestModelNum());
 		} catch (Exception e) {
 			result="FAILED\n";
 			e.printStackTrace();
