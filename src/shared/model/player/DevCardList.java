@@ -28,6 +28,9 @@ public class DevCardList
 	 * @pre none
 	 * @post result is true iff the current devcardlist has >= the cards in the parameter
 	 */
+	public int size(){
+		return monopoly+monument+road_building+soldier+year_of_plenty;
+	}
 	public boolean includes(DevCardList cards)
 	{
 		int other_monopoly = cards.getMonopoly();
