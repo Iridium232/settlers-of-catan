@@ -261,7 +261,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		System.out.print("\nJoining a game with " + game.getPlayers().size() + " players.");
 		Reference ref = Reference.GET_SINGLETON();
 		ref.game_id = game.getId();
-		ref.player_index = game.getPlayers().size() + 1;
+		ref.player_index = getIndex(game.getPlayers());
 		for(PlayerInfo player_info: game.getPlayers())
 		{
 			if(player_info.getColor() == null)continue;
@@ -317,6 +317,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			this.messageView.showModal();
 			getSelectColorView().closeModal();
 		}
+	}
+
+	private int getIndex(List<PlayerInfo> playerInfos) {
+		if (playerInfos.size() < 4) {
+			return playerInfos.size();
+		}
+		Reference r = Reference.GET_SINGLETON();
+		for (int i = 0; i < playerInfos.size(); i++) {
+			if (playerInfos.get(i).getName().equals(r.getName())) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 }
