@@ -1,5 +1,7 @@
 package shared.communication.fromServer.games;
 
+import client.data.RobPlayerInfo;
+
 /**
  * Michael Rhodes
  * CS 340
@@ -17,7 +19,14 @@ public class Player {
         this.id = id;
     }
 
-    public String getColor() {
+    public Player(RobPlayerInfo victim) 
+    {
+		this.color = victim.getColor().name().toLowerCase();
+		this.name = victim.getName();
+		this.id = victim.getId();
+	}
+
+	public String getColor() {
         return color;
     }
 

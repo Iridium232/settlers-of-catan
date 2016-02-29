@@ -317,7 +317,7 @@ public class MapView extends PanelView implements IMapView
 	@Override
 	public void clear() 
 	{
-		map = new MapComponent();		
+		map.clear();		
 	}
 	
 }

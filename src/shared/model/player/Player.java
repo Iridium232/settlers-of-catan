@@ -1,5 +1,6 @@
 package shared.model.player;
 
+import client.data.RobPlayerInfo;
 import shared.communication.toServer.moves.BuildSettlement;
 import shared.communication.toServer.moves.BuyDevCard;
 import shared.definitions.PieceType;
@@ -129,6 +130,16 @@ public class Player {
     }
     
     /**
+     * WARNING this constructor is only to pass information
+     *  to the server proxy and created a stub object
+     * @param victim
+     */
+    public Player(RobPlayerInfo victim) 
+    {
+		this.playerIndex = victim.getPlayerIndex();
+	}
+
+	/**
      * Tells whether this player can afford to buy something with this cost
      * @pre none
      * @post result = true iff the player has this many of the required resources

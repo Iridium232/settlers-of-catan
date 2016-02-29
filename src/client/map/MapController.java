@@ -72,7 +72,7 @@ public class MapController extends Controller implements IMapController, IObserv
 				for(TerrainHex hex : hex_list)
 				{
 					if(hex == null)continue;
-					System.out.print("\nHex added: " + hex.getType().name() + "\n");
+					System.out.print("\nHex added: " + hex.getType().name()  + " - " + hex.getNumber().getValue() + "\n");
 					getView().addHex(hex.getLocation(), hex.getType());
 					
 					getView().addNumber(hex.getLocation(), hex.getNumber().getValue());
@@ -116,7 +116,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		}
 		
 		System.out.print("\nMap Updated\n");
-		getView().getMap().setVisible(true);
+		
 	}
 
 	/**
@@ -241,9 +241,6 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void placeRobber(shared.locations.HexLocation hexLoc) 
 	{
-		
-		//reference.proxy.robPlayer(hexLoc, victim);
-		//TODO get victim that they choose
 		getView().placeRobber(hexLoc);
 		
 		getRobView().showModal();
@@ -310,12 +307,11 @@ public class MapController extends Controller implements IMapController, IObserv
 	 * gets the resource
 	 */
 	public void robPlayer(RobPlayerInfo victim) 
-	{	
-		//shared.model.player.Player victim_player = new shared.model.player.Player(
-		//		victim.getName(), victim.getColor().toString(), victim.getId());
+	{
 		shared.locations.HexLocation location = getView().getMap().getRobber();
 		
-		//reference.proxy.robPlayer(location, victim_player);
+		getRobView().closeModal();
+		Reference.GET_SINGLETON().proxy.robPlayer(location, new shared.model.player.Player(victim));
 	}
 	
 	/**

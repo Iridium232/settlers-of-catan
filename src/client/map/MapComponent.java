@@ -1156,6 +1156,7 @@ public class MapComponent extends JComponent
 		roads.clear();
 		ports.clear();
 		numbers.clear();
+		
 	}
 	
 }
