@@ -1148,8 +1148,20 @@ public class Fascade
 	 */
 	public void changeModel(Game model)
 	{
-		game_model = model;
-		notifyObservers();
+		boolean versionChanged = false;
+		if (game_model == null) {
+			game_model = model;
+			notifyObservers();
+			return;
+		}
+		if (model.getVersion() != game_model.getVersion()) {
+			versionChanged = true;
+		}
+		if (versionChanged) {
+			game_model = model;
+			notifyObservers();
+		}
+
 	}
 	
 	public void addObserver(IObserver observer)
