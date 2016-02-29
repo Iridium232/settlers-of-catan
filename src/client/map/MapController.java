@@ -108,9 +108,13 @@ public class MapController extends Controller implements IMapController, IObserv
 				{
 					if(hex == null)continue;
 					if(hex.getType() == null) continue;
+					if(hex.getLocation() == null)continue;
 					System.out.print("\nHex added: " + hex.getType().name()  + " - " + hex.getNumber().getValue() + "\n");
 					getView().addHex(hex.getLocation(), hex.getType());
-					
+					if(hex.getNumber().getValue() == 0)
+					{
+						continue;
+					}
 					getView().addNumber(hex.getLocation(), hex.getNumber().getValue());
 				}
 			}
@@ -118,7 +122,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		
 		initialized = true;
 		}
-		/*
+		
 		Road[] road_list = model.getRoads();
 		if(road_list != null)
 		{
@@ -152,7 +156,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		{
 			getView().placeRobber(robber.getLocation());
 		}
-		*/
+		
 		System.out.print("\nMap Updated\n");
 
 	}
