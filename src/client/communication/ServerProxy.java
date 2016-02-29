@@ -31,27 +31,27 @@ public class ServerProxy implements IServerProxy {
 	private String path;
 	private int playerIndex;
 	private Fascade fascade;
-	public ServerProxy(String host, int port, Fascade f){
+	public ServerProxy(String host, int port, Fascade f)
+	{
 		this.host=host;
 		this.port=port;
 		this.fascade=f;
 		ClientCommunicator.getSingleton(host, Integer.toString(port));
 	}
 	@Override
-	public void ServerProxy(String host, int port, Fascade f) {
-		// TODO Auto-generated method stub
+	public void ServerProxy(String host, int port, Fascade f) 
+	{
 			this.host = host;
 			this.port = port;
 			this.fascade=f;
 	}
 
 	@Override
-	public String login(String username, String password) {
-		// TODO Auto-generated method stub
+	public String login(String username, String password) 
+	{
 		try {
 			return Integer.toString(ClientCommunicator.getSINGLETON().login(username, password));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "FAILED\n";
@@ -59,7 +59,6 @@ public class ServerProxy implements IServerProxy {
 
 	@Override
 	public String register(String username, String password) {
-		// TODO Auto-generated method stub
 		try{
 				return Integer.toString(ClientCommunicator.getSINGLETON().register(username, password));
 		} catch (Exception e){
@@ -69,8 +68,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public List<Game> getGameList() {
-		// TODO Auto-generated method stub
+	public List<Game> getGameList() 
+	{
 		List<Game> returnList=new ArrayList<Game>();
 		try {
 			List<JSONObject> result=ClientCommunicator.getSINGLETON().gamesList();
@@ -79,33 +78,35 @@ public class ServerProxy implements IServerProxy {
 				String gg=j.toString();
 				returnList.add(gee.fromJson(gg, Game.class));
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 		return returnList;
 	}
 
 	@Override
-	public Game createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
-		// TODO Auto-generated method stub
+	public Game createGame(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) 
+	{
 		CreateGameRequest create= new CreateGameRequest(randomTiles,randomNumbers,randomPorts,name);
 		JSONObject result=null;
-		try {
+		try 
+		{
 			result=ClientCommunicator.getSINGLETON().doPost("/games/create", create);
 			String game=result.toString();
 			Gson gee=new Gson();
 			return gee.fromJson(game, Game.class);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 		return null;
 	}
 
 	@Override
-	public String joinGame(int id, CatanColor color) {
-		// TODO Auto-generated method stub
+	public String joinGame(int id, CatanColor color) 
+	{
 		String result="FAILED\n";
 		try {
 			result=ClientCommunicator.getSINGLETON().joinGame(id, color).toString();
@@ -117,17 +118,20 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public void loadGame(String file_name) {
-		//Todo auto-generated method stub
+	public void loadGame(String file_name) 
+	{
+		
 	}
 
 	@Override
-	public void saveGame(UUID game_id, String file_name){
-		//Todo auto-generated method stub
+	public void saveGame(UUID game_id, String file_name)
+	{
+		
 	}
 
 	@Override
-	public String getModel(int id) {
+	public String getModel(int id) 
+	{
 		String result=null;
 		try {
 			JSONObject model=ClientCommunicator.getSINGLETON().doGet("/game/model");
@@ -141,7 +145,8 @@ public class ServerProxy implements IServerProxy {
 	}
 	
 	@Override
-	public String sendChat(int playerIndex, String content) {
+	public String sendChat(int playerIndex, String content) 
+	{
 		SendChat chat = new SendChat(playerIndex, content);
 		String result=null;
 		try {
@@ -153,8 +158,8 @@ public class ServerProxy implements IServerProxy {
 }
 
 	@Override
-	public String acceptTrade(boolean accept) {
-		// TODO Auto-generated method stub
+	public String acceptTrade(boolean accept) 
+	{
 		String result="FAILED\n";
 		AcceptTrade at=new AcceptTrade(playerIndex,accept);
 		try {
@@ -167,8 +172,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String rollNumber(int number) {
-		// TODO Auto-generated method stub
+	public String rollNumber(int number) 
+	{
 		String result=null;
 		RollNumber roll=new RollNumber(playerIndex,number);
 		try {
@@ -182,7 +187,6 @@ public class ServerProxy implements IServerProxy {
 
 	@Override
 	public String buildRoad(boolean free, shared.communication.EdgeLocation roadLocation) {
-		// TODO Auto-generated method stub
 		String result=null;
 		BuildRoad road=new BuildRoad(playerIndex,roadLocation,free);
 		try {
@@ -195,8 +199,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String buildSettlement(boolean free, VertexLocation place) {
-		// TODO Auto-generated method stub
+	public String buildSettlement(boolean free, VertexLocation place) 
+	{
 		String result=null;
 		BuildSettlement settle=new BuildSettlement(playerIndex,place,free);
 		try {
@@ -209,8 +213,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String buildCity(VertexLocation place) {
-	// TODO Auto-generated method stub
+	public String buildCity(VertexLocation place) 
+	{
 		String result=null;
 		BuildCity city=new BuildCity(playerIndex, place);
 		try {
@@ -223,7 +227,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String maritimeTrade(int ratio, ResourceType input, ResourceType output) {
+	public String maritimeTrade(int ratio, ResourceType input, ResourceType output) 
+	{
 		
 		String result=null;
 		MaritimeTrade trade=new MaritimeTrade(playerIndex,ratio,
@@ -238,8 +243,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String robPlayer(HexLocation location, Player victim) {
-		// TODO Auto-generated method stub
+	public String robPlayer(HexLocation location, Player victim) 
+	{
 		String result=null;
 		RobPlayer rob=new RobPlayer(playerIndex,victim.getPlayerIndex(),location);
 		try {
@@ -252,8 +257,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String finishTurn() {
-		// TODO Auto-generated method stub
+	public String finishTurn() 
+	{
 		String result=null;
 		FinishTurn end=new FinishTurn(playerIndex);
 		try {
@@ -281,8 +286,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String playSoldier(HexLocation place, Player victim) {
-		// TODO Auto-generated method stub
+	public String playSoldier(HexLocation place, Player victim) 
+	{
 		String result=null;
 		Soldier_ soldier=new Soldier_(playerIndex,victim.getPlayerIndex(),place);
 		try {
@@ -296,8 +301,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String yearOfPlenty(ResourceType one, ResourceType two) {
-		// TODO Auto-generated method stub
+	public String yearOfPlenty(ResourceType one, ResourceType two) 
+	{
 		String result=null;
 		Year_of_Plenty_ year=new Year_of_Plenty_(playerIndex,
 				ResourceTranslator.translate(one),ResourceTranslator.translate(two));
@@ -312,7 +317,6 @@ public class ServerProxy implements IServerProxy {
 
 	@Override
 	public String RoadBuilding(shared.communication.EdgeLocation one, shared.communication.EdgeLocation two) {
-		// TODO Auto-generated method stub
 		String result=null;
 		Road_Building_ rb=new Road_Building_(playerIndex,one,two);
 		try {
@@ -325,8 +329,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String monopoly(ResourceType one) {
-		// TODO Auto-generated method stub
+	public String monopoly(ResourceType one) 
+	{
 		String result=null;
 		Monopoly_ mono=new Monopoly_(playerIndex,ResourceTranslator.translate(one));
 		try {
@@ -339,8 +343,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String monument() {
-		// TODO Auto-generated method stub
+	public String monument() 
+	{
 		String result=null;
 		Monument_ mon=new Monument_(playerIndex);
 		try {
@@ -353,8 +357,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String discardCards(ResourceList discardedCards) {
-		// TODO Auto-generated method stub
+	public String discardCards(ResourceList discardedCards) 
+	{
 		String result=null;
 		DiscardCards dc=new DiscardCards(playerIndex,discardedCards);
 		try {
@@ -367,8 +371,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String offerTrade(ResourceList offer, Player receiver) {
-		// TODO Auto-generated method stub
+	public String offerTrade(ResourceList offer, Player receiver) 
+	{
 		String result=null;
 		OfferTrade ot=new OfferTrade(playerIndex,offer,receiver.getPlayerIndex());
 		try {
@@ -381,8 +385,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String addAIPlayer(String AiType) {
-		// TODO Auto-generated method stub
+	public String addAIPlayer(String AiType) 
+	{
 		String result=null;
 		AddAIRequest ai=new AddAIRequest(AiType);
 		try {
@@ -396,8 +400,8 @@ public class ServerProxy implements IServerProxy {
 	}
 
 	@Override
-	public String getAITypes() {
-		// TODO Auto-generated method stub
+	public String getAITypes() 
+	{
 		String result=null;
 		try {
 			JSONObject j=ClientCommunicator.getSINGLETON().doGet("/game/listAI");

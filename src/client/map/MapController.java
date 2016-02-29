@@ -33,6 +33,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	private Reference reference;
 	private IServerProxy proxy;
 	private IState model_state;
+	private boolean is_free = false;
 
 	/**
 	 * Map Controller Constructor
@@ -48,8 +49,6 @@ public class MapController extends Controller implements IMapController, IObserv
 		reference = Reference.GET_SINGLETON();
 		model = reference.getFascade();
 		initFromModel();
-		
-		updateMap();
 		proxy = reference.proxy;
 	}
 	
@@ -191,10 +190,17 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void placeRoad(shared.locations.EdgeLocation edgeLoc) 
 	{
+		if(model_state.getState() == shared.definitions.TurnStatus.FIRSTROUND
+				|| model_state.getState() == shared.definitions.TurnStatus.SECONDROUND)
+		{
+			is_free = true;
+		}
 		shared.communication.EdgeLocation sending_edge = 
 				new shared.communication.EdgeLocation(edgeLoc.getHexLoc()
 						.getX(),edgeLoc.getHexLoc().getY(), edgeLoc.getDir());
 		getView().placeRoad(edgeLoc, reference.player_color);
+		reference.proxy.buildRoad(is_free ,sending_edge);
+		is_free = false;
 	}
 
 	/**
@@ -292,9 +298,11 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void playRoadBuildingCard() 
 	{	
+		is_free = true;
 		this.startMove(PieceType.ROAD, true, false);
 		
 		this.startMove(PieceType.ROAD, true, false);
+		is_free = false;
 		//Send off the info to the controller
 	}
 	
@@ -311,7 +319,8 @@ public class MapController extends Controller implements IMapController, IObserv
 		shared.locations.HexLocation location = getView().getMap().getRobber();
 		
 		getRobView().closeModal();
-		Reference.GET_SINGLETON().proxy.robPlayer(location, new shared.model.player.Player(victim));
+		Reference.GET_SINGLETON().proxy.robPlayer(location,
+				new shared.model.player.Player(victim));
 	}
 	
 	/**
