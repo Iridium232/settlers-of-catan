@@ -477,12 +477,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		Game model = r.getFascade().getModel();
 		Player localPlayer = getLocalPlayer();
 
-		if (getOwnedCount(ResourceType.BRICK, localPlayer) > 0 ||
-				getOwnedCount(ResourceType.WOOD, localPlayer) > 0 ||
-				getOwnedCount(ResourceType.WHEAT, localPlayer) > 0 ||
-				getOwnedCount(ResourceType.SHEEP, localPlayer) > 0 ||
-				getOwnedCount(ResourceType.ORE, localPlayer) > 0) {
-			return true;
+		if (model.getTurn_tracker().getActive_player() == localPlayer.getPlayerIndex()) {
+			if (getOwnedCount(ResourceType.BRICK, localPlayer) > 0 ||
+                    getOwnedCount(ResourceType.WOOD, localPlayer) > 0 ||
+                    getOwnedCount(ResourceType.WHEAT, localPlayer) > 0 ||
+                    getOwnedCount(ResourceType.SHEEP, localPlayer) > 0 ||
+                    getOwnedCount(ResourceType.ORE, localPlayer) > 0) {
+                return true;
+            }
 		}
 		return false;
 	}

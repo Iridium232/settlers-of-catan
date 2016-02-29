@@ -277,8 +277,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		}
 		if (localPlayer == null) return false;
 
-		if (getTradeable().length > 0) {
-			return true;
+		if (model.getTurn_tracker().getActive_player() == localPlayer.getPlayerIndex()) {
+			if (getTradeable().length > 0) {
+                return true;
+            }
 		}
 		return false;
 	}
