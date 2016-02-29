@@ -11,7 +11,6 @@ import shared.model.Game;
 import shared.model.player.Player;
 import shared.model.player.ResourceMultiSet;
 
-import java.sql.Ref;
 import java.util.ArrayList;
 
 
@@ -122,7 +121,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
  */
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-		adjustRecourceOffer(resource, -1);
+		adjustResourceOffer(resource, -1);
 		int amount = resourceCount(resource);
 		getTradeOverlay().setResourceAmount(resource, String.valueOf(amount));
 		if (amount == 0) {
@@ -136,7 +135,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
  */
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-		adjustRecourceOffer(resource, 1);
+		adjustResourceOffer(resource, 1);
 		int amount = resourceCount(resource);
 		getTradeOverlay().setResourceAmount(resource, String.valueOf(amount));
 
@@ -301,26 +300,31 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					brick_offer = 0;
 				}
 				brick_offer_type = type;
+				break;
 			case WOOD:
 				if (!wood_offer_type.equals(type)) {
 					wood_offer = 0;
 				}
 				wood_offer_type = type;
+				break;
 			case WHEAT:
 				if (!wheat_offer_type.equals(type)) {
 					wheat_offer = 0;
 				}
 				wheat_offer_type = type;
+				break;
 			case SHEEP:
 				if (!sheep_offer_type.equals(type)) {
 					sheep_offer = 0;
 				}
 				sheep_offer_type = type;
+				break;
 			case ORE:
 				if (!ore_offer_type.equals(type)) {
 					ore_offer = 0;
 				}
 				ore_offer_type = type;
+				break;
 		}
 		checkOkToTrade();
 	}
@@ -506,7 +510,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		return localPlayer;
 	}
 
-	private void adjustRecourceOffer(ResourceType resource, int amount) {
+	private void adjustResourceOffer(ResourceType resource, int amount) {
 		switch (resource) {
 			case BRICK:
 				brick_offer += amount;

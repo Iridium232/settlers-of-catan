@@ -70,27 +70,26 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			if (player.getPlayerIndex() == r.getPlayer_index()) {
 				localPlayer = player;
 			}
+			boolean highlight = false;
+			if (model.getTurn_tracker().getActive_player() == player.getPlayerIndex()) {
+				highlight = true;
+			}
+
+			boolean largestArmy = false;
+			if (model.getTurn_tracker().getLargest_army_player() == player.getPlayerIndex()) {
+				largestArmy = true;
+			}
+
+			boolean longestRoad = false;
+			if (model.getTurn_tracker().getLongest_road_player() == player.getPlayerIndex()) {
+				longestRoad = true;
+			}
+
+			getView().updatePlayer(player.getPlayerIndex(), player.getVictoryPoints(),
+					highlight, largestArmy, longestRoad);
 		}
 
 		if (localPlayer == null) { return; }
-
-		boolean highlight = false;
-		if (model.getTurn_tracker().getActive_player() == localPlayer.getPlayerIndex()) {
-			highlight = true;
-		}
-
-		boolean largestArmy = false;
-		if (model.getTurn_tracker().getLargest_army_player() == localPlayer.getPlayerIndex()) {
-			largestArmy = true;
-		}
-
-		boolean longestRoad = false;
-		if (model.getTurn_tracker().getLongest_road_player() == localPlayer.getPlayerIndex()) {
-			longestRoad = true;
-		}
-
-		getView().updatePlayer(localPlayer.getPlayerIndex(), localPlayer.getVictoryPoints(),
-				highlight, largestArmy, longestRoad);
 
 		String label = "";
 		boolean enable = false;
