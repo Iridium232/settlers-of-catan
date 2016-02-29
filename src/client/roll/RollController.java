@@ -60,6 +60,7 @@ public class RollController extends Controller implements IRollController, IObse
 	@Override
 	public void ObservableChanged() 
 	{
+		model = r.getFascade().getModel();
 		if(model == null) return;
 		if(model.getTurn_tracker().getActive_player() == r.getPlayer_index()
 				&& model.getTurnStatus(r.getPlayer_index()) == TurnStatus.ROLLING)
