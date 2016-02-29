@@ -21,6 +21,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		super(view);
 		
 		elementActions = new HashMap<ResourceBarElement, IAction>();
+		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 
 	@Override
@@ -47,10 +48,11 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		if(localP.canBuyDevCard()){
 			getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
 		} 		
-		if(localP.getOldDevCards().getTotalCards()>0){
+		if(localP.getOldDevCards().getTotalCards()>0 && !localP.isPlayedDevCard()){
 			getView().setElementEnabled(ResourceBarElement.PLAY_CARD, true);
 		}
 	}
+	
 	private void disableActions(){
 		getView().setElementEnabled(ResourceBarElement.ROAD,false);
 		getView().setElementEnabled(ResourceBarElement.CITY,false);
@@ -127,7 +129,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 				localP=p;
 			}
 		}
-		
 		ResourceMultiSet currentResources=localP.getResources();
 		getView().setElementAmount(ResourceBarElement.BRICK,currentResources.getBrick());
 		getView().setElementAmount(ResourceBarElement.ORE,currentResources.getOre());
@@ -138,7 +139,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		getView().setElementAmount(ResourceBarElement.CITY,localP.getCities());
 		getView().setElementAmount(ResourceBarElement.SETTLEMENT,localP.getSettlements());
 		getView().setElementAmount(ResourceBarElement.SOLDIERS,localP.getSoldiers());
-		if(model.getTurn_tracker().getActive_player() ==r.getPlayer_index()&&model.getTurnStatus(r.getPlayer_index())==TurnStatus.ROLLING){
+		if(model.getTurn_tracker().getActive_player() ==r.getPlayer_index()&&model.getTurnStatus(r.getPlayer_index())==TurnStatus.PLAYING){
 			 enableActions();
 		} else{
 			disableActions();

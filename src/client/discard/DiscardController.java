@@ -36,6 +36,7 @@ public class DiscardController extends Controller implements IDiscardController,
 		super(view);
 		
 		this.waitView = waitView;
+		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 
 	public IDiscardView getDiscardView() {

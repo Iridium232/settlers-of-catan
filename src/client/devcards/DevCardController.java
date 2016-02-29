@@ -1,6 +1,11 @@
 package client.devcards;
 
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
+import shared.definitions.TurnStatus;
+import shared.model.Game;
+import shared.model.player.DevCardList;
+import shared.model.player.Player;
 import client.base.*;
 import client.control.IObserver;
 import client.control.Reference;
@@ -14,6 +19,7 @@ public class DevCardController extends Controller implements IDevCardController,
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
 	private IAction roadAction;
+	private Player localP=null;
 	
 	/**
 	 * DevCardController constructor
@@ -27,7 +33,7 @@ public class DevCardController extends Controller implements IDevCardController,
 								IAction soldierAction, IAction roadAction) {
 
 		super(view);
-		
+		Reference.GET_SINGLETON().getFascade().addObserver(this);
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
@@ -62,7 +68,7 @@ public class DevCardController extends Controller implements IDevCardController,
  */
 	@Override
 	public void buyCard() {
-		
+		r.getProxy().buyDevCard();
 		getBuyCardView().closeModal();
 	}
 /**
@@ -89,6 +95,8 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
 		r.getProxy().monopoly(resource);
+		localP.setPlayedDevCard(true);
+		getPlayCardView().closeModal();
 	}
 /**
  * @pre the player has a monument card
@@ -97,6 +105,8 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void playMonumentCard() {
 		r.getProxy().monument();
+		localP.setPlayedDevCard(true);
+		getPlayCardView().closeModal();
 	}
 /**
  * @pre the player has a roadbuilding card
@@ -104,7 +114,7 @@ public class DevCardController extends Controller implements IDevCardController,
  */
 	@Override
 	public void playRoadBuildCard() {
-		
+		getPlayCardView().closeModal();
 		roadAction.execute();
 	}
 /**
@@ -113,7 +123,7 @@ public class DevCardController extends Controller implements IDevCardController,
  */
 	@Override
 	public void playSoldierCard() {
-		
+		getPlayCardView().closeModal();
 		soldierAction.execute();
 	}
 /**
@@ -123,13 +133,58 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
 		r.getProxy().yearOfPlenty(resource1, resource2);
+		localP.setPlayedDevCard(true);
+		getPlayCardView().closeModal();
 	}
 
-@Override
-public void ObservableChanged() {
-	// TODO Auto-generated method stub
+	private void setEnabled(DevCardList cards){
+		if(cards.getMonopoly()>0){
+			getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, true);
+			getPlayCardView().setCardAmount(DevCardType.MONOPOLY, cards.getMonopoly());
+		}
+		if(cards.getMonument()>0){
+			getPlayCardView().setCardEnabled(DevCardType.MONUMENT, true);
+			getPlayCardView().setCardAmount(DevCardType.MONUMENT, cards.getMonument());
+		}
+		if(cards.getRoad_building()>0){
+			getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, true);
+			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, cards.getRoad_building());
+		}
+		if(cards.getSoldier()>0){
+			getPlayCardView().setCardEnabled(DevCardType.SOLDIER, true);
+			getPlayCardView().setCardAmount(DevCardType.SOLDIER, cards.getSoldier());
+		}
+		if(cards.getYear_of_plenty()>0){
+			getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, true);
+			getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, cards.getYear_of_plenty());
+		}
+	}
 	
-}
+	private void setDisabled(){
+		getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, false);
+		getPlayCardView().setCardEnabled(DevCardType.MONUMENT, false);
+		getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, false);
+		getPlayCardView().setCardEnabled(DevCardType.SOLDIER, false);
+		getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, false);
+	}
+	
+	@Override
+	public void ObservableChanged() {
+		// TODO Auto-generated method stub
+		Game model=r.getFascade().getModel();
+		for(Player p:r.getFascade().getModel().getPlayers()){
+			if(p.getPlayerID()==r.getPlayer_id()){
+				localP=p;
+			}
+		}
+		if(model.getTurn_tracker().getActive_player() ==r.getPlayer_index()&&
+		model.getTurnStatus(r.getPlayer_index())==TurnStatus.PLAYING && !localP.isPlayedDevCard()){
+			DevCardList temp=localP.getOldDevCards();
+				setEnabled(temp);
+		} else{
+			setDisabled();
+		}
+	}
 
 }
 

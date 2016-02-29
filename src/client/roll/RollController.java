@@ -28,6 +28,7 @@ public class RollController extends Controller implements IRollController, IObse
 		super(view);
 		
 		setResultView(resultView);
+		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 	
 	public IRollResultView getResultView() {
