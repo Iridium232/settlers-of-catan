@@ -72,7 +72,9 @@ public class MapController extends Controller implements IMapController, IObserv
 				for(TerrainHex hex : hex_list)
 				{
 					if(hex == null)continue;
+					System.out.print("\nHex added: " + hex.getType().name() + "\n");
 					getView().addHex(hex.getLocation(), hex.getType());
+					
 					getView().addNumber(hex.getLocation(), hex.getNumber().getValue());
 				}
 			}
@@ -112,6 +114,9 @@ public class MapController extends Controller implements IMapController, IObserv
 		{
 			getView().placeRobber(robber.getLocation());
 		}
+		
+		System.out.print("\nMap Updated\n");
+		getView().getMap().setVisible(true);
 	}
 
 	/**

@@ -388,6 +388,22 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 			return null;
 		}
 	}
+
+	@Override
+	public void enableAllColors()
+	{
+		this.btnBlue.setEnabled(true);
+		this.btnWhite.setEnabled(true);
+		this.btnPuce.setEnabled(true);
+		
+		this.btnPurple.setEnabled(true);
+		this.btnBrown.setEnabled(true);
+		this.btnGreen.setEnabled(true);
+		
+		this.btnRed.setEnabled(true);
+		this.btnYellow.setEnabled(true);
+		this.btnOrange.setEnabled(true);
+	}
 	
 }
 

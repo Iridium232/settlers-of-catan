@@ -145,6 +145,7 @@ public class ClientCommunicator {
 				String cookieStr = connection.getHeaderField("Set-cookie");
 				catan_cookie = getEncodedValue(cookieStr);
 				ref.setName(username);
+				ref.setPlayer_id(getPlayerID(cookieStr));
 				return connection.getResponseCode();
 			} else {
 				throw new Exception(String.format("doPost failed: %s (http code %d)",

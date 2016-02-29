@@ -261,11 +261,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		System.out.print("\nJoining a game with " + game.getPlayers().size() + " players.");
 		Reference ref = Reference.GET_SINGLETON();
 		ref.game_id = game.getId();
-	//	if(game.getPlayers().size() > 3)
-	//	{
-	//		if ()
-	//		return;//the game is full
-	//	}
 		ref.player_index = game.getPlayers().size() + 1;
 		for(PlayerInfo player_info: game.getPlayers())
 		{
@@ -273,24 +268,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getSelectColorView().setColorEnabled(player_info.getColor(), false);
 		}
 		getSelectColorView().showModal();
-		//this.joinGame(getSelectColorView().getSelectedColor());
-/*
-
-		PlayerInfo ourguy = new PlayerInfo();
-		ourguy.setColor(null);
-		ourguy.setId(-1);
-		ourguy.setName("DEFAULT_NAME");
-		ourguy.setPlayerIndex(-1);
-		//List<PlayerInfo> playerlist = Reference.GET_SINGLETON().proxy.joinGame();
-		//GameInfo[] player = new GameInfo[playerlist.size()];
-
-		getSelectColorView().showModal();
-		for (PlayerInfo playerInfo : game.getPlayers()) {
-			if (!playerInfo.equals(ourguy)) {
-				getSelectColorView().setColorEnabled(ourguy.getColor(), false);
-			}
-		}
-*/
 	}
 
 
@@ -299,9 +276,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * Cancel to join a game
 	 */
 	@Override
-	public void cancelJoinGame() {
-	
+	public void cancelJoinGame() 
+	{
 		getJoinGameView().closeModal();
+		getSelectColorView().enableAllColors();
 	}
 
 
@@ -339,47 +317,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			this.messageView.showModal();
 			getSelectColorView().closeModal();
 		}
-/*
-	public void joinGame(CatanColor color) {
-		Catan catan = null;
-		Boolean request = false;
-
-		PlayerInfo ourguy = new PlayerInfo();
-		ourguy.setColor(color);
-		ourguy.setId(-1);
-		ourguy.setName("DEFAULT_NAME");
-		ourguy.setPlayerIndex(-1);
-
-		try
-		{
-
-			Reference.GET_SINGLETON().proxy.joinGame(ourguy.getId(), ourguy.getColor());
-		}
-		catch (JoinExceptions e)
-		{
-			e.printStackTrace();
-		}
-
-		// If join succeeded
-		getSelectColorView().closeModal();
-		getJoinGameView().closeModal();
-
-		//Refresh game list
-		List<Game> gamelist = Reference.GET_SINGLETON().proxy.getGameList();
-		GameInfo[] games = new GameInfo[gamelist.size()];
-		int counter = 0;
-		for(Game game: gamelist)
-		{
-			GameInfo thisgame = new GameInfo();
-			thisgame.setId(game.getId());
-			thisgame.setTitle(game.getTitle());
-			counter++;
-			games[counter] = thisgame;
-		}
-
-
-		joinAction.execute();
-*/
 	}
 
 }
