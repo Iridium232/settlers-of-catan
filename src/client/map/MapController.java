@@ -34,6 +34,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	private IServerProxy proxy;
 	private IState model_state;
 	private boolean is_free = false;
+	private boolean initialized = false;
 
 	/**
 	 * Map Controller Constructor
@@ -48,7 +49,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		setRobView(robView);
 		reference = Reference.GET_SINGLETON();
 		model = reference.getFascade();
-		initFromModel();
+		//initFromModel();
 		proxy = reference.proxy;
 	}
 	
@@ -61,9 +62,44 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	protected void initFromModel() 
 	{
+		model = reference.fascade;
+		if(!initialized)
+		{
+		
+		getView().addHex(new HexLocation(-2,-1), HexType.WATER);
+		getView().addHex(new HexLocation(-1,-2), HexType.WATER);
+		getView().addHex(new HexLocation(1,2), HexType.WATER);
+		getView().addHex(new HexLocation(2,1), HexType.WATER);
+		
+		
+		
+		getView().addHex(new HexLocation(-1,3), HexType.WATER);
+		getView().addHex(new HexLocation(-2,3), HexType.WATER);
+		getView().addHex(new HexLocation(-3,3), HexType.WATER);
+		getView().addHex(new HexLocation(0,3), HexType.WATER);
+		
+		getView().addHex(new HexLocation(0,-3), HexType.WATER);
+		getView().addHex(new HexLocation(1,-3), HexType.WATER);
+		getView().addHex(new HexLocation(2,-3), HexType.WATER);
+		getView().addHex(new HexLocation(3,-3), HexType.WATER);
+		
+		getView().addHex(new HexLocation(-3,0), HexType.WATER);
+		getView().addHex(new HexLocation(-3,1), HexType.WATER);
+		getView().addHex(new HexLocation(-3,2), HexType.WATER);
+		getView().addHex(new HexLocation(-3,3), HexType.WATER);
+		
+		getView().addHex(new HexLocation(3,0), HexType.WATER);
+		getView().addHex(new HexLocation(3,-1), HexType.WATER);
+		getView().addHex(new HexLocation(3,-2), HexType.WATER);
+		getView().addHex(new HexLocation(3,-3), HexType.WATER);
+		
+		
+		
 		if(model == null){return;}
 		TerrainHex[][] hex_grid = model.getHexes();
-		getView().clear();
+		//getView().clear();
+
+		
 		if(hex_grid != null)
 		{
 			for(TerrainHex[] hex_list : hex_grid)
@@ -71,6 +107,7 @@ public class MapController extends Controller implements IMapController, IObserv
 				for(TerrainHex hex : hex_list)
 				{
 					if(hex == null)continue;
+					if(hex.getType() == null) continue;
 					System.out.print("\nHex added: " + hex.getType().name()  + " - " + hex.getNumber().getValue() + "\n");
 					getView().addHex(hex.getLocation(), hex.getType());
 					
@@ -79,7 +116,9 @@ public class MapController extends Controller implements IMapController, IObserv
 			}
 		}
 		
-		
+		initialized = true;
+		}
+		/*
 		Road[] road_list = model.getRoads();
 		if(road_list != null)
 		{
@@ -113,9 +152,9 @@ public class MapController extends Controller implements IMapController, IObserv
 		{
 			getView().placeRobber(robber.getLocation());
 		}
-		
+		*/
 		System.out.print("\nMap Updated\n");
-		
+
 	}
 
 	/**
@@ -199,7 +238,7 @@ public class MapController extends Controller implements IMapController, IObserv
 				new shared.communication.EdgeLocation(edgeLoc.getHexLoc()
 						.getX(),edgeLoc.getHexLoc().getY(), edgeLoc.getDir());
 		getView().placeRoad(edgeLoc, reference.player_color);
-		reference.proxy.buildRoad(is_free ,sending_edge);
+		proxy.buildRoad(is_free ,sending_edge);
 		is_free = false;
 	}
 
@@ -319,8 +358,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		shared.locations.HexLocation location = getView().getMap().getRobber();
 		
 		getRobView().closeModal();
-		Reference.GET_SINGLETON().proxy.robPlayer(location,
-				new shared.model.player.Player(victim));
+		proxy.robPlayer(location, new shared.model.player.Player(victim));
 	}
 	
 	/**
