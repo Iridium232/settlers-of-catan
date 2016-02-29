@@ -12,8 +12,8 @@ import shared.model.Game;
  * Implementation for the roll controller
  */
 public class RollController extends Controller implements IRollController, IObserver {
-	private Reference r=Reference.GET_SINGLETON();
-	private Game model=r.getFascade().getModel();
+	private Reference r;
+	private Game model;
 
 	private IRollResultView resultView;
 
@@ -26,7 +26,8 @@ public class RollController extends Controller implements IRollController, IObse
 	public RollController(IRollView view, IRollResultView resultView) {
 
 		super(view);
-		
+		r = Reference.GET_SINGLETON();
+		model = Reference.GET_SINGLETON().getFascade().getModel();
 		setResultView(resultView);
 		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
@@ -46,7 +47,8 @@ public class RollController extends Controller implements IRollController, IObse
 	 * @post simulates a roll of the dice and displays the result and distributes the required cards.
 	 */
 	@Override
-	public void rollDice() {
+	public void rollDice() 
+	{
 		Random rand=new Random();
 		final int result=rand.nextInt(6)+rand.nextInt(6)+2;
 		getResultView().setRollValue(result);
@@ -56,9 +58,12 @@ public class RollController extends Controller implements IRollController, IObse
 	}
 
 	@Override
-	public void ObservableChanged() {
-		// TODO Auto-generated method stub
-		if(model.getTurn_tracker().getActive_player() ==r.getPlayer_index()&&model.getTurnStatus(r.getPlayer_index())==TurnStatus.ROLLING){
+	public void ObservableChanged() 
+	{
+		if(model == null) return;
+		if(model.getTurn_tracker().getActive_player() == r.getPlayer_index()
+				&& model.getTurnStatus(r.getPlayer_index()) == TurnStatus.ROLLING)
+		{
 			 getRollView().showModal();
 		}
 	}

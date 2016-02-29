@@ -59,7 +59,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		Reference r = Reference.GET_SINGLETON();
 		Game model = r.getFascade().getModel();
 		if (!playerInitialized) {
-			for (Player player : model.getPlayers()) {
+			for (Player player : model.getPlayers()) 
+			{
+				if (player.getColor() == null || player == null)continue;
 				getView().initializePlayer(player.getPlayerIndex(), player.getName(), getCatanColor(player));
 			}
 			getView().setLocalPlayerColor(r.getPlayer_color());
@@ -67,6 +69,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		}
 		Player localPlayer = null;
 		for (Player player : model.getPlayers()) {
+			if (player.getColor() == null || player == null)continue;
 			if (player.getPlayerIndex() == r.getPlayer_index()) {
 				localPlayer = player;
 			}

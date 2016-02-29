@@ -313,6 +313,12 @@ public class MapView extends PanelView implements IMapView
 	{
 		return map;
 	}
+
+	@Override
+	public void clear() 
+	{
+		map = new MapComponent();		
+	}
 	
 }
 

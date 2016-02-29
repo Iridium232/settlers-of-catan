@@ -64,12 +64,14 @@ public class MapController extends Controller implements IMapController, IObserv
 	{
 		if(model == null){return;}
 		TerrainHex[][] hex_grid = model.getHexes();
+		getView().clear();
 		if(hex_grid != null)
 		{
 			for(TerrainHex[] hex_list : hex_grid)
 			{
 				for(TerrainHex hex : hex_list)
 				{
+					if(hex == null)continue;
 					getView().addHex(hex.getLocation(), hex.getType());
 					getView().addNumber(hex.getLocation(), hex.getNumber().getValue());
 				}

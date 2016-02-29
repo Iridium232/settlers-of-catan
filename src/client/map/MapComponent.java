@@ -1147,6 +1147,16 @@ public class MapComponent extends JComponent
 	{
 		return robber;
 	}
+
+	public void clear() 
+	{
+		hexes.clear();
+		settlements.clear();
+		cities.clear();
+		roads.clear();
+		ports.clear();
+		numbers.clear();
+	}
 	
 }
 

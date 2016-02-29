@@ -100,5 +100,7 @@ public interface IMapView extends IView
 	 */
 	MapComponent getMap();
 
+	void clear();
+
 }
 
