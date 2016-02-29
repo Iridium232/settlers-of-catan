@@ -141,6 +141,8 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 
 		tempJoinButton = new JButton("Temporary Join Button");
 		tempJoinButton.addActionListener(actionListener);
+		tempJoinButton.setEnabled(false);
+		tempJoinButton.setVisible(false);
 		Font buttonFont = tempJoinButton.getFont();
 		buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
 		tempJoinButton.setFont(buttonFont);
