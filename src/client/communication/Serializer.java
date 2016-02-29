@@ -46,6 +46,8 @@ public class Serializer {
         try {
             if (s.equals("Success")) {
                 return new JSONObject().put("Success", s);
+            } else if (s.equals("true")) {
+                return new JSONObject().put("True", s);
             }
             result = new JSONObject(s);
         } catch (JSONException e) {

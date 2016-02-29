@@ -135,8 +135,11 @@ public class ServerProxy implements IServerProxy {
 		String result=null;
 		try {
 			JSONObject model=ClientCommunicator.getSINGLETON().doGet("/game/model");
-			result=model.toString();
-			ModelPopulator.populateModel(model, fascade);//add fascade to IServerProxy
+
+			if (!model.has("True")) {
+				result=model.toString();
+				ModelPopulator.populateModel(model, fascade);//add fascade to IServerProxy
+			}
 		} catch (Exception e) {
 			result="FAILED\n";
 			e.printStackTrace();
