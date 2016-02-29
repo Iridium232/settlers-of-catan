@@ -10,6 +10,7 @@ import shared.model.player.DevCardList;
 import shared.model.player.Player;
 import shared.model.player.ResourceMultiSet;
 import shared.model.player.TradeOffer;
+import shared.model.states.IState;
 import shared.model.states.TurnTracker;
 import client.data.*;
 
@@ -313,6 +314,11 @@ public class Game
 	public Robber getRobber() 
 	{
 		return map.getRobber();
+	}
+
+	public IState getTurnState(int player_index) 
+	{
+		return turn_tracker.getState();
 	}
 	
 }

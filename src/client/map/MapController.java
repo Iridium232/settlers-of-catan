@@ -155,6 +155,22 @@ public class MapController extends Controller implements IMapController, IObserv
 		{
 			getView().placeRobber(robber.getLocation());
 		}
+		this.model_state = model.getStateOf(reference.player_index);
+		if(model_state.getState() == TurnStatus.ROBBING)
+		{
+			this.startMove(PieceType.ROBBER, false, false);
+		}
+		
+		if(model_state.getState() == TurnStatus.FIRSTROUND)
+		{
+			this.startMove(PieceType.ROAD, true, true);
+		}
+		
+		if(model_state.getState() == TurnStatus.SECONDROUND)
+		{
+			this.startMove(PieceType.SETTLEMENT, true, false);
+		}
+		
 	}
 
 	/**

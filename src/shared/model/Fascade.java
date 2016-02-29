@@ -34,6 +34,7 @@ import shared.model.player.Player;
 import shared.model.player.ResourceMultiSet;
 import shared.model.player.TradeOffer;
 import shared.model.ports.*;
+import shared.model.states.IState;
 import shared.model.states.TurnTracker;
 
 import java.rmi.ServerException;
@@ -1264,6 +1265,11 @@ public class Fascade
 			return null;
 		}
 		return game_model.getRobber();
+	}
+	
+	public IState getStateOf(int player_index)
+	{
+		return game_model.getTurnState(player_index);
 	}
 
 }

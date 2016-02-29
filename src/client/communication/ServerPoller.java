@@ -61,6 +61,7 @@ public class ServerPoller {
 			@Override
 			public void run(){
 					try{
+						System.out.print("\nupdate\n");
 						int version=f.getLatestModelNum();
 						server.getModel(version);
 					}catch(Exception e){

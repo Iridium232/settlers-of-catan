@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import shared.communication.*;
 import shared.communication.fromServer.game.*;
 import shared.communication.fromServer.game.Port;
-import shared.communication.fromServer.game.TradeOffer;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.TurnStatus;
@@ -104,7 +103,7 @@ public class ModelPopulator {
     private void populateMap(ServerModel serverModel, Game newModel) {
         Map serverMap = serverModel.getMap();
         GameMap clientMap = newModel.getMap();
-
+        addDefaultHexes(newModel.getMap());
         populateHexes(serverMap, clientMap);
         populatePorts(serverMap, clientMap);
         populateRoads(serverMap, clientMap);
@@ -113,7 +112,36 @@ public class ModelPopulator {
         populateRobber(serverMap, clientMap);
     }
 
-    private void populateHexes(Map serverMap, GameMap clientMap) {
+    private void addDefaultHexes(GameMap map) 
+    {
+    	map.addTerrainHex(new TerrainHex(-2,-1, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(-1,-2, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(1,2, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(2,1, HexType.WATER));
+		
+    	map.addTerrainHex(new TerrainHex(-2,3, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(-1,3, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(0,3, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(-3,3, HexType.WATER));
+		
+    	map.addTerrainHex(new TerrainHex(0,-3, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(1,-3, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(2,-3, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(3,-3, HexType.WATER));
+		
+    	map.addTerrainHex(new TerrainHex(-3,0, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(-3,1, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(-3,2, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(-3,3, HexType.WATER));
+		
+    	map.addTerrainHex(new TerrainHex(3, 0, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(3,-2, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(3,-1, HexType.WATER));
+    	map.addTerrainHex(new TerrainHex(3,-3, HexType.WATER));
+		
+	}
+
+	private void populateHexes(Map serverMap, GameMap clientMap) {
         Hex[] serverHexes = serverMap.getHexes();
 
         for (Hex hex : serverHexes) {

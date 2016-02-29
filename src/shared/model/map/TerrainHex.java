@@ -14,6 +14,16 @@ public class TerrainHex
 	private HexType type = null;
 	private NumberChit number = null ;
 	
+	public TerrainHex(int i, int j, HexType water) 
+	{
+		location = new HexLocation(i,j);
+		type = water;
+	}
+
+	public TerrainHex() 
+	{
+	}
+
 	/**
 	 * @return the location
 	 */
