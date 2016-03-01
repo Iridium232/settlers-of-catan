@@ -190,50 +190,57 @@ public class ModelPopulator {
             shared.model.ports.Port newPort = null;
             Vertex vertex1 = null;
             Vertex vertex2 = null;
+            EdgeDirection direction = null;
             switch (serverDirection) {
                 case "NW":
                     vertex1 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.NorthWest));
                     vertex2 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.West));
+                    direction = EdgeDirection.NorthWest;
                     break;
                 case "N":
                     vertex1 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.NorthWest));
                     vertex2 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.NorthEast));
+                    direction = EdgeDirection.North;
                     break;
                 case "NE":
                     vertex1 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.NorthEast));
                     vertex2 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.East));
+                    direction = EdgeDirection.NorthEast;
                     break;
                 case "SE":
                     vertex1 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.East));
                     vertex2 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.SouthEast));
+                    direction = EdgeDirection.SouthEast;
                     break;
                 case "S":
                     vertex1 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.SouthEast));
                     vertex2 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.SouthWest));
+                    direction = EdgeDirection.South;
                     break;
                 case "SW":
                     vertex1 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.SouthWest));
                     vertex2 = new Vertex(new shared.locations.VertexLocation(serverLocation, VertexDirection.West));
+                    direction = EdgeDirection.SouthWest;
                     break;
             }
             if (serverResource == null) {
                 newPort = new MiscPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
-                        serverRatio);
+                        serverRatio, direction);
             } else if (serverResource.equals("wood")){
                 newPort = new WoodPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
-                        serverRatio);
+                        serverRatio, direction);
             } else if (serverResource.equals("brick")){
                 newPort = new BrickPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
-                        serverRatio);
+                        serverRatio, direction);
             } else if (serverResource.equals("sheep")){
                 newPort = new SheepPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
-                        serverRatio);
+                        serverRatio, direction);
             } else if (serverResource.equals("wheat")){
                 newPort = new WheatPort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
-                        serverRatio);
+                        serverRatio, direction);
             } else if (serverResource.equals("ore")){
                 newPort = new OrePort(vertex1, serverLocation.getX(), serverLocation.getY(), vertex2,
-                        serverRatio);
+                        serverRatio, direction);
             }
             clientMap.addPort(newPort);
         }

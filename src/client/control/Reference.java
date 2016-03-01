@@ -25,7 +25,7 @@ public class Reference
 	public IServerProxy proxy;
 	public int port;
 	public String host;
-	public int game_id;
+	public int game_id = -1;
 	public int player_id;
 
 	public Fascade getFascade() {

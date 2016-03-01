@@ -2,6 +2,7 @@ package client.map;
 
 import java.util.*;
 
+import shared.communication.fromServer.game.Port;
 import shared.communication.fromServer.games.Player;
 import shared.definitions.*;
 import shared.locations.*;
@@ -64,63 +65,35 @@ public class MapController extends Controller implements IMapController, IObserv
 	{
 		model = reference.fascade;
 		if(!initialized)
-		{
-		
-		getView().addHex(new HexLocation(-2,-1), HexType.WATER);
-		getView().addHex(new HexLocation(-1,-2), HexType.WATER);
-		getView().addHex(new HexLocation(1,2), HexType.WATER);
-		getView().addHex(new HexLocation(2,1), HexType.WATER);
-		
-		
-		
-		getView().addHex(new HexLocation(-1,3), HexType.WATER);
-		getView().addHex(new HexLocation(-2,3), HexType.WATER);
-		getView().addHex(new HexLocation(-3,3), HexType.WATER);
-		getView().addHex(new HexLocation(0,3), HexType.WATER);
-		
-		getView().addHex(new HexLocation(0,-3), HexType.WATER);
-		getView().addHex(new HexLocation(1,-3), HexType.WATER);
-		getView().addHex(new HexLocation(2,-3), HexType.WATER);
-		getView().addHex(new HexLocation(3,-3), HexType.WATER);
-		
-		getView().addHex(new HexLocation(-3,0), HexType.WATER);
-		getView().addHex(new HexLocation(-3,1), HexType.WATER);
-		getView().addHex(new HexLocation(-3,2), HexType.WATER);
-		getView().addHex(new HexLocation(-3,3), HexType.WATER);
-		
-		getView().addHex(new HexLocation(3,0), HexType.WATER);
-		getView().addHex(new HexLocation(3,-1), HexType.WATER);
-		getView().addHex(new HexLocation(3,-2), HexType.WATER);
-		getView().addHex(new HexLocation(3,-3), HexType.WATER);
-		
-		
-		
-		if(model == null){return;}
-		TerrainHex[][] hex_grid = model.getHexes();
-		//getView().clear();
+		{		
+			if(model == null){return;}
+			TerrainHex[][] hex_grid = model.getHexes();
+			//getView().clear();
 
 		
-		if(hex_grid != null)
-		{
-			for(TerrainHex[] hex_list : hex_grid)
+			if(hex_grid != null)
 			{
-				for(TerrainHex hex : hex_list)
+				for(TerrainHex[] hex_list : hex_grid)
 				{
-					if(hex == null)continue;
-					if(hex.getType() == null) continue;
-					if(hex.getLocation() == null)continue;
-					getView().addHex(hex.getLocation(), hex.getType());
-					if(hex.getNumber() == null || hex.getNumber().getValue() == 0)
+					for(TerrainHex hex : hex_list)
 					{
-						continue;
+						if(hex == null)continue;
+						if(hex.getType() == null) continue;
+						if(hex.getLocation() == null)continue;
+						getView().addHex(hex.getLocation(), hex.getType());
+						if(hex.getNumber() == null || hex.getNumber().getValue() == 0)
+						{
+							continue;
+						}
+						getView().addNumber(hex.getLocation(), hex.getNumber().getValue());
 					}
-					getView().addNumber(hex.getLocation(), hex.getNumber().getValue());
 				}
 			}
-		}
 		
 		initialized = true;
 		}
+		
+		
 		
 		Road[] road_list = model.getRoads();
 		if(road_list != null)
@@ -128,6 +101,16 @@ public class MapController extends Controller implements IMapController, IObserv
 			for (Road road : road_list)
 			{
 				getView().placeRoad(road.getLocation().getLocation(), road.getColor());
+			}
+		}
+		
+		shared.model.ports.Port[] port_list = model.getPorts();
+		if(port_list != null)
+		{
+			for (shared.model.ports.Port port : port_list)
+			{
+				PortType type = getPortType(port.getResource());
+				getView().addPort(new EdgeLocation(port.getLocation(),port.getEdgeDirection()), type);
 			}
 		}
 		
@@ -173,6 +156,16 @@ public class MapController extends Controller implements IMapController, IObserv
 			this.startMove(PieceType.SETTLEMENT, true, false);
 		}
 		
+	}
+
+	private PortType getPortType(ResourceType resource) 
+	{
+		if (resource == ResourceType.BRICK) return PortType.BRICK;
+		if (resource == ResourceType.ORE) return PortType.ORE;
+		if (resource == ResourceType.SHEEP) return PortType.SHEEP;
+		if (resource == ResourceType.WHEAT) return PortType.WHEAT;
+		if (resource == ResourceType.WOOD) return PortType.WOOD;
+		return PortType.THREE;
 	}
 
 	/**
@@ -376,8 +369,8 @@ public class MapController extends Controller implements IMapController, IObserv
 	{
 		shared.locations.HexLocation location = getView().getMap().getRobber();
 		
-		getRobView().closeModal();
 		proxy.robPlayer(location, new shared.model.player.Player(victim));
+		getRobView().closeModal();
 	}
 	
 	/**

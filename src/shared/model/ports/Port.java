@@ -16,18 +16,20 @@ public abstract class Port
 	protected Vertex vertex2;
 	protected int ratio;
 	protected ResourceType resource;
+	private EdgeDirection direction;
 
 	public Port()
 	{
 		
 	}
 
-	public Port(Vertex vertex1, int vertX, int vertY, Vertex vertex2, int ratio) {
+	public Port(Vertex vertex1, int vertX, int vertY, Vertex vertex2, int ratio, EdgeDirection direction) {
 
 		this.location = new HexLocation(vertX, vertY);
 		this.vertex1 = vertex1;
 		this.vertex2 = vertex2;
 		this.ratio = ratio;
+		this.direction = direction;
 	}
 	/**
 	 * Class constructor
@@ -124,5 +126,10 @@ public abstract class Port
 
 	public void setResource(ResourceType resource) {
 		this.resource = resource;
+	}
+
+	public EdgeDirection getEdgeDirection() 
+	{
+		return direction;
 	}
 }

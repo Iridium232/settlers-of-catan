@@ -1150,15 +1150,23 @@ public class Fascade
 	public void changeModel(Game model)
 	{
 		boolean versionChanged = false;
-		if (game_model == null) {
+		if (model == null) return;
+		if (game_model == null && model != null) {
 			game_model = model;
 			notifyObservers();
 			return;
 		}
-		if (model.getVersion() != game_model.getVersion()) {
+		if (model.getVersion() >= game_model.getVersion()) 
+		{
 			versionChanged = true;
 		}
-		if (versionChanged) {
+		else
+		{
+			versionChanged  = false;
+		}
+		
+		if (versionChanged) 
+		{
 			game_model = model;
 			notifyObservers();
 		}
@@ -1179,7 +1187,8 @@ public class Fascade
 	 */
 	public void notifyObservers()
 	{
-		for (IObserver observer : observers) {
+		for (IObserver observer : observers) 
+		{
 			observer.ObservableChanged();
 		}
 	}
@@ -1189,30 +1198,6 @@ public class Fascade
 	 *
 	 */
 	class ModelException extends Exception{}
-
-
-/* Do Methods */
-
-
-	public DataTransferResponse doLogin(DataTransferRequest credentials) throws ServerException {
-		CookieResponse responseData = new LoginResponse("", false);
-		Cookie cookie = new UserCookie();
-		//serverProxy.send(Commands.USER_LOGIN, credentials, responseData, RestMethods.POST, cookie);
-		responseData.setCookie(cookie);
-		return responseData;
-	}
-
-	public DataTransferResponse doRegister(DataTransferRequest credentials) throws ServerException {
-		CookieResponse responseData = new RegisterResponse("", false);
-		Cookie cookie = new UserCookie();
-		//serverProxy.send(Commands.USER_REGISTER, credentials, responseData, RestMethods.POST, cookie);
-		responseData.setCookie(cookie);
-		return responseData;
-	}
-
-	public void setPlayerCookie(Cookie playerCookie) {
-		this.playerCookie= playerCookie;
-	}
 
 	public City[] getCities() 
 	{
@@ -1282,6 +1267,11 @@ public class Fascade
 	public IState getStateOf(int player_index)
 	{
 		return game_model.getTurnState(player_index);
+	}
+
+	public shared.model.ports.Port[] getPorts() 
+	{
+		return game_model.getMap().getPorts();
 	}
 
 }

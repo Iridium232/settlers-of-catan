@@ -63,17 +63,18 @@ public class RollController extends Controller implements IRollController, IObse
 	{
 		model = r.getFascade().getModel();
 		if(model == null) return;
-		if(getRollView().isModalShowing())
-		{
-			getRollView().closeModal();
-			getRollView().showModal();
-			return;
-		}
 		if(model.getTurn_tracker().getActive_player() == r.getPlayer_index()
 				&& model.getTurnStatus(r.getPlayer_index()) == TurnStatus.ROLLING)
 		{
-			 if(!getRollView().isModalShowing()) {
-					 getRollView().showModal();
+			System.out.print("You may Roll!");
+			 if(!getRollView().isModalShowing()) 
+			 {
+				 getRollView().showModal();
+			 }
+			 else
+			 {
+				 getRollView().closeModal();
+				 getRollView().showModal();
 			 }
 		}
 	}

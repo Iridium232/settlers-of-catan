@@ -4,6 +4,7 @@ import client.base.Controller;
 import client.base.IAction;
 import client.communication.ClientCommunicator;
 import client.communication.IServerProxy;
+import client.control.IObserver;
 import client.control.Reference;
 import client.data.PlayerInfo;
 import client.misc.IMessageView;
@@ -22,7 +23,7 @@ import java.rmi.ServerException;
 /**
  * Implementation for the login controller
  */
-public class LoginController extends Controller implements ILoginController {
+public class LoginController extends Controller implements ILoginController, IObserver {
 
 	private IServerProxy proxy;
 	private Fascade clientFascade;
@@ -167,6 +168,12 @@ public class LoginController extends Controller implements ILoginController {
 			messageView.showModal();
 		}
 
+	}
+
+	@Override
+	public void ObservableChanged() 
+	{
+		
 	}
 
 }

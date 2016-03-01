@@ -3,6 +3,7 @@ package client.join;
 import client.base.Controller;
 import client.base.IAction;
 import client.communication.ModelPopulator;
+import client.control.IObserver;
 import client.control.Reference;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * Implementation for the join game controller
  */
-public class JoinGameController extends Controller implements IJoinGameController {
+public class JoinGameController extends Controller implements IJoinGameController, IObserver {
 
 	private INewGameView newGameView;
 	private ISelectColorView selectColorView;
@@ -39,10 +40,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 								ISelectColorView selectColorView, IMessageView messageView) {
 
 		super(view);
-
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
+		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 
 	/**
@@ -258,6 +259,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) 
 	{
+		if(game == null) return;
 		if(!(game.getPlayers() == null))System.out.print("\nJoining a game with " + game.getPlayers().size() + " players.");
 		
 		Reference ref = Reference.GET_SINGLETON();
@@ -331,6 +333,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			}
 		}
 		return -1;
+	}
+
+	@Override
+	public void ObservableChanged() 
+	{
+		if(Reference.GET_SINGLETON().game_id != -1)
+		{
+			this.getJoinGameView().closeModal();
+		}
 	}
 
 }
