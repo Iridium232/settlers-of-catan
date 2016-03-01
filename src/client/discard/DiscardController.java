@@ -104,7 +104,7 @@ public class DiscardController extends Controller implements IDiscardController,
 			}
 			ResourceMultiSet hand=localP.getResources();
 			if(hand.size()>7){
-				if(!getDiscardView().isModalShowing()) {
+				if(getDiscardView().isModalShowing()==false) {
 					getDiscardView().showModal();
 					setResourceAmounts(hand);
 					initializeMap();

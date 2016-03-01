@@ -231,6 +231,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				showAcceptOverlay(offer);
 			}
 		}
+		if(getWaitOverlay().isModalShowing()==true) {
+			getWaitOverlay().closeModal();
+		}
 		getTradeView().enableDomesticTrade(setButtonStatus());
 	}
 
