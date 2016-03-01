@@ -36,7 +36,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 				localP=p;
 			}
 		}
-		if(localP.getRoads()>0&&localP.canPlaceCity()){
+		if(localP.getRoads()>0&&localP.canPlaceRoad()){
 			getView().setElementEnabled(ResourceBarElement.ROAD,true);
 		} 
 		if(localP.getCities()>0&&localP.canPlaceCity()){

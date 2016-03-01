@@ -159,12 +159,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
  */
 	@Override
 	public void sendTradeOffer() {
-		getTradeOverlay().reset();
-		resetOffer();
 		if (getTradeOverlay().isModalShowing()) getTradeOverlay().closeModal();
 		if (!getWaitOverlay().isModalShowing()) getWaitOverlay().showModal();
 		Reference r = Reference.GET_SINGLETON();
 		r.getProxy().offerTrade(createOffer(), getPlayer());
+		getTradeOverlay().reset();
+		resetOffer();
 		//Change State Properly  ******************************************************************
 	}
 /**
@@ -228,6 +228,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void ObservableChanged() {
 		Game model = Reference.GET_SINGLETON().getFascade().getModel();
+		if (model == null) return;
 		TradeOffer offer = model.getTrade_offer();
 		if (offer != null) {
 			if (offer.getReciever() == Reference.GET_SINGLETON().getPlayer_index()) {

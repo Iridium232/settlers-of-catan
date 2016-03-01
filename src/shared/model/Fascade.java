@@ -1155,14 +1155,14 @@ public class Fascade
 	 */
 	public void changeModel(Game model)
 	{
-		if (game_model == null) 
+		if (game_model == null)
 		{
 			game_model = model;
 			notifyObservers();
 			return;
 		}
 
-		if (model.getVersion() != game_model.getVersion()) 
+		if (model.getVersion() != game_model.getVersion())
 		{
 			game_model = model;
 			notifyObservers();

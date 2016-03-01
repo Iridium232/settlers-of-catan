@@ -169,6 +169,7 @@ public class ServerProxy implements IServerProxy {
 		AcceptTrade at=new AcceptTrade(playerIndex,accept);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/acceptTrade", at).toString();
+			ModelPopulator.populateModel(new JSONObject(result), fascade);
 		} catch (Exception e) {
 			result="FAILED\n";
 			e.printStackTrace();
@@ -240,6 +241,7 @@ public class ServerProxy implements IServerProxy {
 				ResourceTranslator.translate(input),ResourceTranslator.translate(output));
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/maritimeTrade", trade).toString();
+			ModelPopulator.populateModel(new JSONObject(result), fascade);
 		} catch (Exception e) {
 			result="FAILED\n";
 			e.printStackTrace();
