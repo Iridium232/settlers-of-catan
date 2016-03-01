@@ -114,30 +114,30 @@ public class ModelPopulator {
 
     private void addDefaultHexes(GameMap map) 
     {
-    	map.addTerrainHex(new TerrainHex(-2,-1, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(-1,-2, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(1,2, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(2,1, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(-2,-1, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(-1,-2, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(1,2, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(2,1, HexType.WATER));
 		
-    	map.addTerrainHex(new TerrainHex(-2,3, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(-1,3, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(0,3, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(-3,3, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(-2,3, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(-1,3, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(0,3, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(-3,3, HexType.WATER));
 		
-    	map.addTerrainHex(new TerrainHex(0,-3, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(1,-3, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(2,-3, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(3,-3, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(0,-3, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(1,-3, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(2,-3, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(3,-3, HexType.WATER));
 		
-    	map.addTerrainHex(new TerrainHex(-3,0, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(-3,1, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(-3,2, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(-3,3, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(-3,0, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(-3,1, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(-3,2, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(-3,3, HexType.WATER));
 		
-    	map.addTerrainHex(new TerrainHex(3, 0, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(3,-2, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(3,-1, HexType.WATER));
-    	map.addTerrainHex(new TerrainHex(3,-3, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(3, 0, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(3,-2, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(3,-1, HexType.WATER));
+    	map.addTerrainHex(new shared.model.map.TerrainHex(3,-3, HexType.WATER));
 		
 	}
 
