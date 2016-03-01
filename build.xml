@@ -148,13 +148,6 @@
 				<include name="**"/>
 			</fileset>
 		</copy>
- 		<jar jarfile="${java.dist}/catan-client.jar" basedir="${java.build}">
-			<manifest>
-				<attribute name="Main-Class" value="client.main.Catan"/>
-				<attribute name="Class-Path" 
-					value="lib/gson-2.2.4.jar" />
-			</manifest>
-		</jar>
 		
 		<!--
 		Package of jars idea from http://stackoverflow.com/questions/10929438/create-jar-with-custom-manifest-with-multiple-libraries-in-classpath
@@ -164,6 +157,16 @@
                 <include name="**/*.jar"/>
             </zipgroupfileset>
         </jar>
+		
+ 		<jar jarfile="${java.dist}/catan-client.jar" basedir="${java.build}">
+			<manifest>
+				<attribute name="Main-Class" value="client.main.Catan"/>
+				<attribute name="Class-Path" 
+					value="${external}"/>
+			</manifest>
+		</jar>
+		
+
 		
  		<jar jarfile="${java.dist}/catan-tests.jar" basedir="${java.build}">
 			<manifest>
@@ -183,7 +186,6 @@
 	
 	<target name="our-client" depends="package" description="compiles, packages, and runs the student client">
 		<java jar="${java.dist}/catan-client.jar" dir="${java.dist}" fork="yes">
-
 			<sysproperty key="com.sun.management.jmxremote" value=""/>
 			<assertions>
 				<enable/>

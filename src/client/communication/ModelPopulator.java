@@ -510,8 +510,9 @@ public class ModelPopulator {
         newList.setYear_of_plenty(serverList.getYearOfPlenty());
     }
 
-    private void populateTradeOffer(ServerModel serverModel, Game newModel) {
-        TradeOffer serverOffer = serverModel.getTradeOffer();
+    private void populateTradeOffer(ServerModel serverModel, Game newModel) 
+    {
+    	shared.communication.fromServer.game.TradeOffer serverOffer = serverModel.getTradeOffer();
         shared.model.player.TradeOffer newOffer = new shared.model.player.TradeOffer();
         if(serverOffer == null)return;
         newOffer.setSender(serverOffer.getSender());

@@ -76,8 +76,12 @@ public class Fascade
 	 * @pre none
 	 * @post result is true iff that is a valid road construction
 	 */
-	public boolean canBuildRoad(int player_index, Edge edge)
+	public boolean canBuildRoad(int player_index, Edge edge, boolean allow_disconnected)
 	{
+		if(allow_disconnected)
+		{
+			return true;
+		}
 		GameMap game_map = game_model.getMap();
 		Player player = game_model.getPlayers()[player_index];
 		return game_map.canBuildRoad(edge, player_index) &&

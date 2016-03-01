@@ -77,10 +77,10 @@ public class FascadeTest {
 		
 		
 		//Should be false because it is not his turn
-		assertFalse(facade.canBuildRoad(inactive_player, this.desertN));
+		assertFalse(facade.canBuildRoad(inactive_player, this.desertN, false));
 		
 		//Should be false because he cannot afford it
-		assertFalse(facade.canBuildRoad(active_player, this.desertN));
+		assertFalse(facade.canBuildRoad(active_player, this.desertN, false));
 		
 		//set up the player's resource list
 		ResourceMultiSet resources = new ResourceMultiSet();
@@ -90,13 +90,13 @@ public class FascadeTest {
 		builder.setResources(resources);
 		
 		//Should be false because he has no adjoining pieces
-		assertFalse(facade.canBuildRoad(active_player, desertNW));
+		assertFalse(facade.canBuildRoad(active_player, desertNW, false));
 		
 		//Should be true because he can afford it, it is his turn, and there are adjoining pieces
-		assertTrue(facade.canBuildRoad(active_player, desertN));
+		assertTrue(facade.canBuildRoad(active_player, desertN, false));
 		
 		//Should be false because there is already a road there
-		assertFalse(facade.canBuildRoad(active_player, desertNE));
+		assertFalse(facade.canBuildRoad(active_player, desertNE, false));
 		
 	}
 

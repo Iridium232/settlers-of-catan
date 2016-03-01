@@ -182,7 +182,8 @@ public class MapController extends Controller implements IMapController, IObserv
 	public boolean canPlaceRoad(shared.locations.EdgeLocation edgeLoc) 
 	{
 		Edge edge = new Edge(edgeLoc);
-		return model.canBuildRoad(reference.player_index, edge);
+		return model.canBuildRoad(reference.player_index, edge, 
+				model_state.getState() == TurnStatus.FIRSTROUND || model_state.getState() == TurnStatus.SECONDROUND);
 	}
 
 	/**
