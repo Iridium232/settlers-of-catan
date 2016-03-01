@@ -2,7 +2,6 @@ package client.communication;
 
 import client.control.Reference;
 import com.google.gson.Gson;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.json.JSONObject;
 import shared.communication.ResourceList;
 import shared.communication.ResourceTranslator;

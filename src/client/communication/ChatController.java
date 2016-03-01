@@ -19,15 +19,14 @@ import java.util.List;
  * Chat controller implementation
  */
 public class ChatController extends Controller implements IChatController, IObserver {
-<<<<<<< HEAD
-=======
+
 	//private MessageLine[] game;
 	private Fascade model;
 	private Reference reference;
 	private Game game;
 	private IServerProxy proxy;
 	//private IState model_state;
->>>>>>> refs/remotes/origin/master
+
 
 	public ChatController(IChatView view) {
 		super(view);
@@ -35,7 +34,7 @@ public class ChatController extends Controller implements IChatController, IObse
 		model = reference.getFascade();
 //		initFromModel();
 		proxy = reference.proxy;
-
+		Reference.GET_SINGLETON().getFascade().addObserver(this);
 		//Need modelObserver to point to CHAT!!!
 		//game = Reference.GET_SINGLETON().getFascade().getLog();
 //		fascade.notifyObservers();
@@ -54,39 +53,21 @@ public class ChatController extends Controller implements IChatController, IObse
 	 */
 	@Override
 	public void sendMessage(String message) {
-		int playerIndex = new Player().getPlayerIndex();
-		Reference.GET_SINGLETON().getProxy().sendChat(playerIndex, message);
-
-
-
+//		int playerIndex = new Player().getPlayerIndex();
+		Reference.GET_SINGLETON().getProxy().sendChat(reference.getPlayer_index(), message);
 	}
 
 
 	private void initFromModel() {
 		List<LogEntry> entries = new ArrayList<>();
 
-		MessageLine[] messages = model.getMessages();
+		MessageLine[] messages = Reference.GET_SINGLETON().getFascade().getMessages();
 		
 		//System.out.printf()
 
 
 		for (MessageLine messageLine : messages) {
-
-			Color color = Color.decode(model.getPlayerColorByIndex(reference.player_index));
-			LogEntry tempEntry = new LogEntry(color, messageLine.getMessage());
-			entries.add(tempEntry);
-			//messageList.getMessages();
-			//	entries = messageList.getMessages();
-
-			//if (operation == CommunicationData.CHAT) {
-
-			//if (chat != null) {
-
-			//	}
-
-			//} else {
-			//	System.out.printf("New Message");
-			//	}
+			entries.add(MessageToLogEntry.getMessageToLog().convert(messageLine));			
 		}
 
 		this.getView().setEntries(entries);
@@ -98,18 +79,9 @@ public class ChatController extends Controller implements IChatController, IObse
 
 	@Override
 	public void ObservableChanged() {
-		updateChat();
+		initFromModel();
 
 	}
 
-	private void updateChat() {
-		this.initFromModel();
-	}
-
-	@Override
-	public void ObservableChanged() {
-		// TODO Auto-generated method stub
-
-	}
 }
 
