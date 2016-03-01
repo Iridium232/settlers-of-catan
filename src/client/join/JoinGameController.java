@@ -312,9 +312,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			while (getSelectColorView().isModalShowing()) {
 				getSelectColorView().closeModal();
 			}
-			System.out.println(getSelectColorView().isModalShowing());
+			//System.out.println(getSelectColorView().isModalShowing());
 			//System.out.print("\n\nJoin Game Success\n" + model_string + "\n");
+			ref.fascade.notifyObservers();
 			joinAction.execute();
+			
 		} 
 		catch (JSONException | JoinExceptions e) 
 		{
