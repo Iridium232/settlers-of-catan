@@ -1,6 +1,8 @@
 package client.communication;
 
-import shared.definitions.*;
+import shared.definitions.CatanColor;
+
+import java.awt.*;
 
 /**
  * Message (or entry) displayed in the LogComponent
@@ -23,7 +25,11 @@ public class LogEntry
 		this.color = color;
 		this.message = message;
 	}
-	
+
+	public LogEntry(Color color, String message) {
+
+	}
+
 	public CatanColor getColor()
 	{
 		return color;
