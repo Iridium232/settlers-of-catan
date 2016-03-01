@@ -249,6 +249,10 @@ public class GameMap
 	
 	public TerrainHex getHexAt(int x, int y)
 	{
+		if(x > 3 || x < -3 || y > 3 || y < -3)
+		{
+			return new TerrainHex(x,y,HexType.WATER);
+		}
 		return hexes[x + GameMap.HEXINDEXOFFSET]
 				[y + GameMap.HEXINDEXOFFSET];
 	}
@@ -410,19 +414,19 @@ public class GameMap
 				{
 					continue;
 				}
-				if(neighbors[0].equals(terrain_hex.getLocation()) 
+				if(neighbors[0] != null && neighbors[0].equals(terrain_hex.getLocation()) 
 					&& terrain_hex.getType() != HexType.WATER)
 				{
 					answer = true;
 					break;
 				}
-				if(neighbors[1].equals(terrain_hex.getLocation()) 
+				if(neighbors[1] != null && neighbors[1].equals(terrain_hex.getLocation()) 
 					&& terrain_hex.getType() != HexType.WATER)
 				{
 					answer = true;
 					break;
 				}
-				if(neighbors[2].equals(terrain_hex.getLocation()) 
+				if(neighbors[2] != null && neighbors[2].equals(terrain_hex.getLocation()) 
 					&& terrain_hex.getType() != HexType.WATER)
 				{
 					answer = true;
