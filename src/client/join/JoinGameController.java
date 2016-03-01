@@ -258,7 +258,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) 
 	{
-		System.out.print("\nJoining a game with " + game.getPlayers().size() + " players.");
+		if(!(game.getPlayers() == null))System.out.print("\nJoining a game with " + game.getPlayers().size() + " players.");
+		
 		Reference ref = Reference.GET_SINGLETON();
 		ref.game_id = game.getId();
 		ref.player_index = getIndex(game.getPlayers());
@@ -304,7 +305,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			Reference.GET_SINGLETON().player_color = color;
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
-			System.out.print("\n\nJoin Game Success\n" + model_string + "\n");
+			//System.out.print("\n\nJoin Game Success\n" + model_string + "\n");
 			joinAction.execute();
 		} 
 		catch (JSONException | JoinExceptions e) 

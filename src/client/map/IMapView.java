@@ -102,5 +102,7 @@ public interface IMapView extends IView
 
 	void clear();
 
+	boolean isDropping();
+
 }
 

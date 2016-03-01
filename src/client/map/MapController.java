@@ -110,7 +110,7 @@ public class MapController extends Controller implements IMapController, IObserv
 					if(hex.getType() == null) continue;
 					if(hex.getLocation() == null)continue;
 					getView().addHex(hex.getLocation(), hex.getType());
-					if(hex.getNumber().getValue() == 0)
+					if(hex.getNumber() == null || hex.getNumber().getValue() == 0)
 					{
 						continue;
 					}
@@ -164,10 +164,12 @@ public class MapController extends Controller implements IMapController, IObserv
 		if(model_state.getState() == TurnStatus.FIRSTROUND)
 		{
 			this.startMove(PieceType.ROAD, true, true);
+			this.startMove(PieceType.SETTLEMENT, true, false);
 		}
 		
 		if(model_state.getState() == TurnStatus.SECONDROUND)
 		{
+			this.startMove(PieceType.ROAD, true, true);
 			this.startMove(PieceType.SETTLEMENT, true, false);
 		}
 		
@@ -316,6 +318,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) 
 	{	
+		if(getView().isDropping()) return;
 		getView().startDrop(pieceType, reference.player_color, !isFree);
 	}
 	

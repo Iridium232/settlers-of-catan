@@ -319,6 +319,13 @@ public class MapView extends PanelView implements IMapView
 	{
 		map.clear();		
 	}
+
+	@Override
+	public boolean isDropping() 
+	{
+		if(overlay == null)return false;
+		return overlay.isVisible();
+	}
 	
 }
 
