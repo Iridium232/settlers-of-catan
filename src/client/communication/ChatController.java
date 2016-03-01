@@ -30,7 +30,7 @@ public class ChatController extends Controller implements IChatController, IObse
 		super(view);
 		reference = Reference.GET_SINGLETON();
 		model = reference.getFascade();
-		initFromModel();
+//		initFromModel();
 		proxy = reference.proxy;
 
 		//Need modelObserver to point to CHAT!!!
