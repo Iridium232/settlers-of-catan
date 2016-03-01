@@ -53,7 +53,9 @@ public class RollController extends Controller implements IRollController, IObse
 		Random rand=new Random();
 		final int result=rand.nextInt(6)+rand.nextInt(6)+2;
 		getResultView().setRollValue(result);
-		getResultView().showModal();
+		if(getResultView().isModalShowing()==false) {
+			getResultView().showModal();
+		}
 		Reference.GET_SINGLETON().getProxy().rollNumber(result);
 		Reference.GET_SINGLETON().getProxy().getModel(Reference.GET_SINGLETON().getFascade().getLatestModelNum());
 	}
@@ -66,15 +68,9 @@ public class RollController extends Controller implements IRollController, IObse
 		if(model.getTurn_tracker().getActive_player() == r.getPlayer_index()
 				&& model.getTurnStatus(r.getPlayer_index()) == TurnStatus.ROLLING)
 		{
-			System.out.print("You may Roll!");
-			 if(!getRollView().isModalShowing()) 
-			 {
-				 getRollView().showModal();
-			 }
-			 else
-			 {
-				 getRollView().closeModal();
-				 getRollView().showModal();
+			 if(getRollView().isModalShowing()==false) {
+					 getRollView().showModal();
+
 			 }
 		}
 	}
