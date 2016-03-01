@@ -212,7 +212,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void cancelTrade() {
 		getTradeOverlay().reset();
 		resetOffer();
-		if (getAcceptOverlay().isModalShowing()) getTradeOverlay().closeModal();
+		if (getTradeOverlay().isModalShowing()) getTradeOverlay().closeModal();
 	}
 /**
  * @pre the player has the requested resource
