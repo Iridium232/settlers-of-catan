@@ -181,7 +181,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public boolean canPlaceRoad(shared.locations.EdgeLocation edgeLoc) 
 	{
-		Edge edge = new Edge();
+		Edge edge = new Edge(edgeLoc);
 		return model.canBuildRoad(reference.player_index, edge);
 	}
 
@@ -314,7 +314,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) 
 	{	
-		if(getView().isDropping()) return;
+		System.out.print("Piece Drop Begin\n");
 		getView().startDrop(pieceType, reference.player_color, !isFree);
 	}
 	
