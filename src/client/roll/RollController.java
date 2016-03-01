@@ -39,7 +39,8 @@ public class RollController extends Controller implements IRollController, IObse
 		this.resultView = resultView;
 	}
 
-	public IRollView getRollView() {
+	public IRollView getRollView() 
+	{
 		return (IRollView)getView();
 	}
 	/**
@@ -62,6 +63,12 @@ public class RollController extends Controller implements IRollController, IObse
 	{
 		model = r.getFascade().getModel();
 		if(model == null) return;
+		if(getRollView().isModalShowing())
+		{
+			getRollView().closeModal();
+			getRollView().showModal();
+			return;
+		}
 		if(model.getTurn_tracker().getActive_player() == r.getPlayer_index()
 				&& model.getTurnStatus(r.getPlayer_index()) == TurnStatus.ROLLING)
 		{
