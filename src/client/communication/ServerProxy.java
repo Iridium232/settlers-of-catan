@@ -2,6 +2,7 @@ package client.communication;
 
 import client.control.Reference;
 import com.google.gson.Gson;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.json.JSONObject;
 import shared.communication.ResourceList;
 import shared.communication.ResourceTranslator;
@@ -169,6 +170,7 @@ public class ServerProxy implements IServerProxy {
 		AcceptTrade at=new AcceptTrade(playerIndex,accept);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/acceptTrade", at).toString();
+			ModelPopulator.populateModel(new JSONObject(result), fascade);
 		} catch (Exception e) {
 			result="FAILED\n";
 			e.printStackTrace();
@@ -240,6 +242,7 @@ public class ServerProxy implements IServerProxy {
 				ResourceTranslator.translate(input),ResourceTranslator.translate(output));
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/maritimeTrade", trade).toString();
+			ModelPopulator.populateModel(new JSONObject(result), fascade);
 		} catch (Exception e) {
 			result="FAILED\n";
 			e.printStackTrace();

@@ -99,37 +99,37 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		TurnStatus state = model.getTurnStatus(localPlayer.getPlayerIndex());
 		switch (state) {
 			case ROLLING:
-				label = "State: ROLLING";
-//				label = "Roll the Dice";
+//				label = "State: ROLLING";
+				label = "Roll the Dice";
 				break;
 			case ROBBING:
-				label = "State: ROBBING";
-//				label = "Rob a Player";
+//				label = "State: ROBBING";
+				label = "Rob a Player";
 				break;
 			case PLAYING:
-				label = "State: PLAYING";
-//				label = "Finish Turn";
+//				label = "State: PLAYING";
+				label = "Finish Turn";
 				enable = true;
 				break;
 			case DISCARDING:
-				label = "State: DISCARDING";
-//				label = "Discard Cards";
+//				label = "State: DISCARDING";
+				label = "Discard Cards";
 				break;
 			case FIRSTROUND:
-				label = "State: FIRSTROUND";
-//				label = "Place Structures";
+//				label = "State: FIRSTROUND";
+				label = "Place Structures";
 				break;
 			case SECONDROUND:
-				label = "State: SECONDROUND";
-//				label = "Place Structures";
+//				label = "State: SECONDROUND";
+				label = "Place Structures";
 				break;
 			case WAITING:
-				label = "State: WAITING";
-//				label = "Waiting for Players";
+//				label = "State: WAITING";
+				label = "Waiting for Players";
 				break;
 			case TRADING:
-				label = "State: TRADING";
-//				label = "Trading";
+//				label = "State: TRADING";
+				label = "Trading";
 				break;
 		}
 		getView().updateGameState(label, enable);

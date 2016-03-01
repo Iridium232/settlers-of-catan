@@ -269,6 +269,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private boolean setButtonStatus() {
 		Reference r = Reference.GET_SINGLETON();
 		Game model = r.getFascade().getModel();
+		if (model == null) return false;
 		Player localPlayer = null;
 		for (Player player : model.getPlayers()) {
 			if (player.getPlayerIndex() == r.getPlayer_index()) {
