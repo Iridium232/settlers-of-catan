@@ -52,7 +52,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().setTradeEnabled(false);
 		getTradeOverlay().showGiveOptions(getTradeable());
 		getTradeOverlay().hideGetOptions();
-		getTradeOverlay().showModal();
+		if (!getTradeOverlay().isModalShowing()) getTradeOverlay().showModal();
 	}
 /**
  * @pre player has selected at least one resource with the required amounts. 
@@ -61,7 +61,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void makeTrade() {
 		Reference.GET_SINGLETON().getProxy().maritimeTrade(ratio, get, give);
-		getTradeOverlay().closeModal();
+		if (getTradeOverlay().isModalShowing()) getTradeOverlay().closeModal();
 	}
 /**
  * @pre the trade view is open
@@ -72,7 +72,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().hideGetOptions();
 		getTradeOverlay().hideGiveOptions();
 		getTradeOverlay().setTradeEnabled(false);
-		getTradeOverlay().closeModal();
+		if (getTradeOverlay().isModalShowing()) getTradeOverlay().closeModal();
 	}
 /**
  * @pre the bank has the desired type available

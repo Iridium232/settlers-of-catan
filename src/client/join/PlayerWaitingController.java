@@ -61,9 +61,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		try {
 			getView().setPlayers(convertToArray(playerInfos));
 			getView().setAIChoices(AIValues);
-			getView().showModal();
+			if (!getView().isModalShowing()) getView().showModal();
 			if (playerInfos.size() == 4) {
-				getView().closeModal();
+				if (getView().isModalShowing()) getView().closeModal();
 			}
 		}
 		catch (Exception e){
@@ -115,7 +115,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			getView().setAIChoices(AIValues);
 			if(!getView().isModalShowing()) getView().showModal();
 			if (playerInfos.size() == 4) {
-				getView().closeModal();
+				if (getView().isModalShowing()) getView().closeModal();
 			}
 		}
 		catch (Exception e){

@@ -114,7 +114,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			playersSet = true;
 		}
 		getTradeOverlay().setStateMessage("Select the resources you want to trade");
-		getTradeOverlay().showModal();
+		if (!getTradeOverlay().isModalShowing()) getTradeOverlay().showModal();
 	}
 /**
  * @pre the resource amount has been incremented
@@ -161,8 +161,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void sendTradeOffer() {
 		getTradeOverlay().reset();
 		resetOffer();
-		getTradeOverlay().closeModal();
-		getWaitOverlay().showModal();
+		if (getTradeOverlay().isModalShowing()) getTradeOverlay().closeModal();
+		if (!getWaitOverlay().isModalShowing()) getWaitOverlay().showModal();
 		Reference r = Reference.GET_SINGLETON();
 		r.getProxy().offerTrade(createOffer(), getPlayer());
 		//Change State Properly  ******************************************************************
@@ -212,7 +212,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void cancelTrade() {
 		getTradeOverlay().reset();
 		resetOffer();
-		getTradeOverlay().closeModal();
+		if (getAcceptOverlay().isModalShowing()) getTradeOverlay().closeModal();
 	}
 /**
  * @pre the player has the requested resource
@@ -222,7 +222,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void acceptTrade(boolean willAccept) {
 		Reference.GET_SINGLETON().getProxy().acceptTrade(willAccept);
 		getAcceptOverlay().reset();
-		getAcceptOverlay().closeModal();
+		if (getAcceptOverlay().isModalShowing()) getAcceptOverlay().closeModal();
 	}
 
 	@Override
@@ -574,7 +574,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 		getAcceptOverlay().setAcceptEnabled(enableButton);
 
-		getAcceptOverlay().showModal();
+		if (!getAcceptOverlay().isModalShowing()) getAcceptOverlay().showModal();
 	}
 
 	private void resetOffer() {
