@@ -889,7 +889,8 @@ public class Fascade
 	 */
 	public MessageLine[] getMessages()
 	{
-		return null;
+		return game_model.getChat().getMessages().toArray(
+				new MessageLine[game_model.getChat().getMessages().size()]);
 	}
 	
 	/**
@@ -900,7 +901,8 @@ public class Fascade
 	 */
 	public MessageLine[] getLog()
 	{
-		return null;
+		return game_model.getLog().getMessages().toArray(
+				new MessageLine[game_model.getLog().getMessages().size()]);
 	}
 	
 	/**

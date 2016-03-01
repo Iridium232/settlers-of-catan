@@ -146,6 +146,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		
 		if(model_state.getState() == TurnStatus.FIRSTROUND)
 		{
+			System.out.print("\nFIRSTROUND\n");
 			this.startMove(PieceType.ROAD, true, true);
 			this.startMove(PieceType.SETTLEMENT, true, false);
 		}
@@ -299,6 +300,8 @@ public class MapController extends Controller implements IMapController, IObserv
 	{
 		getView().placeRobber(hexLoc);
 		
+		
+		getRobView().setPlayers(reference.fascade.whoCanBeRobbed());
 		getRobView().showModal();
 	}
 	
