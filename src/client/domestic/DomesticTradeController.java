@@ -159,7 +159,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
  */
 	@Override
 	public void sendTradeOffer() {
-
+		getTradeOverlay().reset();
+		resetOffer();
 		getTradeOverlay().closeModal();
 		getWaitOverlay().showModal();
 		Reference r = Reference.GET_SINGLETON();
@@ -210,6 +211,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 @Override
 	public void cancelTrade() {
 		getTradeOverlay().reset();
+		resetOffer();
 		getTradeOverlay().closeModal();
 	}
 /**
@@ -219,6 +221,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void acceptTrade(boolean willAccept) {
 		Reference.GET_SINGLETON().getProxy().acceptTrade(willAccept);
+		getAcceptOverlay().reset();
 		getAcceptOverlay().closeModal();
 	}
 
@@ -572,6 +575,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		getAcceptOverlay().setAcceptEnabled(enableButton);
 
 		getAcceptOverlay().showModal();
+	}
+
+	private void resetOffer() {
+		brick_offer = 0;
+		wood_offer = 0;
+		wheat_offer = 0;
+		sheep_offer = 0;
+		ore_offer = 0;
 	}
 }
 

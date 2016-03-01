@@ -79,24 +79,24 @@ public class TradeOffer
 		
 		int count = 0;
 		count = offer_set.getBrick();
-		if(count > 0) sender_offers.setBrick(1);
-		if(count < 0) reciever_offers.setBrick(1);
+		if(count > 0) sender_offers.setBrick(Math.abs(offer_set.getBrick()));
+		if(count < 0) reciever_offers.setBrick(Math.abs(offer_set.getBrick()));
 		
 		count = offer_set.getOre();
-		if(count > 0) sender_offers.setOre(1);
-		if(count < 0) reciever_offers.setOre(1);
+		if(count > 0) sender_offers.setOre(Math.abs(offer_set.getOre()));
+		if(count < 0) reciever_offers.setOre(Math.abs(offer_set.getOre()));
 		
 		count = offer_set.getSheep();
-		if(count > 0) sender_offers.setSheep(1);
-		if(count < 0) reciever_offers.setSheep(1);
+		if(count > 0) sender_offers.setSheep(Math.abs(offer_set.getSheep()));
+		if(count < 0) reciever_offers.setSheep(Math.abs(offer_set.getSheep()));
 		
 		count = offer_set.getWheat();
-		if(count > 0) sender_offers.setWheat(1);
-		if(count < 0) reciever_offers.setWheat(1);
+		if(count > 0) sender_offers.setWheat(Math.abs(offer_set.getWheat()));
+		if(count < 0) reciever_offers.setWheat(Math.abs(offer_set.getWheat()));
 		
 		count = offer_set.getWood();
-		if(count > 0) sender_offers.setWood(1);
-		if(count < 0) reciever_offers.setWood(1);
+		if(count > 0) sender_offers.setWood(Math.abs(offer_set.getWood()));
+		if(count < 0) reciever_offers.setWood(Math.abs(offer_set.getWood()));
 		
 		this.sender_gives = sender_offers;
 		this.reciever_gives = reciever_offers;
