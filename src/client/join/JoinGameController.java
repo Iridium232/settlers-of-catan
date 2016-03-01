@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Implementation for the join game controller
  */
-public class JoinGameController extends Controller implements IJoinGameController, IObserver {
+public class JoinGameController extends Controller implements IJoinGameController {
 
 	private INewGameView newGameView;
 	private ISelectColorView selectColorView;
@@ -43,7 +43,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
-		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 
 	/**
@@ -260,7 +259,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void startJoinGame(GameInfo game) 
 	{
 		if(game == null) return;
-		if(!(game.getPlayers() == null))System.out.print("\nJoining a game with " + game.getPlayers().size() + " players.");
+		if(!(game.getPlayers() == null))System.out.println("\nJoining a game with " + game.getPlayers().size() + " players.");
 		
 		Reference ref = Reference.GET_SINGLETON();
 		ref.game_id = game.getId();
@@ -273,7 +272,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getSelectColorView().setColorEnabled(player_info.getColor(), true);
 			}
 		}
-		getJoinGameView().closeModal();
+		if(getJoinGameView().isModalShowing()) {
+			getJoinGameView().closeModal();
+		}
 		getSelectColorView().showModal();
 	}
 
@@ -285,8 +286,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void cancelJoinGame() 
 	{
-		getJoinGameView().closeModal();
-		getSelectColorView().enableAllColors();
+		getSelectColorView().closeModal();
+		getJoinGameView().showModal();
+		
 	}
 
 
@@ -309,12 +311,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			ModelPopulator.populateModel(model, ref.getFascade());
 			// If join succeeded
 			Reference.GET_SINGLETON().player_color = color;
-			while (getSelectColorView().isModalShowing()) {
+			//while (getSelectColorView().isModalShowing()) {
+			if(getSelectColorView().isModalShowing()){
 				getSelectColorView().closeModal();
 			}
-			System.out.println(getSelectColorView().isModalShowing());
+			//}
+			//System.out.println(getSelectColorView().isModalShowing());
 			//System.out.print("\n\nJoin Game Success\n" + model_string + "\n");
-			joinAction.execute();
+			//joinAction.execute();
 		} 
 		catch (JSONException | JoinExceptions e) 
 		{
@@ -325,7 +329,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			e.printStackTrace();
 			this.messageView.showModal();
 			getSelectColorView().closeModal();
-		}
+		} 
 	}
 
 	private int getIndex(List<PlayerInfo> playerInfos) {
@@ -341,14 +345,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		return -1;
 	}
 
-	@Override
-	public void ObservableChanged() 
-	{
-		if(Reference.GET_SINGLETON().game_id != -1)
-		{
-			this.getJoinGameView().closeModal();
-		}
-	}
+
 
 }
 
