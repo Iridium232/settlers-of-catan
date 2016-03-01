@@ -114,7 +114,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			playersSet = true;
 		}
 		getTradeOverlay().setStateMessage("Select the resources you want to trade");
-		getTradeOverlay().showModal();
+		if (!getTradeOverlay().isModalShowing()) getTradeOverlay().showModal();
 	}
 /**
  * @pre the resource amount has been incremented
@@ -159,9 +159,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
  */
 	@Override
 	public void sendTradeOffer() {
-
-		getTradeOverlay().closeModal();
-		getWaitOverlay().showModal();
+		getTradeOverlay().reset();
+		resetOffer();
+		if (getTradeOverlay().isModalShowing()) getTradeOverlay().closeModal();
+		if (!getWaitOverlay().isModalShowing()) getWaitOverlay().showModal();
 		Reference r = Reference.GET_SINGLETON();
 		r.getProxy().offerTrade(createOffer(), getPlayer());
 		//Change State Properly  ******************************************************************
@@ -210,7 +211,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 @Override
 	public void cancelTrade() {
 		getTradeOverlay().reset();
-		getTradeOverlay().closeModal();
+		resetOffer();
+		if (getTradeOverlay().isModalShowing()) getTradeOverlay().closeModal();
 	}
 /**
  * @pre the player has the requested resource
@@ -219,7 +221,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void acceptTrade(boolean willAccept) {
 		Reference.GET_SINGLETON().getProxy().acceptTrade(willAccept);
-		getAcceptOverlay().closeModal();
+		getAcceptOverlay().reset();
+		if (getAcceptOverlay().isModalShowing()) getAcceptOverlay().closeModal();
 	}
 
 	@Override
@@ -571,7 +574,15 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 		getAcceptOverlay().setAcceptEnabled(enableButton);
 
-		getAcceptOverlay().showModal();
+		if (!getAcceptOverlay().isModalShowing()) getAcceptOverlay().showModal();
+	}
+
+	private void resetOffer() {
+		brick_offer = 0;
+		wood_offer = 0;
+		wheat_offer = 0;
+		sheep_offer = 0;
+		ore_offer = 0;
 	}
 }
 
