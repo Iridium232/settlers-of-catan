@@ -10,6 +10,7 @@ import client.misc.*;
 import shared.model.Game;
 import shared.model.player.Player;
 import shared.model.player.ResourceMultiSet;
+import shared.model.player.TradeOffer;
 
 import java.util.ArrayList;
 
@@ -224,9 +225,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void ObservableChanged() {
 		Game model = Reference.GET_SINGLETON().getFascade().getModel();
-		if (model.getTrade_offer() != null) {
-			if (model.getTrade_offer().getReciever() == Reference.GET_SINGLETON().getPlayer_index()) {
-				getAcceptOverlay().showModal();
+		TradeOffer offer = model.getTrade_offer();
+		if (offer != null) {
+			if (offer.getReciever() == Reference.GET_SINGLETON().getPlayer_index()) {
+				showAcceptOverlay(offer);
 			}
 		}
 		getTradeView().enableDomesticTrade(setButtonStatus());
@@ -530,6 +532,43 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				ore_offer += amount;
 				break;
 		}
+	}
+
+	private void showAcceptOverlay(TradeOffer offer) {
+		ResourceMultiSet giving = offer.getReciever_gives();
+		if (giving.getBrick() > 0) getAcceptOverlay().addGetResource(ResourceType.BRICK, giving.getBrick());
+		if (giving.getWood() > 0) getAcceptOverlay().addGetResource(ResourceType.WOOD, giving.getWood());
+		if (giving.getWheat() > 0) getAcceptOverlay().addGetResource(ResourceType.WHEAT, giving.getWheat());
+		if (giving.getSheep() > 0) getAcceptOverlay().addGetResource(ResourceType.SHEEP, giving.getSheep());
+		if (giving.getOre() > 0) getAcceptOverlay().addGetResource(ResourceType.ORE, giving.getOre());
+
+		boolean enableButton = true;
+		ResourceMultiSet owned = getLocalPlayer().getResources();
+		ResourceMultiSet receiving = offer.getSender_gives();
+		if (receiving.getBrick() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.BRICK, receiving.getBrick());
+			if (receiving.getBrick() > owned.getBrick()) enableButton = false;
+		}
+		if (receiving.getWood() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.WOOD, receiving.getWood());
+			if (receiving.getWood() > owned.getWood()) enableButton = false;
+		}
+		if (receiving.getWheat() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.WHEAT, receiving.getWheat());
+			if (receiving.getWheat() > owned.getWheat()) enableButton = false;
+		}
+		if (receiving.getSheep() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.SHEEP, receiving.getSheep());
+			if (receiving.getSheep() > owned.getSheep()) enableButton = false;
+		}
+		if (receiving.getOre() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.ORE, receiving.getOre());
+			if (receiving.getOre() > owned.getOre()) enableButton = false;
+		}
+
+		getAcceptOverlay().setAcceptEnabled(enableButton);
+
+		getAcceptOverlay().showModal();
 	}
 }
 
