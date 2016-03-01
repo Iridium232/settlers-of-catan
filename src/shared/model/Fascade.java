@@ -347,10 +347,10 @@ public class Fascade
 	 * @post result = an array of indexes to the players that can be robbed. 
 	 * Or an empty array if none are possible
 	 */
-	public DataResponse whoCanBeRobbed()
+	public Player[] whoCanBeRobbed()
 	{
-		DataResponse response = new DataResponse(Commands.ROB_PLAYER,false);
-		return response;
+		
+		return null;
 	}
 	
 	/**

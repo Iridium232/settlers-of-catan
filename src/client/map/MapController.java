@@ -301,7 +301,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		getView().placeRobber(hexLoc);
 		
 		
-		getRobView().setPlayers(reference.fascade.whoCanBeRobbed());
+		//getRobView().setPlayers(reference.fascade.whoCanBeRobbed());
 		getRobView().showModal();
 	}
 	
