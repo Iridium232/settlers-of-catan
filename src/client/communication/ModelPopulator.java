@@ -511,7 +511,7 @@ public class ModelPopulator {
     }
 
     private void populateTradeOffer(ServerModel serverModel, Game newModel) {
-        TradeOffer serverOffer = serverModel.getTradeOffer();
+        shared.communication.fromServer.game.TradeOffer serverOffer = serverModel.getTradeOffer();
         shared.model.player.TradeOffer newOffer = new shared.model.player.TradeOffer();
         if(serverOffer == null)return;
         newOffer.setSender(serverOffer.getSender());
