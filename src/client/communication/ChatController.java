@@ -1,6 +1,7 @@
 package client.communication;
 
 import client.base.Controller;
+import client.control.IObserver;
 import client.control.Reference;
 import shared.communication.fromServer.game.Player;
 
@@ -9,7 +10,7 @@ import shared.communication.fromServer.game.Player;
 /**
  * Chat controller implementation
  */
-public class ChatController extends Controller implements IChatController {
+public class ChatController extends Controller implements IChatController, IObserver {
 
 	public ChatController(IChatView view) {
 		super(view);
@@ -29,6 +30,12 @@ public class ChatController extends Controller implements IChatController {
 	public void sendMessage(String message) {
 		int playerIndex = new Player().getPlayerIndex();
 		Reference.GET_SINGLETON().getProxy().sendChat(playerIndex, message);
+	}
+
+	@Override
+	public void ObservableChanged() {
+		// TODO Auto-generated method stub
+
 	}
 }
 
