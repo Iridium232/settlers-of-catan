@@ -269,7 +269,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		{
 			if(player_info.getColor() == null)continue;
 			getSelectColorView().setColorEnabled(player_info.getColor(), false);
+			if (player_info.getColor() == ref.getPlayer_color()) {
+				getSelectColorView().setColorEnabled(player_info.getColor(), true);
+			}
 		}
+		getJoinGameView().closeModal();
 		getSelectColorView().showModal();
 	}
 
@@ -305,8 +309,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			ModelPopulator.populateModel(model, ref.getFascade());
 			// If join succeeded
 			Reference.GET_SINGLETON().player_color = color;
-			getSelectColorView().closeModal();
-			getJoinGameView().closeModal();
+			while (getSelectColorView().isModalShowing()) {
+				getSelectColorView().closeModal();
+			}
+			System.out.println(getSelectColorView().isModalShowing());
 			//System.out.print("\n\nJoin Game Success\n" + model_string + "\n");
 			joinAction.execute();
 		} 
