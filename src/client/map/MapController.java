@@ -139,19 +139,19 @@ public class MapController extends Controller implements IMapController, IObserv
 			getView().placeRobber(robber.getLocation());
 		}
 		this.model_state = model.getStateOf(reference.player_index);
-		if(model_state.getState() == TurnStatus.ROBBING)
+		if(model.getStateOf(reference.player_index).getState() == TurnStatus.ROBBING)
 		{
 			this.startMove(PieceType.ROBBER, false, false);
 		}
 		
-		if(model_state.getState() == TurnStatus.FIRSTROUND)
+		if(model.getStateOf(reference.player_index).getState() == TurnStatus.FIRSTROUND)
 		{
 			System.out.print("\nFIRSTROUND\n");
 			this.startMove(PieceType.ROAD, true, true);
 			this.startMove(PieceType.SETTLEMENT, true, false);
 		}
 		
-		if(model_state.getState() == TurnStatus.SECONDROUND)
+		if(model.getStateOf(reference.player_index).getState() == TurnStatus.SECONDROUND)
 		{
 			this.startMove(PieceType.ROAD, true, true);
 			this.startMove(PieceType.SETTLEMENT, true, false);
@@ -303,6 +303,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		
 		
 		//getRobView().setPlayers(reference.fascade.whoCanBeRobbed());
+		
 		getRobView().showModal();
 	}
 	

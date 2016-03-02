@@ -55,11 +55,21 @@ public class GameMap
 	 * @post result = an array of all buildings adjoining the hex
 	 * 
 	 */
-	public Building[] getAdjoiningPlayers(TerrainHex location) throws Exception
+	public Building[] getAdjoiningPlayers(HexLocation location) throws Exception
 	{
-		return null;
+		ArrayList<Building> builds = new ArrayList<Building>();
+		for (Building building : buildings)
+		{
+			Vertex utility = new Vertex(building.getLocation());
+			HexLocation[] neighbors = utility.getNeigborHexLocations(this);
+			if(neighbors[0].equals(location))
+			{
+				builds.add(building);
+			}
+		}
+		return builds.toArray(new Building[builds.size()]);
 	}
-	
+
 	/**
 	 * Gets the terrain hexes benefited by a dice roll
 	 * 
@@ -334,8 +344,8 @@ public class GameMap
 	 */
 	public boolean canPutRobber(HexLocation location) 
 	{
-		// TODO Auto-generated method stub
-		return true;
+		TerrainHex hex = this.getHexAt(location.getX(), location.getY());
+		return hex.getType() != HexType.WATER;
 	}
 
 	/**

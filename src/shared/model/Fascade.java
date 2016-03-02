@@ -353,8 +353,32 @@ public class Fascade
 	 */
 	public Player[] whoCanBeRobbed()
 	{
+		HexLocation robberLocation = game_model.getMap().getRobber().getLocation();
+		Building[] buildings;
+		try 
+		{
+			buildings = game_model.getMap().getAdjoiningPlayers(robberLocation);
+		} 
+		catch (Exception e) 
+		{
+			return new Player[0];
+		}
+		ArrayList<Player> players = new ArrayList<Player>();
 		
-		return null;
+		for(Player player : game_model.getPlayers())
+		{
+			for(Building building : buildings)
+			{
+				if(player.getColor().toLowerCase().equals(building.getColor().name().toLowerCase()))
+				{
+					if(!players.contains(player))
+					{
+						players.add(player);
+					}
+				}
+			}
+		}
+		return players.toArray(new Player[players.size()]);
 	}
 	
 	/**
@@ -428,7 +452,7 @@ public class Fascade
 			return false;
 		}
 		TurnTracker turn_tracker = game_model.getTurn_tracker();
-		//TODO check its his turn
+		
 		return player.canPlayDevelopmentCard(dev_card) &&
 				(game_model.getTurnStatus(player_index) == TurnStatus.PLAYING) ;
 	}
