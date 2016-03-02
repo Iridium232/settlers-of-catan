@@ -67,7 +67,9 @@ public class RollController extends Controller implements IRollController, IObse
 				&& model.getTurnStatus(r.getPlayer_index()) == TurnStatus.ROLLING)
 		{
 				getRollView().closeModal();
-				getRollView().showModal();
+				if(!getRollView().isModalShowing()) {
+					getRollView().showModal();
+				}
 		}
 	}
 
