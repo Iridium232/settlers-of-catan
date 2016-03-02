@@ -38,6 +38,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	private int targetPlayer;
 	private boolean playersSet;
+	private boolean waiting;
 
 
 	/**
@@ -71,6 +72,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 		targetPlayer = -1;
 		playersSet = false;
+		waiting = false;
 
 		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
@@ -161,6 +163,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void sendTradeOffer() {
 		if (getTradeOverlay().isModalShowing()) getTradeOverlay().closeModal();
 		if (!getWaitOverlay().isModalShowing()) getWaitOverlay().showModal();
+		waiting = true;
 		Reference r = Reference.GET_SINGLETON();
 		r.getProxy().offerTrade(createOffer(), getPlayer());
 		getTradeOverlay().reset();
@@ -220,9 +223,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
  */
 	@Override
 	public void acceptTrade(boolean willAccept) {
-		Reference.GET_SINGLETON().getProxy().acceptTrade(willAccept);
+		Reference r = Reference.GET_SINGLETON();
+		r.getProxy().acceptTrade(willAccept);
 		getAcceptOverlay().reset();
 		if (getAcceptOverlay().isModalShowing()) getAcceptOverlay().closeModal();
+		waiting = false;
 	}
 
 	@Override
@@ -232,11 +237,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		TradeOffer offer = model.getTrade_offer();
 		if (offer != null) {
 			if (offer.getReciever() == Reference.GET_SINGLETON().getPlayer_index()) {
-				showAcceptOverlay(offer);
+				if (!getAcceptOverlay().isModalShowing()) showAcceptOverlay(offer);
 			}
-		}
-		if(getWaitOverlay().isModalShowing()==true) {
-			getWaitOverlay().closeModal();
+			if(getWaitOverlay().isModalShowing()==true && waiting) {
+				getWaitOverlay().closeModal();
+			} else if (!getWaitOverlay().isModalShowing() && waiting) {
+				getWaitOverlay().showModal();
+			}
 		}
 		getTradeView().enableDomesticTrade(setButtonStatus());
 	}
@@ -343,7 +350,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if (getOfferType(ResourceType.BRICK).equals("send")) {
 			offer.setBrick(brick_offer);
 		} else if (getOfferType(ResourceType.BRICK).equals("receive")){
-			offer.setBrick(-brick_offer);
+			offer.setBrick(brick_offer * -1);
 		} else {
 			offer.setBrick(0);
 		}
@@ -351,7 +358,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if (getOfferType(ResourceType.WOOD).equals("send")) {
 			offer.setWood(wood_offer);
 		} else if (getOfferType(ResourceType.WOOD).equals("receive")){
-			offer.setWood(-wood_offer);
+			offer.setWood(wood_offer * -1);
 		} else {
 			offer.setWood(0);
 		}
@@ -359,7 +366,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if (getOfferType(ResourceType.WHEAT).equals("send")) {
 			offer.setWheat(wheat_offer);
 		} else if (getOfferType(ResourceType.WHEAT).equals("receive")){
-			offer.setWheat(-wheat_offer);
+			offer.setWheat(wheat_offer * -1);
 		} else {
 			offer.setWheat(0);
 		}
@@ -367,7 +374,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if (getOfferType(ResourceType.SHEEP).equals("send")) {
 			offer.setSheep(sheep_offer);
 		} else if (getOfferType(ResourceType.SHEEP).equals("receive")){
-			offer.setSheep(-sheep_offer);
+			offer.setSheep(sheep_offer * -1);
 		} else {
 			offer.setSheep(0);
 		}
@@ -375,7 +382,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		if (getOfferType(ResourceType.ORE).equals("send")) {
 			offer.setOre(ore_offer);
 		} else if (getOfferType(ResourceType.ORE).equals("receive")){
-			offer.setOre(-ore_offer);
+			offer.setOre(ore_offer * -1);
 		} else {
 			offer.setOre(0);
 		}

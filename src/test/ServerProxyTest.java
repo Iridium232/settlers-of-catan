@@ -163,7 +163,7 @@ public class ServerProxyTest {
             sp.joinGame(0, CatanColor.RED);
             //ClientCommunicator.getSINGLETON().doPost("/game/commands", sb.toString());
             sp.finishTurn();
-            result = sp.acceptTrade(true);
+            result = sp.acceptTrade(0, true);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

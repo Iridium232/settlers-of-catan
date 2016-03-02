@@ -112,7 +112,7 @@ public interface IServerProxy {
 	 * @post the trade offer is removed. If accepted resources are exchanged if not nothing happens.
 	 * @param accept
 	 */
-	public String acceptTrade(boolean accept);
+	public String acceptTrade(int playerIndex, boolean accept);
 	
 	/**
 	 * @pre status of the client model is discarding, user has over 7 cards, user has chosen cards to discard
