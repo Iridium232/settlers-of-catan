@@ -68,8 +68,6 @@ public class MapController extends Controller implements IMapController, IObserv
 		{		
 			if(model == null){return;}
 			TerrainHex[][] hex_grid = model.getHexes();
-			//getView().clear();
-
 		
 			if(hex_grid != null)
 			{
@@ -139,6 +137,7 @@ public class MapController extends Controller implements IMapController, IObserv
 			getView().placeRobber(robber.getLocation());
 		}
 		this.model_state = model.getStateOf(reference.player_index);
+		
 		if(model.getStateOf(reference.player_index).getState() == TurnStatus.ROBBING)
 		{
 			this.startMove(PieceType.ROBBER, false, false);
@@ -337,6 +336,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void cancelMove() 
 	{
+		
 		//Do nothing
 	}
 	
@@ -383,7 +383,11 @@ public class MapController extends Controller implements IMapController, IObserv
 		shared.locations.HexLocation location = getView().getMap().getRobber();
 		
 		proxy.robPlayer(location, new shared.model.player.Player(victim));
-		getRobView().closeModal();
+		
+		if(getRobView().isModalShowing())
+		{
+			getRobView().closeModal();
+		}
 	}
 	
 	/**
