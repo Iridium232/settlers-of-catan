@@ -107,7 +107,7 @@ public class MockServer implements IServerProxy {
 	}
 
 	@Override
-	public String acceptTrade(boolean accept) {
+	public String acceptTrade(int playerIndes, boolean accept) {
 		// TODO Auto-generated method stub
 		return null;
 	}

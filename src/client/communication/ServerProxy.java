@@ -29,7 +29,6 @@ public class ServerProxy implements IServerProxy {
 	private String host;
 	private int port;
 	private String path;
-	private int playerIndex;
 	private Fascade fascade;
 	public ServerProxy(String host, int port, Fascade f)
 	{
@@ -163,7 +162,7 @@ public class ServerProxy implements IServerProxy {
 }
 
 	@Override
-	public String acceptTrade(boolean accept) 
+	public String acceptTrade(int playerIndex, boolean accept)
 	{
 		String result="FAILED\n";
 		AcceptTrade at=new AcceptTrade(playerIndex,accept);
@@ -181,6 +180,7 @@ public class ServerProxy implements IServerProxy {
 	public String rollNumber(int number) 
 	{
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		RollNumber roll=new RollNumber(playerIndex,number);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/rollNumber", roll).toString();
@@ -194,6 +194,7 @@ public class ServerProxy implements IServerProxy {
 	@Override
 	public String buildRoad(boolean free, shared.communication.EdgeLocation roadLocation) {
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		BuildRoad road=new BuildRoad(playerIndex,roadLocation,free);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/buildRoad", road).toString();
@@ -208,6 +209,7 @@ public class ServerProxy implements IServerProxy {
 	public String buildSettlement(boolean free, VertexLocation place) 
 	{
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		BuildSettlement settle=new BuildSettlement(playerIndex,place,free);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/buildSettlement", settle).toString();
@@ -222,6 +224,7 @@ public class ServerProxy implements IServerProxy {
 	public String buildCity(VertexLocation place) 
 	{
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		BuildCity city=new BuildCity(playerIndex, place);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/buildCity", city).toString();
@@ -237,6 +240,7 @@ public class ServerProxy implements IServerProxy {
 	{
 		
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		MaritimeTrade trade=new MaritimeTrade(playerIndex,ratio,
 				ResourceTranslator.translate(input),ResourceTranslator.translate(output));
 		try {
@@ -253,6 +257,7 @@ public class ServerProxy implements IServerProxy {
 	public String robPlayer(HexLocation location, Player victim) 
 	{
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		RobPlayer rob=new RobPlayer(playerIndex,victim.getPlayerIndex(),location);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/robPlayer", rob).toString();
@@ -267,6 +272,7 @@ public class ServerProxy implements IServerProxy {
 	public String finishTurn() 
 	{
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		FinishTurn end=new FinishTurn(playerIndex);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/finishTurn", end).toString();
@@ -282,6 +288,7 @@ public class ServerProxy implements IServerProxy {
 	{
 
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		BuyDevCard card=new BuyDevCard(playerIndex);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/buyDevCard", card).toString();
@@ -296,6 +303,7 @@ public class ServerProxy implements IServerProxy {
 	public String playSoldier(HexLocation place, Player victim) 
 	{
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		Soldier_ soldier=new Soldier_(playerIndex,victim.getPlayerIndex(),place);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/Soldier", soldier).toString();
@@ -311,6 +319,7 @@ public class ServerProxy implements IServerProxy {
 	public String yearOfPlenty(ResourceType one, ResourceType two) 
 	{
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		Year_of_Plenty_ year=new Year_of_Plenty_(playerIndex,
 				ResourceTranslator.translate(one),ResourceTranslator.translate(two));
 		try {
@@ -325,6 +334,7 @@ public class ServerProxy implements IServerProxy {
 	@Override
 	public String RoadBuilding(shared.communication.EdgeLocation one, shared.communication.EdgeLocation two) {
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		Road_Building_ rb=new Road_Building_(playerIndex,one,two);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/Road_Building", rb).toString();
@@ -339,6 +349,7 @@ public class ServerProxy implements IServerProxy {
 	public String monopoly(ResourceType one) 
 	{
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		Monopoly_ mono=new Monopoly_(playerIndex,ResourceTranslator.translate(one));
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/Monopoly", mono).toString();
@@ -353,6 +364,7 @@ public class ServerProxy implements IServerProxy {
 	public String monument() 
 	{
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		Monument_ mon=new Monument_(playerIndex);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/Monument", mon).toString();
@@ -367,6 +379,7 @@ public class ServerProxy implements IServerProxy {
 	public String discardCards(ResourceList discardedCards) 
 	{
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		DiscardCards dc=new DiscardCards(playerIndex,discardedCards);
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/discardCards", dc).toString();
@@ -381,6 +394,7 @@ public class ServerProxy implements IServerProxy {
 	public String offerTrade(ResourceList offer, Player receiver) 
 	{
 		String result=null;
+		int playerIndex = Reference.GET_SINGLETON().getPlayer_index();
 		OfferTrade ot=new OfferTrade(playerIndex,offer,receiver.getPlayerIndex());
 		try {
 			result=ClientCommunicator.getSINGLETON().doPost("/moves/offerTrade", ot).toString();
