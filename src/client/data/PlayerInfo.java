@@ -38,6 +38,14 @@ public class PlayerInfo
 		this.name = player.getName();
 		
 	}
+	public PlayerInfo(shared.model.player.Player player) 
+	{
+		this.id = player.getPlayerID();
+		this.playerIndex = player.getPlayerIndex();
+		this.color = CatanColor.valueOf(player.getColor());
+		this.name = player.getName();
+	}
+
 	public void setColor(String colorname)
 	{
 		if(colorname == null)

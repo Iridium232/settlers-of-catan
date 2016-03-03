@@ -1,5 +1,7 @@
 package client.data;
 
+import shared.model.player.Player;
+
 /**
  * Used to pass player information into the rob view<br>
  * <br>
@@ -23,6 +25,11 @@ public class RobPlayerInfo extends PlayerInfo
 		super();
 	}
 	
+	public RobPlayerInfo(Player player) 
+	{
+		super(player);
+	}
+
 	public int getNumCards()
 	{
 		return numCards;
