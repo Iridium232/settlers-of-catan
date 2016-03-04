@@ -22,5 +22,7 @@ public interface IOverlayView extends IView
 	 * @return True if the overlay is showing, false otherwise
 	 */
 	boolean isModalShowing();
+
+	int getModalsOpen();
 }
 
