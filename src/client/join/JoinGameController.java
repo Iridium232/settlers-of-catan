@@ -169,7 +169,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ourguy.setName(ref.name);
 		
 		getJoinGameView().setGames(games, ourguy);
-		getJoinGameView().showModal();
+		if (!getJoinGameView().isModalShowing()) getJoinGameView().showModal();
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startCreateNewGame() 
 	{	
-		getNewGameView().showModal();
+		if (!getNewGameView().isModalShowing()) getNewGameView().showModal();
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void cancelCreateNewGame() {
 		
-		getNewGameView().closeModal();
+		if (getNewGameView().isModalShowing()) getNewGameView().closeModal();
 	}
 
 
@@ -242,7 +242,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ourguy.setId(ref.player_id);
 		ourguy.setName(ref.name);
 		
-		getNewGameView().closeModal();
+		if (getNewGameView().isModalShowing()) getNewGameView().closeModal();
 		getJoinGameView().setGames(games, ourguy);
 		
 	}
@@ -275,7 +275,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(getJoinGameView().isModalShowing()) {
 			getJoinGameView().closeModal();
 		}
-		getSelectColorView().showModal();
+		if (!getSelectColorView().isModalShowing()) getSelectColorView().showModal();
 	}
 
 
@@ -286,8 +286,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void cancelJoinGame() 
 	{
-		getSelectColorView().closeModal();
-		getJoinGameView().showModal();
+		if (getSelectColorView().isModalShowing()) getSelectColorView().closeModal();
+		if (!getJoinGameView().isModalShowing()) getJoinGameView().showModal();
 		
 	}
 
@@ -308,7 +308,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			{
 				throw new JoinExceptions("Join Refused by server");
 			}
-			ModelPopulator.populateModel(model, ref.getFascade());
+			ModelPopulator.populateModel(model, ref.getFascade());  //A modal gets opened here without us expecting it
+			while (getMessageView().getModalsOpen() > 0) getMessageView().closeModal(); //Close unexpected modals
+			//Should be no modals open so that we can close selectColorView modal
+			
 			// If join succeeded
 			Reference.GET_SINGLETON().player_color = color;
 			//while (getSelectColorView().isModalShowing()) {
@@ -328,8 +331,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			this.messageView.setMessage(error);
 			System.err.print("ERROR: FAILED TO JOIN GAME");
 			e.printStackTrace();
-			this.messageView.showModal();
-			getSelectColorView().closeModal();
+			if (!this.messageView.isModalShowing()) this.messageView.showModal();
+			if (getSelectColorView().isModalShowing()) getSelectColorView().closeModal();
 		} 
 	}
 
