@@ -224,7 +224,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void acceptTrade(boolean willAccept) {
 		Reference r = Reference.GET_SINGLETON();
-		r.getProxy().acceptTrade(targetPlayer, willAccept);
+		r.getProxy().acceptTrade(r.getPlayer_index(), willAccept);
 		getAcceptOverlay().reset();
 		if (getAcceptOverlay().isModalShowing()) getAcceptOverlay().closeModal();
 		waiting = false;
@@ -239,7 +239,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			if (offer.getReciever() == Reference.GET_SINGLETON().getPlayer_index()) {
 				if (!getAcceptOverlay().isModalShowing()) showAcceptOverlay(offer);
 			}
-			if(getWaitOverlay().isModalShowing()==true && waiting) {
+			if(getWaitOverlay().isModalShowing()==true && !waiting) {
 				getWaitOverlay().closeModal();
 			} else if (!getWaitOverlay().isModalShowing() && waiting) {
 				getWaitOverlay().showModal();
