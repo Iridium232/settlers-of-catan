@@ -3,10 +3,10 @@ package client.map;
 import java.util.*;
 
 import shared.communication.fromServer.game.Port;
-import shared.communication.fromServer.games.Player;
 import shared.definitions.*;
 import shared.locations.*;
 import shared.model.Fascade;
+import shared.model.Game;
 import shared.model.map.Edge;
 import shared.model.map.Road;
 import shared.model.map.Robber;
@@ -14,6 +14,7 @@ import shared.model.map.TerrainHex;
 import shared.model.map.Vertex;
 import shared.model.map.buildings.City;
 import shared.model.map.buildings.Settlement;
+import shared.model.player.Player;
 import shared.model.states.IState;
 import client.base.*;
 import client.communication.IServerProxy;
@@ -181,7 +182,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	public boolean canPlaceRoad(shared.locations.EdgeLocation edgeLoc) 
 	{
 		Edge edge = new Edge(edgeLoc);
-		return model.canBuildRoad(reference.player_index, edge, 
+		return model.canBuildRoad(reference.player_index, edge,
 				model_state.getState() == TurnStatus.FIRSTROUND || model_state.getState() == TurnStatus.SECONDROUND);
 	}
 
@@ -250,7 +251,7 @@ public class MapController extends Controller implements IMapController, IObserv
 				new shared.communication.EdgeLocation(edgeLoc.getHexLoc()
 						.getX(),edgeLoc.getHexLoc().getY(), edgeLoc.getDir());
 		getView().placeRoad(edgeLoc, reference.player_color);
-		proxy.buildRoad(is_free ,sending_edge);
+		proxy.buildRoad(is_free, sending_edge);
 		is_free = false;
 	}
 
@@ -399,7 +400,17 @@ public class MapController extends Controller implements IMapController, IObserv
 	@Override
 	public void ObservableChanged() 
 	{
-		updateMap();
+		Reference r = Reference.GET_SINGLETON();
+		Game model = r.getFascade().getModel();
+		boolean all4Players = true;
+		for (Player player : model.getPlayers()) {
+			if (player.getName() == null) {
+				all4Players = false;
+			}
+		}
+		if (all4Players) {
+			updateMap();
+		}
 	}
 	
 	/**
