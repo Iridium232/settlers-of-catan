@@ -14,9 +14,12 @@ import shared.model.messages.MessageLine;
  */
 public class GameHistoryController extends Controller implements IGameHistoryController, IObserver {
 
+	private int historySize;
+
 	public GameHistoryController(IGameHistoryView view) {
 		
 		super(view);
+		historySize = 0;
 		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 	
@@ -44,7 +47,11 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	@Override
 	public void ObservableChanged() {
 		// TODO Auto-generated method stub
-		initFromModel();
+		MessageLine[] history = Reference.GET_SINGLETON().getFascade().getLog();
+		if (history.length != historySize) {
+			initFromModel();
+			historySize = history.length;
+		}
 	}
 	
 }

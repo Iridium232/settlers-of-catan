@@ -21,6 +21,7 @@ import client.communication.IServerProxy;
 import client.control.IObserver;
 import client.control.Reference;
 import client.data.*;
+import shared.model.states.TurnTracker;
 
 
 /**
@@ -37,6 +38,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	private IState model_state;
 	private boolean is_free = false;
 	private boolean initialized = false;
+	private boolean drawn = false;
 
 	/**
 	 * Map Controller Constructor
@@ -400,15 +402,19 @@ public class MapController extends Controller implements IMapController, IObserv
 	@Override
 	public void ObservableChanged() 
 	{
+		if (!drawn) {
+			updateMap();
+			drawn = true;
+		}
+
 		Reference r = Reference.GET_SINGLETON();
 		Game model = r.getFascade().getModel();
-		boolean all4Players = true;
-		for (Player player : model.getPlayers()) {
-			if (player.getName() == null) {
-				all4Players = false;
-			}
-		}
-		if (all4Players) {
+		TurnStatus status = model.getTurn_tracker().turnStatusOf(r.getPlayer_index());
+		boolean shouldDoSomething = status == TurnStatus.FIRSTROUND ||
+				status == TurnStatus.SECONDROUND ||
+				status == TurnStatus.PLAYING;
+
+		if (shouldDoSomething) {
 			updateMap();
 		}
 	}
