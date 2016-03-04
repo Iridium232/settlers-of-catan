@@ -308,16 +308,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			{
 				throw new JoinExceptions("Join Refused by server");
 			}
-			ModelPopulator.populateModel(model, ref.getFascade());  //A modal gets opened here without us expecting it
-			while (getMessageView().getModalsOpen() > 0) getMessageView().closeModal(); //Close unexpected modals
-			//Should be no modals open so that we can close selectColorView modal
-			
-			// If join succeeded
-			Reference.GET_SINGLETON().player_color = color;
+
 			//while (getSelectColorView().isModalShowing()) {
 			if(getSelectColorView().isModalShowing()){
 				getSelectColorView().closeModal();
 			}
+
+			ModelPopulator.populateModel(model, ref.getFascade());
+			// If join succeeded
+			Reference.GET_SINGLETON().player_color = color;
 
 			//}
 			//System.out.println(getSelectColorView().isModalShowing());
