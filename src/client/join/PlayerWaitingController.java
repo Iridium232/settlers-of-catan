@@ -6,6 +6,7 @@ import client.control.IObserver;
 import client.control.Reference;
 import client.data.PlayerInfo;
 import shared.definitions.CatanColor;
+import shared.definitions.TurnStatus;
 import shared.model.Fascade;
 import shared.model.player.Player;
 
@@ -25,7 +26,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public PlayerWaitingController(IPlayerWaitingView view) {
 
 		super(view);
-
 		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 
@@ -109,17 +109,19 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				}
 			}
 		}
-		String[] AIValues = { "LARGEST_ARMY" };
-		try {
-			getView().setPlayers(convertToArray(playerInfos));
-			getView().setAIChoices(AIValues);
-			if(!getView().isModalShowing()) getView().showModal();
-			if (playerInfos.size() == 4) {
-				if (getView().isModalShowing()) getView().closeModal();
-			}
-		}
-		catch (Exception e){
-			e.printStackTrace();
+		if (f.getModel().getTurnStatus(Reference.GET_SINGLETON().getPlayer_index()) == TurnStatus.FIRSTROUND) {
+			String[] AIValues = { "LARGEST_ARMY" };
+			try {
+                getView().setPlayers(convertToArray(playerInfos));
+                getView().setAIChoices(AIValues);
+                if(!getView().isModalShowing()) getView().showModal();
+                if (playerInfos.size() == 4) {
+                    if (getView().isModalShowing()) getView().closeModal();
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
 		}
 	}
 

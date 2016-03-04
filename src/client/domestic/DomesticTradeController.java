@@ -116,6 +116,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			playersSet = true;
 		}
 		getTradeOverlay().setStateMessage("Select the resources you want to trade");
+
+		if (getLocalPlayer().getResources().getBrick() < 5) {
+			getLocalPlayer().getResources().setBrick(5);
+		}
+
 		if (!getTradeOverlay().isModalShowing()) getTradeOverlay().showModal();
 	}
 /**

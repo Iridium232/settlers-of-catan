@@ -327,7 +327,10 @@ public class MapController extends Controller implements IMapController, IObserv
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) 
 	{	
 		System.out.print("Piece Drop Begin\n");
-		getView().startDrop(pieceType, reference.player_color, !isFree);
+		int activePlayerIndex = reference.getFascade().getModel().getTurn_tracker().getActive_player();
+		if (activePlayerIndex == reference.getPlayer_index()) {
+			getView().startDrop(pieceType, reference.player_color, !isFree);
+		}
 	}
 	
 	/**
@@ -410,11 +413,17 @@ public class MapController extends Controller implements IMapController, IObserv
 		Reference r = Reference.GET_SINGLETON();
 		Game model = r.getFascade().getModel();
 		TurnStatus status = model.getTurn_tracker().turnStatusOf(r.getPlayer_index());
+
+		boolean has4Players = true;
+		for (Player player : model.getPlayers()) {
+			if (player.getName() == null) has4Players = false;
+		}
+
 		boolean shouldDoSomething = status == TurnStatus.FIRSTROUND ||
 				status == TurnStatus.SECONDROUND ||
 				status == TurnStatus.PLAYING;
 
-		if (shouldDoSomething) {
+		if (shouldDoSomething && has4Players) {
 			updateMap();
 		}
 	}

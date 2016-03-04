@@ -60,7 +60,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
  */
 	@Override
 	public void makeTrade() {
-		Reference.GET_SINGLETON().getProxy().maritimeTrade(ratio, get, give);
+		Reference.GET_SINGLETON().getProxy().maritimeTrade(ratio, give, get);
 		if (getTradeOverlay().isModalShowing()) getTradeOverlay().closeModal();
 	}
 /**
