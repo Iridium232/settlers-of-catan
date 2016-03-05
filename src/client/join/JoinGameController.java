@@ -37,7 +37,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * @param messageView     Message view (used to display error messages that occur while the user is joining a game)
 	 */
 	public JoinGameController(IJoinGameView view, INewGameView newGameView,
-								ISelectColorView selectColorView, IMessageView messageView) {
+								ISelectColorView selectColorView, IMessageView messageView) 
+	{
 
 		super(view);
 		setNewGameView(newGameView);
@@ -169,7 +170,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ourguy.setName(ref.name);
 		
 		getJoinGameView().setGames(games, ourguy);
-		getJoinGameView().showModal();
+		if(!getJoinGameView().isModalShowing())
+		{
+			getJoinGameView().showModal();
+		}
 	}
 
 	/**
@@ -178,16 +182,22 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startCreateNewGame() 
 	{	
-		getNewGameView().showModal();
+		if(!getNewGameView().isModalShowing())
+		{
+			getNewGameView().showModal();
+		}
 	}
 
 	/**
 	 * Close Modal
 	 */
 	@Override
-	public void cancelCreateNewGame() {
-		
-		getNewGameView().closeModal();
+	public void cancelCreateNewGame() 
+	{
+		if(getNewGameView().isModalShowing())
+		{
+			getNewGameView().closeModal();
+		}
 	}
 
 
@@ -241,8 +251,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		
 		ourguy.setId(ref.player_id);
 		ourguy.setName(ref.name);
+		if(getNewGameView().isModalShowing())
+		{
+			getNewGameView().closeModal();
+		}
 		
-		getNewGameView().closeModal();
 		getJoinGameView().setGames(games, ourguy);
 		
 	}
@@ -268,14 +281,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		{
 			if(player_info.getColor() == null)continue;
 			getSelectColorView().setColorEnabled(player_info.getColor(), false);
-			if (player_info.getName().equals(ref.getName())) {
+			if (player_info.getName().equals(ref.getName())) 
+			{
 				getSelectColorView().setColorEnabled(player_info.getColor(), true);
 			}
 		}
-		if(getJoinGameView().isModalShowing()) {
+		if(getJoinGameView().isModalShowing()) 
+		{
 			getJoinGameView().closeModal();
 		}
-		getSelectColorView().showModal();
+		if(!getSelectColorView().isModalShowing())
+		{
+			getSelectColorView().showModal();
+		}
 	}
 
 
@@ -286,8 +304,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void cancelJoinGame() 
 	{
-		getSelectColorView().closeModal();
-		getJoinGameView().showModal();
+		if(getSelectColorView().isModalShowing())
+		{
+			getSelectColorView().closeModal();
+		}
+		if(!getJoinGameView().isModalShowing())
+		{
+			getJoinGameView().showModal();
+		}
 		
 	}
 
@@ -311,14 +335,17 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			ModelPopulator.populateModel(model, ref.getFascade());
 			// If join succeeded
 			Reference.GET_SINGLETON().player_color = color;
-			//while (getSelectColorView().isModalShowing()) {
-			if(getSelectColorView().isModalShowing()){
-				getSelectColorView().closeModal();
-			}
 
-			//}
-			//System.out.println(getSelectColorView().isModalShowing());
-			//System.out.print("\n\nJoin Game Success\n" + model_string + "\n");
+			if(getSelectColorView().isModalShowing())
+			{
+				getSelectColorView().closeModal();
+				setSelectColorView(null);
+				if(this.getJoinGameView().isModalShowing())
+				{
+					getJoinGameView().closeModal();
+				}
+			}
+			
 			//joinAction.execute();
 		} 
 		catch (JSONException | JoinExceptions e) 
@@ -329,17 +356,24 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			System.err.print("ERROR: FAILED TO JOIN GAME");
 			e.printStackTrace();
 			this.messageView.showModal();
-			getSelectColorView().closeModal();
+			if(getSelectColorView().isModalShowing())
+			{
+				getSelectColorView().closeModal();
+			}
 		} 
 	}
 
-	private int getIndex(List<PlayerInfo> playerInfos) {
-		if (playerInfos.size() < 4) {
+	private int getIndex(List<PlayerInfo> playerInfos) 
+	{
+		if (playerInfos.size() < 4) 
+		{
 			return playerInfos.size();
 		}
 		Reference r = Reference.GET_SINGLETON();
-		for (int i = 0; i < playerInfos.size(); i++) {
-			if (playerInfos.get(i).getName().equals(r.getName())) {
+		for (int i = 0; i < playerInfos.size(); i++) 
+		{
+			if (playerInfos.get(i).getName().equals(r.getName())) 
+			{
 				return i;
 			}
 		}
