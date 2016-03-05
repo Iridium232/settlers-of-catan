@@ -1186,11 +1186,11 @@ public class Fascade
 			return;
 		}
 
-		if (model.getVersion() != game_model.getVersion())
-		{
+//		if (model.getVersion() != game_model.getVersion())
+//		{
 			game_model = model;
 			notifyObservers();
-		}
+//		}
 
 	}
 	

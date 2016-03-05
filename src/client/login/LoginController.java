@@ -83,7 +83,7 @@ public class LoginController extends Controller implements ILoginController, IOb
 	@Override
 	public void start() 
 	{
-		getLoginView().showModal();
+		if (!getLoginView().isModalShowing()) getLoginView().showModal();
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class LoginController extends Controller implements ILoginController, IOb
 		if (!password.equals(passwordRepeat)) {
 			messageView.setMessage("Warning!");
 			messageView.setTitle("Passwords don't match.");
-			messageView.showModal();
+			if (!messageView.isModalShowing()) messageView.showModal();
 		} else {
 			this.doOperation(username, password, Operation.REGISTER);
 		}
@@ -158,14 +158,14 @@ public class LoginController extends Controller implements ILoginController, IOb
 		if (success) 
 		{
 			// If login succeeded
-			getLoginView().closeModal();
+			if (getLoginView().isModalShowing()) getLoginView().closeModal();
 			loginAction.execute();
 		} 
 		else
 		{
 			messageView.setMessage(message);
 			messageView.setTitle(messageTitle);
-			messageView.showModal();
+			if (!messageView.isModalShowing()) messageView.showModal();
 		}
 
 	}

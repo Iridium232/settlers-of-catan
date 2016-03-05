@@ -170,6 +170,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ourguy.setName(ref.name);
 		
 		getJoinGameView().setGames(games, ourguy);
+
 		if(!getJoinGameView().isModalShowing())
 		{
 			getJoinGameView().showModal();
@@ -255,7 +256,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		{
 			getNewGameView().closeModal();
 		}
-		
+		if (getNewGameView().isModalShowing())
+		{
+			getNewGameView().closeModal();
+		}
+
 		getJoinGameView().setGames(games, ourguy);
 		
 	}
@@ -290,12 +295,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		{
 			getJoinGameView().closeModal();
 		}
+		
 		if(!getSelectColorView().isModalShowing())
 		{
 			getSelectColorView().showModal();
 		}
 	}
-
 
 
 	/**
@@ -345,7 +350,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 					getJoinGameView().closeModal();
 				}
 			}
-			
 			//joinAction.execute();
 		} 
 		catch (JSONException | JoinExceptions e) 
@@ -355,7 +359,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			this.messageView.setMessage(error);
 			System.err.print("ERROR: FAILED TO JOIN GAME");
 			e.printStackTrace();
-			this.messageView.showModal();
+
+			if(!this.messageView.isModalShowing())
+			{
+				this.messageView.showModal();
+			}
 			if(getSelectColorView().isModalShowing())
 			{
 				getSelectColorView().closeModal();

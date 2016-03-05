@@ -140,6 +140,10 @@ public class OverlayView extends PanelView implements IOverlayView
 		
 		return false;
 	}
+
+	public int getModalsOpen() {
+		return overlayStack.size();
+	}
 	
 	private static class OverlayInfo
 	{

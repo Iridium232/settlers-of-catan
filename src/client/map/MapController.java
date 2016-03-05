@@ -3,10 +3,10 @@ package client.map;
 import java.util.*;
 
 import shared.communication.fromServer.game.Port;
-import shared.communication.fromServer.games.Player;
 import shared.definitions.*;
 import shared.locations.*;
 import shared.model.Fascade;
+import shared.model.Game;
 import shared.model.map.Edge;
 import shared.model.map.Road;
 import shared.model.map.Robber;
@@ -14,12 +14,14 @@ import shared.model.map.TerrainHex;
 import shared.model.map.Vertex;
 import shared.model.map.buildings.City;
 import shared.model.map.buildings.Settlement;
+import shared.model.player.Player;
 import shared.model.states.IState;
 import client.base.*;
 import client.communication.IServerProxy;
 import client.control.IObserver;
 import client.control.Reference;
 import client.data.*;
+import shared.model.states.TurnTracker;
 
 
 /**
@@ -38,6 +40,8 @@ public class MapController extends Controller implements IMapController, IObserv
 	private boolean initialized = false;
 	private boolean has_placed_road = false;
 	private boolean has_placed_city = false;
+	private boolean drawn = false;
+
 
 	/**
 	 * Map Controller Constructor
@@ -201,7 +205,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	public boolean canPlaceRoad(shared.locations.EdgeLocation edgeLoc) 
 	{
 		Edge edge = new Edge(edgeLoc);
-		return model.canBuildRoad(reference.player_index, edge, 
+		return model.canBuildRoad(reference.player_index, edge,
 				model_state.getState() == TurnStatus.FIRSTROUND || model_state.getState() == TurnStatus.SECONDROUND);
 	}
 
@@ -270,7 +274,7 @@ public class MapController extends Controller implements IMapController, IObserv
 				new shared.communication.EdgeLocation(edgeLoc.getHexLoc()
 						.getX(),edgeLoc.getHexLoc().getY(), edgeLoc.getDir());
 		getView().placeRoad(edgeLoc, reference.player_color);
-		proxy.buildRoad(is_free ,sending_edge);
+		proxy.buildRoad(is_free, sending_edge);
 		is_free = false;
 	}
 
@@ -344,7 +348,10 @@ public class MapController extends Controller implements IMapController, IObserv
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) 
 	{	
 		System.out.print("Piece Drop Begin\n");
-		getView().startDrop(pieceType, reference.player_color, !isFree);
+		int activePlayerIndex = reference.getFascade().getModel().getTurn_tracker().getActive_player();
+		if (activePlayerIndex == reference.getPlayer_index()) {
+			getView().startDrop(pieceType, reference.player_color, !isFree);
+		}
 	}
 	
 	/**
@@ -419,7 +426,27 @@ public class MapController extends Controller implements IMapController, IObserv
 	@Override
 	public void ObservableChanged() 
 	{
-		updateMap();
+		if (!drawn) {
+			updateMap();
+			drawn = true;
+		}
+
+		Reference r = Reference.GET_SINGLETON();
+		Game model = r.getFascade().getModel();
+		TurnStatus status = model.getTurn_tracker().turnStatusOf(r.getPlayer_index());
+
+		boolean has4Players = true;
+		for (Player player : model.getPlayers()) {
+			if (player.getName() == null) has4Players = false;
+		}
+
+		boolean shouldDoSomething = status == TurnStatus.FIRSTROUND ||
+				status == TurnStatus.SECONDROUND ||
+				status == TurnStatus.PLAYING;
+
+		if (shouldDoSomething && has4Players) {
+			updateMap();
+		}
 	}
 	
 	/**

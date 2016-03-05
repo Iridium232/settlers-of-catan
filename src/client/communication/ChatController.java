@@ -25,6 +25,7 @@ public class ChatController extends Controller implements IChatController, IObse
 	private Reference reference;
 	private Game game;
 	private IServerProxy proxy;
+	private int chatSize;
 	//private IState model_state;
 
 
@@ -34,6 +35,7 @@ public class ChatController extends Controller implements IChatController, IObse
 		model = reference.getFascade();
 //		initFromModel();
 		proxy = reference.proxy;
+		chatSize = 0;
 		Reference.GET_SINGLETON().getFascade().addObserver(this);
 		//Need modelObserver to point to CHAT!!!
 		//game = Reference.GET_SINGLETON().getFascade().getLog();
@@ -79,7 +81,12 @@ public class ChatController extends Controller implements IChatController, IObse
 
 	@Override
 	public void ObservableChanged() {
-		initFromModel();
+		MessageLine[] chat = Reference.GET_SINGLETON().getFascade().getMessages();
+
+		if (chat.length != chatSize) {
+			initFromModel();
+			chatSize = chat.length;
+		}
 
 	}
 

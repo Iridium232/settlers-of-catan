@@ -116,6 +116,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			playersSet = true;
 		}
 		getTradeOverlay().setStateMessage("Select the resources you want to trade");
+
+		if (getLocalPlayer().getResources().getBrick() < 5) {
+			getLocalPlayer().getResources().setBrick(5);
+		}
+
 		if (!getTradeOverlay().isModalShowing()) getTradeOverlay().showModal();
 	}
 /**
@@ -224,10 +229,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void acceptTrade(boolean willAccept) {
 		Reference r = Reference.GET_SINGLETON();
-		r.getProxy().acceptTrade(targetPlayer, willAccept);
+		r.getProxy().acceptTrade(r.getPlayer_index(), willAccept);
 		getAcceptOverlay().reset();
 		if (getAcceptOverlay().isModalShowing()) getAcceptOverlay().closeModal();
-		waiting = false;
 	}
 
 	@Override
@@ -239,11 +243,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			if (offer.getReciever() == Reference.GET_SINGLETON().getPlayer_index()) {
 				if (!getAcceptOverlay().isModalShowing()) showAcceptOverlay(offer);
 			}
-			if(getWaitOverlay().isModalShowing()==true && waiting) {
-				getWaitOverlay().closeModal();
-			} else if (!getWaitOverlay().isModalShowing() && waiting) {
-				getWaitOverlay().showModal();
-			}
+		}
+		if (waiting) {
+			if (offer == null) waiting = false;
+		}
+		if(getWaitOverlay().isModalShowing()==true && !waiting) {
+			getWaitOverlay().closeModal();
+		} else if (!getWaitOverlay().isModalShowing() && waiting) {
+			getWaitOverlay().showModal();
 		}
 		getTradeView().enableDomesticTrade(setButtonStatus());
 	}

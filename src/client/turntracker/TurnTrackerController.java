@@ -59,37 +59,45 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		Reference r = Reference.GET_SINGLETON();
 		Game model = r.getFascade().getModel();
 		if (!playerInitialized) {
-			for (Player player : model.getPlayers()) 
-			{
-				if (player.getColor() == null || player == null)continue;
-				getView().initializePlayer(player.getPlayerIndex(), player.getName(), getCatanColor(player));
+			boolean have4Players = true;
+			for (Player player : model.getPlayers()) {
+				if (player.getName() == null) have4Players = false;
 			}
-			getView().setLocalPlayerColor(r.getPlayer_color());
-			playerInitialized = true;
+			if (have4Players) {
+				for (Player player : model.getPlayers())
+                {
+                    if (player.getColor() == null || player == null)continue;
+                    getView().initializePlayer(player.getPlayerIndex(), player.getName(), getCatanColor(player));
+                }
+				getView().setLocalPlayerColor(r.getPlayer_color());
+				playerInitialized = true;
+			}
 		}
 		Player localPlayer = null;
-		for (Player player : model.getPlayers()) {
-			if (player == null || player.getColor() == null)continue;
-			if (player.getPlayerIndex() == r.getPlayer_index()) {
-				localPlayer = player;
-			}
-			boolean highlight = false;
-			if (model.getTurn_tracker().getActive_player() == player.getPlayerIndex()) {
-				highlight = true;
-			}
+		if (playerInitialized) {
+			for (Player player : model.getPlayers()) {
+                if (player == null || player.getColor() == null)continue;
+                if (player.getPlayerIndex() == r.getPlayer_index()) {
+                    localPlayer = player;
+                }
+                boolean highlight = false;
+                if (model.getTurn_tracker().getActive_player() == player.getPlayerIndex()) {
+                    highlight = true;
+                }
 
-			boolean largestArmy = false;
-			if (model.getTurn_tracker().getLargest_army_player() == player.getPlayerIndex()) {
-				largestArmy = true;
-			}
+                boolean largestArmy = false;
+                if (model.getTurn_tracker().getLargest_army_player() == player.getPlayerIndex()) {
+                    largestArmy = true;
+                }
 
-			boolean longestRoad = false;
-			if (model.getTurn_tracker().getLongest_road_player() == player.getPlayerIndex()) {
-				longestRoad = true;
-			}
+                boolean longestRoad = false;
+                if (model.getTurn_tracker().getLongest_road_player() == player.getPlayerIndex()) {
+                    longestRoad = true;
+                }
 
-			getView().updatePlayer(player.getPlayerIndex(), player.getVictoryPoints(),
-					highlight, largestArmy, longestRoad);
+                getView().updatePlayer(player.getPlayerIndex(), player.getVictoryPoints(),
+                        highlight, largestArmy, longestRoad);
+            }
 		}
 
 		if (localPlayer == null) { return; }

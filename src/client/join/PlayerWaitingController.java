@@ -6,6 +6,7 @@ import client.control.IObserver;
 import client.control.Reference;
 import client.data.PlayerInfo;
 import shared.definitions.CatanColor;
+import shared.definitions.TurnStatus;
 import shared.model.Fascade;
 import shared.model.player.Player;
 
@@ -25,7 +26,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public PlayerWaitingController(IPlayerWaitingView view) {
 
 		super(view);
-
 		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
 
@@ -132,7 +132,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				if (getView().isModalShowing()) getView().closeModal();
 			}
 		}
-		catch (Exception e){
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
