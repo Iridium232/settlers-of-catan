@@ -1295,6 +1295,11 @@ public class Fascade
 		return game_model.getMap().getPorts();
 	}
 
+	public int getActivePlayer() 
+	{
+		return game_model.getTurn_tracker().getActive_player();
+	}
+
 }
 
 

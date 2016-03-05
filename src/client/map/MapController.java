@@ -2,6 +2,7 @@ package client.map;
 
 import java.util.*;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import shared.communication.fromServer.game.Port;
@@ -42,8 +43,11 @@ public class MapController extends Controller implements IMapController, IObserv
 	private boolean is_free = false;
 	private boolean initialized = false;
 	private boolean has_placed_road = false;
+	private boolean is_placing_road = false;
 	private boolean has_placed_city = false;
+	private boolean is_placing_city = false;
 	private boolean drawn = false;
+	private boolean is_moving_robber = false;
 
 
 	/**
@@ -161,29 +165,37 @@ public class MapController extends Controller implements IMapController, IObserv
 		
 		//=======================================================
 		// If this player is supposed to be robbing:
-		if(model.getStateOf(reference.player_index).getState() == TurnStatus.ROBBING)
+		if(model.getStateOf(reference.player_index).getState() == TurnStatus.ROBBING 
+				&& !is_moving_robber)
 		{
+			is_moving_robber = true;
 			this.startMove(PieceType.ROBBER, false, false);
 		}
 		
 		//=======================================================
 		// If we are in the first round
-		if(model.getStateOf(reference.player_index).getState() == TurnStatus.FIRSTROUND)
+		if(model.getStateOf(reference.player_index).getState() == TurnStatus.FIRSTROUND
+				&& model.getActivePlayer() == reference.player_index)
 		{
 			System.out.print("\nFIRSTROUND\n");
-			if(!has_placed_road)
+			if(!has_placed_road && !is_placing_city && !is_placing_road)
 			{
+				this.is_placing_road = true;
 				this.startMove(PieceType.ROAD, true, true);
-				has_placed_road = true;
 			}
-			if(!has_placed_city)
+			if(!has_placed_city && !is_placing_city && !is_placing_road)
 			{
+				this.is_placing_city = true;
 				this.startMove(PieceType.SETTLEMENT, true, false);
-				has_placed_city = true;
+				
 			}
-			if(has_placed_road && has_placed_city)
+			if(has_placed_road && has_placed_city && !is_placing_road && !is_placing_city)
 			{
-				String result = reference.getProxy().finishTurn();
+				String result = "";
+				if(model.getActivePlayer() == reference.player_index)
+				{
+					result = reference.getProxy().finishTurn();
+				}
 				try
 				{
 					ModelPopulator.populateModel(new JSONObject(result), reference.fascade);
@@ -200,21 +212,26 @@ public class MapController extends Controller implements IMapController, IObserv
 		
 		//=======================================================
 		//If we are in the second setup round
-		if(model.getStateOf(reference.player_index).getState() == TurnStatus.SECONDROUND)
+		if(model.getStateOf(reference.player_index).getState() == TurnStatus.SECONDROUND
+				&& model.getActivePlayer() == reference.player_index)
 		{
-			if(!has_placed_road)
+			if(!has_placed_road && !is_placing_city && !is_placing_road)
 			{
+				this.is_placing_road = true;
 				this.startMove(PieceType.ROAD, true, true);
-				has_placed_road = true;
 			}
-			if(!has_placed_city)
+			if(!has_placed_city && !is_placing_city && !is_placing_road)
 			{
+				this.is_placing_city = true;
 				this.startMove(PieceType.SETTLEMENT, true, false);
-				has_placed_city = true;
 			}
-			if(has_placed_road && has_placed_city)
+			if(has_placed_road && has_placed_city && !is_placing_city && !is_placing_road)
 			{
-				String result = reference.getProxy().finishTurn();
+				String result = "";
+				if(model.getActivePlayer() == reference.player_index)
+				{
+					result = reference.getProxy().finishTurn();
+				}
 				try
 				{
 					ModelPopulator.populateModel(new JSONObject(result), reference.fascade);
@@ -323,7 +340,24 @@ public class MapController extends Controller implements IMapController, IObserv
 				new shared.communication.EdgeLocation(edgeLoc.getHexLoc()
 						.getX(),edgeLoc.getHexLoc().getY(), edgeLoc.getDir());
 		getView().placeRoad(edgeLoc, reference.player_color);
-		proxy.buildRoad(is_free, sending_edge);
+		String result = proxy.buildRoad(is_free, sending_edge);
+		
+		try 
+		{
+			ModelPopulator.populateModel(new JSONObject(result), reference.fascade);
+		} 
+		catch (JSONException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		if(this.model_state.getState() == TurnStatus.FIRSTROUND ||
+				this.model_state.getState() == TurnStatus.SECONDROUND)
+		{
+			this.has_placed_road = true;
+			this.is_placing_road = false;
+		}
+		
 		is_free = false;
 	}
 
@@ -341,8 +375,23 @@ public class MapController extends Controller implements IMapController, IObserv
 						vertLoc.getHexLoc().getX(), vertLoc.getHexLoc().getY());
 		boolean free = model_state.getState() == TurnStatus.FIRSTROUND;
 		free = free && model_state.getState() == TurnStatus.SECONDROUND;
-		reference.proxy.buildSettlement(free, sending_location);
+		String result = reference.proxy.buildSettlement(free, sending_location);
 		getView().placeSettlement(vertLoc, reference.player_color);
+		try 
+		{
+			ModelPopulator.populateModel(new JSONObject(result), reference.fascade);
+		} 
+		catch (JSONException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		if(this.model_state.getState() == TurnStatus.FIRSTROUND ||
+				this.model_state.getState() == TurnStatus.SECONDROUND)
+		{
+			this.has_placed_city = true;
+			this.is_placing_city = false;
+		}
 	}
 
 	/**
@@ -357,8 +406,17 @@ public class MapController extends Controller implements IMapController, IObserv
 		shared.communication.fromServer.game.VertexLocation sending_location = 
 				new shared.communication.fromServer.game.VertexLocation(vertLoc.getDir(),
 						vertLoc.getHexLoc().getX(), vertLoc.getHexLoc().getY());
-		reference.proxy.buildCity(sending_location);
+		String result = reference.proxy.buildCity(sending_location);
+		
 		getView().placeCity(vertLoc, reference.player_color);
+		try 
+		{
+			ModelPopulator.populateModel(new JSONObject(result), reference.fascade);
+		} 
+		catch (JSONException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -468,7 +526,7 @@ public class MapController extends Controller implements IMapController, IObserv
 			proxy.robPlayer(location, new shared.model.player.Player(victim));
 		}
 		
-		
+		is_moving_robber = false;
 		
 		if(getRobView().isModalShowing())
 		{
