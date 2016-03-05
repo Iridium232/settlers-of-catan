@@ -194,6 +194,8 @@ public class MapController extends Controller implements IMapController, IObserv
 				String result = "";
 				if(model.getActivePlayer() == reference.player_index)
 				{
+					has_placed_road = false;
+					has_placed_city = false;
 					result = reference.getProxy().finishTurn();
 				}
 				try
