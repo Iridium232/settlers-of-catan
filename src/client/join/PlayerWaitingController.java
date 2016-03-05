@@ -136,7 +136,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	private PlayerInfo[] convertToArray(ArrayList<PlayerInfo> playerInfos) {

@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Implementation for the join game controller
  */
-public class JoinGameController extends Controller implements IJoinGameController, IObserver {
+public class JoinGameController extends Controller implements IJoinGameController {
 
 	private INewGameView newGameView;
 	private ISelectColorView selectColorView;
@@ -313,7 +313,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		{
 			getSelectColorView().closeModal();
 		}
-		if(!getJoinGameView().isModalShowing() && Reference.GET_SINGLETON().game_id != -1)
+		if(!getJoinGameView().isModalShowing())
 		{
 			getJoinGameView().showModal();
 		}
@@ -337,14 +337,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			{
 				throw new JoinExceptions("Join Refused by server");
 			}
-
-			
 			if(getSelectColorView().isModalShowing())
 			{
 				getSelectColorView().closeModal();
+				setSelectColorView(null);
+//				if(this.getJoinGameView().isModalShowing())
+//				{
+//					getJoinGameView().closeModal();
+//				}
 			}
-			
-
 			ModelPopulator.populateModel(model, ref.getFascade());
 			// If join succeeded
 			Reference.GET_SINGLETON().player_color = color;
@@ -386,14 +387,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		}
 		return -1;
 	}
-
-	@Override
-	public void ObservableChanged() 
-	{
-
-	}
-	
-	
 
 
 
