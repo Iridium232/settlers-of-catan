@@ -2,6 +2,8 @@ package client.map;
 
 import java.util.*;
 
+import org.json.JSONObject;
+
 import shared.communication.fromServer.game.Port;
 import shared.definitions.*;
 import shared.locations.*;
@@ -18,6 +20,7 @@ import shared.model.player.Player;
 import shared.model.states.IState;
 import client.base.*;
 import client.communication.IServerProxy;
+import client.communication.ModelPopulator;
 import client.control.IObserver;
 import client.control.Reference;
 import client.data.*;
@@ -70,7 +73,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	protected void initFromModel() 
 	{
 		model = reference.fascade;
-		if(!initialized)
+		if(!initialized)//Set up Tiles
 		{		
 			if(model == null){return;}
 			TerrainHex[][] hex_grid = model.getHexes();
@@ -98,7 +101,8 @@ public class MapController extends Controller implements IMapController, IObserv
 		}
 		
 		
-		
+		//=======================================================
+		//Set Roads
 		Road[] road_list = model.getRoads();
 		if(road_list != null)
 		{
@@ -108,6 +112,8 @@ public class MapController extends Controller implements IMapController, IObserv
 			}
 		}
 		
+		//=======================================================
+		//Set Ports
 		shared.model.ports.Port[] port_list = model.getPorts();
 		if(port_list != null)
 		{
@@ -118,6 +124,8 @@ public class MapController extends Controller implements IMapController, IObserv
 			}
 		}
 		
+		//=======================================================
+		//Set Cities
 		City[] city_list = model.getCities();
 		if(city_list != null)
 		{
@@ -127,6 +135,8 @@ public class MapController extends Controller implements IMapController, IObserv
 			}
 		}
 		
+		//=======================================================
+		//Set Settlements
 		Settlement[] settlement_list = model.getSettlements();
 		if (settlement_list != null)
 		{
@@ -137,20 +147,27 @@ public class MapController extends Controller implements IMapController, IObserv
 			}
 		}
 		
+		//=======================================================
+		//Put the Robber
 		Robber robber = model.getRobber();
 		if(robber!= null)
 		{
 			getView().placeRobber(robber.getLocation());
 		}
 		
+		//=======================================================
+		//Set Map State
 		this.model_state = model.getStateOf(reference.player_index);
 		
-		
+		//=======================================================
+		// If this player is supposed to be robbing:
 		if(model.getStateOf(reference.player_index).getState() == TurnStatus.ROBBING)
 		{
 			this.startMove(PieceType.ROBBER, false, false);
 		}
 		
+		//=======================================================
+		// If we are in the first round
 		if(model.getStateOf(reference.player_index).getState() == TurnStatus.FIRSTROUND)
 		{
 			System.out.print("\nFIRSTROUND\n");
@@ -164,8 +181,25 @@ public class MapController extends Controller implements IMapController, IObserv
 				this.startMove(PieceType.SETTLEMENT, true, false);
 				has_placed_city = true;
 			}
+			if(has_placed_road && has_placed_city)
+			{
+				String result = reference.getProxy().finishTurn();
+				try
+				{
+					ModelPopulator.populateModel(new JSONObject(result), reference.fascade);
+				}
+				catch(Exception e)
+				{
+					System.err.println("FirstRound Turn End Failure!");
+					e.printStackTrace();
+				}
+				has_placed_road = false;
+				has_placed_city = false;
+			}
 		}
 		
+		//=======================================================
+		//If we are in the second setup round
 		if(model.getStateOf(reference.player_index).getState() == TurnStatus.SECONDROUND)
 		{
 			if(!has_placed_road)
@@ -177,6 +211,21 @@ public class MapController extends Controller implements IMapController, IObserv
 			{
 				this.startMove(PieceType.SETTLEMENT, true, false);
 				has_placed_city = true;
+			}
+			if(has_placed_road && has_placed_city)
+			{
+				String result = reference.getProxy().finishTurn();
+				try
+				{
+					ModelPopulator.populateModel(new JSONObject(result), reference.fascade);
+				}
+				catch(Exception e)
+				{
+					System.err.println("SecondRound Turn End Failure!");
+					e.printStackTrace();
+				}
+				has_placed_road = false;
+				has_placed_city = false;
 			}
 		}
 		
@@ -409,7 +458,17 @@ public class MapController extends Controller implements IMapController, IObserv
 	{
 		shared.locations.HexLocation location = getView().getMap().getRobber();
 		
-		proxy.robPlayer(location, new shared.model.player.Player(victim));
+				
+		if(victim == null)
+		{
+			shared.model.player.Player default_victim = new shared.model.player.Player();
+		}
+		else
+		{
+			proxy.robPlayer(location, new shared.model.player.Player(victim));
+		}
+		
+		
 		
 		if(getRobView().isModalShowing())
 		{
@@ -442,9 +501,11 @@ public class MapController extends Controller implements IMapController, IObserv
 
 		boolean shouldDoSomething = status == TurnStatus.FIRSTROUND ||
 				status == TurnStatus.SECONDROUND ||
-				status == TurnStatus.PLAYING;
+				status == TurnStatus.PLAYING ||
+				status == TurnStatus.ROBBING ||
+				status == TurnStatus.WAITING;
 
-		if (shouldDoSomething && has4Players) {
+		if (has4Players) {
 			updateMap();
 		}
 	}
