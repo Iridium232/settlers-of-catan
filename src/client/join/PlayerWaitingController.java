@@ -61,9 +61,16 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		try {
 			getView().setPlayers(convertToArray(playerInfos));
 			getView().setAIChoices(AIValues);
-			if (!getView().isModalShowing()) getView().showModal();
-			if (playerInfos.size() == 4) {
-				if (getView().isModalShowing()) getView().closeModal();
+			if (!getView().isModalShowing())
+			{
+				getView().showModal();
+			}
+			if (playerInfos.size() == 4) 
+			{
+				if (getView().isModalShowing())
+				{
+					getView().closeModal();
+				}
 			}
 		}
 		catch (Exception e){
@@ -93,10 +100,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	}
 
 	@Override
-	public void ObservableChanged() {
+	public void ObservableChanged() 
+	{
 		Fascade f = Reference.GET_SINGLETON().getFascade();
 		ArrayList<PlayerInfo> playerInfos = new ArrayList<>();
-		if (f.getModel() != null) {
+		if (f.getModel() != null) 
+		{
 			Player[] players = f.getModel().getPlayers();
 			for (Player player : players) {
 				if (player.getName() != null) {
@@ -109,19 +118,23 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				}
 			}
 		}
-		if (f.getModel().getTurnStatus(Reference.GET_SINGLETON().getPlayer_index()) == TurnStatus.FIRSTROUND) {
-			String[] AIValues = { "LARGEST_ARMY" };
-			try {
-                getView().setPlayers(convertToArray(playerInfos));
-                getView().setAIChoices(AIValues);
-                if(!getView().isModalShowing()) getView().showModal();
-                if (playerInfos.size() == 4) {
-                    if (getView().isModalShowing()) getView().closeModal();
-                }
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
+		String[] AIValues = { "LARGEST_ARMY" };
+		try 
+		{
+			getView().setPlayers(convertToArray(playerInfos));
+			getView().setAIChoices(AIValues);
+			if(!getView().isModalShowing() && playerInfos.size() != 4)
+			{
+				getView().showModal();
+			}
+			if (playerInfos.size() == 4) 
+			{
+				if (getView().isModalShowing()) getView().closeModal();
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 

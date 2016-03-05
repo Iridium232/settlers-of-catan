@@ -38,7 +38,10 @@ public class MapController extends Controller implements IMapController, IObserv
 	private IState model_state;
 	private boolean is_free = false;
 	private boolean initialized = false;
+	private boolean has_placed_road = false;
+	private boolean has_placed_city = false;
 	private boolean drawn = false;
+
 
 	/**
 	 * Map Controller Constructor
@@ -139,7 +142,9 @@ public class MapController extends Controller implements IMapController, IObserv
 		{
 			getView().placeRobber(robber.getLocation());
 		}
+		
 		this.model_state = model.getStateOf(reference.player_index);
+		
 		
 		if(model.getStateOf(reference.player_index).getState() == TurnStatus.ROBBING)
 		{
@@ -149,14 +154,30 @@ public class MapController extends Controller implements IMapController, IObserv
 		if(model.getStateOf(reference.player_index).getState() == TurnStatus.FIRSTROUND)
 		{
 			System.out.print("\nFIRSTROUND\n");
-			this.startMove(PieceType.ROAD, true, true);
-			this.startMove(PieceType.SETTLEMENT, true, false);
+			if(!has_placed_road)
+			{
+				this.startMove(PieceType.ROAD, true, true);
+				has_placed_road = true;
+			}
+			if(!has_placed_city)
+			{
+				this.startMove(PieceType.SETTLEMENT, true, false);
+				has_placed_city = true;
+			}
 		}
 		
 		if(model.getStateOf(reference.player_index).getState() == TurnStatus.SECONDROUND)
 		{
-			this.startMove(PieceType.ROAD, true, true);
-			this.startMove(PieceType.SETTLEMENT, true, false);
+			if(!has_placed_road)
+			{
+				this.startMove(PieceType.ROAD, true, true);
+				has_placed_road = true;
+			}
+			if(!has_placed_city)
+			{
+				this.startMove(PieceType.SETTLEMENT, true, false);
+				has_placed_city = true;
+			}
 		}
 		
 	}
