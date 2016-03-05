@@ -1,5 +1,6 @@
 package client.turntracker;
 
+import client.communication.ModelPopulator;
 import client.control.IObserver;
 import client.control.Reference;
 import shared.definitions.CatanColor;
@@ -10,6 +11,8 @@ import shared.model.Game;
 import shared.model.player.Player;
 
 import javax.xml.parsers.FactoryConfigurationError;
+
+import org.json.JSONObject;
 
 
 /**
@@ -42,8 +45,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	public void endTurn() {
 		try {
 			Fascade f = Reference.GET_SINGLETON().getFascade();
-			if (f.canFinishTurn(Reference.GET_SINGLETON().getPlayer_index())) {
-				Reference.GET_SINGLETON().getProxy().finishTurn();
+			if (f.canFinishTurn(Reference.GET_SINGLETON().getPlayer_index())) 
+			{
+				String finish = Reference.GET_SINGLETON().getProxy().finishTurn();
+				ModelPopulator.populateModel(new JSONObject(finish), Reference.GET_SINGLETON().fascade);
 			}
 
 		} catch (Exception e) {
