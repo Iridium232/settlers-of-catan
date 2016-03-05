@@ -1,7 +1,12 @@
 package client.roll;
 
 import client.base.*;
+import client.communication.ModelPopulator;
+
 import java.util.Random;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import client.control.IObserver;
 import client.control.Reference;
@@ -55,7 +60,7 @@ public class RollController extends Controller implements IRollController, IObse
 		getResultView().setRollValue(result);
 		getResultView().showModal();
 		Reference.GET_SINGLETON().getProxy().rollNumber(result);
-		Reference.GET_SINGLETON().getProxy().getModel(Reference.GET_SINGLETON().getFascade().getLatestModelNum());
+		//		Reference.GET_SINGLETON().getProxy().getModel(Reference.GET_SINGLETON().getFascade().getLatestModelNum());
 	}
 
 	@Override
