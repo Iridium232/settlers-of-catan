@@ -5,7 +5,7 @@ import shared.definitions.CatanColor;
 import shared.model.messages.MessageLine;
 import shared.model.player.Player;
 
-public class MessageToLogEntry {
+public class MessageToLogEntry{
 	private static MessageToLogEntry single;
 	private MessageToLogEntry(){}
 	public static MessageToLogEntry getMessageToLog(){
