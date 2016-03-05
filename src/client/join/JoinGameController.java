@@ -337,16 +337,17 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			{
 				throw new JoinExceptions("Join Refused by server");
 			}
+
 			
 			if(getSelectColorView().isModalShowing())
 			{
 				getSelectColorView().closeModal();
 			}
 			
+
 			ModelPopulator.populateModel(model, ref.getFascade());
 			// If join succeeded
 			Reference.GET_SINGLETON().player_color = color;
-
 
 			//joinAction.execute();
 		} 
