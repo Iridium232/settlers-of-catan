@@ -94,9 +94,10 @@ public class DiscardController extends Controller implements IDiscardController,
 	}
 
 	@Override
-	public void ObservableChanged() {
-		// TODO Auto-generated method stub
-		if(r.getFascade().getModel().getTurnStatus(r.getPlayer_index())==TurnStatus.DISCARDING){
+	public void ObservableChanged() 
+	{
+		if(r.getFascade().getModel().getTurnStatus(r.getFascade().getActivePlayer())
+				== TurnStatus.DISCARDING ){
 			for(Player p:r.getFascade().getModel().getPlayers()){
 				if(r.getPlayer_id()==p.getPlayerID()){
 					localP=p;

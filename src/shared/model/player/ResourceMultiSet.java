@@ -275,5 +275,11 @@ public class ResourceMultiSet {
 	}
 
 
+	public int total() 
+	{
+		return brick+ore+sheep+wheat+wood;
+	}
+
+
 
 }
