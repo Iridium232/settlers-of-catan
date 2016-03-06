@@ -434,7 +434,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		getView().placeRobber(hexLoc);
 		ArrayList<RobPlayerInfo> playerlist = new ArrayList<RobPlayerInfo>();
 		
-		for (shared.model.player.Player player : reference.fascade.whoCanBeRobbed())
+		for (shared.model.player.Player player : reference.fascade.whoCanBeRobbed(hexLoc))
 		{
 			playerlist.add(new RobPlayerInfo(player));
 		}

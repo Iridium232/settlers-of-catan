@@ -351,13 +351,14 @@ public class Fascade
 	 * @post result = an array of indexes to the players that can be robbed. 
 	 * Or an empty array if none are possible
 	 */
-	public Player[] whoCanBeRobbed()
+	public Player[] whoCanBeRobbed(HexLocation hexLoc)
 	{
-		HexLocation robberLocation = game_model.getMap().getRobber().getLocation();
+//		HexLocation robberLocation = game_model.getMap().getRobber().getLocation();
 		Building[] buildings;
 		try 
 		{
-			buildings = game_model.getMap().getAdjoiningPlayers(robberLocation);
+			buildings = game_model.getMap().getAdjoiningPlayers(hexLoc);
+			System.out.println(buildings.length);
 		} 
 		catch (Exception e) 
 		{
