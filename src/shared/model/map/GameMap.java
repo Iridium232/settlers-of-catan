@@ -70,15 +70,9 @@ public class GameMap
 		{
 			
 			Vertex utility = new Vertex(building.getLocation());
-			System.out.println("Looking for neighbors of a building (" + 
-					utility.getLocation().getNormalizedLocation().getHexLoc().getX() 
-					+ "," + 
-					utility.getLocation().getNormalizedLocation().getHexLoc().getY() + 
-					")");
 			
 			HexLocation[] neighbors = utility.getNeigborHexLocations(this);
-			
-			System.out.print("gotNeighbors");
+
 			
 			if(neighbors[0] != null && neighbors[0].equals(location))
 			{

@@ -449,14 +449,15 @@ public class MapController extends Controller implements IMapController, IObserv
 	public void placeRobber(shared.locations.HexLocation hexLoc) 
 	{
 		getView().placeRobber(hexLoc);
-		ArrayList<RobPlayerInfo> playerlist = new ArrayList<RobPlayerInfo>();
 		
-		System.out.println("PlaceRobber!");
+		ArrayList<RobPlayerInfo> playerlist = new ArrayList<RobPlayerInfo>();
+
 		for (shared.model.player.Player player : reference.fascade.whoCanBeRobbed(hexLoc))
 		{
 			playerlist.add(new RobPlayerInfo(player));
 		}
-		soldier_move = false;
+		
+		
 		getRobView().setPlayers(playerlist.toArray(new RobPlayerInfo[playerlist.size()]));
 		
 		if(!getRobView().isModalShowing())
@@ -548,17 +549,47 @@ public class MapController extends Controller implements IMapController, IObserv
 	public void robPlayer(RobPlayerInfo victim) 
 	{
 		shared.locations.HexLocation location = getView().getMap().getRobber();
+		String result = "";
 		
-				
+
+		
+		
+		
+		
 		if(victim == null)
 		{
 			shared.model.player.Player default_victim = new shared.model.player.Player();
 			default_victim.setPlayerIndex(-1);
-			proxy.robPlayer(location, default_victim);
+			if(soldier_move)
+			{
+				result = proxy.playSoldier(location, default_victim);
+			}
+			else
+			{
+				result = proxy.robPlayer(location, default_victim);
+			}
 		}
 		else
 		{
-			proxy.robPlayer(location, new shared.model.player.Player(victim));
+			if(soldier_move)
+			{
+				proxy.playSoldier(location, new shared.model.player.Player(victim));
+			}
+			else
+			{
+				result = proxy.robPlayer(location, new shared.model.player.Player(victim));
+			}
+		}
+		
+		soldier_move = false;
+		
+		try 
+		{
+			ModelPopulator.populateModel(new JSONObject(result), reference.fascade);
+		} 
+		catch (JSONException e) 
+		{
+			e.printStackTrace();
 		}
 		
 		is_moving_robber = false;
