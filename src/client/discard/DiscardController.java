@@ -46,6 +46,13 @@ public class DiscardController extends Controller implements IDiscardController,
 	public IWaitView getWaitView() {
 		return waitView;
 	}
+	private void reset() {
+		getDiscardView().setResourceDiscardAmount(ResourceType.BRICK, 0);
+		getDiscardView().setResourceDiscardAmount(ResourceType.ORE, 0);
+		getDiscardView().setResourceDiscardAmount(ResourceType.SHEEP, 0);
+		getDiscardView().setResourceDiscardAmount(ResourceType.WHEAT, 0);
+		getDiscardView().setResourceDiscardAmount(ResourceType.WOOD, 0);
+	}
 /**
  * @pre has already decreased the amount for this resourcetype
  * @post counter for specified ResourceType is increased by 1
@@ -87,8 +94,9 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void discard() {
 		r.getProxy().discardCards(new ResourceList(discard.get(ResourceType.BRICK),discard.get(ResourceType.ORE),
-				discard.get(ResourceType.SHEEP),discard.get(ResourceType.WHEAT),discard.get(ResourceType.WOOD)));
+		discard.get(ResourceType.SHEEP),discard.get(ResourceType.WHEAT),discard.get(ResourceType.WOOD)));
 		getDiscardView().closeModal();
+		reset();
 		/*if(!getWaitView().isModalShowing()){
 			getWaitView().showModal();
 		}*/
