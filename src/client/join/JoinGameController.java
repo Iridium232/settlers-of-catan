@@ -3,6 +3,7 @@ package client.join;
 import client.base.Controller;
 import client.base.IAction;
 import client.communication.ModelPopulator;
+import client.communication.ServerPoller;
 import client.control.IObserver;
 import client.control.Reference;
 import client.data.GameInfo;
@@ -21,12 +22,13 @@ import java.util.List;
 /**
  * Implementation for the join game controller
  */
-public class JoinGameController extends Controller implements IJoinGameController {
+public class JoinGameController extends Controller implements IJoinGameController, IObserver {
 
 	private INewGameView newGameView;
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
+	private GameInfo[] oldGames;
 
 	/**
 	 * JoinGameController constructor
@@ -44,6 +46,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
+		oldGames = null;
 		Reference.GET_SINGLETON().joinview = view;
 	}
 
@@ -145,6 +148,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void start() 
 	{
+		ServerPoller.getServerPoller().setObserver(this);
 		List<Game> gamelist = Reference.GET_SINGLETON().proxy.getGameList();
 		GameInfo[] games = new GameInfo[gamelist.size()];
 		int counter = 0;
@@ -162,6 +166,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			games[counter] = thisgame;
 			counter++;
 		}
+
+		if (Reference.GET_SINGLETON().getPlayer_color() != null) return;
+		if (!hasChanged(games, oldGames)) return;
+		oldGames = games;
 		
 		Reference ref = Reference.GET_SINGLETON();
 		
@@ -172,6 +180,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		
 		getJoinGameView().setGames(games, ourguy);
 
+		if (getJoinGameView().isModalShowing()) getJoinGameView().closeModal();
 		if(!getJoinGameView().isModalShowing())
 		{
 			getJoinGameView().showModal();
@@ -376,7 +385,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		} 
 	}
 
-	private int getIndex(List<PlayerInfo> playerInfos) 
+	@Override
+	public void ObservableChanged() {
+		start();
+	}
+
+	private int getIndex(List<PlayerInfo> playerInfos)
 	{
 		if (playerInfos.size() < 4) 
 		{
@@ -393,7 +407,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		return -1;
 	}
 
-
+	private boolean hasChanged(GameInfo[] newGames, GameInfo[] oldGames) {
+		if (oldGames == null) return true;
+		if (newGames.length != oldGames.length) return true;
+		for (int i = 0; i < newGames.length; i++) {
+			List<PlayerInfo> newPlayers = newGames[i].getPlayers();
+			List<PlayerInfo> oldPlayers = oldGames[i].getPlayers();
+			if (newPlayers.size() != oldPlayers.size()) return true;
+		}
+		return false;
+	}
 
 }
 
