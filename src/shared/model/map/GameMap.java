@@ -505,10 +505,24 @@ public class GameMap
 			return false;//This means that the road would be over water.
 		}
 		
+		Vertex v1 = edge.getEnd1();
+		Vertex v2 = edge.getEnd2();
+		
 		//check that there is not already a road there
 		for(Road road : roads)
 		{
-			if(road.getLocation().equals(edge))
+			if((road.getLocation().getEnd1().getLocation().getNormalizedLocation()
+					.equals(v1.getLocation().getNormalizedLocation())
+					&&
+				road.getLocation().getEnd2().getLocation().getNormalizedLocation()
+					.equals(v2.getLocation().getNormalizedLocation())
+					)||(
+				road.getLocation().getEnd2().getLocation().getNormalizedLocation()
+					.equals(v1.getLocation().getNormalizedLocation())
+					&&
+				road.getLocation().getEnd1().getLocation().getNormalizedLocation()
+					.equals(v2.getLocation().getNormalizedLocation())
+					))
 			{
 				return false;
 			}
@@ -518,8 +532,6 @@ public class GameMap
 		boolean road_to_end = false;
 		boolean building_at_end  = false;
 		
-		building_at_end = getBuildingAt(player_index, side1) != null 
-				|| getBuildingAt(player_index, side2) != null;
 		
 		road_to_end = hasRoadTo(player_index, side1)
 						|| hasRoadTo(player_index, side2);
@@ -539,6 +551,7 @@ public class GameMap
 	{
 		for (Road road: roads)
 		{
+			if (road.getOwnerIndex() != player_index) continue;
 			Vertex side1 = road.getLocation().getEnd1();
 			Vertex side2 = road.getLocation().getEnd2();
 			if((vertex.getLocation().getNormalizedLocation()

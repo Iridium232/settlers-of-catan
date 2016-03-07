@@ -12,6 +12,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 //import shared.model.states.IState;
 
 
@@ -54,9 +57,17 @@ public class ChatController extends Controller implements IChatController, IObse
 	 * @post a message is posted to the chat view.
 	 */
 	@Override
-	public void sendMessage(String message) {
-//		int playerIndex = new Player().getPlayerIndex();
-		Reference.GET_SINGLETON().getProxy().sendChat(reference.getPlayer_index(), message);
+	public void sendMessage(String message) 
+	{
+		String result = Reference.GET_SINGLETON().getProxy().sendChat(reference.getPlayer_index(), message);
+		try 
+		{
+			ModelPopulator.populateModel(new JSONObject(result), Reference.GET_SINGLETON().getFascade());
+		} 
+		catch (JSONException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 
 

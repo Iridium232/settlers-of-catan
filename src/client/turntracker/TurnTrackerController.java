@@ -80,7 +80,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		}
 		Player localPlayer = null;
 		if (playerInitialized) {
-			for (Player player : model.getPlayers()) {
+			for (Player player : model.getPlayers()) 
+			{
                 if (player == null || player.getColor() == null)continue;
                 if (player.getPlayerIndex() == r.getPlayer_index()) {
                     localPlayer = player;
@@ -99,9 +100,11 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
                 if (model.getTurn_tracker().getLongest_road_player() == player.getPlayerIndex()) {
                     longestRoad = true;
                 }
+                
+     
 
-                getView().updatePlayer(player.getPlayerIndex(), player.getVictoryPoints(),
-                        highlight, largestArmy, longestRoad);
+                getView().updatePlayer(player.getPlayerIndex(), r.getFascade().getVictoryPoints(player.getPlayerIndex()),
+                        highlight, largestArmy, longestRoad, player.getColor());
             }
 		}
 

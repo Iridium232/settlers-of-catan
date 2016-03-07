@@ -281,7 +281,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void startJoinGame(GameInfo game) 
 	{
 		if(game == null) return;
-		if(!(game.getPlayers() == null))System.out.println("\nJoining a game with " + game.getPlayers().size() + " players.");
+		
 		getSelectColorView().enableAllColors();
 		Reference ref = Reference.GET_SINGLETON();
 		ref.game_id = game.getId();
