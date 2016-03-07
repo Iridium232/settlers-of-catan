@@ -92,6 +92,8 @@ public class DiscardController extends Controller implements IDiscardController,
 		if(!getWaitView().isModalShowing()){
 			getWaitView().showModal();
 		}
+		initializeMap();
+		
 	}
 
 	@Override

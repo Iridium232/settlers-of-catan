@@ -48,10 +48,10 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	public void ObservableChanged() {
 		// TODO Auto-generated method stub
 		MessageLine[] history = Reference.GET_SINGLETON().getFascade().getLog();
-		if (history.length != historySize) {
+		//if (history.length != historySize) {
 			initFromModel();
-			historySize = history.length;
-		}
+		//	historySize = history.length;
+		//}
 	}
 	
 }
