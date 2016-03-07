@@ -48,6 +48,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	private boolean is_placing_city = false;
 	private boolean drawn = false;
 	private boolean is_moving_robber = false;
+	private boolean has_robbed = false;
 
 
 	/**
@@ -250,6 +251,9 @@ public class MapController extends Controller implements IMapController, IObserv
 		
 	}
 
+	/**
+	 * Converts Strings to PortTypes
+	 */
 	private PortType getPortType(ResourceType resource) 
 	{
 		if (resource == ResourceType.BRICK) return PortType.BRICK;
@@ -533,6 +537,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		}
 		
 		is_moving_robber = false;
+		has_robbed = true;
 		
 		if(getRobView().isModalShowing())
 		{
