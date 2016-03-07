@@ -69,11 +69,11 @@ public class DiscardController extends Controller implements IDiscardController,
  */
 	@Override
 	public void decreaseAmount(ResourceType resource) {
-		int amount=discard.get(resource);
+		int amount = discard.get(resource);
 		amount--;
 		getDiscardView().setResourceDiscardAmount(resource, amount);
 		selected--;
-		discard.replace(resource, amount);
+		discard.put(resource, new Integer(amount));
 		getDiscardView().setStateMessage(selected+"/"+numToDiscard);
 		if(selected!=numToDiscard){
 			getDiscardView().setDiscardButtonEnabled(false);

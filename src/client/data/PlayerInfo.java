@@ -42,7 +42,7 @@ public class PlayerInfo
 	{
 		this.id = player.getPlayerID();
 		this.playerIndex = player.getPlayerIndex();
-		this.color = CatanColor.valueOf(player.getColor());
+		this.color = CatanColor.valueOf(player.getColor().toUpperCase());
 		this.name = player.getName();
 	}
 

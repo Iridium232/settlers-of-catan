@@ -28,17 +28,18 @@ public class Vertex
 	{
 		HexLocation[] neighbors = new HexLocation[3];
 		neighbors[0] = location.getNormalizedLocation().getHexLoc();//lower hex
-		int lowerX = neighbors[0].getX();
-		int lowerY = neighbors[0].getY();
-		neighbors[1] = map_pointer.getHexAt(lowerX, lowerY + 1).getLocation();
+
+		neighbors[1] = neighbors[0].getNeighborLoc(EdgeDirection.North);
+		
 		if(this.getLocation().getDir() == VertexDirection.NorthEast)
 		{
-			neighbors[2] = map_pointer.getHexAt(lowerX - 1,lowerY + 1).getLocation();//Upper Left
+			neighbors[2] = neighbors[0].getNeighborLoc(EdgeDirection.NorthEast);//Upper Left
 		}
 		else if (this.getLocation().getDir() == VertexDirection.NorthWest)
 		{
-			neighbors[2] = map_pointer.getHexAt(lowerX + 1,lowerY).getLocation();//Upper Right
+			neighbors[2] = neighbors[0].getNeighborLoc(EdgeDirection.NorthWest);//Upper Right
 		}
+
 		return neighbors;
 	}
 	
@@ -58,7 +59,6 @@ public class Vertex
 			neighbors[1] = new Vertex(new VertexLocation(location.getHexLoc(), VertexDirection.West));
 			neighbors[2] = new Vertex(new VertexLocation(neighbor_hexes[1], VertexDirection.West));
 		}
-		
 		
 		
 		return neighbors;

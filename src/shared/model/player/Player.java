@@ -499,8 +499,12 @@ public class Player {
      *
      * @return  How many victory points this player has
      */
-    public int getVictoryPoints() {
-        return victoryPoints;
+    public int getVictoryPoints() 
+    {
+    	int citycount = 4 - cities;
+    	int settlecount = 5 - settlements;
+    	
+        return citycount*2 + settlecount + monuments;
     }
 
     /**

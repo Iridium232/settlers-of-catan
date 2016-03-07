@@ -44,6 +44,13 @@ public class GameMap
 		ports = new Port[0];
 		roads = new Road[0];
 		buildings = new Building[0];
+		for(int i = 0; i < 7; i++)
+		{
+			for(int j = 0; j < 7; j++)
+			{
+				hexes[i][j] = new TerrainHex(i, j, HexType.WATER);
+			}
+		}
 	}
 
 	/**
@@ -58,15 +65,39 @@ public class GameMap
 	public Building[] getAdjoiningPlayers(HexLocation location) throws Exception
 	{
 		ArrayList<Building> builds = new ArrayList<Building>();
+		
 		for (Building building : buildings)
 		{
+			
 			Vertex utility = new Vertex(building.getLocation());
+			System.out.println("Looking for neighbors of a building (" + 
+					utility.getLocation().getNormalizedLocation().getHexLoc().getX() 
+					+ "," + 
+					utility.getLocation().getNormalizedLocation().getHexLoc().getY() + 
+					")");
+			
 			HexLocation[] neighbors = utility.getNeigborHexLocations(this);
-			if(neighbors[0].equals(location))
+			
+			System.out.print("gotNeighbors");
+			
+			if(neighbors[0] != null && neighbors[0].equals(location))
 			{
+				System.out.println("added a building");
 				builds.add(building);
 			}
+			if(neighbors[1] != null && neighbors[1].equals(location))
+			{
+				System.out.println("added a building");
+				builds.add(building);
+			}
+			if(neighbors[2] != null && neighbors[2].equals(location))
+			{
+				System.out.println("added a building");
+				builds.add(building);
+			}
+			System.out.println(" pass.");
 		}
+		System.out.println("Found " + builds.size() + " buildings.");
 		return builds.toArray(new Building[builds.size()]);
 	}
 
@@ -369,25 +400,20 @@ public class GameMap
 			}
 		}
 		
-		//Make sure that unless it is the inital round, the player has an incoming road
+		//Make sure that the player has an incoming road
 		boolean has_incoming_road = false;
-		if(!initialOverride)
+		for(Road road : roads)
 		{
-			for(Road road : roads)
+			boolean touches_vertex = road.getLocation().getEnd1().getLocation().getNormalizedLocation()
+						.equals(location.getLocation().getNormalizedLocation()) 
+					|| road.getLocation().getEnd2().getLocation().getNormalizedLocation()
+						.equals(location.getLocation().getNormalizedLocation());
+			if(road.getOwnerIndex() == player_index && touches_vertex)
 			{
-				boolean touches_vertex = road.getLocation().getEnd1().equals(location) 
-						|| road.getLocation().getEnd2().equals(location);
-				if(road.getOwnerIndex() == player_index || touches_vertex)
-				{
-					has_incoming_road = true;
-				}
+				has_incoming_road = true;
 			}
-			//check that there is a road to there unless Initial round Override
 		}
-		else
-		{
-			has_incoming_road = true;
-		}
+
 		
 		
 		//check that there are no buildings within 1 edge.
@@ -402,7 +428,6 @@ public class GameMap
 				}
 			}
 		}
-		
 		return has_incoming_road && is_on_land;
 	}
 	
@@ -416,34 +441,17 @@ public class GameMap
 	{
 		HexLocation[] neighbors = vertex.getNeigborHexLocations(this);
 		boolean answer = false;
-		for (TerrainHex[] terrain_hex_array : hexes)
+		//ArrayList<TerrainHex> neighbor_hexes = new ArrayList<TerrainHex>();
+		for (HexLocation location : neighbors)
 		{
-			for (TerrainHex terrain_hex : terrain_hex_array)
+			if (location == null) continue;
+			TerrainHex newhex = this.getHexAt(location.getX(), location.getY());
+			if(newhex.getType() != HexType.WATER)
 			{
-				if(terrain_hex == null)
-				{
-					continue;
-				}
-				if(neighbors[0] != null && neighbors[0].equals(terrain_hex.getLocation()) 
-					&& terrain_hex.getType() != HexType.WATER)
-				{
-					answer = true;
-					break;
-				}
-				if(neighbors[1] != null && neighbors[1].equals(terrain_hex.getLocation()) 
-					&& terrain_hex.getType() != HexType.WATER)
-				{
-					answer = true;
-					break;
-				}
-				if(neighbors[2] != null && neighbors[2].equals(terrain_hex.getLocation()) 
-					&& terrain_hex.getType() != HexType.WATER)
-				{
-					answer = true;
-					break;
-				}
+				answer = true;
 			}
 		}
+
 		return answer;
 	}
 	
@@ -492,7 +500,7 @@ public class GameMap
 		//check that the spot is on land
 		Vertex side1 = edge.getEnd1();
 		Vertex side2 = edge.getEnd2();
-		if(!(this.touchesLand(side1) || touchesLand(side2)))
+		if(!(this.touchesLand(side1) && touchesLand(side2)))
 		{
 			return false;//This means that the road would be over water.
 		}
@@ -545,6 +553,22 @@ public class GameMap
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Can-do for when we are in the setup rounds
+	 * @param edge
+	 * @param player_index
+	 * @param allow_disconnected
+	 * @pre none
+	 * @post whether you can build a road there is returned
+	 */
+	public boolean canBuildRoad(Edge edge, int player_index,
+			boolean allow_disconnected) 
+	{
+		Vertex v1 = edge.getEnd1();
+		Vertex v2 = edge.getEnd2();
+		return this.touchesLand(v1) && touchesLand(v2);
 	}
 	
 	

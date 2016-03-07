@@ -434,6 +434,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		getView().placeRobber(hexLoc);
 		ArrayList<RobPlayerInfo> playerlist = new ArrayList<RobPlayerInfo>();
 		
+		System.out.println("PlaceRobber!");
 		for (shared.model.player.Player player : reference.fascade.whoCanBeRobbed(hexLoc))
 		{
 			playerlist.add(new RobPlayerInfo(player));
@@ -522,6 +523,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		if(victim == null)
 		{
 			shared.model.player.Player default_victim = new shared.model.player.Player();
+			proxy.robPlayer(location, default_victim);
 		}
 		else
 		{

@@ -78,12 +78,13 @@ public class Fascade
 	 */
 	public boolean canBuildRoad(int player_index, Edge edge, boolean allow_disconnected)
 	{
-		if(allow_disconnected)
-		{
-			return true;
-		}
+
 		GameMap game_map = game_model.getMap();
 		Player player = game_model.getPlayers()[player_index];
+		if(allow_disconnected)
+		{
+			return game_map.canBuildRoad(edge, player_index, allow_disconnected);
+		}
 		return game_map.canBuildRoad(edge, player_index) &&
 				player.canPlaceRoad() && (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
@@ -353,12 +354,13 @@ public class Fascade
 	 */
 	public Player[] whoCanBeRobbed(HexLocation hexLoc)
 	{
-//		HexLocation robberLocation = game_model.getMap().getRobber().getLocation();
 		Building[] buildings;
 		try 
 		{
+			System.out.println("We are finding who is adjoining");
 			buildings = game_model.getMap().getAdjoiningPlayers(hexLoc);
-			System.out.println(buildings.length);
+			System.out.println("There are this many adjoining buildings: "
+					+ buildings.length);
 		} 
 		catch (Exception e) 
 		{
@@ -370,7 +372,8 @@ public class Fascade
 		{
 			for(Building building : buildings)
 			{
-				if(player.getColor().toLowerCase().equals(building.getColor().name().toLowerCase()))
+				if(player.getColor().toLowerCase().equals
+						(building.getColor().name().toLowerCase()))
 				{
 					if(!players.contains(player))
 					{
