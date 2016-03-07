@@ -6,7 +6,12 @@ import shared.definitions.TurnStatus;
 import shared.model.Game;
 import shared.model.player.DevCardList;
 import shared.model.player.Player;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import client.base.*;
+import client.communication.ModelPopulator;
 import client.control.IObserver;
 import client.control.Reference;
 
@@ -68,7 +73,13 @@ public class DevCardController extends Controller implements IDevCardController,
  */
 	@Override
 	public void buyCard() {
-		r.getProxy().buyDevCard();
+		String result = r.getProxy().buyDevCard();
+		try {
+			ModelPopulator.populateModel(new JSONObject(result), Reference.GET_SINGLETON().getFascade());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		getBuyCardView().closeModal();
 	}
 /**

@@ -19,7 +19,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	public ResourceBarController(IResourceBarView view) {
 
 		super(view);
-		
+		disableActions();
 		elementActions = new HashMap<ResourceBarElement, IAction>();
 		Reference.GET_SINGLETON().getFascade().addObserver(this);
 	}
