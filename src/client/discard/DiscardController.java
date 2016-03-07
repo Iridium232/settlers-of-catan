@@ -109,7 +109,8 @@ public class DiscardController extends Controller implements IDiscardController,
 	public void ObservableChanged() 
 	{
 		if(r.getFascade().getModel().getTurnStatus(r.getFascade().getActivePlayer())
-				== TurnStatus.DISCARDING ){
+				== TurnStatus.DISCARDING)
+		{
 
 			for(Player p:r.getFascade().getModel().getPlayers()){
 				if(r.getPlayer_id()==p.getPlayerID()){
@@ -124,10 +125,16 @@ public class DiscardController extends Controller implements IDiscardController,
 					initializeMap();
 					numToDiscard=hand.size()/2;
 				}
-			} else{
-				getWaitView().showModal();
+			} else
+			{
+				if(getWaitView().isModalShowing())
+				{
+					getWaitView().showModal();
+				}
 			}
-		} else{
+		} 
+		else
+		{
 			if(getDiscardView().isModalShowing()){
 				getDiscardView().closeModal();
 			}

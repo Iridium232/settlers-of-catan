@@ -361,15 +361,12 @@ public class Fascade
 	 * @post result = an array of indexes to the players that can be robbed. 
 	 * Or an empty array if none are possible
 	 */
-	public Player[] whoCanBeRobbed(HexLocation hexLoc)
+	public Player[] whoCanBeRobbed(HexLocation hexLoc, int player_index)
 	{
 		Building[] buildings;
 		try 
 		{
-			System.out.println("We are finding who is adjoining");
 			buildings = game_model.getMap().getAdjoiningPlayers(hexLoc);
-			System.out.println("There are this many adjoining buildings: "
-					+ buildings.length);
 		} 
 		catch (Exception e) 
 		{
@@ -384,7 +381,7 @@ public class Fascade
 				if(player.getColor().toLowerCase().equals
 						(building.getColor().name().toLowerCase()))
 				{
-					if(!players.contains(player))
+					if(!players.contains(player) && !(building.getOwner() == player_index))
 					{
 						players.add(player);
 					}

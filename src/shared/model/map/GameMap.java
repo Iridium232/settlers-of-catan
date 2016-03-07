@@ -89,7 +89,7 @@ public class GameMap
 				System.out.println("added a building");
 				builds.add(building);
 			}
-			System.out.println(" pass.");
+	
 		}
 		System.out.println("Found " + builds.size() + " buildings.");
 		return builds.toArray(new Building[builds.size()]);

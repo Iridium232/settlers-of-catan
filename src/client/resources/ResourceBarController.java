@@ -150,7 +150,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		getView().setElementAmount(ResourceBarElement.SETTLEMENT,localP.getSettlements());
 		getView().setElementAmount(ResourceBarElement.SOLDIERS,localP.getSoldiers());
 		if(model.getTurn_tracker().getActive_player() ==r.getPlayer_index()&&model.getTurnStatus(r.getPlayer_index())==TurnStatus.PLAYING){
-			 enableActions();
+			disableActions(); 
+			enableActions();
 		} else{
 			disableActions();
 		}
