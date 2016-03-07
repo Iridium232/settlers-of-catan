@@ -230,7 +230,7 @@ public class FascadeTest {
 		Game model = facade.getModel();
 		
 		//Should be false because it is not this player's turn
-		assertFalse(facade.canPlaceRobber(desert.getLocation(), inactive_player));
+		assertFalse(facade.canPlaceRobber(desert.getLocation(), inactive_player, false));
 
 		//TurnTracker 
 		TurnTracker tracker = model.getTurn_tracker();
@@ -240,10 +240,10 @@ public class FascadeTest {
 		
 		//Should be true because this active player is in the state where
 		//they can move the robber and rob
-		assertTrue(facade.canPlaceRobber(desert.getLocation(), active_player));
+		assertTrue(facade.canPlaceRobber(desert.getLocation(), active_player, false));
 		
 		//Should be false because we are waiting for player 0 to rob
-		assertFalse(facade.canPlaceRobber(desert.getLocation(), inactive_player));
+		assertFalse(facade.canPlaceRobber(desert.getLocation(), inactive_player, false));
 	}
 
 	@Test

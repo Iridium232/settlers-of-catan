@@ -328,9 +328,9 @@ public class MapController extends Controller implements IMapController, IObserv
 	{
 		if(soldier_move)
 		{
-			return model.canPlaceRobber(hexLoc, model.getActivePlayer());
+			return model.canPlaceRobber(hexLoc, model.getActivePlayer(), true);
 		}
-		return model.canPlaceRobber(hexLoc, reference.player_index);
+		return model.canPlaceRobber(hexLoc, reference.player_index, false);
 	}
 
 	/**
@@ -497,12 +497,19 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void playSoldierCard() 
 	{	
+
 		soldier_move = true;
+
+
+		has_robbed=false;
+
+
 		if(!this.is_moving_robber)
 		{
 			is_moving_robber = true;
 			this.startMove(PieceType.ROBBER, false, false);
 		}
+
 		return;
 	}
 	
@@ -539,6 +546,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		if(victim == null)
 		{
 			shared.model.player.Player default_victim = new shared.model.player.Player();
+			default_victim.setPlayerIndex(-1);
 			proxy.robPlayer(location, default_victim);
 		}
 		else

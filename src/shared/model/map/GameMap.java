@@ -248,7 +248,8 @@ public class GameMap
 		Building current_occupant = this.getBuildingAt(player_index, location);
 		if(current_occupant == null) return false;
 		Settlement example = new Settlement();
-		return (current_occupant.getClass().equals(example.getClass()));
+		if (!current_occupant.getClass().equals(example.getClass())) return false;
+		return current_occupant.getOwner() == player_index;
 	}
 	
 	

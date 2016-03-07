@@ -317,13 +317,18 @@ public class Fascade
 	 * 
 	 * @param location
 	 * @param player_index
+	 * @param soldier 
 	 * @pre
 	 * @post true iff the terrainhex is not the ocean and the player can move the robber
 	 */
-	public boolean canPlaceRobber(HexLocation location, int player_index)
+	public boolean canPlaceRobber(HexLocation location, int player_index, boolean soldier)
 	{
 		GameMap game_map = game_model.getMap();
 		Player player = game_model.getPlayers()[player_index];
+		if(soldier)
+		{
+			return game_map.canPutRobber(location);
+		}
 		return game_map.canPutRobber(location) && (game_model.getTurnStatus(player_index) == TurnStatus.ROBBING);
 	}
 	
@@ -338,7 +343,7 @@ public class Fascade
 	 */
 	public void moveRobber(HexLocation location, int player_index) throws Exception
 	{
-		if (!this.canPlaceRobber(location, player_index)) throw new ModelException();
+		if (!this.canPlaceRobber(location, player_index, false)) throw new ModelException();
 		GameMap game_map = game_model.getMap();
 		Player player = game_model.getPlayers()[player_index];
 		game_map.moveRobber(location);
