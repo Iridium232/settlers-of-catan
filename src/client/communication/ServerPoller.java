@@ -1,8 +1,11 @@
 package client.communication;
 
+import java.io.IOError;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import client.control.IObserver;
 import shared.model.Fascade;
 import shared.model.player.Player;
 
@@ -21,6 +24,7 @@ public class ServerPoller {
 	private static ClientCommunicator comm;
 	public final static long DEFAULT_POLL_INTERVAL=3000;
 	private static ServerPoller sp;
+	private IObserver observer;
 	/**
 	 * 
 	 * @param server
@@ -64,7 +68,10 @@ public class ServerPoller {
 						int version=f.getLatestModelNum();
 						server.getModel(version);
 					}catch(Exception e){
-						
+						IObserver observer = ServerPoller.getServerPoller().getObserver();
+						if (observer != null) {
+							observer.ObservableChanged();
+						}
 					}
 			}
 		}, 0, DEFAULT_POLL_INTERVAL);
@@ -75,5 +82,13 @@ public class ServerPoller {
 	 */
 	public static void Stop(){
 		
+	}
+
+	public void setObserver(IObserver observer) {
+		this.observer = observer;
+	}
+
+	public IObserver getObserver() {
+		return observer;
 	}
 }
