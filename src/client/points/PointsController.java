@@ -55,25 +55,34 @@ public class PointsController extends Controller implements IPointsController, I
 	}
 
 	@Override
-	public void ObservableChanged() {
+	public void ObservableChanged() 
+	{
 		Reference r = Reference.GET_SINGLETON();
 		Game model = r.getFascade().getModel();
 		Player localPlayer = null;
 		for (Player player : model.getPlayers()) {
-			if (player.getPlayerIndex() == r.getPlayer_index()) {
+			if (player.getPlayerIndex() == r.getPlayer_index()) 
+			{
 				localPlayer = player;
 			}
 		}
 
 		if (localPlayer == null) return;
-		for (Player player : model.getPlayers()) {
-			if (player.getVictoryPoints() >= 10) {
+		for (Player player : model.getPlayers()) 
+		{
+			if (r.getFascade().getVictoryPoints(player.getPlayerIndex()) >= 10) 
+			{
 				boolean isLocalPlayer = false;
-				if (player.getPlayerIndex() == localPlayer.getPlayerIndex()) {
+				if (player.getPlayerIndex() == localPlayer.getPlayerIndex()) 
+				{
 					isLocalPlayer = true;
 				}
 				getFinishedView().setWinner(player.getName(), isLocalPlayer);
-				return;
+				if(!getFinishedView().isModalShowing())
+				{
+					getFinishedView().showModal();
+				}
+				break;
 			}
 		}
 
