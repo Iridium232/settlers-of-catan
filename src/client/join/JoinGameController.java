@@ -183,6 +183,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startCreateNewGame() 
 	{	
+		getNewGameView().setTitle("");
+		getNewGameView().setRandomlyPlaceHexes(false);
+		getNewGameView().setRandomlyPlaceNumbers(false);
+		getNewGameView().setUseRandomPorts(false);
 		if(!getNewGameView().isModalShowing())
 		{
 			getNewGameView().showModal();
@@ -278,7 +282,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	{
 		if(game == null) return;
 		if(!(game.getPlayers() == null))System.out.println("\nJoining a game with " + game.getPlayers().size() + " players.");
-		
+		getSelectColorView().enableAllColors();
 		Reference ref = Reference.GET_SINGLETON();
 		ref.game_id = game.getId();
 		ref.player_index = getIndex(game.getPlayers());
