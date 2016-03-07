@@ -167,7 +167,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		//=======================================================
 		// If this player is supposed to be robbing:
 		if(model.getStateOf(reference.player_index).getState() == TurnStatus.ROBBING 
-				&& !is_moving_robber)
+				&& getView().isDropping()==false)
 		{
 			is_moving_robber = true;
 			this.startMove(PieceType.ROBBER, false, false);
@@ -492,6 +492,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void playSoldierCard() 
 	{	
+		has_robbed=false;
 		this.startMove(PieceType.ROBBER, false, false);
 		return;
 	}

@@ -92,7 +92,7 @@ public class DiscardController extends Controller implements IDiscardController,
 		if(!getWaitView().isModalShowing()){
 			getWaitView().showModal();
 		}
-		initializeMap();
+//		initializeMap();
 		
 	}
 
@@ -160,6 +160,7 @@ public class DiscardController extends Controller implements IDiscardController,
 		discard.put(ResourceType.SHEEP, 0);
 		discard.put(ResourceType.WHEAT, 0);
 		discard.put(ResourceType.WOOD, 0);
+		selected=0;
 	}
 	
 	private void setEnabled(ResourceType resource, ResourceMultiSet hand,int amount){

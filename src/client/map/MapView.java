@@ -324,7 +324,7 @@ public class MapView extends PanelView implements IMapView
 	public boolean isDropping() 
 	{
 		if(overlay == null)return false;
-		return overlay.isVisible();
+		return overlay.isModalShowing();
 	}
 	
 }
