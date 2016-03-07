@@ -48,6 +48,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	private boolean is_placing_city = false;
 	private boolean drawn = false;
 	private boolean is_moving_robber = false;
+	private boolean has_robbed = false;
 
 
 	/**
@@ -250,6 +251,9 @@ public class MapController extends Controller implements IMapController, IObserv
 		
 	}
 
+	/**
+	 * Converts Strings to PortTypes
+	 */
 	private PortType getPortType(ResourceType resource) 
 	{
 		if (resource == ResourceType.BRICK) return PortType.BRICK;
@@ -344,6 +348,13 @@ public class MapController extends Controller implements IMapController, IObserv
 		getView().placeRoad(edgeLoc, reference.player_color);
 		String result = proxy.buildRoad(is_free, sending_edge);
 		
+		if(this.model_state.getState() == TurnStatus.FIRSTROUND ||
+				this.model_state.getState() == TurnStatus.SECONDROUND)
+		{
+			this.has_placed_road = true;
+			this.is_placing_road = false;
+		}
+		
 		try 
 		{
 			ModelPopulator.populateModel(new JSONObject(result), reference.fascade);
@@ -353,12 +364,7 @@ public class MapController extends Controller implements IMapController, IObserv
 			e.printStackTrace();
 		}
 		
-		if(this.model_state.getState() == TurnStatus.FIRSTROUND ||
-				this.model_state.getState() == TurnStatus.SECONDROUND)
-		{
-			this.has_placed_road = true;
-			this.is_placing_road = false;
-		}
+
 		
 		is_free = false;
 	}
@@ -531,6 +537,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		}
 		
 		is_moving_robber = false;
+		has_robbed = true;
 		
 		if(getRobView().isModalShowing())
 		{
@@ -560,12 +567,6 @@ public class MapController extends Controller implements IMapController, IObserv
 		for (Player player : model.getPlayers()) {
 			if (player.getName() == null) has4Players = false;
 		}
-
-		boolean shouldDoSomething = status == TurnStatus.FIRSTROUND ||
-				status == TurnStatus.SECONDROUND ||
-				status == TurnStatus.PLAYING ||
-				status == TurnStatus.ROBBING ||
-				status == TurnStatus.WAITING;
 
 		if (has4Players) {
 			updateMap();

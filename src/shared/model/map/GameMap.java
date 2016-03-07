@@ -439,9 +439,9 @@ public class GameMap
 	 */
 	private boolean touchesLand(Vertex vertex)
 	{
+		vertex = new Vertex(vertex.getLocation().getNormalizedLocation());
 		HexLocation[] neighbors = vertex.getNeigborHexLocations(this);
 		boolean answer = false;
-		//ArrayList<TerrainHex> neighbor_hexes = new ArrayList<TerrainHex>();
 		for (HexLocation location : neighbors)
 		{
 			if (location == null) continue;
@@ -568,7 +568,28 @@ public class GameMap
 	{
 		Vertex v1 = edge.getEnd1();
 		Vertex v2 = edge.getEnd2();
-		return this.touchesLand(v1) && touchesLand(v2);
+		boolean grounded = this.touchesLand(v1) && touchesLand(v2);
+		boolean alone = true;
+		for(Road road : roads)
+		{
+			if(road.getLocation().getEnd1().getLocation().getNormalizedLocation()
+					.equals(v1.getLocation().getNormalizedLocation())
+					||
+				road.getLocation().getEnd2().getLocation().getNormalizedLocation()
+					.equals(v1.getLocation().getNormalizedLocation())
+					||
+				road.getLocation().getEnd2().getLocation().getNormalizedLocation()
+					.equals(v2.getLocation().getNormalizedLocation())
+					||
+				road.getLocation().getEnd1().getLocation().getNormalizedLocation()
+					.equals(v2.getLocation().getNormalizedLocation())
+					)
+			{
+				return false;
+			}
+		}
+		
+		return grounded && alone;
 	}
 	
 	
