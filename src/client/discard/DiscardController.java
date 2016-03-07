@@ -97,9 +97,9 @@ public class DiscardController extends Controller implements IDiscardController,
 		discard.get(ResourceType.SHEEP),discard.get(ResourceType.WHEAT),discard.get(ResourceType.WOOD)));
 		getDiscardView().closeModal();
 		reset();
-		/*if(!getWaitView().isModalShowing()){
+		if(!getWaitView().isModalShowing()){
 			getWaitView().showModal();
-		}*/
+		}
 //		initializeMap();
 		
 	}
@@ -125,7 +125,9 @@ public class DiscardController extends Controller implements IDiscardController,
 					numToDiscard=hand.size()/2;
 				}
 			} else{
-				getWaitView().showModal();
+				if(!getWaitView().isModalShowing()) {
+					getWaitView().showModal();
+				}
 			}
 		} else{
 			if(getDiscardView().isModalShowing()){

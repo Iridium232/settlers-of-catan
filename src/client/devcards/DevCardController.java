@@ -149,25 +149,26 @@ public class DevCardController extends Controller implements IDevCardController,
 	}
 
 	private void setEnabled(DevCardList cards){
+		getPlayCardView().setCardAmount(DevCardType.MONOPOLY, cards.getMonopoly());
+		getPlayCardView().setCardAmount(DevCardType.MONUMENT, cards.getMonument());
+		getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, cards.getRoad_building());
+		getPlayCardView().setCardAmount(DevCardType.SOLDIER, cards.getSoldier());
+		getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, cards.getYear_of_plenty());
+
 		if(cards.getMonopoly()>0){
 			getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, true);
-			getPlayCardView().setCardAmount(DevCardType.MONOPOLY, cards.getMonopoly());
 		}
 		if(cards.getMonument()>0){
 			getPlayCardView().setCardEnabled(DevCardType.MONUMENT, true);
-			getPlayCardView().setCardAmount(DevCardType.MONUMENT, cards.getMonument());
 		}
 		if(cards.getRoad_building()>0){
 			getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, true);
-			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, cards.getRoad_building());
 		}
 		if(cards.getSoldier()>0){
 			getPlayCardView().setCardEnabled(DevCardType.SOLDIER, true);
-			getPlayCardView().setCardAmount(DevCardType.SOLDIER, cards.getSoldier());
 		}
 		if(cards.getYear_of_plenty()>0){
 			getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, true);
-			getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, cards.getYear_of_plenty());
 		}
 	}
 	

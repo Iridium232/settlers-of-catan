@@ -59,9 +59,13 @@ public class RollController extends Controller implements IRollController, IObse
 		final int result=rand.nextInt(6)+rand.nextInt(6)+2;
 		getResultView().setRollValue(result);
 		getResultView().showModal();
-		Reference.GET_SINGLETON().getProxy().rollNumber(result);
-		//		Reference.GET_SINGLETON().getProxy().getModel(Reference.GET_SINGLETON().getFascade().getLatestModelNum());
-	}
+		String rolled=Reference.GET_SINGLETON().getProxy().rollNumber(result);
+		try {
+			ModelPopulator.populateModel(new JSONObject(rolled), Reference.GET_SINGLETON().getFascade());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	}
 
 	@Override
 	public void ObservableChanged() 
@@ -74,6 +78,10 @@ public class RollController extends Controller implements IRollController, IObse
 				if(!getRollView().isModalShowing()) {
 					getRollView().showModal();
 				}
+		} else {
+			if(getRollView().isModalShowing()) {
+				getRollView().closeModal();
+			}
 		}
 	}
 
