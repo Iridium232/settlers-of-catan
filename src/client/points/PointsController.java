@@ -49,7 +49,8 @@ public class PointsController extends Controller implements IPointsController, I
 /**
  * @post initializes the player info based on the model
  */
-	private void initFromModel() {
+	private void initFromModel() 
+	{
 		getPointsView().setPoints(0);
 	}
 
@@ -76,7 +77,7 @@ public class PointsController extends Controller implements IPointsController, I
 			}
 		}
 
-		getPointsView().setPoints(localPlayer.getVictoryPoints());
+		getPointsView().setPoints(r.getFascade().getVictoryPoints(r.player_index));
 	}
 }
 

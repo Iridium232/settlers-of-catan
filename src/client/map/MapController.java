@@ -178,7 +178,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		if(model.getStateOf(reference.player_index).getState() == TurnStatus.FIRSTROUND
 				&& model.getActivePlayer() == reference.player_index)
 		{
-			System.out.print("\nFIRSTROUND\n");
+			
 			if(!has_placed_road && !is_placing_city && !is_placing_road)
 			{
 				this.is_placing_road = true;
@@ -492,7 +492,11 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void playSoldierCard() 
 	{	
-		this.startMove(PieceType.ROBBER, false, false);
+		if(!this.is_moving_robber)
+		{
+			is_moving_robber = true;
+			this.startMove(PieceType.ROBBER, false, false);
+		}
 		return;
 	}
 	

@@ -19,6 +19,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 	private TitlePanel titlePanel;
 	private GameStatePanel gameStatePanel;
 	private JPanel [] playerPanel;
+	private JPanel [] indicators;
 	private JLabel [] playerPoints;
 	private JLabel [] playerRoad;
 	private JLabel [] playerArmy;
@@ -47,6 +48,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		playerPoints = new JLabel[NUM_PLAYERS];
 		playerRoad = new JLabel[NUM_PLAYERS];
 		playerArmy = new JLabel[NUM_PLAYERS];
+		indicators = new JPanel[NUM_PLAYERS];
 		
 		longestRoadImage = ImageUtils.loadImage("images/misc/road.png").getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		largestArmyImage = ImageUtils.loadImage("images/misc/army.png").getScaledInstance(30, 30, Image.SCALE_SMOOTH);
@@ -102,6 +104,8 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		indicatorPanel.add(playerRoad[playerIndex]);
 		playerRoad[playerIndex].setVisible(false);
 		
+		indicators[playerIndex] = indicatorPanel;
+		
 		playerPoints[playerIndex] = new JLabel("0");
 		playerPoints[playerIndex].setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
 		playerPoints[playerIndex].setFont(labelFont);
@@ -114,11 +118,13 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 
 	@Override
 	public void updatePlayer(int playerIndex, int points, boolean highlight,
-			boolean largestArmy, boolean longestRoad) {
+			boolean largestArmy, boolean longestRoad, String color) {
 		playerArmy[playerIndex].setVisible(largestArmy);
 		playerRoad[playerIndex].setVisible(longestRoad);
 		playerPoints[playerIndex].setText(String.format("%d", points));
-		
+		playerPanel[playerIndex].setBackground(CatanColor.valueOf(color.toUpperCase()).getJavaColor());
+		indicators[playerIndex].setBackground(CatanColor.valueOf(color.toUpperCase()).getJavaColor());
+		indicators[playerIndex].setForeground(CatanColor.valueOf(color.toUpperCase()).getJavaColor());
 		
 		if(highlight)
 			playerPanel[playerIndex].setBorder(BorderFactory.createLineBorder(new Color(0,0,0), 3));

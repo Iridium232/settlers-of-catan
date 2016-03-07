@@ -1224,6 +1224,9 @@ public class Fascade
 	 */
 	class ModelException extends Exception{}
 
+	
+	//=========================================Getters and Setters==========================================
+	
 	public City[] getCities() 
 	{
 		if(game_model == null)
@@ -1302,6 +1305,21 @@ public class Fascade
 	public int getActivePlayer() 
 	{
 		return game_model.getTurn_tracker().getActive_player();
+	}
+	
+	public int getVictoryPoints(int player_index)
+	{
+		int points = game_model.getPlayers()[player_index].getVictoryPoints();
+		if(game_model.getTurn_tracker().getLargest_army_player() == player_index)
+		{
+			points += 2;
+		}
+		if(game_model.getTurn_tracker().getLongest_road_player() == player_index)
+		{
+			points += 2;
+		}
+			
+		return points;
 	}
 
 }

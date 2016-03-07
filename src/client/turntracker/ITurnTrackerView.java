@@ -44,9 +44,10 @@ public interface ITurnTrackerView extends IView
 	 *            Whether or not the player has the largest army
 	 * @param longestRoad
 	 *            Whether or not the player has the longest road
+	 * @param string 
 	 */
 	void updatePlayer(int playerIndex, int points, boolean highlight,
-					  boolean largestArmy, boolean longestRoad);
+					  boolean largestArmy, boolean longestRoad, String string);
 	
 	/**
 	 * Updates the game state button's message and enable state
