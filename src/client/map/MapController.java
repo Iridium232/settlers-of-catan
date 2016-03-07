@@ -552,9 +552,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		String result = "";
 		
 
-		
-		
-		
+	
 		
 		if(victim == null)
 		{

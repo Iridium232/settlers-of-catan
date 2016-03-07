@@ -108,7 +108,8 @@ public class DiscardController extends Controller implements IDiscardController,
 
 	public void ObservableChanged() 
 	{
-		if(r.getFascade().getModel().getTurnStatus(r.getFascade().getActivePlayer())
+		;
+		if(r.fascade.getStateOf(r.fascade.getActivePlayer()).getState()
 				== TurnStatus.DISCARDING)
 		{
 
@@ -126,6 +127,7 @@ public class DiscardController extends Controller implements IDiscardController,
 					numToDiscard=hand.size()/2;
 				}
 			} else{
+				
 				if(!getWaitView().isModalShowing())
 				{
 					getWaitView().showModal();
@@ -134,10 +136,23 @@ public class DiscardController extends Controller implements IDiscardController,
 		} 
 		else
 		{
-			if(getDiscardView().isModalShowing()){
+			if(getDiscardView().isModalShowing())
+			{
 				getDiscardView().closeModal();
 			}
 			if(getWaitView().isModalShowing()){
+				getWaitView().closeModal();
+			}
+		}
+		if(r.fascade.getStateOf(r.fascade.getActivePlayer()).getState()
+				== TurnStatus.ROBBING)
+		{
+			if(getDiscardView().isModalShowing())
+			{
+				getDiscardView().closeModal();
+			}
+			if(getWaitView().isModalShowing())
+			{
 				getWaitView().closeModal();
 			}
 		}
