@@ -1,9 +1,16 @@
 package client.control;
 
 import client.communication.IServerProxy;
+import client.join.IJoinGameView;
 import shared.definitions.CatanColor;
 import shared.model.Fascade;
 
+
+/**
+ * 
+ * Singelton Class used throughout the controllers for local player info
+ *
+ */
 public class Reference 
 {
 	private static Reference SINGLETON;
@@ -27,6 +34,7 @@ public class Reference
 	public String host;
 	public int game_id = -1;
 	public int player_id;
+	public IJoinGameView joinview;
 
 	public Fascade getFascade() {
 		return fascade;

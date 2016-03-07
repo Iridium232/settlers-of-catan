@@ -49,6 +49,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	private boolean drawn = false;
 	private boolean is_moving_robber = false;
 	private boolean has_robbed = false;
+	private boolean soldier_move = false;
 
 
 	/**
@@ -167,7 +168,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		//=======================================================
 		// If this player is supposed to be robbing:
 		if(model.getStateOf(reference.player_index).getState() == TurnStatus.ROBBING 
-				&& !is_moving_robber)
+				&& (!is_moving_robber || (!getView().isDropping()) && !getRobView().isModalShowing()))
 		{
 			is_moving_robber = true;
 			this.startMove(PieceType.ROBBER, false, false);
@@ -325,6 +326,10 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public boolean canPlaceRobber(shared.locations.HexLocation hexLoc) 
 	{
+		if(soldier_move)
+		{
+			return model.canPlaceRobber(hexLoc, model.getActivePlayer());
+		}
 		return model.canPlaceRobber(hexLoc, reference.player_index);
 	}
 
@@ -445,7 +450,7 @@ public class MapController extends Controller implements IMapController, IObserv
 		{
 			playerlist.add(new RobPlayerInfo(player));
 		}
-		
+		soldier_move = false;
 		getRobView().setPlayers(playerlist.toArray(new RobPlayerInfo[playerlist.size()]));
 		
 		if(!getRobView().isModalShowing())
@@ -463,7 +468,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) 
 	{	
-		System.out.print("Piece Drop Begin\n");
+		//System.out.print("Piece Drop Begin\n");
 		int activePlayerIndex = reference.getFascade().getModel().getTurn_tracker().getActive_player();
 		if (activePlayerIndex == reference.getPlayer_index()) {
 			getView().startDrop(pieceType, reference.player_color, !isFree);
@@ -492,6 +497,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void playSoldierCard() 
 	{	
+		soldier_move = true;
 		if(!this.is_moving_robber)
 		{
 			is_moving_robber = true;

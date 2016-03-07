@@ -13,7 +13,7 @@ import shared.model.player.Player;
 public class PointsController extends Controller implements IPointsController, IObserver {
 
 	private IGameFinishedView finishedView;
-	
+	private boolean reported_end = false;
 	/**
 	 * PointsController constructor
 	 * 
@@ -52,6 +52,7 @@ public class PointsController extends Controller implements IPointsController, I
 	private void initFromModel() 
 	{
 		getPointsView().setPoints(0);
+		reported_end = false;
 	}
 
 	@Override
@@ -78,14 +79,15 @@ public class PointsController extends Controller implements IPointsController, I
 					isLocalPlayer = true;
 				}
 				getFinishedView().setWinner(player.getName(), isLocalPlayer);
-				if(!getFinishedView().isModalShowing())
+				if(!getFinishedView().isModalShowing() && !reported_end)
 				{
 					getFinishedView().showModal();
 				}
+				reported_end = true;
 				break;
 			}
 		}
-
+		
 		getPointsView().setPoints(r.getFascade().getVictoryPoints(r.player_index));
 	}
 }

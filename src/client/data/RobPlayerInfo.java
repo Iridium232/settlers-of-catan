@@ -28,7 +28,7 @@ public class RobPlayerInfo extends PlayerInfo
 	public RobPlayerInfo(Player player) 
 	{
 		super(player);
-		numCards=player.getResources().total();
+		numCards = player.getResources().total();
 	}
 
 	public int getNumCards()

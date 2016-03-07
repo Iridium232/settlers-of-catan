@@ -7,6 +7,7 @@ import java.awt.image.*;
 import javax.swing.*;
 
 import client.base.*;
+import client.control.Reference;
 import client.utils.*;
 
 
@@ -78,6 +79,9 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 			
 			if (e.getSource() == okButton) {
 				closeModal();
+				Reference.GET_SINGLETON().joinview.showModal();
+				Reference.GET_SINGLETON().game_id = -1;
+				Reference.GET_SINGLETON().player_index = -1;
 			}
 		}	
 	};
