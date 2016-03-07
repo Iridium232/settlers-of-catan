@@ -77,6 +77,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buildRoad() {
 		executeElementAction(ResourceBarElement.ROAD);
+		disableActions();
+		enableActions();
 	}
 /**
  * @pre it is the players turn and the player has at least one wheat, one wool, one brick, and one wood.
@@ -85,6 +87,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buildSettlement() {
 		executeElementAction(ResourceBarElement.SETTLEMENT);
+		disableActions();
+		enableActions();
 	}
 /**
  * @pre it is the players turn and the player has at least 3 wheat and 2 ore
@@ -93,6 +97,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buildCity() {
 		executeElementAction(ResourceBarElement.CITY);
+		disableActions();
+		enableActions();
 	}
 /**
  * @pre it is the players turn and the player has one ore, one wool, and one wheat.a card 
@@ -101,6 +107,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void buyCard() {
 		executeElementAction(ResourceBarElement.BUY_CARD);
+		disableActions();
+		enableActions();
 	}
 /**
  * @pre it is the players turn and he has at least one dev card in his old hand or a victory point in his new hand
@@ -109,6 +117,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void playCard() {
 		executeElementAction(ResourceBarElement.PLAY_CARD);
+		disableActions();
+		enableActions();
 	}
 	
 	private void executeElementAction(ResourceBarElement element) {
