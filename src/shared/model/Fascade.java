@@ -76,7 +76,7 @@ public class Fascade
 	 * @pre none
 	 * @post result is true iff that is a valid road construction
 	 */
-	public boolean canBuildRoad(int player_index, Edge edge, boolean allow_disconnected)
+	public boolean canBuildRoad(int player_index, Edge edge, boolean allow_disconnected, boolean free)
 	{
 
 		GameMap game_map = game_model.getMap();
@@ -84,6 +84,10 @@ public class Fascade
 		if(allow_disconnected)
 		{
 			return game_map.canBuildRoad(edge, player_index, allow_disconnected);
+		}
+		if(free)
+		{
+			return game_map.canBuildRoad(edge, player_index);
 		}
 		return game_map.canBuildRoad(edge, player_index) &&
 				player.canPlaceRoad() && (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);

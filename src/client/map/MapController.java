@@ -50,6 +50,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	private boolean is_moving_robber = false;
 	private boolean has_robbed = false;
 	private boolean soldier_move = false;
+	private int free_roads = 0;
 
 
 	/**
@@ -279,7 +280,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	{
 		Edge edge = new Edge(edgeLoc);
 		return model.canBuildRoad(reference.player_index, edge,
-				model_state.getState() == TurnStatus.FIRSTROUND || model_state.getState() == TurnStatus.SECONDROUND);
+				model_state.getState() == TurnStatus.FIRSTROUND || model_state.getState() == TurnStatus.SECONDROUND, is_free);
 	}
 
 	/**
@@ -345,6 +346,11 @@ public class MapController extends Controller implements IMapController, IObserv
 		if(model_state.getState() == shared.definitions.TurnStatus.FIRSTROUND
 				|| model_state.getState() == shared.definitions.TurnStatus.SECONDROUND)
 		{
+			is_free = true;
+		}
+		if(free_roads > 0)
+		{
+			free_roads--;
 			is_free = true;
 		}
 		shared.communication.EdgeLocation sending_edge = 
@@ -522,11 +528,12 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void playRoadBuildingCard() 
 	{	
-		is_free = true;
+		free_roads = 2;
 		this.startMove(PieceType.ROAD, true, false);
 		
+		
 		this.startMove(PieceType.ROAD, true, false);
-		is_free = false;
+
 		//Send off the info to the controller
 	}
 	
