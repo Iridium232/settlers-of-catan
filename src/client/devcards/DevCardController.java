@@ -180,7 +180,8 @@ public class DevCardController extends Controller implements IDevCardController,
 		if(model.getTurn_tracker().getActive_player() ==r.getPlayer_index()&&
 		model.getTurnStatus(r.getPlayer_index())==TurnStatus.PLAYING && !localP.isPlayedDevCard()){
 			DevCardList temp=localP.getOldDevCards();
-				setEnabled(temp);
+			setDisabled();	
+			setEnabled(temp);
 		} else{
 			setDisabled();
 		}

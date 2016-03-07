@@ -89,9 +89,9 @@ public class DiscardController extends Controller implements IDiscardController,
 		r.getProxy().discardCards(new ResourceList(discard.get(ResourceType.BRICK),discard.get(ResourceType.ORE),
 				discard.get(ResourceType.SHEEP),discard.get(ResourceType.WHEAT),discard.get(ResourceType.WOOD)));
 		getDiscardView().closeModal();
-		if(!getWaitView().isModalShowing()){
+		/*if(!getWaitView().isModalShowing()){
 			getWaitView().showModal();
-		}
+		}*/
 //		initializeMap();
 		
 	}
