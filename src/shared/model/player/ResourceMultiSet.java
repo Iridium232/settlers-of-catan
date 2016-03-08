@@ -277,6 +277,7 @@ public class ResourceMultiSet {
 
 	public int total() 
 	{
+		if(brick+ore+sheep+wheat+wood < 0)return 0;
 		return brick+ore+sheep+wheat+wood;
 	}
 

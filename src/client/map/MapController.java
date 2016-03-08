@@ -51,6 +51,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	private boolean has_robbed = false;
 	private boolean soldier_move = false;
 	private int free_roads = 0;
+	private HexLocation robber_move = null;
 
 
 	/**
@@ -449,12 +450,15 @@ public class MapController extends Controller implements IMapController, IObserv
 	public void placeRobber(shared.locations.HexLocation hexLoc) 
 	{
 		getView().placeRobber(hexLoc);
-		
+		this.robber_move = hexLoc;
 		ArrayList<RobPlayerInfo> playerlist = new ArrayList<RobPlayerInfo>();
 
 		for (shared.model.player.Player player : reference.fascade.whoCanBeRobbed(hexLoc, reference.player_index))
 		{
-			playerlist.add(new RobPlayerInfo(player));
+			if(player.getResources().total() > 0)
+			{
+				playerlist.add(new RobPlayerInfo(player));
+			}
 		}
 		
 		
@@ -548,7 +552,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	 */
 	public void robPlayer(RobPlayerInfo victim) 
 	{
-		shared.locations.HexLocation location = getView().getMap().getRobber();
+		shared.locations.HexLocation location = this.robber_move;
 		String result = "";
 		
 

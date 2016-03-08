@@ -31,11 +31,11 @@ public class Vertex
 
 		neighbors[1] = neighbors[0].getNeighborLoc(EdgeDirection.North);
 		
-		if(this.getLocation().getDir() == VertexDirection.NorthEast)
+		if(this.getLocation().getNormalizedLocation().getDir() == VertexDirection.NorthEast)
 		{
 			neighbors[2] = neighbors[0].getNeighborLoc(EdgeDirection.NorthEast);//Upper Left
 		}
-		else if (this.getLocation().getDir() == VertexDirection.NorthWest)
+		else if (this.getLocation().getNormalizedLocation().getDir() == VertexDirection.NorthWest)
 		{
 			neighbors[2] = neighbors[0].getNeighborLoc(EdgeDirection.NorthWest);//Upper Right
 		}
