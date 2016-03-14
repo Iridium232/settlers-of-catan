@@ -1,4 +1,4 @@
-package sever.commands;
+package server.commands;
 /**
  * Interface for the commands that the server receives.
  * @author Doug
