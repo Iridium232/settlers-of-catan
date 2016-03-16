@@ -1,22 +1,14 @@
 package shared.model;
 
-import client.base.IController;
 import client.catan.GameStatePanel;
-import client.communication.IServerProxy;
+import client.communication.IServer;
 import client.control.IObserver;
 import client.map.IMapController;
 import org.json.Cookie;
 import shared.communication.toServer.moves.BuyDevCard;
-import shared.dataTransfer.cookie.CookieResponse;
-import shared.dataTransfer.cookie.UserCookie;
-import shared.dataTransfer.request.DataTransferRequest;
 import shared.dataTransfer.response.DataResponse;
-import shared.dataTransfer.response.DataTransferResponse;
-import shared.dataTransfer.response.LoginResponse;
-import shared.dataTransfer.response.RegisterResponse;
 import shared.definitions.Commands;
 import shared.definitions.DevCardType;
-import shared.definitions.RestMethods;
 import shared.definitions.TurnStatus;
 import shared.locations.HexLocation;
 import shared.model.map.Edge;
@@ -37,7 +29,6 @@ import shared.model.ports.*;
 import shared.model.states.IState;
 import shared.model.states.TurnTracker;
 
-import java.rmi.ServerException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +46,7 @@ public class Fascade
 	private int[] player_colors;
 	protected BuyDevCard buy_devcard;
 	private ArrayList<IObserver> observers = new ArrayList<IObserver>();
-	private IServerProxy serverProxy;
+	private IServer serverProxy;
 	private int player_move_robber;
 	protected List<Player> players;
 	protected GameStatePanel game_state;

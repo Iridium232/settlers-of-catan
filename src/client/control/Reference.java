@@ -1,6 +1,6 @@
 package client.control;
 
-import client.communication.IServerProxy;
+import client.communication.IServer;
 import client.join.IJoinGameView;
 import shared.definitions.CatanColor;
 import shared.model.Fascade;
@@ -29,7 +29,7 @@ public class Reference
 	public String name;
 	public int player_index;
 	public CatanColor player_color;
-	public IServerProxy proxy;
+	public IServer proxy;
 	public int port;
 	public String host;
 	public int game_id = -1;
@@ -68,11 +68,11 @@ public class Reference
 		this.player_color = player_color;
 	}
 
-	public IServerProxy getProxy() {
+	public IServer getProxy() {
 		return proxy;
 	}
 
-	public void setProxy(IServerProxy proxy) {
+	public void setProxy(IServer proxy) {
 		this.proxy = proxy;
 	}
 

@@ -8,7 +8,6 @@ import shared.communication.fromServer.games.Game;
 import shared.communication.fromServer.games.Player;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
-import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.model.Fascade;
 
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MockServer implements IServerProxy {
+public class MockServer implements IServer {
 	private Fascade fascade;
 	@Override
 	public void ServerProxy(String host, int port, Fascade f) {

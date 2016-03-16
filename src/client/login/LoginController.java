@@ -2,20 +2,10 @@ package client.login;
 
 import client.base.Controller;
 import client.base.IAction;
-import client.communication.ClientCommunicator;
-import client.communication.IServerProxy;
+import client.communication.IServer;
 import client.control.IObserver;
 import client.control.Reference;
-import client.data.PlayerInfo;
 import client.misc.IMessageView;
-import shared.communication.toServer.user.Credentials;
-import shared.dataTransfer.cookie.CookieResponse;
-import shared.dataTransfer.response.DataTransferResponse;
-import shared.dataTransfer.response.LoginResponse;
-import shared.definitions.Password;
-import shared.definitions.PlayerName;
-import shared.exceptions.InvalidNameException;
-import shared.exceptions.InvalidPasswordException;
 import shared.model.Fascade;
 
 import java.rmi.ServerException;
@@ -25,7 +15,7 @@ import java.rmi.ServerException;
  */
 public class LoginController extends Controller implements ILoginController, IObserver {
 
-	private IServerProxy proxy;
+	private IServer proxy;
 	private Fascade clientFascade;
 	private IMessageView messageView;
 	private IAction loginAction;

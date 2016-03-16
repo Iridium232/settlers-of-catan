@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import client.communication.IServer;
 import shared.communication.EdgeLocation;
 import shared.communication.ResourceList;
 import shared.communication.fromServer.game.VertexLocation;
@@ -20,7 +21,7 @@ import shared.model.player.Player;
  * Catan Server Facade that gets called by commands
  *
  */
-public class ServerFacade implements client.communication.IServerProxy
+public class ServerFacade implements IServer
 {
 	
 	private ArrayList<shared.model.Fascade> games;
@@ -45,7 +46,7 @@ public class ServerFacade implements client.communication.IServerProxy
 	@Override
 	public String login(String username, String password) 
 	{
-		return null;
+		return "Success";
 	}
 	
 	/**
@@ -58,7 +59,7 @@ public class ServerFacade implements client.communication.IServerProxy
 	@Override
 	public String register(String username, String password) 
 	{
-		return null;
+		return "Success";
 	}
 
 	/**
@@ -441,5 +442,355 @@ public class ServerFacade implements client.communication.IServerProxy
 	{
 		return null;
 	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Register command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public String registerCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Login Command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public String loginCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * getGameList command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.games.Game[] getGameListCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Create Game command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public String createGameCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Join Game command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel joinGameCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Get Model command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel getModelCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Save Game command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public String saveGameCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Load Game command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel loadGameCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Add AI Player command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel addAIPlayerCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * getAITypes command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public String[] getAITypesCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Send Chat command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel sendChatCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Accept Trade command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel acceptTradeCommand(Object... parameters)
+	{
+		return null;
+	}
 
+	/**
+	 * Access for a command class to the server operations
+	 * Discard command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel discardCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * rollNumber command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel rollNumberCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Build Road command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel buildRoadCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Build City command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel buildCityCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * build Settlement command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel buildSettlementCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * offer Trade command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel offerTradeCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * MaritimeTrade command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel maritimeTradeCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Rob command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel robCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Finish Turn command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel FinishTurnCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * buyDevCard command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel buyDevCardCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Play Soldier command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel playSoldierCardCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Play Monument command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel playMonumentCardCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Play Monopoly command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel playMonopolyCardCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Play Year Of Plenty command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel playYearOfPlentyCardCommand(Object... parameters)
+	{
+		return null;
+	}
+	
+	/**
+	 * Access for a command class to the server operations
+	 * Play Soldier command
+	 * 
+	 * @pre none
+	 * @post the command is executed and a communication class is filled 
+	 * and returned. Null means an error
+	 */
+	public shared.communication.fromServer.game.ServerModel playRoadBuildingCardCommand(Object... parameters)
+	{
+		return null;
+	}
 }

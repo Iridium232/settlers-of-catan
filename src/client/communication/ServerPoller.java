@@ -1,13 +1,10 @@
 package client.communication;
 
-import java.io.IOError;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import client.control.IObserver;
 import shared.model.Fascade;
-import shared.model.player.Player;
 
 /**
  * 
@@ -18,7 +15,7 @@ import shared.model.player.Player;
  */
 public class ServerPoller {
 	
-	private static IServerProxy server;
+	private static IServer server;
 	private static Fascade f;
 	private static Timer poller=null;
 	private static ClientCommunicator comm;
@@ -47,7 +44,7 @@ public class ServerPoller {
 		comm=c;
 	}
 	
-	public static void setServer(IServerProxy s){
+	public static void setServer(IServer s){
 		server=s;
 	}
 	

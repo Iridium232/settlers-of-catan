@@ -1,5 +1,6 @@
 package server.handlers;
 
+<<<<<<< HEAD
 import java.io.IOException;
 
 import javax.xml.ws.spi.http.HttpExchange;
@@ -12,5 +13,14 @@ public class MaritimeTradeHandler extends HttpHandler {
 		// TODO Auto-generated method stub
 
 	}
+=======
+/**
+ * 
+ * Handler that generates and sends the command for a maritime trade
+ * action
+ *
+ */
+public class MaritimeTradeHandler {
+>>>>>>> 5f8eee25c70b212b91a2cc394ea620b6d7283411
 
 }
