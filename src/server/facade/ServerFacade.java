@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import client.communication.IServer;
 import shared.communication.EdgeLocation;
 import shared.communication.ResourceList;
 import shared.communication.fromServer.game.VertexLocation;
@@ -20,7 +21,7 @@ import shared.model.player.Player;
  * Catan Server Facade that gets called by commands
  *
  */
-public class ServerFacade implements client.communication.IServerProxy
+public class ServerFacade implements IServer
 {
 	
 	private ArrayList<shared.model.Fascade> games;

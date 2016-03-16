@@ -1,12 +1,11 @@
 package client.join;
 
 import client.base.*;
-import client.communication.IServerProxy;
+import client.communication.IServer;
 import client.control.IObserver;
 import client.control.Reference;
 import client.data.PlayerInfo;
 import shared.definitions.CatanColor;
-import shared.definitions.TurnStatus;
 import shared.model.Fascade;
 import shared.model.player.Player;
 
@@ -83,7 +82,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	 */
 	@Override
 	public void addAI() {
-		IServerProxy sp = Reference.GET_SINGLETON().getProxy();
+		IServer sp = Reference.GET_SINGLETON().getProxy();
 		sp.addAIPlayer("LARGEST_ARMY");
 	}
 

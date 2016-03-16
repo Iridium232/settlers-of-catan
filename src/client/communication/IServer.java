@@ -21,7 +21,7 @@ import shared.model.exceptions.ModelException;
  * @author Doug
  *
  */
-public interface IServerProxy {
+public interface IServer {
 	/**
 	 * @pre the host is running the server on the specified port
 	 * @post initializes a ServerProxy to send commands to the Client Communicator

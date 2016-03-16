@@ -3,12 +3,10 @@ package client.communication;
 import client.base.Controller;
 import client.control.IObserver;
 import client.control.Reference;
-import shared.communication.fromServer.game.Player;
 import shared.model.Fascade;
 import shared.model.Game;
 import shared.model.messages.MessageLine;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class ChatController extends Controller implements IChatController, IObse
 	private Fascade model;
 	private Reference reference;
 	private Game game;
-	private IServerProxy proxy;
+	private IServer proxy;
 	private int chatSize;
 	//private IState model_state;
 

@@ -5,7 +5,6 @@ import java.util.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import shared.communication.fromServer.game.Port;
 import shared.definitions.*;
 import shared.locations.*;
 import shared.model.Fascade;
@@ -20,12 +19,11 @@ import shared.model.map.buildings.Settlement;
 import shared.model.player.Player;
 import shared.model.states.IState;
 import client.base.*;
-import client.communication.IServerProxy;
+import client.communication.IServer;
 import client.communication.ModelPopulator;
 import client.control.IObserver;
 import client.control.Reference;
 import client.data.*;
-import shared.model.states.TurnTracker;
 
 
 /**
@@ -38,7 +36,7 @@ public class MapController extends Controller implements IMapController, IObserv
 	private IRobView robView;
 	private Fascade model;
 	private Reference reference;
-	private IServerProxy proxy;
+	private IServer proxy;
 	private IState model_state;
 	private boolean is_free = false;
 	private boolean initialized = false;

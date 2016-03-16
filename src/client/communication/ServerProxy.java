@@ -12,7 +12,6 @@ import shared.communication.toServer.games.CreateGameRequest;
 import shared.communication.toServer.moves.*;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
-import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.model.Fascade;
 import shared.model.player.Player;
@@ -21,11 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 /**
- * Implements IServerProxy send requests through the client communicator to the server.
+ * Implements IServer send requests through the client communicator to the server.
  * @author Doug
  *
  */
-public class ServerProxy implements IServerProxy {
+public class ServerProxy implements IServer {
 	private String host;
 	private int port;
 	private String path;
@@ -137,7 +136,7 @@ public class ServerProxy implements IServerProxy {
 
 			if (!model.has("True")) {
 				result=model.toString();
-				ModelPopulator.populateModel(model, fascade);//add fascade to IServerProxy
+				ModelPopulator.populateModel(model, fascade);//add fascade to IServer
 			}
 		} catch (Exception e) {
 

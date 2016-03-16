@@ -3,8 +3,7 @@ package client.main;
 import client.base.IAction;
 import client.catan.CatanPanel;
 import client.communication.ClientCommunicator;
-import client.communication.IServerProxy;
-import client.communication.ModelPopulator;
+import client.communication.IServer;
 import client.communication.ServerPoller;
 import client.communication.ServerProxy;
 import client.control.Reference;
@@ -34,7 +33,7 @@ public class Catan extends JFrame
 		
 		Reference reference = Reference.GET_SINGLETON();
 		Fascade facade = new Fascade();
-		IServerProxy proxy = new ServerProxy(host , port , facade);
+		IServer proxy = new ServerProxy(host , port , facade);
 		
 		ServerPoller.getServerPoller();
 		ServerPoller.setFascade(facade);
