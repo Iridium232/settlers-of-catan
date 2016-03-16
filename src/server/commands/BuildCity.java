@@ -6,4 +6,10 @@ package server.commands;
  */
 public class BuildCity implements Command {
 
+	@Override
+	public void execute() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

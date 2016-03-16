@@ -4,6 +4,11 @@ package server.commands;
  * @author Doug
  *
  */
-public class Monopoly {
+public class Monopoly extends Command {
 
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

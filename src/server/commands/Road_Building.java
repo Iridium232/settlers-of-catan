@@ -4,6 +4,12 @@ package server.commands;
  * @author Doug
  *
  */
-public class Road_Building implements Command {
+public class Road_Building extends Command {
+
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

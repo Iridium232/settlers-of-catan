@@ -4,6 +4,11 @@ package server.commands;
  * @author Doug
  *
  */
-public class MaritimeTrade implements Command {
+public class MaritimeTrade extends Command {
 
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

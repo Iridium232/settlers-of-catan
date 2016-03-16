@@ -4,6 +4,11 @@ package server.commands;
  * @author Doug
  *
  */
-public class BuildSettlement implements Command {
+public class BuildSettlement extends Command {
 
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

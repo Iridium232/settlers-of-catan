@@ -4,6 +4,12 @@ package server.commands;
  * @author Doug
  *
  */
-public class AcceptTrade implements Command {
+public class AcceptTrade extends Command {
+
+	@Override
+	public void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

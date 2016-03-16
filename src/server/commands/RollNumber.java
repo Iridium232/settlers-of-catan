@@ -4,6 +4,11 @@ package server.commands;
  * @author Doug
  *
  */
-public class RollNumber implements Command {
+public class RollNumber extends Command {
 
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

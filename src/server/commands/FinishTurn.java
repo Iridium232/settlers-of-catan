@@ -4,6 +4,11 @@ package server.commands;
  * @author Doug
  *
  */
-public class FinishTurn implements Command {
+public class FinishTurn extends Command {
 
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -5,6 +5,11 @@ package server.commands;
  * @author Doug
  *
  */
-public class Year_of_Plenty implements Command {
+public class Year_of_Plenty extends Command {
 
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

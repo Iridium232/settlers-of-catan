@@ -4,6 +4,12 @@ package server.commands;
  * @author Doug
  *
  */
-public class Monument implements Command {
+public class Monument extends Command {
+
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

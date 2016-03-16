@@ -4,6 +4,11 @@ package server.commands;
  * @author Doug
  *
  */
-public class BuyDevCard implements Command {
+public class BuyDevCard extends Command {
 
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

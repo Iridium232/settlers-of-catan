@@ -4,6 +4,11 @@ package server.commands;
  * @author Doug
  *
  */
-public class DiscardCards implements Command {
+public class DiscardCards extends Command {
 
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

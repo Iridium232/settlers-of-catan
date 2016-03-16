@@ -4,6 +4,11 @@ package server.commands;
  * @author Doug
  *
  */
-public class Soldier implements Command {
+public class Soldier extends Command {
 
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

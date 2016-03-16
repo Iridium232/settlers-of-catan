@@ -4,6 +4,11 @@ package server.commands;
  * @author Doug
  *
  */
-public class RobPlayer implements Command {
+public class RobPlayer extends Command {
 
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 }

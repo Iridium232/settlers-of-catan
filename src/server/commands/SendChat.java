@@ -4,6 +4,11 @@ package server.commands;
  * @author Doug
  *
  */
-public class SendChat implements Command {
+public class SendChat extends Command {
 
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+		
+	}
 }
