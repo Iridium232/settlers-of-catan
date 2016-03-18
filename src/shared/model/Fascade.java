@@ -1319,6 +1319,25 @@ public class Fascade
 		return points;
 	}
 
+	public void buildNewGame(String name, boolean randomTiles,
+			boolean randomNumbers, boolean randomPorts) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public shared.communication.fromServer.games.Player[] getPlayers() 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getGameName() 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 
 

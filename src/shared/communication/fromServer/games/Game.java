@@ -1,4 +1,7 @@
 package shared.communication.fromServer.games;
+
+import shared.model.Fascade;
+
 //This class is superfluous as it is the exact same as client.data.GameInfo.java
 /**
  * Michael Rhodes
@@ -17,7 +20,18 @@ public class Game {
         this.players = players;
     }
 
-    public String getTitle() {
+    /**
+     * Constructor to build the game information from a model facade
+     * @param facade
+     */
+    public Game(Fascade facade, int game_id) 
+    {
+		this.title = facade.getGameName();
+		this.id = game_id;
+		this.players = facade.getPlayers();
+	}
+
+	public String getTitle() {
         return title;
     }
 
