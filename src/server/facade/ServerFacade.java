@@ -8,6 +8,7 @@ import client.communication.IServer;
 import client.communication.ModelPopulator;
 import shared.communication.EdgeLocation;
 import shared.communication.ResourceList;
+import shared.communication.fromServer.game.CommunicationModel;
 import shared.communication.fromServer.game.VertexLocation;
 import shared.communication.fromServer.games.Game;
 import shared.definitions.CatanColor;
@@ -550,7 +551,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel joinGameCommand(
+	public CommunicationModel joinGameCommand(
 			shared.communication.toServer.games.JoinGameRequest params)
 	{
 		try 
@@ -574,7 +575,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel getModelCommand(int version)
+	public CommunicationModel getModelCommand(int version)
 	{
 		return this.getModelCommand(version);
 	}
@@ -601,7 +602,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel loadGameCommand(
+	public CommunicationModel loadGameCommand(
 			shared.communication.toServer.games.LoadGameRequest params)
 	{
 		return null;
@@ -615,7 +616,8 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel addAIPlayerCommand(shared.communication.toServer.game.AddAIRequest params)
+	public CommunicationModel addAIPlayerCommand(
+			shared.communication.toServer.game.AddAIRequest params)
 	{
 		//add this: params.getAIType();
 		return null;
@@ -644,7 +646,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel sendChatCommand(
+	public CommunicationModel sendChatCommand(
 			shared.communication.toServer.moves.SendChat params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -661,7 +663,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel acceptTradeCommand(
+	public CommunicationModel acceptTradeCommand(
 			shared.communication.toServer.moves.AcceptTrade params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -677,7 +679,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel discardCommand(
+	public CommunicationModel discardCommand(
 			shared.communication.toServer.moves.DiscardCards params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -693,7 +695,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel rollNumberCommand(
+	public CommunicationModel rollNumberCommand(
 				shared.communication.toServer.moves.RollNumber params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -709,7 +711,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel buildRoadCommand(
+	public CommunicationModel buildRoadCommand(
 			shared.communication.toServer.moves.BuildRoad params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -725,7 +727,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel buildCityCommand(
+	public CommunicationModel buildCityCommand(
 			shared.communication.toServer.moves.BuildCity params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -741,7 +743,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel buildSettlementCommand(
+	public CommunicationModel buildSettlementCommand(
 			shared.communication.toServer.moves.BuildSettlement params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -757,7 +759,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel offerTradeCommand(
+	public CommunicationModel offerTradeCommand(
 			shared.communication.toServer.moves.OfferTrade params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -773,7 +775,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel maritimeTradeCommand(
+	public CommunicationModel maritimeTradeCommand(
 			shared.communication.toServer.moves.MaritimeTrade params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -791,7 +793,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel robCommand(
+	public CommunicationModel robCommand(
 			shared.communication.toServer.moves.RobPlayer params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -807,7 +809,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel FinishTurnCommand(
+	public CommunicationModel FinishTurnCommand(
 			shared.communication.toServer.moves.FinishTurn params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -823,7 +825,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel buyDevCardCommand(
+	public CommunicationModel buyDevCardCommand(
 			shared.communication.toServer.moves.BuyDevCard params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -839,7 +841,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel playSoldierCardCommand(
+	public CommunicationModel playSoldierCardCommand(
 			shared.communication.toServer.moves.Soldier_ params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -855,7 +857,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel playMonumentCardCommand(
+	public CommunicationModel playMonumentCardCommand(
 			shared.communication.toServer.moves.Monument_ params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -871,7 +873,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel playMonopolyCardCommand(
+	public CommunicationModel playMonopolyCardCommand(
 			shared.communication.toServer.moves.Monopoly_ params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -887,7 +889,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel playYearOfPlentyCardCommand(
+	public CommunicationModel playYearOfPlentyCardCommand(
 			shared.communication.toServer.moves.Year_of_Plenty_ params)
 	{
 		commanding_player_index = params.getPlayerIndex();
@@ -904,7 +906,7 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public shared.communication.fromServer.game.ServerModel playRoadBuildingCardCommand(
+	public CommunicationModel playRoadBuildingCardCommand(
 			shared.communication.toServer.moves.Road_Building_ params)
 	{
 		commanding_player_index = params.getPlayerIndex();

@@ -3,6 +3,7 @@ package client.communication;
 import client.control.Reference;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
+import shared.communication.Serializer;
 import shared.communication.toServer.games.JoinGameRequest;
 import shared.communication.toServer.user.Credentials;
 import shared.definitions.CatanColor;
