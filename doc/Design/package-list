@@ -38,6 +38,7 @@ shared.exceptions
 shared.locations
 shared.model
 shared.model.exceptions
+shared.model.extensions
 shared.model.map
 shared.model.map.buildings
 shared.model.messages

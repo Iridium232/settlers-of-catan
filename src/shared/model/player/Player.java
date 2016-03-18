@@ -139,6 +139,16 @@ public class Player {
 		this.playerIndex = victim.getPlayerIndex();
 	}
 
+    /**
+     * Do not use this. It is only for functions that need a player 
+     * parameter to get its index only
+     * @param victimIndex
+     */
+	public Player(int victimIndex) 
+	{
+		this.playerIndex = victimIndex;
+	}
+
 	/**
      * Tells whether this player can afford to buy something with this cost
      * @pre none

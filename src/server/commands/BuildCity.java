@@ -4,7 +4,7 @@ package server.commands;
  * @author Doug
  *
  */
-public class BuildCity implements Command {
+public class BuildCity extends Command {
 
 	@Override
 	public void execute() {
