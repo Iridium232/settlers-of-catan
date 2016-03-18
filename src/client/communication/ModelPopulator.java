@@ -33,9 +33,9 @@ public class ModelPopulator {
     public static void populateModel(JSONObject o, Fascade fascade) {
         ModelPopulator mp = new ModelPopulator();
         Gson gson = new Gson();
-        ServerModel serverModel = gson.fromJson(o.toString(), ServerModel.class);
+        CommunicationModel communicationModel = gson.fromJson(o.toString(), CommunicationModel.class);
         Game newModel = new Game();
-        mp.populateGame(serverModel, newModel);
+        mp.populateGame(communicationModel, newModel);
         fascade.changeModel(newModel);
         Reference.GET_SINGLETON().setFascade(fascade);
     }
@@ -43,21 +43,21 @@ public class ModelPopulator {
     private ModelPopulator() {
     }
 
-    private void populateGame(ServerModel serverModel, Game newModel) {
-        populateDeck(serverModel, newModel);
-        populateBank(serverModel, newModel);
-        populateChat(serverModel, newModel);
-        populateLog(serverModel, newModel);
-        populateMap(serverModel, newModel);
-        populatePlayers(serverModel, newModel);
-        populateTradeOffer(serverModel, newModel);
-        populateTurnTracker(serverModel, newModel);
-        newModel.setVersion(serverModel.getVersion());
-        newModel.setWinner(serverModel.getWinner());
+    private void populateGame(CommunicationModel communicationModel, Game newModel) {
+        populateDeck(communicationModel, newModel);
+        populateBank(communicationModel, newModel);
+        populateChat(communicationModel, newModel);
+        populateLog(communicationModel, newModel);
+        populateMap(communicationModel, newModel);
+        populatePlayers(communicationModel, newModel);
+        populateTradeOffer(communicationModel, newModel);
+        populateTurnTracker(communicationModel, newModel);
+        newModel.setVersion(communicationModel.getVersion());
+        newModel.setWinner(communicationModel.getWinner());
     }
 
-    private void populateDeck(ServerModel serverModel, Game newModel) {
-    	shared.communication.fromServer.game.DevCardList deck = serverModel.getDeck();
+    private void populateDeck(CommunicationModel communicationModel, Game newModel) {
+    	shared.communication.fromServer.game.DevCardList deck = communicationModel.getDeck();
         shared.model.player.DevCardList development_bank = new shared.model.player.DevCardList();
 
         development_bank.setMonument(deck.getMonument());
@@ -69,8 +69,8 @@ public class ModelPopulator {
         newModel.setDevelopment_bank(development_bank);
     }
 
-    private void populateBank(ServerModel serverModel, Game newModel) {
-        ResourceList bank = serverModel.getBank();
+    private void populateBank(CommunicationModel communicationModel, Game newModel) {
+        ResourceList bank = communicationModel.getBank();
         ResourceMultiSet resource_bank = new ResourceMultiSet(bank.getBrick(),
                 bank.getWheat(),
                 bank.getOre(),
@@ -80,8 +80,8 @@ public class ModelPopulator {
         newModel.setResource_bank(resource_bank);
     }
 
-    private void populateChat(ServerModel serverModel, Game newModel) {
-        MessageList serverChat = serverModel.getChat();
+    private void populateChat(CommunicationModel communicationModel, Game newModel) {
+        MessageList serverChat = communicationModel.getChat();
         MessageList clientChat = new MessageList();
 
         for (MessageLine line : serverChat.getMessages()) {
@@ -90,8 +90,8 @@ public class ModelPopulator {
         newModel.setChat(clientChat);
     }
 
-    private void populateLog(ServerModel serverModel, Game newModel) {
-        MessageList serverLog = serverModel.getLog();
+    private void populateLog(CommunicationModel communicationModel, Game newModel) {
+        MessageList serverLog = communicationModel.getLog();
         MessageList clientLog = new MessageList();
 
         for (MessageLine line : serverLog.getMessages()) {
@@ -100,8 +100,8 @@ public class ModelPopulator {
         newModel.setLog(clientLog);
     }
 
-    private void populateMap(ServerModel serverModel, Game newModel) {
-        Map serverMap = serverModel.getMap();
+    private void populateMap(CommunicationModel communicationModel, Game newModel) {
+        Map serverMap = communicationModel.getMap();
         GameMap clientMap = newModel.getMap();
         addDefaultHexes(newModel.getMap());
         populateHexes(serverMap, clientMap);
@@ -410,8 +410,8 @@ public class ModelPopulator {
         clientMap.getRobber().setLocation(new HexLocation(serverLocation.getX(), serverLocation.getY()));
     }
 
-    private void populatePlayers(ServerModel serverModel, Game newModel) {
-    	shared.communication.fromServer.game.Player[] serverPlayers = serverModel.getPlayers();
+    private void populatePlayers(CommunicationModel communicationModel, Game newModel) {
+    	shared.communication.fromServer.game.Player[] serverPlayers = communicationModel.getPlayers();
 
         for (shared.communication.fromServer.game.Player player : serverPlayers) {
         	if(player == null)continue;
@@ -511,8 +511,8 @@ public class ModelPopulator {
     }
 
 
-    private void populateTradeOffer(ServerModel serverModel, Game newModel) {
-        shared.communication.fromServer.game.TradeOffer serverOffer = serverModel.getTradeOffer();
+    private void populateTradeOffer(CommunicationModel communicationModel, Game newModel) {
+        shared.communication.fromServer.game.TradeOffer serverOffer = communicationModel.getTradeOffer();
         shared.model.player.TradeOffer newOffer = new shared.model.player.TradeOffer();
         if(serverOffer == null)return;
         newOffer.setSender(serverOffer.getSender());
@@ -525,8 +525,8 @@ public class ModelPopulator {
         newModel.setTrade_offer(newOffer);
     }
 
-    private void populateTurnTracker(ServerModel serverModel, Game newModel) {
-    	shared.communication.fromServer.game.TurnTracker serverTracker = serverModel.getTurnTracker();
+    private void populateTurnTracker(CommunicationModel communicationModel, Game newModel) {
+    	shared.communication.fromServer.game.TurnTracker serverTracker = communicationModel.getTurnTracker();
         shared.model.states.TurnTracker newTracker = new shared.model.states.TurnTracker();
 
         newTracker.setActive_player(serverTracker.getCurrentTurn());

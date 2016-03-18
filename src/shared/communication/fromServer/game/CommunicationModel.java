@@ -9,7 +9,7 @@ import shared.model.messages.MessageList;
  * Section 2
  * Team 10
  */
-public class ServerModel {
+public class CommunicationModel {
     private DevCardList deck;
     private ResourceList bank;
     private MessageList chat;
@@ -21,7 +21,7 @@ public class ServerModel {
     private int version;
     private int winner;
 
-    public ServerModel(DevCardList deck, ResourceList bank, MessageList chat, MessageList log, Map map, Player[]
+    public CommunicationModel(DevCardList deck, ResourceList bank, MessageList chat, MessageList log, Map map, Player[]
             players, TradeOffer tradeOffer, TurnTracker turnTracker, int version, int winner) {
         this.deck = deck;
         this.bank = bank;
