@@ -27,6 +27,11 @@ public class Game
 	private GameMap map = new GameMap();
 	
 	/**
+	 * Name of the game
+	 */
+	private String game_name;
+	
+	/**
 	 * Info needed by the GUI
 	 */
 	private GameInfo gameinfo;
@@ -319,6 +324,18 @@ public class Game
 	public IState getTurnState(int player_index) 
 	{
 		return turn_tracker.getState();
+	}
+
+	public void buildNewGame(String name, boolean randomTiles,
+			boolean randomNumbers, boolean randomPorts) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getName() 
+	{
+		return game_name;
 	}
 	
 }

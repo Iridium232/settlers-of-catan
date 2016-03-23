@@ -16,6 +16,7 @@ import shared.definitions.ResourceType;
 import shared.exceptions.JoinExceptions;
 import shared.locations.HexLocation;
 import shared.model.Fascade;
+import shared.model.player.DevCardList;
 import shared.model.player.Player;
 
 /**
@@ -104,8 +105,9 @@ public class ServerFacade implements IServer
 		for (Fascade facade : games)
 		{
 			Game game_entry = new Game(facade, games.size());
+			result.add(game_entry);
 		}
-		return null;
+		return result;
 	}
 
 	
@@ -135,9 +137,19 @@ public class ServerFacade implements IServer
 	 * @post the player is added to the game and gets information about the game.
 	 */
 	@Override
-	public String joinGame(int id, CatanColor color) throws JoinExceptions {
-		// TODO Auto-generated method stub
-		return null;
+	public String joinGame(int id, CatanColor color) throws JoinExceptions 
+	{
+		try 
+		{
+			User joiner = users.get(id);
+			games.get(game_index).addPlayer(joiner.getName(), color);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -150,7 +162,8 @@ public class ServerFacade implements IServer
 	 * 			unless there are no changes to report
 	 */
 	@Override
-	public String getModel(int id) {
+	public String getModel(int id) 
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -195,7 +208,8 @@ public class ServerFacade implements IServer
 	 * 
 	 */
 	@Override
-	public String addAIPlayer(String AiType) {
+	public String addAIPlayer(String AiType) 
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -210,8 +224,8 @@ public class ServerFacade implements IServer
 	 * 
 	 */
 	@Override
-	public String getAITypes() {
-		// TODO Auto-generated method stub
+	public String getAITypes() 
+	{
 		return null;
 	}
 
@@ -225,9 +239,18 @@ public class ServerFacade implements IServer
 	 * 
 	 */
 	@Override
-	public String sendChat(int playerIndex, String message) {
-		// TODO Auto-generated method stub
-		return null;
+	public String sendChat(int playerIndex, String message) 
+	{
+		try 
+		{
+			games.get(game_index).sendChat(commanding_player_index, message);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -242,7 +265,16 @@ public class ServerFacade implements IServer
 	@Override
 	public String acceptTrade(int playerIndex, boolean accept) 
 	{
-		return null;
+		try 
+		{
+			games.get(game_index).acceptTrade(commanding_player_index, accept);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -257,7 +289,16 @@ public class ServerFacade implements IServer
 	@Override
 	public String discardCards(ResourceList discardedCards) 
 	{
-		return null;
+		try 
+		{
+			games.get(game_index).discardResources(discardedCards);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -273,7 +314,16 @@ public class ServerFacade implements IServer
 	@Override
 	public String rollNumber(int number) 
 	{
-		return null;
+		try 
+		{
+			games.get(game_index).RollDice(number);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -286,9 +336,19 @@ public class ServerFacade implements IServer
 	 * 
 	 */
 	@Override
-	public String buildRoad(boolean free, EdgeLocation roadLocation) {
-		// TODO Auto-generated method stub
-		return null;
+	public String buildRoad(boolean free, EdgeLocation roadLocation) 
+	{
+		try 
+		{
+			games.get(game_index).buildRoadAt(commanding_player_index,
+					roadLocation, free);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -303,7 +363,16 @@ public class ServerFacade implements IServer
 	@Override
 	public String buildSettlement(boolean free, VertexLocation place) 
 	{
-		return null;
+		try 
+		{
+			games.get(game_index).buildSettlement(commanding_player_index, place);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -317,9 +386,18 @@ public class ServerFacade implements IServer
 	 * 
 	 */
 	@Override
-	public String buildCity(VertexLocation place) {
-		// TODO Auto-generated method stub
-		return null;
+	public String buildCity(VertexLocation place) 
+	{
+		try 
+		{
+			games.get(game_index).BuildCity(commanding_player_index, place);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -332,9 +410,19 @@ public class ServerFacade implements IServer
 	 * 
 	 */
 	@Override
-	public String offerTrade(ResourceList offer, Player receiver) {
-		// TODO Auto-generated method stub
-		return null;
+	public String offerTrade(ResourceList offer, Player receiver) 
+	{
+		try 
+		{
+			games.get(game_index).offerTrade(commanding_player_index,
+					offer, receiver.getPlayerIndex());
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -348,9 +436,19 @@ public class ServerFacade implements IServer
 	 */
 	@Override
 	public String maritimeTrade(int ratio, ResourceType input,
-			ResourceType output) {
-		// TODO Auto-generated method stub
-		return null;
+			ResourceType output) 
+	{
+		try 
+		{
+			games.get(game_index).maritimeTrade(commanding_player_index,
+					ratio, input, output);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -365,8 +463,16 @@ public class ServerFacade implements IServer
 	@Override
 	public String robPlayer(HexLocation location, Player victim) 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		try 
+		{
+			games.get(game_index).rob(commanding_player_index, victim, location);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -381,7 +487,16 @@ public class ServerFacade implements IServer
 	@Override
 	public String finishTurn() 
 	{
-		return null;
+		try 
+		{
+			games.get(game_index).finishTurn(commanding_player_index);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -396,7 +511,16 @@ public class ServerFacade implements IServer
 	@Override
 	public String buyDevCard() 
 	{
-		return null;
+		try 
+		{
+			games.get(game_index).buyDevelopmentCard(commanding_player_index);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -410,9 +534,19 @@ public class ServerFacade implements IServer
 	 * 
 	 */
 	@Override
-	public String playSoldier(HexLocation place, Player victim) {
-		// TODO Auto-generated method stub
-		return null;
+	public String playSoldier(HexLocation place, Player victim) 
+	{
+		try 
+		{
+			games.get(game_index).playSoldier(
+					commanding_player_index, place, victim.getPlayerIndex());
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 	
 	
@@ -429,7 +563,16 @@ public class ServerFacade implements IServer
 	@Override
 	public String yearOfPlenty(ResourceType one, ResourceType two) 
 	{
-		return null;
+		try 
+		{
+			games.get(game_index).playYearOfPlenty(commanding_player_index, one, two);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -443,9 +586,19 @@ public class ServerFacade implements IServer
 	 * 
 	 */
 	@Override
-	public String RoadBuilding(EdgeLocation one, EdgeLocation two) {
-		// TODO Auto-generated method stub
-		return null;
+	public String RoadBuilding(EdgeLocation one, EdgeLocation two) 
+	{
+		try 
+		{
+			games.get(game_index).playRoadBuilding(
+					commanding_player_index, one, two);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -461,7 +614,16 @@ public class ServerFacade implements IServer
 	@Override
 	public String monopoly(ResourceType one) 
 	{
-		return null;
+		try 
+		{
+			games.get(game_index).playMonopoly(commanding_player_index, one);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 
 	/**
@@ -476,7 +638,16 @@ public class ServerFacade implements IServer
 	@Override
 	public String monument() 
 	{
-		return null;
+		try 
+		{
+			games.get(game_index).playMonument(commanding_player_index);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "FAILED\n";
+		}
+		return "SUCCESS\n";
 	}
 	
 	/**

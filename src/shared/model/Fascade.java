@@ -5,10 +5,16 @@ import client.communication.IServer;
 import client.control.IObserver;
 import client.map.IMapController;
 import org.json.Cookie;
+
+import shared.communication.EdgeLocation;
+import shared.communication.ResourceList;
+import shared.communication.fromServer.game.VertexLocation;
 import shared.communication.toServer.moves.BuyDevCard;
 import shared.dataTransfer.response.DataResponse;
+import shared.definitions.CatanColor;
 import shared.definitions.Commands;
 import shared.definitions.DevCardType;
+import shared.definitions.ResourceType;
 import shared.definitions.TurnStatus;
 import shared.locations.HexLocation;
 import shared.model.map.Edge;
@@ -180,12 +186,12 @@ public class Fascade
 	 * Build a settlement on that spot
 	 * 
 	 * @param player
-	 * @param location
+	 * @param place
 	 * @pre canBuildSettlement() is true
 	 * @post a settlement is built by that player on the specified location
 	 * @post The player's resources are reduced by 1 food, 1 brick, 1 wood, and 1 wool
 	 */
-	public void buildSettlement(int player_index, Vertex location) throws Exception
+	public void buildSettlement(int player_index, VertexLocation place) throws Exception
 	{
 //		if (!this.canBuildSettlement(player_index, location))
 //			throw new ModelException();
@@ -221,7 +227,7 @@ public class Fascade
 	 * @post The player's resources are reduced by 2 food and 3 ore
 	 * 
 	 */
-	public void BuildCity(int player_index, Vertex location) throws Exception
+	public void BuildCity(int player_index, VertexLocation place) throws Exception
 	{
 //		if (!this.canBuildCity(player_index, location))
 //			throw new ModelException();
@@ -296,15 +302,14 @@ public class Fascade
 	
 	/**
 	 * 
-	 * @param discard_list
+	 * @param discardedCards
 	 * @pre the player was forced by a rolled 7 to discard half and 
 	 * generated a list of half his resources to discard
 	 * @post the chosen resources are returned to the game bank
 	 */
-	public DataResponse discardResources(ResourceMultiSet discard_list) throws Exception
+	public void discardResources(ResourceList discardedCards) throws Exception
 	{
-		DataResponse response = new DataResponse(Commands.DISCARD_CARDS,false);
-		return response;
+
 	}
 	
 	/**
@@ -1322,20 +1327,110 @@ public class Fascade
 	public void buildNewGame(String name, boolean randomTiles,
 			boolean randomNumbers, boolean randomPorts) 
 	{
-		// TODO Auto-generated method stub
-		
+		game_model.buildNewGame(name, randomTiles, randomNumbers, randomPorts);
 	}
 
 	public shared.communication.fromServer.games.Player[] getPlayers() 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		shared.model.player.Player[] players = game_model.getPlayers();
+		ArrayList<shared.communication.fromServer.games.Player> result = 
+				new ArrayList<shared.communication.fromServer.games.Player>();
+		for (shared.model.player.Player player : players)
+		{
+			result.add(new shared.communication.fromServer.games.Player(player.getColor(),
+					player.getName(), player.getPlayerID()));	
+		}
+		return result.toArray(new shared.communication.fromServer.games.Player[result.size()]);
 	}
 
 	public String getGameName() 
 	{
+		return game_model.getName();
+	}
+
+	public void playMonopoly(int commanding_player_index, ResourceType one) 
+	{
 		// TODO Auto-generated method stub
-		return null;
+		
+	}
+
+	public void playMonument(int commanding_player_index) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void playRoadBuilding(int commanding_player_index, EdgeLocation one,
+			EdgeLocation two) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void playYearOfPlenty(int commanding_player_index, ResourceType one,
+			ResourceType two) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void playSoldier(int commanding_player_index, HexLocation place,
+			int victimIndex) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void finishTurn(int commanding_player_index) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void rob(int commanding_player_index, Player victim,
+			HexLocation location) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void maritimeTrade(int commanding_player_index, int ratio,
+			ResourceType input, ResourceType output) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void offerTrade(int commanding_player_index, ResourceList offer,
+			int playerIndex) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void buildRoadAt(int commanding_player_index,
+			EdgeLocation roadLocation, boolean free) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void acceptTrade(int commanding_player_index, boolean accept) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void sendChat(int commanding_player_index, String message) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addPlayer(String name, CatanColor color) 
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }
