@@ -1,5 +1,7 @@
 package shared.model.player;
 
+import shared.communication.ResourceList;
+
 
 /**
  * 
@@ -17,6 +19,19 @@ public class TradeOffer
 	private ResourceMultiSet sender_gives = new ResourceMultiSet();
 	private ResourceMultiSet reciever_gives = new ResourceMultiSet();
 	
+	public TradeOffer(int sender, int reciever) 
+	{
+		this.sender = sender;
+		this.reciever = reciever;
+	}
+	
+	/**
+	 *  Default constructor
+	 */
+	public TradeOffer() 
+	{
+		
+	}
 	/**
 	 * @return the sender
 	 */

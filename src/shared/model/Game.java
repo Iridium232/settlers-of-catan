@@ -4,6 +4,7 @@ import java.util.Random;
 
 import shared.communication.EdgeLocation;
 import shared.communication.ResourceList;
+import shared.communication.fromServer.game.VertexLocation;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
@@ -24,6 +25,8 @@ import shared.model.player.TradeOffer;
 import shared.model.states.IState;
 import shared.model.states.PlayingState;
 import shared.model.states.RobbingState;
+import shared.model.states.RollingState;
+import shared.model.states.TradingState;
 import shared.model.states.TurnTracker;
 import client.data.*;
 
@@ -258,29 +261,6 @@ public class Game
 	{
 		this.development_bank = development_bank;
 	}
-	
-	/**
-	 * advances to the next phase in this player's turn
-	 * @pre this turn phase is finished
-	 * @post the next turn phase is entered. If that means another player
-	 * should become the active player, that player becomes so.
-	 */
-	public void nextTurnPhase()
-	{
-		
-	}
-	
-	/**
-	 * advances the turn to the next player
-	 * 
-	 * @pre the player is finished with his turn
-	 * @post it is the next player's turn
-	 */
-	public void endTurn()
-	{
-		//TODO
-	}
-	
 
 
 	/**
@@ -340,6 +320,17 @@ public class Game
 	}
 	//=========================== Action =========================================
 	
+	/**
+	 * creates a new game
+	 * 
+	 * @pre none
+	 * @post builds a new game with either pre-set setup or a random one.
+	 * 
+	 * @param name
+	 * @param randomTiles
+	 * @param randomNumbers
+	 * @param randomPorts
+	 */
 	public void buildNewGame(String name, boolean randomTiles,
 			boolean randomNumbers, boolean randomPorts) 
 	{
@@ -347,6 +338,15 @@ public class Game
 		
 	}
 
+	/**
+	 * Play monument
+	 * 
+	 * @pre The player has the monument card
+	 * @post the player gets a victory point
+	 * 
+	 * @param commanding_player_index
+	 * @throws Exception
+	 */
 	public void playMonument(int commanding_player_index) throws Exception 
 	{
 		players[commanding_player_index].playDevCard(DevCardType.MONUMENT);
@@ -354,6 +354,16 @@ public class Game
 				players[commanding_player_index].getMonuments() + 1);
 	}
 
+	/**
+	 * monopoly
+	 * 
+	 * @pre the player has the monopoly card
+	 * @post the player gets all of a certain resource
+	 * 
+	 * @param commanding_player_index
+	 * @param resource
+	 * @throws Exception
+	 */
 	public void playMonopoly(int commanding_player_index, ResourceType resource) throws Exception 
 	{
 		players[commanding_player_index].playDevCard(DevCardType.MONOPOLY);
@@ -393,6 +403,17 @@ public class Game
 		this.buildRoadAt(commanding_player_index, two, true);
 	}
 
+	/**
+	 * year of plenty
+	 * 
+	 * @pre the player has the year of plenty card
+	 * @post the player gets the 2 resources he wanted and loses the dev card
+	 * 
+	 * @param commanding_player_index
+	 * @param one
+	 * @param two
+	 * @throws Exception
+	 */
 	public void playYearOfPlenty(int commanding_player_index, 
 			ResourceType one, ResourceType two) throws Exception 
 	{
@@ -403,13 +424,44 @@ public class Game
 		this.resource_bank.pay(two, 1);
 	}
 	
-
+	/**
+	 * play soldier
+	 * 
+	 * @pre this player has a soldier dev card
+	 * @post the player robs somebody
+	 * 
+	 * @param commanding_player_index
+	 * @param place
+	 * @param victimIndex
+	 * @throws Exception
+	 */
 	public void playSoldier(int commanding_player_index, HexLocation place,
 			int victimIndex) throws Exception 
 	{
 		//move robber
 		this.map.moveRobber(place);
 		//rob happens
+		players[commanding_player_index].setSoldiers(players[commanding_player_index].getSoldiers()+ 1);
+		for (Player player : players)
+		{
+			if(player.getPlayerIndex()==commanding_player_index)
+			{
+				continue;
+			}
+			if(turn_tracker.getLargest_army_player() == -1 && players[commanding_player_index].getSoldiers() 
+						> 2)
+			{
+				turn_tracker.setLargest_army_player(commanding_player_index);
+			}
+			if (player.getPlayerIndex() == turn_tracker.getLargest_army_player() 
+					&& players[commanding_player_index].getSoldiers() 
+						> player.getSoldiers())		
+			{
+				turn_tracker.setLargest_army_player(commanding_player_index);
+			}
+		}
+		
+		
 		if(victimIndex == -1)
 		{
 			return;
@@ -429,13 +481,39 @@ public class Game
 	
 		players[commanding_player_index].getResource(resource, 1);
 		players[victimIndex].pay(resource, 1);
+		
+		
+		
+		
 	}
 
+	/**
+	 * Finishes that player's turn
+	 * 
+	 * @pre none
+	 * @post next player is the active player and rolling
+	 * 
+	 * @param commanding_player_index
+	 * @throws Exception
+	 */
 	public void finishTurn(int commanding_player_index) throws Exception 
 	{
 		this.turn_tracker.advanceActivePlayer(commanding_player_index);
+		turn_tracker.setState(new RollingState());
 	}
-
+	
+	
+	/**
+	 * rob and move robber
+	 * 
+	 * @pre none
+	 * @post robber is moved and the other guy is robbed a random resource
+	 * 
+	 * @param commanding_player_index
+	 * @param victim
+	 * @param location
+	 * @throws Exception
+	 */
 	public void rob(int commanding_player_index, Player victim,
 			HexLocation location) throws Exception 
 	{
@@ -478,11 +556,23 @@ public class Game
 		players[commanding_player_index].getResource(output, 1);
 	}
 
-	public void offerTrade(int commanding_player_index, ResourceList offer,
+	/**
+	 * offers a trade
+	 * 
+	 * @pre none
+	 * @post the trade offer is out there and all go into waiting for the response
+	 * 
+	 * @param commanding_player_index
+	 * @param offering
+	 * @param playerIndex
+	 */
+	public void offerTrade(int commanding_player_index, ResourceList offering,
 			int playerIndex) 
 	{
-		// TODO Auto-generated method stub
-		
+		TradeOffer offer = new TradeOffer(commanding_player_index, playerIndex);
+		offer.translateOffer(new ResourceMultiSet(offering));
+		this.trade_offer = offer;
+		turn_tracker.setState(new TradingState());
 	}
 
 	/**
@@ -527,10 +617,24 @@ public class Game
 	 * 
 	 * @param commanding_player_index
 	 * @param accept
+	 * @throws Exception 
 	 */
-	public void replyToTrade(int commanding_player_index, boolean accept) 
+	public void replyToTrade(int commanding_player_index, boolean accept) throws Exception 
 	{
-		// TODO Auto-generated method stub
+		if(commanding_player_index != trade_offer.getReciever())
+		{
+			throw new Exception("ERROR: this person is not part of the trade");
+		}
+		if(!accept)
+		{
+			this.trade_offer = null;
+		}
+		else
+		{
+			
+		}
+		turn_tracker.setState(new PlayingState());
+		return;
 		
 	}
 
@@ -666,5 +770,11 @@ public class Game
 		{
 			player.setDiscarded(false);
 		}
+	}
+
+	public void buildCity(int player_index, VertexLocation place)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

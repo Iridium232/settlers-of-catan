@@ -229,12 +229,7 @@ public class Fascade
 	 */
 	public void BuildCity(int player_index, VertexLocation place) throws Exception
 	{
-//		if (!this.canBuildCity(player_index, location))
-//			throw new ModelException();
-//		GameMap game_map = game_model.getMap();
-//		Player player = game_model.getPlayers()[player_index];
-//		game_map.addCity(location, player_index);
-
+		game_model.buildCity(player_index, place);
 	}
 	
 	//+++++++++++++++++++++++++++++++++++++++++++++++
@@ -1430,7 +1425,7 @@ public class Fascade
 		
 	}
 
-	public void acceptTrade(int commanding_player_index, boolean accept) 
+	public void acceptTrade(int commanding_player_index, boolean accept) throws Exception 
 	{
 		game_model.replyToTrade(commanding_player_index, accept);	
 	}
