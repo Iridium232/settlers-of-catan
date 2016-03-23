@@ -162,7 +162,7 @@ public class ModelTranslator {
             comPlayers.add(comPlayer);
         }
 
-        return (shared.communication.fromServer.game.Player[])comPlayers.toArray();
+        return toPlayerArray(comPlayers);
     }
 
     private shared.communication.fromServer.game.TradeOffer translateTradeOffer(shared.model.Game serverModel)
@@ -198,13 +198,22 @@ public class ModelTranslator {
             for (TerrainHex hex : outerHexes) {
                 HexLocation location = hex.getLocation();
                 String resource = hexTypeToString(hex.getType());
-                if (hex.getNumber() == null) throw new NullPointerException("NumberChit in a hex in our map is null");
+                if (hex.getNumber() == null) return null;
                 int number = hex.getNumber().getValue();
                 Hex comHex = new Hex(location, resource, number);
                 comHexes.add(comHex);
             }
         }
-        return (Hex[])comHexes.toArray();
+        return toHexArray(comHexes);
+    }
+
+    private Hex[] toHexArray(ArrayList<Hex> comHexes) {
+        Hex[] newArray =
+                new Hex[comHexes.size()];
+        for (int i = 0; i < comHexes.size(); i++) {
+            newArray[i] = comHexes.get(i);
+        }
+        return newArray;
     }
 
     private shared.communication.fromServer.game.Port[] translatePorts(GameMap serverMap)
@@ -222,7 +231,7 @@ public class ModelTranslator {
                     new shared.communication.fromServer.game.Port(resource, location, direction, ratio);
             comPorts.add(comPort);
         }
-        return (shared.communication.fromServer.game.Port[])comPorts.toArray();
+        return toPortArray(comPorts);
     }
 
     private shared.communication.fromServer.game.Road[] translateRoads(GameMap serverMap)
@@ -238,7 +247,7 @@ public class ModelTranslator {
                     new shared.communication.fromServer.game.Road(owner, location);
             comRoads.add(comRoad);
         }
-        return (shared.communication.fromServer.game.Road[])comRoads.toArray();
+        return toRoadArray(comRoads);
     }
 
     private shared.communication.fromServer.game.VertexObject[] translateSettlements(GameMap serverMap)
@@ -257,7 +266,7 @@ public class ModelTranslator {
                 comVertexObjects.add(comVertexObject);
             }
         }
-        return (shared.communication.fromServer.game.VertexObject[])comVertexObjects.toArray();
+        return toVertexObjectArray(comVertexObjects);
     }
 
     private shared.communication.fromServer.game.VertexObject[] translateCities(GameMap serverMap)
@@ -276,13 +285,13 @@ public class ModelTranslator {
                 comVertexObjects.add(comVertexObject);
             }
         }
-        return (shared.communication.fromServer.game.VertexObject[])comVertexObjects.toArray();
+        return toVertexObjectArray(comVertexObjects);
     }
 
     private HexLocation translateRobber(GameMap serverMap)
             throws NullPointerException {
         Robber robber = serverMap.getRobber();
-        if (robber == null) throw new NullPointerException("robber in our in our map is null");
+        if (robber == null) throw new NullPointerException("robber in our map is null");
 
         return robber.getLocation();
     }
@@ -335,6 +344,9 @@ public class ModelTranslator {
             case ORE:
                 strType = "ore";
                 break;
+            case MISC:
+                strType = "misc";
+                break;
             default:
                 throw new Exception("Unknown type");
         }
@@ -384,6 +396,26 @@ public class ModelTranslator {
         return new shared.communication.fromServer.game.VertexLocation(direction, x, y);
     }
 
+    private shared.communication.fromServer.game.Port[] toPortArray(
+            ArrayList<shared.communication.fromServer.game.Port> comPorts) {
+        shared.communication.fromServer.game.Port[] newArray =
+                new shared.communication.fromServer.game.Port[comPorts.size()];
+        for (int i = 0; i < comPorts.size(); i++) {
+            newArray[i] = comPorts.get(i);
+        }
+        return newArray;
+    }
+
+    private shared.communication.fromServer.game.VertexObject[] toVertexObjectArray(
+            ArrayList<shared.communication.fromServer.game.VertexObject> comPorts) {
+        shared.communication.fromServer.game.VertexObject[] newArray =
+                new shared.communication.fromServer.game.VertexObject[comPorts.size()];
+        for (int i = 0; i < comPorts.size(); i++) {
+            newArray[i] = comPorts.get(i);
+        }
+        return newArray;
+    }
+
     //*************************************** For Translating Players *************************************************
     private shared.communication.fromServer.game.DevCardList translateDevCardList(
             shared.model.player.DevCardList list) {
@@ -403,6 +435,26 @@ public class ModelTranslator {
         int sheep = multiSet.getSheep();
         int ore = multiSet.getOre();
         return new ResourceList(brick, ore, sheep, wheat, wood);
+    }
+
+    private shared.communication.fromServer.game.Player[] toPlayerArray(
+            ArrayList<shared.communication.fromServer.game.Player> comPlayers) {
+        shared.communication.fromServer.game.Player[] newArray =
+                new shared.communication.fromServer.game.Player[comPlayers.size()];
+        for (int i = 0; i < comPlayers.size(); i++) {
+            newArray[i] = comPlayers.get(i);
+        }
+        return newArray;
+    }
+
+    private shared.communication.fromServer.game.Road[] toRoadArray(
+            ArrayList<shared.communication.fromServer.game.Road> comRoads) {
+        shared.communication.fromServer.game.Road[] newArray =
+                new shared.communication.fromServer.game.Road[comRoads.size()];
+        for (int i = 0; i < comRoads.size(); i++) {
+            newArray[i] = comRoads.get(i);
+        }
+        return newArray;
     }
 
     //************************************ For Translating TradeOffer **********************************************
