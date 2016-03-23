@@ -1,17 +1,20 @@
 package server.handlers;
 
+import java.io.IOException;
+
+import com.sun.net.httpserver.HttpExchange;
+
 /**
  * 
  * Handler that generates and sends the command for a Roll
  * action
  *
  */
-public class RollHandler implements IHandler {
-
+public class RollHandler extends AbstractHandler{
+	
 	@Override
-	public Object handle() {
-		// TODO Auto-generated method stub
-		return null;
+	public void handle(HttpExchange exchange) throws IOException {
+		
 	}
-
+	
 }

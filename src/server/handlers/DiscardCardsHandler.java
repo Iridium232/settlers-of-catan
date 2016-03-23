@@ -3,10 +3,10 @@ package server.handlers;
 
 import java.io.IOException;
 
-import javax.xml.ws.spi.http.HttpExchange;
-import javax.xml.ws.spi.http.HttpHandler;
+import com.sun.net.httpserver.HttpExchange;
 
-public class DiscardCardsHandler extends HttpHandler {
+
+public class DiscardCardsHandler extends AbstractHandler {
 /**
  * @post creates a new Discard card command and executes it. 
  */
