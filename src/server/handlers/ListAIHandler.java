@@ -1,12 +1,14 @@
 package server.handlers;
 
-public class ListAIHandler implements IHandler 
-{
+import java.io.IOException;
 
+import com.sun.net.httpserver.HttpExchange;
+
+public class ListAIHandler extends AbstractHandler{
+	
 	@Override
-	public Object handle() {
-		// TODO Auto-generated method stub
-		return null;
+	public void handle(HttpExchange exchange) throws IOException {
+		
 	}
-
+	
 }

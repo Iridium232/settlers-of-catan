@@ -2,22 +2,19 @@ package server.handlers;
 
 import java.io.IOException;
 
-import javax.xml.ws.spi.http.HttpExchange;
-import javax.xml.ws.spi.http.HttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+
 /**
  * handles a buildSettlement request
  * @author Doug
  *
  */
-public class BuildSettlementHandler extends HttpHandler {
+public class BuildSettlementHandler extends AbstractHandler {
 /**
  * @post a new Build Settlement command is created and added to the list.
  */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
-
-
+		
 	}
-
 }

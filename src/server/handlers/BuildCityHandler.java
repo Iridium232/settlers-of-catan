@@ -1,12 +1,10 @@
 package server.handlers;
 
-
 import java.io.IOException;
 
-import javax.xml.ws.spi.http.HttpExchange;
-import javax.xml.ws.spi.http.HttpHandler;
+import com.sun.net.httpserver.HttpExchange;
 
-public class BuildCityHandler extends HttpHandler {
+public class BuildCityHandler extends AbstractHandler {
 	/**
 	 * @post a build city command is created and executed on the proper coordinates with the correct owner
 	 * @author Doug
@@ -14,8 +12,7 @@ public class BuildCityHandler extends HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

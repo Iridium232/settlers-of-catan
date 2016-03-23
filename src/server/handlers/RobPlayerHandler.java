@@ -2,10 +2,10 @@ package server.handlers;
 
 import java.io.IOException;
 
-import javax.xml.ws.spi.http.HttpExchange;
-import javax.xml.ws.spi.http.HttpHandler;
+import com.sun.net.httpserver.HttpExchange;
 
-public class RobPlayerHandler extends HttpHandler {
+
+public class RobPlayerHandler extends AbstractHandler {
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {

@@ -1,16 +1,20 @@
 package server.handlers;
 
+import java.io.IOException;
+
+import com.sun.net.httpserver.HttpExchange;
+
 /**
  * 
  * Handler that generates and sends the command for a Join
  * action
  *
  */
-public class JoinHandler implements IHandler
-{
-	public Object handle() {
-		// TODO Auto-generated method stub
-		return null;
+public class JoinHandler extends AbstractHandler{
+	
+	@Override
+	public void handle(HttpExchange exchange) throws IOException {
+		
 	}
 	
 }

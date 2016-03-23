@@ -4,13 +4,11 @@ import java.io.IOException;
 
 import com.sun.net.httpserver.HttpExchange;
 
-
-public class FinishTurnHandler extends AbstractHandler {
-
+public class MonopolyHandler extends AbstractHandler{
+	
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 }
