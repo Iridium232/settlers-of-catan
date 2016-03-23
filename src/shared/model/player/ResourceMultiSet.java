@@ -1,4 +1,5 @@
 package shared.model.player;
+import shared.communication.ResourceList;
 import shared.definitions.ResourceType;
 /**
  * @author rscheuer
@@ -41,6 +42,20 @@ public class ResourceMultiSet {
 
 
     /**
+     * constructor from communication
+     * @param discardedCards
+     */
+    public ResourceMultiSet(ResourceList discardedCards) 
+    {
+        this.brick = discardedCards.getBrick();
+        this.wheat = discardedCards.getWheat();
+        this.ore = discardedCards.getOre();
+        this.wood = discardedCards.getWood();
+        this.sheep = discardedCards.getSheep();
+	}
+
+
+	/**
      * Check for amount of card type specified.
      * @pre none
      * @post returns boolean
@@ -232,6 +247,11 @@ public class ResourceMultiSet {
     }
 
 
+    /**
+     * Tests whether it can afford
+     * @param trade_in_cards
+     * @return
+     */
 	public boolean canAfford(ResourceMultiSet trade_in_cards) 
 	{
 		int other_wood = trade_in_cards.getWood();
@@ -251,8 +271,12 @@ public class ResourceMultiSet {
 	}
 
 
-	public int size() {
-		// TODO Auto-generated method stub
+	/**
+	 * See total
+	 * @return
+	 */
+	public int size() 
+	{
 		return brick+ore+sheep+wheat+wood;
 	}
 
@@ -340,6 +364,35 @@ public class ResourceMultiSet {
 		case WOOD:
 			this.wood -= quantity;
 			break;
+		default: 
+			throw new Exception("ERROR: Unsupported resource type");
+		}
+	}
+
+
+	/**
+	 * Whether this set has the following
+	 * 
+	 * @pre none
+	 * @post returns whether the multiset contains this resource type
+	 * @param resource
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean has(ResourceType resource) throws Exception 
+	{
+		switch (resource)
+		{
+		case BRICK:
+			return this.brick > 0;
+		case ORE:
+			return this.ore > 0;
+		case SHEEP:
+			return this.sheep > 0;
+		case WHEAT:
+			return this.wheat > 0;
+		case WOOD:
+			return this.wood > 0;
 		default: 
 			throw new Exception("ERROR: Unsupported resource type");
 		}

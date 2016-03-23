@@ -185,4 +185,9 @@ public class TurnTracker
 		}
 		state = active_state;
 	}
+
+	public void setState(IState playingState) 
+	{
+		this.state = playingState;
+	}
 }

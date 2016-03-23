@@ -31,8 +31,11 @@ public class RobbingState implements IState
 	@Override
 	public void finishPhase(TurnTracker turn_tracker_pointer, int player_index) 
 	{
-		// TODO Auto-generated method stub
-		
+		if (turn_tracker_pointer.getActive_player() == player_index)
+		{
+			turn_tracker_pointer.setStatus(TurnStatus.PLAYING);
+			turn_tracker_pointer.setState(new PlayingState());
+		}
 	}
 
 	

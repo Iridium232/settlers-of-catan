@@ -68,4 +68,32 @@ public class TerrainHex
 		assert (this.number == null);
 		this.number = number;
 	}
+
+	/**
+	 * Gets the resource of this hex
+	 * 
+	 * @pre none
+	 * @post returns the resource you get here or null if not applicable
+	 * @return
+	 */
+	public ResourceType getResource() 
+	{
+		switch (this.type)
+		{
+		case BRICK:
+			return ResourceType.BRICK;
+		case ORE:
+			return ResourceType.ORE;
+		case SHEEP:
+			return ResourceType.SHEEP;
+		case WHEAT:
+			return ResourceType.WHEAT;
+		case WOOD:
+			return ResourceType.WOOD;
+		case WATER:
+		case DESERT:
+		default:
+			return null;
+		}
+	}
 }

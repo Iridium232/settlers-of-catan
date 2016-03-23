@@ -18,6 +18,7 @@ import shared.locations.HexLocation;
 import shared.model.Fascade;
 import shared.model.player.DevCardList;
 import shared.model.player.Player;
+import shared.model.player.ResourceMultiSet;
 
 /**
  * 
@@ -289,9 +290,11 @@ public class ServerFacade implements IServer
 	@Override
 	public String discardCards(ResourceList discardedCards) 
 	{
+		ResourceMultiSet discards = new ResourceMultiSet(discardedCards);
 		try 
 		{
-			games.get(game_index).discardResources(discardedCards);
+			games.get(game_index).discardResources(commanding_player_index, 
+					discards);
 		} 
 		catch (Exception e) 
 		{

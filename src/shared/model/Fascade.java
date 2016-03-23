@@ -264,9 +264,9 @@ public class Fascade
 	 * @post the dice are rolled and the consequences are applied to each player
 	 * and the game state is advanced to the next turn phase
 	 */
-	public int RollDice(int player_index) throws Exception
+	public void RollDice(int number) throws Exception
 	{
-		return -1;//TODO
+		game_model.applyDiceRoll(number);
 	}
 	
 	/**
@@ -307,9 +307,9 @@ public class Fascade
 	 * generated a list of half his resources to discard
 	 * @post the chosen resources are returned to the game bank
 	 */
-	public void discardResources(ResourceList discardedCards) throws Exception
+	public void discardResources(int player_index, ResourceMultiSet discardedCards) throws Exception
 	{
-
+		game_model.discard(player_index, discardedCards);
 	}
 	
 	/**
@@ -1371,12 +1371,12 @@ public class Fascade
 		game_model.setName(name);
 	}
 	
-	public void playMonopoly(int commanding_player_index, ResourceType one) 
+	public void playMonopoly(int commanding_player_index, ResourceType one) throws Exception 
 	{
 		game_model.playMonopoly(commanding_player_index, one);
 	}
 
-	public void playMonument(int commanding_player_index) 
+	public void playMonument(int commanding_player_index) throws Exception 
 	{
 		game_model.playMonument(commanding_player_index);
 	}
@@ -1394,7 +1394,7 @@ public class Fascade
 	}
 
 	public void playSoldier(int commanding_player_index, HexLocation place,
-			int victimIndex) 
+			int victimIndex) throws Exception 
 	{
 		game_model.playSoldier(commanding_player_index, place, victimIndex);
 	}
@@ -1405,7 +1405,7 @@ public class Fascade
 	}
 
 	public void rob(int commanding_player_index, Player victim,
-			HexLocation location) 
+			HexLocation location) throws Exception 
 	{
 		game_model.rob(commanding_player_index, victim, location);
 	}
@@ -1424,7 +1424,7 @@ public class Fascade
 	}
 
 	public void buildRoadAt(int commanding_player_index,
-			EdgeLocation roadLocation, boolean free) 
+			EdgeLocation roadLocation, boolean free) throws Exception 
 	{
 		game_model.buildRoadAt(commanding_player_index, roadLocation, free);
 		

@@ -30,8 +30,7 @@ public class DiscardState implements IState
 	@Override
 	public void finishPhase(TurnTracker turn_tracker_pointer, int player_index) 
 	{
-		// TODO Auto-generated method stub
-		
+		turn_tracker_pointer.setState(new PlayingState());
 	}
 
 	/**

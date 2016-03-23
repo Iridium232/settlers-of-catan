@@ -9,7 +9,6 @@ import shared.definitions.TurnStatus;
  */
 public class RollingState implements IState 
 {
-
 	/**
 	 * Gets the state
 	 * 
@@ -36,14 +35,13 @@ public class RollingState implements IState
 	}
 
 	/**
-	 * forceDiscard() should not be called on this state
+	 *  the game waits for all players to discard
 	 * @post An error is thrown
 	 */
 	@Override
 	public void forceDiscard(TurnTracker turn_tracker_pointer, int player_index) throws Exception 
 	{
-		// TODO Auto-generated method stub
-		
+		turn_tracker_pointer.setState(new DiscardState());
 	}
 
 }

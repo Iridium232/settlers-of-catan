@@ -1,16 +1,20 @@
 package shared.model;
 
+import java.util.Random;
+
 import shared.communication.EdgeLocation;
 import shared.communication.ResourceList;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.definitions.TurnStatus;
+import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.model.map.GameMap;
 import shared.model.map.Road;
 import shared.model.map.Robber;
 import shared.model.map.TerrainHex;
+import shared.model.map.buildings.Building;
 import shared.model.messages.MessageLine;
 import shared.model.messages.MessageList;
 import shared.model.player.DevCardList;
@@ -18,6 +22,8 @@ import shared.model.player.Player;
 import shared.model.player.ResourceMultiSet;
 import shared.model.player.TradeOffer;
 import shared.model.states.IState;
+import shared.model.states.PlayingState;
+import shared.model.states.RobbingState;
 import shared.model.states.TurnTracker;
 import client.data.*;
 
@@ -272,20 +278,10 @@ public class Game
 	 */
 	public void endTurn()
 	{
-		
+		//TODO
 	}
 	
-	/**
-	 * 
-	 * @pre the active player has rolled the dice in turn and achieved this result
-	 * @post players recieve resources and are forced to discard if they have
-	 * too many resources.
-	 * @post if the player rolled a 7, they are put into the ROB phase of their turn.
-	 */
-	public void applyDiceRoll(int result)
-	{
-		
-	}
+
 
 	/**
 	 * Tells which player has the most soldiers in play first
@@ -333,6 +329,17 @@ public class Game
 		return turn_tracker.getState();
 	}
 
+	public String getName() 
+	{
+		return game_name;
+	}	
+	
+	public void setName(String name) 
+	{
+		game_name = name;
+	}
+	//=========================== Action =========================================
+	
 	public void buildNewGame(String name, boolean randomTiles,
 			boolean randomNumbers, boolean randomPorts) 
 	{
@@ -340,25 +347,35 @@ public class Game
 		
 	}
 
-	public String getName() 
+	public void playMonument(int commanding_player_index) throws Exception 
 	{
-		return game_name;
+		players[commanding_player_index].playDevCard(DevCardType.MONUMENT);
+		players[commanding_player_index].setMonuments(
+				players[commanding_player_index].getMonuments() + 1);
 	}
 
-	public void setName(String name) 
+	public void playMonopoly(int commanding_player_index, ResourceType resource) throws Exception 
 	{
-		game_name = name;
-	}
-
-	public void playMonument(int commanding_player_index) 
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void playMonopoly(int commanding_player_index, ResourceType one) {
-		// TODO Auto-generated method stub
-		
+		players[commanding_player_index].playDevCard(DevCardType.MONOPOLY);
+		int total_found = 0;
+		for (int i = 0; i < 4; i++)
+		{
+			if (commanding_player_index == i)
+			{
+				continue;
+			}
+			int amt_has = players[i].getResources().getAmount(resource);
+			if(amt_has > 0)
+			{
+				total_found += amt_has;
+				players[i].pay(resource, amt_has);
+			}
+		}
+		if(total_found < 0)
+		{
+			total_found = 0;
+		}
+		players[commanding_player_index].getResource(resource, total_found);
 	}
 
 	/**
@@ -388,10 +405,30 @@ public class Game
 	
 
 	public void playSoldier(int commanding_player_index, HexLocation place,
-			int victimIndex) 
+			int victimIndex) throws Exception 
 	{
-		// TODO Auto-generated method stub
-		
+		//move robber
+		this.map.moveRobber(place);
+		//rob happens
+		if(victimIndex == -1)
+		{
+			return;
+		}
+		ResourceType resource = null;
+		ResourceMultiSet victim_stuff = players[victimIndex].getResources();
+		if (victim_stuff.total() < 1)
+		{
+			throw new Exception("ERROR! This victim had no resources!");
+		}
+		Random rand = new Random();
+		do
+		{
+			resource = ResourceType.values()[rand.nextInt(6)];
+		}
+		while (!victim_stuff.has(resource));
+	
+		players[commanding_player_index].getResource(resource, 1);
+		players[victimIndex].pay(resource, 1);
 	}
 
 	public void finishTurn(int commanding_player_index) throws Exception 
@@ -400,10 +437,36 @@ public class Game
 	}
 
 	public void rob(int commanding_player_index, Player victim,
-			HexLocation location) 
+			HexLocation location) throws Exception 
 	{
-		// TODO Auto-generated method stub
+		int victimIndex = victim.getPlayerIndex();
 		
+		//move robber
+		this.map.moveRobber(location);
+		//rob happens
+		if(victimIndex == -1)
+		{
+			return;
+		}
+		
+		
+		ResourceType resource = null;
+		ResourceMultiSet victim_stuff = players[victimIndex].getResources();
+		if (victim_stuff.total() < 1)
+		{
+			throw new Exception("ERROR! This victim had no resources!");
+		}
+		Random rand = new Random();
+		do
+		{
+			resource = ResourceType.values()[rand.nextInt(6)];
+		}
+		while (!victim_stuff.has(resource));
+	
+		players[commanding_player_index].getResource(resource, 1);
+		players[victimIndex].pay(resource, 1);
+		
+		turn_tracker.getState().finishPhase(turn_tracker, commanding_player_index);
 	}
 
 	public void maritimeTrade(int commanding_player_index, int ratio,
@@ -422,12 +485,38 @@ public class Game
 		
 	}
 
-	
+	/**
+	 * 
+	 * Build a road at that spot
+	 * 
+	 * @pre canBuildRoad
+	 * @post a road is put on that spot by that player 
+	 *
+	 * 
+	 * @param commanding_player_index
+	 * @param roadLocation
+	 * @param free
+	 * @throws Exception
+	 */
 	public void buildRoadAt(int commanding_player_index,
-			EdgeLocation roadLocation, boolean free) 
+			EdgeLocation roadLocation, boolean free) throws Exception 
 	{
-		// TODO Auto-generated method stub
+		if(!free)
+		{
+			players[commanding_player_index].pay(ResourceType.WOOD, 1);
+			players[commanding_player_index].pay(ResourceType.BRICK, 1);
+		}
 		
+		shared.locations.EdgeLocation place = 
+				new shared.locations.EdgeLocation(
+				new HexLocation(roadLocation.getX(),
+				roadLocation.getY()), EdgeDirection.valueOf(
+						roadLocation.getDirection()));
+		
+		map.addRoad(new Road(place, commanding_player_index, CatanColor.valueOf(
+				players[commanding_player_index].getColor()))); 
+		
+		players[commanding_player_index].placeRoad();
 	}
 
 	/**
@@ -488,6 +577,55 @@ public class Game
 	
 	/**
 	 * 
+	 * @throws Exception 
+	 * @pre the active player has rolled the dice in turn and achieved this result
+	 * @post players recieve resources and are forced to discard if they have
+	 * too many resources.
+	 * @post if the player rolled a 7, they are put into the ROB phase of their turn.
+	 */
+	public void applyDiceRoll(int result) throws Exception
+	{
+		if(result != 7)
+		{
+			TerrainHex[] lucky_spots = map.getHexesByNumber(result);
+			for(int i = 0; i < 2; i++)
+			{
+				TerrainHex lucky_spot = lucky_spots[i];
+				Building[] buildings = map.getAdjoiningPlayers(lucky_spot.getLocation());
+				for(Building building : buildings)
+				{
+					if(building.getClass().getName().equals("City"))
+					{
+						players[building.getOwner()].getResource(
+							lucky_spot.getResource(), 2);
+					}
+					else
+					{
+						players[building.getOwner()].getResource(
+							lucky_spot.getResource(), 1);
+					}	
+				}
+			}
+			turn_tracker.setState(new PlayingState());
+		}
+		else //Brigand Attack!
+		{
+			for (Player player : players)
+			{
+				if (player.getResources().total() > 7)
+				{
+					turn_tracker.getState().forceDiscard(turn_tracker, -1);
+					return;
+				}
+			}
+			turn_tracker.setState(new RobbingState());
+			return;
+		}
+	}
+	
+	
+	/**
+	 * 
 	 * @pre none
 	 * @post returns the index of a player opening or -1 if there is none
 	 */
@@ -502,5 +640,31 @@ public class Game
 		}
 		return -1;
 		
+	}
+
+	/**
+	 * Discard resources
+	 * 
+	 * @pre none
+	 * @post the resources are discarded and the game goes into playing 
+	 * for the active player
+	 * @param discardedCards
+	 */
+	public void discard(int player_index, ResourceMultiSet discardedCards) 
+	{
+		players[player_index].discard(discardedCards);
+		players[player_index].setDiscarded(true);
+		for( Player player : players)
+		{
+			if (player.getResources().total() > 7 && !player.isDiscarded())
+			{
+				return;
+			}
+		}
+		turn_tracker.getState().finishPhase(turn_tracker, -1);
+		for(Player player : players)
+		{
+			player.setDiscarded(false);
+		}
 	}
 }

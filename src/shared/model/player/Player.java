@@ -539,8 +539,9 @@ public class Player {
      * @pre The player must have at least 1 city left to play
      * @post    The number of cities left to play is reduced by 1
      */
-    public void placeCity() {
-
+    public void placeCity() 
+    {
+    	this.cities--;
     }
 
     /**
@@ -553,20 +554,11 @@ public class Player {
      * at least one card to discard
      * @post    The number of cards in the ResourceCardList is reduced by the number of cards being discarded
      */
-    public void discard(ResourceMultiSet resources) {
+    public void discard(ResourceMultiSet resources) 
+    {
 
     }
 
-    /**
-     *
-     * Increases the count of the number of monuments played by 1
-     *
-     * @pre Player must have at least one DevCard of type monument in the DevCardList
-     * @post    One DevCard of type monument is removed from the DevCardList
-     */
-    public void playMonument() {
-
-    }
 
     /**
      *
@@ -591,8 +583,9 @@ public class Player {
      * @pre The player must have at least 1 road left to play
      * @post    The number of roads left to play is reduced by 1
      */
-    public void placeRoad() {
-
+    public void placeRoad() 
+    {
+    	roads--;
     }
 
     /**
@@ -602,9 +595,9 @@ public class Player {
      * @pre The player must have at least 1 settlement left to play
      * @post    The number of settlements left to play is reduced by 1
      */
-    public BuildSettlement placeSettlement() {
-
-        return null;
+    public void placeSettlement() 
+    {
+    	this.settlements--;
     }
 
     /**

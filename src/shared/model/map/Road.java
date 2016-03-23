@@ -1,4 +1,5 @@
 package shared.model.map;
+import shared.communication.EdgeLocation;
 import shared.definitions.*;
 
 /**
@@ -13,6 +14,19 @@ public class Road
 	private int owner_index = -1;
 
 	private CatanColor color = null;
+
+	/**
+	 * constructor
+	 * @param roadLocation
+	 * @param owner_index
+	 * @param color
+	 */
+	public Road(shared.locations.EdgeLocation roadLocation, int owner_index, CatanColor color) 
+	{
+		location = new Edge(roadLocation);
+		this.owner_index = owner_index;
+		this.color = color;
+	}
 
 	/**
 	 * @return the location
