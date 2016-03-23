@@ -29,6 +29,14 @@ public class Road
 	}
 
 	/**
+	 * Default constructor
+	 */
+	public Road() 
+	{
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
 	 * @return the location
 	 */
 	public Edge getLocation() {

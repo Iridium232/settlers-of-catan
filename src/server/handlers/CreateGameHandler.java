@@ -2,14 +2,14 @@ package server.handlers;
 
 import java.io.IOException;
 
-import javax.xml.ws.spi.http.HttpExchange;
-import javax.xml.ws.spi.http.HttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+
 /**
  * Handles a create game request from the client
  * @author Doug
  *
  */
-public class CreateGameHandler extends HttpHandler {
+public class CreateGameHandler extends AbstractHandler {
 /**
  * @post Creates a new game on the server
  */
