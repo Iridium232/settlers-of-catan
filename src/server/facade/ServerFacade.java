@@ -43,7 +43,7 @@ public class ServerFacade implements IServer
 	/**
 	 * Login
 	 * 
-	 * creates a new game
+	 * logs user into the server
 	 * @pre the user has a valid account
 	 * @post The user is given user credentials if the login was valid.
 	 * 			Signals access denied if the login is invalid
@@ -142,7 +142,7 @@ public class ServerFacade implements IServer
 		try 
 		{
 			User joiner = users.get(id);
-			games.get(game_index).addPlayer(joiner.getName(), color);
+			games.get(game_index).addPlayer(joiner.getName(), color, id);
 		} 
 		catch (Exception e) 
 		{
@@ -1083,5 +1083,10 @@ public class ServerFacade implements IServer
 		commanding_player_index = params.getPlayerIndex();
 		this.RoadBuilding(params.getSpot1(), params.getSpot2());
 		return null;//TODO serialize and return	
+	}
+	
+	public Fascade getFacadeByID(int game_id_index)
+	{
+		return games.get(game_id_index);
 	}
 }

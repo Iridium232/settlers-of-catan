@@ -1,10 +1,16 @@
 package shared.model;
 
+import shared.communication.EdgeLocation;
+import shared.communication.ResourceList;
+import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
 import shared.definitions.TurnStatus;
+import shared.locations.HexLocation;
 import shared.model.map.GameMap;
 import shared.model.map.Road;
 import shared.model.map.Robber;
 import shared.model.map.TerrainHex;
+import shared.model.messages.MessageLine;
 import shared.model.messages.MessageList;
 import shared.model.player.DevCardList;
 import shared.model.player.Player;
@@ -337,5 +343,149 @@ public class Game
 	{
 		return game_name;
 	}
+
+	public void setName(String name) 
+	{
+		game_name = name;
+	}
+
+	public void playMonument(int commanding_player_index) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void playMonopoly(int commanding_player_index, ResourceType one) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * Builds 2 roads for free 
+	 * @param commanding_player_index
+	 * @param one
+	 * @param two
+	 */
+	public void playRoadBuiding(int commanding_player_index, 
+			EdgeLocation one, EdgeLocation two) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void playYearOfPlenty(int commanding_player_index, ResourceType one) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void playSoldier(int commanding_player_index, HexLocation place,
+			int victimIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void finishTurn(int commanding_player_index) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void rob(int commanding_player_index, Player victim,
+			HexLocation location) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void maritimeTrade(int commanding_player_index, int ratio,
+			ResourceType input, ResourceType output) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void offerTrade(int commanding_player_index, ResourceList offer,
+			int playerIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
+	public void buildRoadAt(int commanding_player_index,
+			EdgeLocation roadLocation, boolean free) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * Reply to Trade
+	 * 
+	 * @pre there is a trade offer to this player
+	 * @post the trade is replied to and may happen
+	 * 
+	 * @param commanding_player_index
+	 * @param accept
+	 */
+	public void replyToTrade(int commanding_player_index, boolean accept) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * Sends a chat message
+	 * 
+	 * 
+	 * @pre none
+	 * @post a message is sent to all of the other players.
+	 * @param commanding_player_index
+	 * @param message
+	 * @throws Exception 
+	 */
+	public void sendChat(int commanding_player_index, String message) throws Exception 
+	{
+		if(commanding_player_index > 3 || commanding_player_index < 0)
+		{
+			throw new Exception("ERROR: INVALID MESSAGE SENDER");
+		}
+		String sender = players[commanding_player_index].getName();
+		this.chat.addMessage(new MessageLine(sender, message));
+	}
+
+	/**
+	 * Adds a player to the game
+	 * 
+	 * @pre  none
+	 * @post adds the player. Throws an error on failure
+	 * @param name
+	 * @param color
+	 * @param playerID
+	 * @throws Exception
+	 */
+	public void addPlayer(String name, CatanColor color, int playerID) throws Exception 
+	{
+		int player_slot = findOpening();
+		if(player_slot == -1)
+		{
+			throw new Exception("ERROR: no available slots for player");
+		}
+		Player new_player = new Player(color.name(), name, player_slot, playerID);
+		players[player_slot] = new_player;
+	}
+	
+	/**
+	 * 
+	 * @pre none
+	 * @post returns the index of a player opening or -1 if there is none
+	 */
+	private int findOpening() 
+	{
+		for(int i = 0; i < 4 ; i++)
+		{
+			if(players[i] == null || players[i].getName() == null)
+			{
+				return i;
+			}
+		}
+		return -1;
+		
+	}
 }

@@ -9,6 +9,18 @@ public class MessageLine
 {
 	private String message;
 	private String source;
+	
+	/**
+	 * constructor
+	 * 
+	 * @param sender
+	 * @param message2
+	 */
+	public MessageLine(String sender, String message) 
+	{
+		this.message = message;
+		this.source = sender;
+	}
 	/**
 	 * @return the message
 	 */

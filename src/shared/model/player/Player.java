@@ -33,7 +33,7 @@ public class Player {
     /**
      *  The name of this player
      */
-    private String name;
+    private String name = null;
     /**
      *  The dev cards the player bought this turn
      */
@@ -110,7 +110,8 @@ public class Player {
      * @param playerIndex   What place in the array this player is: 0-3. It determines their turn order
      * @param playerID  The unique playerID. This is used to pick the client player apart from the others
      */
-    public Player(String color, String name, int playerIndex, int playerID) {
+    public Player(String color, String name, int playerIndex, int playerID) 
+    {
         this.color = color;
         this.name = name;
         this.playerIndex = playerIndex;

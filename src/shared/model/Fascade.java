@@ -1324,12 +1324,26 @@ public class Fascade
 		return points;
 	}
 
+	
+	/**
+	 * Create a game
+	 * 
+	 * creates a new game
+	 * @pre the user logged in with a valid account
+	 * @post The game is created and populated according to the parameters
+	 */
 	public void buildNewGame(String name, boolean randomTiles,
 			boolean randomNumbers, boolean randomPorts) 
 	{
 		game_model.buildNewGame(name, randomTiles, randomNumbers, randomPorts);
 	}
 
+	/**
+	 * Get Players
+	 * 
+	 * @pre none 
+	 * @post returns a list of players for communication
+	 */
 	public shared.communication.fromServer.games.Player[] getPlayers() 
 	{
 		shared.model.player.Player[] players = game_model.getPlayers();
@@ -1343,94 +1357,93 @@ public class Fascade
 		return result.toArray(new shared.communication.fromServer.games.Player[result.size()]);
 	}
 
+	/**
+	 * Returns the game name
+	 * 
+	 */
 	public String getGameName() 
 	{
 		return game_model.getName();
 	}
 
+	public void setGameName(String name)
+	{
+		game_model.setName(name);
+	}
+	
 	public void playMonopoly(int commanding_player_index, ResourceType one) 
 	{
-		// TODO Auto-generated method stub
-		
+		game_model.playMonopoly(commanding_player_index, one);
 	}
 
 	public void playMonument(int commanding_player_index) 
 	{
-		// TODO Auto-generated method stub
-		
+		game_model.playMonument(commanding_player_index);
 	}
 
 	public void playRoadBuilding(int commanding_player_index, EdgeLocation one,
 			EdgeLocation two) 
 	{
-		// TODO Auto-generated method stub
-		
+		game_model.playRoadBuiding(commanding_player_index, one, two);
 	}
 
 	public void playYearOfPlenty(int commanding_player_index, ResourceType one,
 			ResourceType two) 
 	{
-		// TODO Auto-generated method stub
-		
+		game_model.playYearOfPlenty(commanding_player_index, one);
 	}
 
 	public void playSoldier(int commanding_player_index, HexLocation place,
 			int victimIndex) 
 	{
-		// TODO Auto-generated method stub
-		
+		game_model.playSoldier(commanding_player_index, place, victimIndex);
 	}
 
 	public void finishTurn(int commanding_player_index) 
 	{
-		// TODO Auto-generated method stub
-		
+		game_model.finishTurn(commanding_player_index);
 	}
 
 	public void rob(int commanding_player_index, Player victim,
 			HexLocation location) 
 	{
-		// TODO Auto-generated method stub
-		
+		game_model.rob(commanding_player_index, victim, location);
 	}
 
 	public void maritimeTrade(int commanding_player_index, int ratio,
 			ResourceType input, ResourceType output) 
 	{
-		// TODO Auto-generated method stub
+		game_model.maritimeTrade(commanding_player_index, ratio, input, output);
 		
 	}
 
 	public void offerTrade(int commanding_player_index, ResourceList offer,
 			int playerIndex) 
 	{
-		// TODO Auto-generated method stub
+		game_model.offerTrade(commanding_player_index, offer, playerIndex);
 		
 	}
 
 	public void buildRoadAt(int commanding_player_index,
 			EdgeLocation roadLocation, boolean free) 
 	{
-		// TODO Auto-generated method stub
+		game_model.buildRoadAt(commanding_player_index, roadLocation, free);
 		
 	}
 
 	public void acceptTrade(int commanding_player_index, boolean accept) 
 	{
-		// TODO Auto-generated method stub
-		
+		game_model.replyToTrade(commanding_player_index, accept);	
 	}
 
-	public void sendChat(int commanding_player_index, String message) 
+	public void sendChat(int commanding_player_index, String message) throws Exception 
 	{
-		// TODO Auto-generated method stub
-		
+		game_model.sendChat(commanding_player_index, message);
 	}
 
-	public void addPlayer(String name, CatanColor color) 
+	public void addPlayer(String name, CatanColor color, int playerID) throws Exception 
 	{
-		// TODO Auto-generated method stub
-		
+		game_model.addPlayer(name, color, playerID);
 	}
 
 }
