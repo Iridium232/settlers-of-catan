@@ -1382,15 +1382,15 @@ public class Fascade
 	}
 
 	public void playRoadBuilding(int commanding_player_index, EdgeLocation one,
-			EdgeLocation two) 
+			EdgeLocation two) throws Exception 
 	{
 		game_model.playRoadBuiding(commanding_player_index, one, two);
 	}
 
 	public void playYearOfPlenty(int commanding_player_index, ResourceType one,
-			ResourceType two) 
+			ResourceType two) throws Exception 
 	{
-		game_model.playYearOfPlenty(commanding_player_index, one);
+		game_model.playYearOfPlenty(commanding_player_index, one, two);
 	}
 
 	public void playSoldier(int commanding_player_index, HexLocation place,
@@ -1399,7 +1399,7 @@ public class Fascade
 		game_model.playSoldier(commanding_player_index, place, victimIndex);
 	}
 
-	public void finishTurn(int commanding_player_index) 
+	public void finishTurn(int commanding_player_index) throws Exception 
 	{
 		game_model.finishTurn(commanding_player_index);
 	}
@@ -1411,10 +1411,9 @@ public class Fascade
 	}
 
 	public void maritimeTrade(int commanding_player_index, int ratio,
-			ResourceType input, ResourceType output) 
+			ResourceType input, ResourceType output) throws Exception 
 	{
 		game_model.maritimeTrade(commanding_player_index, ratio, input, output);
-		
 	}
 
 	public void offerTrade(int commanding_player_index, ResourceList offer,

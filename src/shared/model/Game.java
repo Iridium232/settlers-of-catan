@@ -3,6 +3,7 @@ package shared.model;
 import shared.communication.EdgeLocation;
 import shared.communication.ResourceList;
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.definitions.TurnStatus;
 import shared.locations.HexLocation;
@@ -365,44 +366,58 @@ public class Game
 	 * @param commanding_player_index
 	 * @param one
 	 * @param two
+	 * @throws Exception 
 	 */
 	public void playRoadBuiding(int commanding_player_index, 
-			EdgeLocation one, EdgeLocation two) 
+			EdgeLocation one, EdgeLocation two) throws Exception 
+	{
+		players[commanding_player_index].playDevCard(DevCardType.ROAD_BUILD);
+		this.buildRoadAt(commanding_player_index, one, true);
+		this.buildRoadAt(commanding_player_index, two, true);
+	}
+
+	public void playYearOfPlenty(int commanding_player_index, 
+			ResourceType one, ResourceType two) throws Exception 
+	{
+		players[commanding_player_index].playDevCard(DevCardType.YEAR_OF_PLENTY);
+		players[commanding_player_index].getResource(one, 1);
+		players[commanding_player_index].getResource(two, 1);
+		this.resource_bank.pay(one, 1);
+		this.resource_bank.pay(two, 1);
+	}
+	
+
+	public void playSoldier(int commanding_player_index, HexLocation place,
+			int victimIndex) 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void playYearOfPlenty(int commanding_player_index, ResourceType one) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void playSoldier(int commanding_player_index, HexLocation place,
-			int victimIndex) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void finishTurn(int commanding_player_index) {
-		// TODO Auto-generated method stub
-		
+	public void finishTurn(int commanding_player_index) throws Exception 
+	{
+		this.turn_tracker.advanceActivePlayer(commanding_player_index);
 	}
 
 	public void rob(int commanding_player_index, Player victim,
-			HexLocation location) {
+			HexLocation location) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	public void maritimeTrade(int commanding_player_index, int ratio,
-			ResourceType input, ResourceType output) {
-		// TODO Auto-generated method stub
-		
+			ResourceType input, ResourceType output) throws Exception 
+	{
+		this.resource_bank.pay(output, 1);
+		players[commanding_player_index].pay(input, ratio);
+		this.resource_bank.add(input, ratio);
+		players[commanding_player_index].getResource(output, 1);
 	}
 
 	public void offerTrade(int commanding_player_index, ResourceList offer,
-			int playerIndex) {
+			int playerIndex) 
+	{
 		// TODO Auto-generated method stub
 		
 	}

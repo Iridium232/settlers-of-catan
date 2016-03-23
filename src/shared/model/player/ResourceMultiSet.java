@@ -257,9 +257,10 @@ public class ResourceMultiSet {
 	}
 
 
-	public int getAmount(ResourceType resource) {
-		// TODO Auto-generated method stub
-		switch (resource){
+	public int getAmount(ResourceType resource) 
+	{
+		switch (resource)
+		{
 		case BRICK:
 			return brick;
 		case ORE:
@@ -274,11 +275,74 @@ public class ResourceMultiSet {
 		}
 	}
 
-
+	/**
+	 * Gets the total resources
+	 * 
+	 * @pre none
+	 * @post the total cardinality of the multiset is returned
+	 * @return
+	 */
 	public int total() 
 	{
 		if(brick+ore+sheep+wheat+wood < 0)return 0;
 		return brick+ore+sheep+wheat+wood;
+	}
+
+	/**
+	 * add a resource
+	 * 
+	 * gives a player a resource
+	 * 
+	 * @param resource
+	 * @throws Exception
+	 */
+	public void add(ResourceType resource, int quantity) throws Exception 
+	{
+		switch (resource)
+		{
+		case BRICK:
+			this.brick += quantity;
+			break;
+		case ORE:
+			this.ore += quantity;
+			break;
+		case SHEEP:
+			this.sheep += quantity;
+			break;
+		case WHEAT:
+			this.wheat += quantity;
+			break;
+		case WOOD:
+			this.wood += quantity;
+			break;
+		default: 
+			throw new Exception("ERROR: Unsupported resource type");
+		}
+	}
+
+
+	public void pay(ResourceType resource, int quantity) throws Exception 
+	{
+		switch (resource)
+		{
+		case BRICK:
+			this.brick -= quantity;
+			break;
+		case ORE:
+			this.ore -= quantity;
+			break;
+		case SHEEP:
+			this.sheep -= quantity;
+			break;
+		case WHEAT:
+			this.wheat -= quantity;
+			break;
+		case WOOD:
+			this.wood -= quantity;
+			break;
+		default: 
+			throw new Exception("ERROR: Unsupported resource type");
+		}
 	}
 
 

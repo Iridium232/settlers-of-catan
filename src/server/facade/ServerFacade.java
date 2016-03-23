@@ -1085,6 +1085,13 @@ public class ServerFacade implements IServer
 		return null;//TODO serialize and return	
 	}
 	
+	/**
+	 * get the facade by ID
+	 * 
+	 * This gets game facades for the serializer to use
+	 * @param game_id_index
+	 * @return
+	 */
 	public Fascade getFacadeByID(int game_id_index)
 	{
 		return games.get(game_id_index);

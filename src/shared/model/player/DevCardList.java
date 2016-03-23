@@ -1,5 +1,7 @@
 package shared.model.player;
 
+import shared.definitions.DevCardType;
+
 /**
  * A collection of development cards
  * 
@@ -108,5 +110,58 @@ public class DevCardList
 	 */
 	public void setYear_of_plenty(int year_of_plenty) {
 		this.year_of_plenty = year_of_plenty;
+	}
+
+	/**
+	 * play a dev card
+	 * 
+	 * @pre none
+	 * @post that dev card count is reduced by one. Throws an error when there are none
+	 * @param devcard
+	 * @throws Exception 
+	 */
+	public void play(DevCardType devcard) throws Exception 
+	{
+		switch (devcard)
+		{
+		case MONOPOLY:
+			if(this.monopoly > 0)
+			{
+				this.monopoly--;
+				return;
+			}
+			break;
+		case MONUMENT:
+			if(this.monument > 0)
+			{
+				this.monument--;
+				return;
+			}
+			break;
+		case SOLDIER:
+			if(this.soldier > 0)
+			{
+				this.soldier--;
+				return;
+			}
+			break;
+		case ROAD_BUILD:
+			if(this.road_building > 0)
+			{
+				this.road_building--;
+				return;
+			}
+			break;
+		case YEAR_OF_PLENTY:
+			if(this.year_of_plenty > 0)
+			{
+				this.year_of_plenty--;
+				return;
+			}
+			break;
+		default:
+			throw new Exception("ERROR: invalid dev card type");
+		}
+		throw new Exception("ERROR: This player cannot play that card.");
 	}
 }

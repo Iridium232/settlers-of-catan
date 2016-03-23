@@ -3,7 +3,9 @@ package shared.model.player;
 import client.data.RobPlayerInfo;
 import shared.communication.toServer.moves.BuildSettlement;
 import shared.communication.toServer.moves.BuyDevCard;
+import shared.definitions.DevCardType;
 import shared.definitions.PieceType;
+import shared.definitions.ResourceType;
 
 /**
  * Michael Rhodes
@@ -569,14 +571,17 @@ public class Player {
     /**
      *
      * Reduces the count of DevCardList by 1
+     * @param roadBuild 
+     * @throws Exception 
      *
      * @pre Player must have at least one DevCard in the DevCardList and the type of the DevCard to be discarded must
      * match the type of at least one DevCard in the DevCardList
      * @post    The number of cards in the DevCardList is reduced by one
      *
      */
-    public void playDevCard() {
-
+    public void playDevCard(DevCardType devcard) throws Exception 
+    {
+    	oldDevCards.play(devcard);
     }
 
     /**
@@ -822,5 +827,15 @@ public class Player {
     	DevCardList soldier_cost = new DevCardList();
     	soldier_cost.setMonopoly(1);
         return oldDevCards.includes(soldier_cost) && !playedDevCard;
+	}
+
+	public void getResource(ResourceType resource, int quantity) throws Exception 
+	{
+		this.resources.add(resource, quantity);
+	}
+
+	public void pay(ResourceType resource, int quantity) throws Exception 
+	{
+		resources.pay(resource, quantity);
 	}
 }

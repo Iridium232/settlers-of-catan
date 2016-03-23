@@ -41,8 +41,12 @@ public class TurnTracker
 	 * @post the active player is the next in line
 	 * @pre the active player has finished their turn
 	 */
-	public void advanceActivePlayer() throws Exception
+	public void advanceActivePlayer(int current_player_index) throws Exception
 	{
+		if (current_player_index != active_player)
+		{
+			throw new Exception("ERROR! This player is trying to end his turn...\nbut it is not his turn!");
+		}
 		if(first_round)
 		{
 			if(active_player == 3)
