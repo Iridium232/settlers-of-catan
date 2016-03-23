@@ -16,12 +16,24 @@ public class Hex {
      */
     private String resource;
     /** (Optional)  What number is on this tile. It's omitted if this is a desert hex */
-    private int number;
+    private Integer number;
 
     public Hex(HexLocation location, String resource, int number) {
         this.location = location;
         this.resource = resource;
         this.number = number;
+    }
+
+    public Hex(HexLocation location, String resource) {
+        this.location = location;
+        this.resource = resource;
+        this.number = null;
+    }
+
+    public Hex(HexLocation location) {
+        this.location = location;
+        this.resource = null;
+        this.number = null;
     }
 
     public HexLocation getLocation() {
@@ -41,7 +53,11 @@ public class Hex {
     }
 
     public int getNumber() {
-        return number;
+        if (number != null) {
+            return number;
+        } else {
+            return 0;
+        }
     }
 
     public void setNumber(int number) {

@@ -198,9 +198,16 @@ public class ModelTranslator {
             for (TerrainHex hex : outerHexes) {
                 HexLocation location = hex.getLocation();
                 String resource = hexTypeToString(hex.getType());
-                if (hex.getNumber() == null) return null;
-                int number = hex.getNumber().getValue();
-                Hex comHex = new Hex(location, resource, number);
+                if (resource.equals("water")) continue;
+                if (resource.equals("desert")) resource = null;
+                Integer number;
+                Hex comHex;
+                if (hex.getNumber() == null) {
+                    comHex = new Hex(location, resource);
+                } else {
+                    number = hex.getNumber().getValue();
+                    comHex = new Hex(location, resource, number.intValue());
+                }
                 comHexes.add(comHex);
             }
         }
