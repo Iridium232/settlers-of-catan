@@ -1319,11 +1319,12 @@ public class Fascade
 	 * Create a game
 	 * 
 	 * creates a new game
+	 * @throws Exception 
 	 * @pre the user logged in with a valid account
 	 * @post The game is created and populated according to the parameters
 	 */
 	public void buildNewGame(String name, boolean randomTiles,
-			boolean randomNumbers, boolean randomPorts) 
+			boolean randomNumbers, boolean randomPorts) throws Exception 
 	{
 		game_model.buildNewGame(name, randomTiles, randomNumbers, randomPorts);
 	}

@@ -121,10 +121,19 @@ public class ServerFacade implements IServer
 	 */
 	@Override
 	public Game createGame(String name, boolean randomTiles,
-			boolean randomNumbers, boolean randomPorts) throws JoinExceptions 
+			boolean randomNumbers, boolean randomPorts) 
 	{
 		shared.model.Fascade new_game_facade = new Fascade();
-		new_game_facade.buildNewGame(name, randomTiles, randomNumbers, randomPorts);
+		try
+		{
+			new_game_facade.buildNewGame(name, randomTiles, randomNumbers, randomPorts);
+		}
+		catch (Exception e)
+		{
+			System.err.print("Game Creation Exception " + e.getMessage() + "\n");
+			e.printStackTrace();
+			return null;
+		}
 		this.games.add(new_game_facade);
 		
 		return null;
@@ -709,9 +718,9 @@ public class ServerFacade implements IServer
 		{
 			this.createGame(params.getName(), params.isRandomTiles(), params.isRandomNumbers(), params.isRandomPorts());
 		} 
-		catch (JoinExceptions e) 
+		catch (Exception e) 
 		{
-			System.err.print("\nERROR: FAILED TO CREATE GAME.\n");
+			System.err.print("\nERROR: FAILED TO CREATE GAME.\n" + e.getMessage() + "\n");
 			e.printStackTrace();
 		}
 		return null;
@@ -1085,7 +1094,7 @@ public class ServerFacade implements IServer
 	{
 		commanding_player_index = params.getPlayerIndex();
 		this.RoadBuilding(params.getSpot1(), params.getSpot2());
-		return null;//TODO serialize and return	
+		return null;
 	}
 	
 	/**
