@@ -1,16 +1,21 @@
 package test;
 
 import client.communication.ModelPopulator;
+import junit.framework.TestCase;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import server.communication.ModelTranslator;
+import shared.communication.ResourceList;
 import shared.communication.fromServer.game.CommunicationModel;
+import shared.communication.fromServer.game.Map;
 import shared.model.Fascade;
 import shared.model.Game;
-
-import static org.junit.Assert.*;
+import shared.model.map.GameMap;
+import shared.model.messages.MessageLine;
+import shared.model.messages.MessageList;
+import shared.model.player.ResourceMultiSet;
 
 /**
  * Michael Rhodes
@@ -18,10 +23,11 @@ import static org.junit.Assert.*;
  * Section 2
  * Team 10
  */
-public class ModelTranslatorTest {
+public class ModelTranslatorTest extends TestCase {
     Fascade fascade;
     String strModel;
     Game model;
+    ModelTranslator mt;
 
     @Before
     public void setUp()
@@ -29,6 +35,7 @@ public class ModelTranslatorTest {
         this.fascade = new Fascade();
         this.model = new Game();
         this.strModel = getStrModel();
+        this.mt = ModelTranslator.forTesting();
 
         JSONObject json = null;
         try {
@@ -41,9 +48,135 @@ public class ModelTranslatorTest {
     }
 
     @Test
-    public void test1() {
+    public void testTranslateModel() throws Exception {
         CommunicationModel comModel = ModelTranslator.translateModel(model);
-        System.out.println("Model Translated");
+        assertNotNull(comModel);
+    }
+
+    @Test
+    public void testTranslateDeck() throws Exception {
+        shared.model.player.DevCardList modelList = model.getDevelopment_bank();
+        shared.communication.fromServer.game.DevCardList result = mt.testTranslateDeck(model);
+        assertEquals(modelList.getMonopoly(), result.getMonopoly());
+        assertEquals(modelList.getMonument(), result.getMonument());
+        assertEquals(modelList.getRoad_building(), result.getRoadBuilding());
+        assertEquals(modelList.getSoldier(), result.getSoldier());
+        assertEquals(modelList.getYear_of_plenty(), result.getYearOfPlenty());
+    }
+
+    @Test
+    public void testTranslateBank() throws Exception {
+        shared.model.player.ResourceMultiSet modelBank = model.getResource_bank();
+        ResourceList result = mt.testTranslateBank(model);
+        assertEquals(modelBank.getBrick(), result.getBrick());
+        assertEquals(modelBank.getWheat(), result.getWheat());
+        assertEquals(modelBank.getWood(), result.getWood());
+        assertEquals(modelBank.getSheep(), result.getSheep());
+        assertEquals(modelBank.getOre(), result.getOre());
+    }
+
+    @Test
+    public void testTranslateChat() throws Exception {
+        MessageList modelChat = model.getChat();
+        MessageList result = mt.testTranslateChat(model);
+        assertEquals(modelChat.getMessages().size(), result.getMessages().size());
+        for (int i = 0; i < modelChat.getMessages().size(); i++) {
+            assertEquals(modelChat.getMessages().get(i), result.getMessages().get(i));
+        }
+    }
+
+    @Test
+    public void testTranslateLog() throws Exception {
+        MessageList modelLog = model.getLog();
+        MessageList result = mt.testTranslateLog(model);
+        assertEquals(modelLog.getMessages().size(), result.getMessages().size());
+        for (int i = 0; i < modelLog.getMessages().size(); i++) {
+            assertEquals(modelLog.getMessages().get(i), result.getMessages().get(i));
+        }
+    }
+
+    @Test
+    public void testTranslateMap() throws Exception {
+        GameMap modelMap = model.getMap();
+        Map result = mt.testTranslateMap(model);
+        assertTrue(result.getCities().length == 0);
+        assertTrue(result.getHexes().length == 19);
+        assertEquals(result.getPorts().length, modelMap.getPorts().length);
+        assertEquals(result.getRobber(), modelMap.getRobber().getLocation());
+        assertEquals(result.getRoads().length, modelMap.getRoads().length);
+        assertTrue(result.getSettlements().length == 8);
+    }
+
+    @Test
+    public void testTranslatePlayers() throws Exception {
+        shared.model.player.Player[] modelPlayers = model.getPlayers();
+        shared.communication.fromServer.game.Player[] result = mt.testTranslatePlayers(model);
+        assertEquals(modelPlayers.length, result.length);
+    }
+
+    @Test
+    public void testTranslateTradeOffer() throws Exception {
+        shared.model.player.TradeOffer modelOffer = model.getTrade_offer();
+        shared.communication.fromServer.game.TradeOffer result = mt.testTranslateTradeOffer(model);
+        assertNull(result);
+    }
+
+    @Test
+    public void testTranslateTurnTracker() throws Exception {
+
+    }
+
+    @Test
+    public void testTranslateHexes() throws Exception {
+
+    }
+
+    @Test
+    public void testTranslatePorts() throws Exception {
+
+    }
+
+    @Test
+    public void testTranslateRoads() throws Exception {
+
+    }
+
+    @Test
+    public void testTranslateSettlements() throws Exception {
+
+    }
+
+    @Test
+    public void testTranslateCities() throws Exception {
+
+    }
+
+    @Test
+    public void testTranslateRobber() throws Exception {
+
+    }
+
+    @Test
+    public void testTranslateDevCardList() throws Exception {
+
+    }
+
+    @Test
+    public void testTranslateResourceMultiSet() throws Exception {
+
+    }
+
+    @Test
+    public void testTranslateOffer() throws Exception {
+        shared.model.player.TradeOffer testOffer = new shared.model.player.TradeOffer(0, 1);
+        testOffer.setReciever_gives(new ResourceMultiSet(1,2,0,0,0));
+        testOffer.setSender_gives(new ResourceMultiSet(0,0,0,2,1));
+        ResourceList result = mt.testTranslateOffer(testOffer);
+        assertEquals(result.getBrick(), 1);
+        assertEquals(result.getWheat(), 2);
+        assertEquals(result.getOre(), 0);
+        assertEquals(result.getWood(), -2);
+        assertEquals(result.getSheep(), -1);
     }
 
     private String getStrModel() {

@@ -110,6 +110,7 @@ public class ModelPopulator {
         populateSettlements(serverMap, clientMap);
         populateCities(serverMap, clientMap);
         populateRobber(serverMap, clientMap);
+
     }
 
     private void addDefaultHexes(GameMap map) 
