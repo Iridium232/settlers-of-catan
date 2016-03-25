@@ -2,31 +2,7 @@ package server.main;
 
 import com.sun.net.httpserver.HttpServer;
 
-import server.handlers.AbstractHandler;
-import server.handlers.AcceptTradeHandler;
-import server.handlers.BuildCityHandler;
-import server.handlers.BuildRoadHandler;
-import server.handlers.BuildSettlementHandler;
-import server.handlers.BuyDevCardHandler;
-import server.handlers.CreateHandler;
-import server.handlers.DiscardCardsHandler;
-import server.handlers.FinishTurnHandler;
-import server.handlers.GameListHandler;
-import server.handlers.GetModelHandler;
-import server.handlers.JoinHandler;
-import server.handlers.ListAIHandler;
-import server.handlers.LoginHandler;
-import server.handlers.MaritimeTradeHandler;
-import server.handlers.MonopolyHandler;
-import server.handlers.MonumentHandler;
-import server.handlers.OfferTradeHandler;
-import server.handlers.RegisterHandler;
-import server.handlers.RoadBuildingHandler;
-import server.handlers.RobPlayerHandler;
-import server.handlers.RollNumberHandler;
-import server.handlers.SendChatHandler;
-import server.handlers.SoldierHandler;
-import server.handlers.YearOfPlentyHandler;
+import server.handlers.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -112,6 +88,8 @@ public class Server
 		server.createContext("/moves/discardCards", discardCardsHandler);
 		server.createContext("/moves/finishTurn", finishTurnHandler);
 		server.createContext("/moves/Monument", monumentHandler);
+		server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
+		server.createContext("/docs/api/view", new Handlers.BasicFile(""));
 		
 		server.start();
 	}
