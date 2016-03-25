@@ -782,6 +782,13 @@ public class Game
 		}
 	}
 
+	/**
+	 * @pre none
+	 * @post the player gets a city on that spot and gets a settlement back
+	 * @param player_index
+	 * @param place
+	 * @throws Exception
+	 */
 	public void buildCity(int player_index, VertexLocation place) throws Exception
 	{
 		players[player_index].pay(ResourceType.WHEAT, 2);
@@ -792,6 +799,15 @@ public class Game
 		players[player_index].setSettlements(players[player_index].getSettlements() + 1);
 	}
 
+	/**
+	 * builds a settlement
+	 * 
+	 * @pre none
+	 * @post the settlement is placed there
+	 * @param player_index
+	 * @param place
+	 * @throws Exception
+	 */
 	public void buildSettlement(int player_index, VertexLocation place) throws Exception 
 	{
 		players[player_index].pay(ResourceType.BRICK, 1);
