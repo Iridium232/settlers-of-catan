@@ -512,4 +512,92 @@ public class ModelTranslator {
     private String translateState(shared.model.states.IState state) {
         return state.getState().name();
     }
+
+    //*************************************** To help with Testing *************************************************
+    public static ModelTranslator forTesting() {
+        return new ModelTranslator();
+    }
+
+    public shared.communication.fromServer.game.DevCardList testTranslateDeck(shared.model.Game serverModel)
+            throws NullPointerException {
+        return translateDeck(serverModel);
+    }
+
+    public ResourceList testTranslateBank(shared.model.Game serverModel)
+            throws NullPointerException {
+        return translateBank(serverModel);
+    }
+
+    public MessageList testTranslateChat(shared.model.Game serverModel)
+            throws NullPointerException {
+        return translateChat(serverModel);
+    }
+
+    public MessageList testTranslateLog(shared.model.Game serverModel)
+            throws NullPointerException {
+        return translateLog(serverModel);
+    }
+
+    public Map testTranslateMap(shared.model.Game serverModel)
+            throws NullPointerException, Exception {
+        return translateMap(serverModel);
+    }
+
+    public shared.communication.fromServer.game.Player[] testTranslatePlayers(shared.model.Game serverModel)
+            throws NullPointerException {
+        return translatePlayers(serverModel);
+    }
+
+    public shared.communication.fromServer.game.TradeOffer testTranslateTradeOffer(shared.model.Game serverModel)
+            throws NullPointerException {
+        return translateTradeOffer(serverModel);
+    }
+
+    public shared.communication.fromServer.game.TurnTracker testTranslateTurnTracker(shared.model.Game serverModel)
+            throws NullPointerException {
+        return translateTurnTracker(serverModel);
+    }
+
+    public Hex[] testTranslateHexes(GameMap serverMap)
+            throws NullPointerException, Exception {
+        return translateHexes(serverMap);
+    }
+
+    public shared.communication.fromServer.game.Port[] testTranslatePorts(GameMap serverMap)
+            throws NullPointerException, Exception {
+        return translatePorts(serverMap);
+    }
+
+    public shared.communication.fromServer.game.Road[] testTranslateRoads(GameMap serverMap)
+            throws NullPointerException {
+        return translateRoads(serverMap);
+    }
+
+    public shared.communication.fromServer.game.VertexObject[] testTranslateSettlements(GameMap serverMap)
+            throws NullPointerException {
+        return translateSettlements(serverMap);
+    }
+
+    public shared.communication.fromServer.game.VertexObject[] testTranslateCities(GameMap serverMap)
+            throws NullPointerException {
+        return translateCities(serverMap);
+    }
+
+    public HexLocation testTranslateRobber(GameMap serverMap)
+            throws NullPointerException {
+        return translateRobber(serverMap);
+    }
+
+    public shared.communication.fromServer.game.DevCardList testTranslateDevCardList(
+            shared.model.player.DevCardList list) {
+        return translateDevCardList(list);
+    }
+
+    public ResourceList testTranslateResourceMultiSet(ResourceMultiSet multiSet) {
+        return translateResourceMultiSet(multiSet);
+    }
+
+    public ResourceList testTranslateOffer(shared.model.player.TradeOffer serverOffer) {
+        return translateOffer(serverOffer);
+    }
 }
