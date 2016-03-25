@@ -9,10 +9,13 @@ import org.junit.Test;
 import server.communication.ModelTranslator;
 import shared.communication.ResourceList;
 import shared.communication.fromServer.game.CommunicationModel;
+import shared.communication.fromServer.game.Hex;
 import shared.communication.fromServer.game.Map;
+import shared.definitions.HexType;
 import shared.model.Fascade;
 import shared.model.Game;
 import shared.model.map.GameMap;
+import shared.model.map.TerrainHex;
 import shared.model.messages.MessageLine;
 import shared.model.messages.MessageList;
 import shared.model.player.ResourceMultiSet;
@@ -123,12 +126,18 @@ public class ModelTranslatorTest extends TestCase {
 
     @Test
     public void testTranslateTurnTracker() throws Exception {
-
+        shared.model.states.TurnTracker modelTracker = model.getTurn_tracker();
+        shared.communication.fromServer.game.TurnTracker result = mt.testTranslateTurnTracker(model);
+        assertEquals(modelTracker.getActive_player(), result.getCurrentTurn());
+        assertEquals(modelTracker.getLargest_army_player(), result.getLargestArmy());
+        assertEquals(modelTracker.getLongest_road_player(), result.getLongestRoad());
+        assertEquals(modelTracker.getState().getState().name(), result.getStatus());
     }
 
     @Test
     public void testTranslateHexes() throws Exception {
-
+        TerrainHex[][] modelHexes = model.getHexes();
+        Hex[] result = mt.testTranslateHexes(model.getMap());
     }
 
     @Test
@@ -177,6 +186,25 @@ public class ModelTranslatorTest extends TestCase {
         assertEquals(result.getOre(), 0);
         assertEquals(result.getWood(), -2);
         assertEquals(result.getSheep(), -1);
+    }
+
+    private boolean hexHasMatch(TerrainHex[][] modelHexes, Hex[] result) {
+        boolean hasMatch = false;
+        for (TerrainHex[] hexes : modelHexes) {
+            for (TerrainHex hex : hexes) {
+                if (hex.getType() == HexType.WATER) continue;
+                for (Hex resultHex : result) {
+                    if (hex.getResource().name().equals(resultHex.getResource())) {
+                        if (hex.getLocation().getX() == resultHex.getLocation().getX()) {
+                            if (hex.getLocation().getY() == resultHex.getLocation().getY()) {
+                                hasMatch = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return hasMatch;
     }
 
     private String getStrModel() {
