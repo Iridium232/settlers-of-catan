@@ -16,6 +16,8 @@ import shared.model.map.Road;
 import shared.model.map.Robber;
 import shared.model.map.TerrainHex;
 import shared.model.map.buildings.Building;
+import shared.model.map.buildings.City;
+import shared.model.map.buildings.Settlement;
 import shared.model.messages.MessageLine;
 import shared.model.messages.MessageList;
 import shared.model.player.DevCardList;
@@ -334,8 +336,8 @@ public class Game
 	public void buildNewGame(String name, boolean randomTiles,
 			boolean randomNumbers, boolean randomPorts) 
 	{
-		// TODO Auto-generated method stub
-		
+		this.game_name = name;
+		map.buildNewGameMap(randomTiles, randomNumbers, randomPorts);
 	}
 
 	/**
@@ -772,9 +774,23 @@ public class Game
 		}
 	}
 
-	public void buildCity(int player_index, VertexLocation place)
+	public void buildCity(int player_index, VertexLocation place) throws Exception
 	{
-		// TODO Auto-generated method stub
-		
+		players[player_index].pay(ResourceType.WHEAT, 2);
+		players[player_index].pay(ResourceType.ORE, 3);
+		players[player_index].placeCity();
+		map.addBuilding(new City(players[player_index].getColor(), 
+				place, player_index));
+		players[player_index].setSettlements(players[player_index].getSettlements() + 1);
+	}
+
+	public void buildSettlement(int player_index, VertexLocation place) throws Exception 
+	{
+		players[player_index].pay(ResourceType.BRICK, 1);
+		players[player_index].pay(ResourceType.SHEEP, 1);
+		players[player_index].pay(ResourceType.WOOD, 1);
+		players[player_index].pay(ResourceType.WHEAT, 1);
+		players[player_index].placeSettlement();
+		map.addBuilding(new Settlement(player_index, place, players[player_index].getColor()));
 	}
 }

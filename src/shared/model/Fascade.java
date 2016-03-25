@@ -193,12 +193,7 @@ public class Fascade
 	 */
 	public void buildSettlement(int player_index, VertexLocation place) throws Exception
 	{
-//		if (!this.canBuildSettlement(player_index, location))
-//			throw new ModelException();
-//		GameMap game_map = game_model.getMap();
-//		Player player = game_model.getPlayers()[player_index];
-//		BuildSettlement build_settlement = player.placeSettlement();
-//		game_map.addSettlement(build_settlement, player_index);
+		game_model.buildSettlement(player_index, place);
 
 	}
 	

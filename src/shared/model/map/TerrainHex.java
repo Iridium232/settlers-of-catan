@@ -14,14 +14,37 @@ public class TerrainHex
 	private HexType type = null;
 	private NumberChit number = null ;
 	
+	/**
+	 * Default Constructor
+	 * @param i
+	 * @param j
+	 * @param water
+	 */
 	public TerrainHex(int i, int j, HexType water) 
 	{
 		location = new HexLocation(i,j);
 		type = water;
 	}
 
+	/**
+	 * Default Constructor
+	 */
 	public TerrainHex() 
 	{
+		
+	}
+
+	/**
+	 * constructor
+	 * @param nextHexType
+	 * @param j
+	 * @param i
+	 */
+	public TerrainHex(HexType type, int j, int i, NumberChit number) 
+	{
+		this.location = new HexLocation(j,i);
+		this.type = type;
+		this.number = number;
 	}
 
 	/**

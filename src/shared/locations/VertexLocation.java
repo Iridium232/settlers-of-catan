@@ -1,5 +1,7 @@
 package shared.locations;
 
+
+
 /**
  * Represents the location of a vertex on a hex map
  */
@@ -9,12 +11,22 @@ public class VertexLocation
 	private HexLocation hexLoc;
 	private VertexDirection dir;
 	
-	public VertexLocation(HexLocation hexLoc, VertexDirection dir)
+	public VertexLocation(HexLocation hexLoc, shared.locations.VertexDirection dir)
 	{
 		setHexLoc(hexLoc);
 		setDir(dir);
 	}
 	
+	/**
+	 * Constructor
+	 * @param place
+	 */
+	public VertexLocation(shared.communication.fromServer.game.VertexLocation place) 
+	{
+		this.hexLoc = new HexLocation(place.getX(),place.getY());
+		this.dir = VertexDirection.valueOf(place.getDirection().toUpperCase());
+	}
+
 	public HexLocation getHexLoc()
 	{
 		return hexLoc;

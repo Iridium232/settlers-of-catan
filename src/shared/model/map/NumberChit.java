@@ -14,6 +14,23 @@ public class NumberChit
 	private int value = -1;
 	
 	/**
+	 * Constructor
+	 * @param integer
+	 */
+	public NumberChit(Integer integer) 
+	{
+		this.value = integer;
+	}
+
+	/**
+	 * Default Constructor
+	 */
+	public NumberChit() 
+	{
+		
+	}
+
+	/**
 	 * @return the location
 	 */
 	public HexLocation getLocation() {

@@ -25,6 +25,12 @@ public class GameMap
 	private Building[] buildings;
 	private Robber robber = new Robber();
 	private int radius;
+	private int tile_counter;
+	private int port_counter;
+	private int number_counter;
+	private ArrayList<HexType> tile_list;
+	private ArrayList<PortType> port_list;
+	private ArrayList<Integer> number_list;
 	
 	/**
 	 * Builds a GameMap based on a JSON string
@@ -598,6 +604,218 @@ public class GameMap
 		}
 		
 		return grounded && alone;
+	}
+	
+	/**
+	 * builds a new game map
+	 * 
+	 * @pre none
+	 * @post a valid map is represented
+	 * @param randomTiles
+	 * @param randomNumbers
+	 * @param randomPorts
+	 */
+	public void buildNewGameMap(boolean randomTiles, boolean randomNumbers,
+			boolean randomPorts) 
+	{
+		this.port_counter = 0;
+		this.number_counter = 0;
+		this.tile_counter = 0;
+		populateTileList();
+		populateNumberList();
+		populatePortList();
+		
+		HexType type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,0,0,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+		
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,0,1,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+		
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,0,2,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,0,-1,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,0,-2,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,1,0,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,1,1,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,1,-1,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,1,-2,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,-1,1,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,-1,2,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,-1,-1,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,-2,0,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,-2,1,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,-2,2,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,2,0,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,2,-1,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,2,-2,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+
+		type = getNextHexType(randomTiles);
+		this.addTerrainHex(new TerrainHex(type,-1,0,
+				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
+		
+		//Ports
+	}
+
+	/**
+	 * gets the next port type
+	 */
+	private PortType getNextPortType(boolean random)
+	{
+		int index = 0;
+		if(random)
+		{
+			Random r = new Random();
+			index = r.nextInt(port_list.size());
+		}
+		PortType reply = port_list.get(index);
+		port_list.remove(index);
+		return reply;
+	}
+	
+	
+	/**
+	 * gets the next hex type
+	 */
+	private HexType getNextHexType(boolean random)
+	{
+		int index = 0;
+		if(random)
+		{
+			Random r = new Random();
+			index = r.nextInt(tile_list.size());
+		}
+		HexType reply = tile_list.get(index);
+		tile_list.remove(index);
+		return reply;
+	}
+	
+	/**
+	 * gets the next port type
+	 */
+	private NumberChit getNextNumberChit(boolean random)
+	{
+		int index = 0;
+		if(random)
+		{
+			Random r = new Random();
+			index = r.nextInt(number_list.size());
+		}
+		NumberChit reply = new NumberChit(number_list.get(index));
+		number_list.remove(index);
+		return reply;
+	}
+	
+	
+	
+	/**
+	 * gets the port type list ready
+	 */
+	private void populatePortList() 
+	{
+		this.port_list = new ArrayList<PortType>();
+		port_list.add(PortType.THREE);
+		port_list.add(PortType.THREE);
+		port_list.add(PortType.THREE);
+		port_list.add(PortType.BRICK);
+		port_list.add(PortType.ORE);
+		port_list.add(PortType.SHEEP);
+		port_list.add(PortType.WHEAT);
+		port_list.add(PortType.WOOD);
+		port_list.add(PortType.THREE);
+	}
+
+	/**
+	 * gets the number list ready
+	 */
+	private void populateNumberList() 
+	{
+		this.number_list = new ArrayList<Integer>();
+		number_list.add(new Integer(2));
+		number_list.add(new Integer(3));
+		number_list.add(new Integer(4));
+		number_list.add(new Integer(4));
+		number_list.add(new Integer(5));
+		number_list.add(new Integer(5));
+		number_list.add(new Integer(6));
+		number_list.add(new Integer(6));
+		number_list.add(new Integer(8));
+		number_list.add(new Integer(8));
+		number_list.add(new Integer(9));
+		number_list.add(new Integer(9));
+		number_list.add(new Integer(10));
+		number_list.add(new Integer(10));
+		number_list.add(new Integer(11));
+		number_list.add(new Integer(11));
+		number_list.add(new Integer(12));
+		number_list.add(new Integer(3));
+	}
+
+	/**
+	 * gets the list of tiles ready
+	 */
+	private void populateTileList() 
+	{
+		HexType[] hex_types = {
+				HexType.BRICK, HexType.BRICK,HexType.BRICK,
+				HexType.WOOD,HexType.WOOD,HexType.WOOD,
+				HexType.ORE,HexType.ORE,HexType.ORE,
+				HexType.WHEAT,HexType.WHEAT,HexType.WHEAT,HexType.WHEAT,
+				HexType.DESERT,
+				HexType.SHEEP,HexType.SHEEP,HexType.SHEEP,HexType.SHEEP
+				};
+		this.tile_list = new ArrayList<HexType>();
+		for(HexType type : hex_types)
+		{
+			tile_list.add(type);
+		}
 	}
 	
 	

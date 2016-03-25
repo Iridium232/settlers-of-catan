@@ -15,9 +15,9 @@ import shared.locations.*;
  */
 public abstract class Building
 {
-	private VertexLocation location;
-	private CatanColor color;
-	private int owner;
+	protected VertexLocation location;
+	protected CatanColor color;
+	protected int owner;
 	/**
 	 * @return the location
 	 */
