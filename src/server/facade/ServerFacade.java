@@ -164,17 +164,11 @@ public class ServerFacade implements IServer
 
 	/**
 	 * Get Model
-	 * 
-	 * gets the currrently stored model
-	 * 
-	 * @pre the model is a game that the user has joined
-	 * @post the model is returned serialized 
-	 * 			unless there are no changes to report
+	 * does nothing here
 	 */
 	@Override
 	public String getModel(int id) 
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -188,7 +182,8 @@ public class ServerFacade implements IServer
 	 * 
 	 */
 	@Override
-	public void saveGame(UUID game_id, String file_name) throws JoinExceptions {
+	public void saveGame(UUID game_id, String file_name) throws JoinExceptions 
+	{
 		// TODO Auto-generated method stub
 		
 	}
@@ -758,9 +753,9 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public CommunicationModel getModelCommand(int version)
+	public shared.model.Game getModelCommand(int id)
 	{
-		return this.getModelCommand(version);
+		return games.get(id).getModel();
 	}
 	
 	/**
