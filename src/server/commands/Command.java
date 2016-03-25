@@ -1,5 +1,6 @@
 package server.commands;
 
+import client.communication.IServer;
 import client.control.IObserver;
 
 /**
@@ -9,6 +10,10 @@ import client.control.IObserver;
  */
 public abstract class Command 
 {
-	public static IObserver server;
+	IServer server;
+	public static IObserver observer;
+	public Command(IServer s) {
+		server=s;
+	}
 	abstract void execute();
 }

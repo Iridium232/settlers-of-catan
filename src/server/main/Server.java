@@ -2,6 +2,7 @@ package server.main;
 
 import com.sun.net.httpserver.HttpServer;
 
+import server.facade.ServerFacade;
 import server.handlers.AbstractHandler;
 import server.handlers.AcceptTradeHandler;
 import server.handlers.BuildCityHandler;
@@ -30,9 +31,8 @@ import server.handlers.YearOfPlentyHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.logging.Level;
 
-import com.sun.net.httpserver.*;
+
 /**
  * Main Class for Catan Server
  *
@@ -47,7 +47,7 @@ public class Server
 	 * @param args
 	 */
 	private HttpServer server;
-	
+	private ServerFacade facade;
 	private Server() {
 		return;
 	}
@@ -121,7 +121,7 @@ public class Server
 	private AbstractHandler modelHandler = new GetModelHandler();
 	private AbstractHandler createHandler = new CreateHandler();
 	private AbstractHandler registerHandler = new RegisterHandler();
-	private AbstractHandler acceptTradeHandler = new AcceptTradeHandler();
+	private AbstractHandler acceptTradeHandler = new AcceptTradeHandler(facade);
 	private AbstractHandler buildCityHandler = new BuildCityHandler();
 	private AbstractHandler buildRoadHandler = new BuildRoadHandler();
 	private AbstractHandler buildSettlementHandler = new BuildSettlementHandler();
