@@ -1103,4 +1103,9 @@ public class ServerFacade implements IServer
 	{
 		return games.get(game_id_index);
 	}
+	
+	public int getVersionOf(int game_id)
+	{
+		return games.get(game_id).getVersion();
+	}
 }
