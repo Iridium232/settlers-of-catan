@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import server.communication.ModelTranslator;
 import client.communication.IServer;
 import client.communication.ModelPopulator;
 import shared.communication.EdgeLocation;
 import shared.communication.ResourceList;
+import shared.communication.Serializer;
 import shared.communication.fromServer.game.CommunicationModel;
 import shared.communication.fromServer.game.VertexLocation;
 import shared.communication.fromServer.games.Game;
@@ -169,7 +171,7 @@ public class ServerFacade implements IServer
 	@Override
 	public String getModel(int id) 
 	{
-		return null;
+		return Serializer.getSINGLETON().serialize(ModelTranslator.translateModel(getModelCommand(id)));
 	}
 
 	/**
@@ -756,6 +758,7 @@ public class ServerFacade implements IServer
 	public shared.model.Game getModelCommand(int id)
 	{
 		return games.get(id).getModel();
+		
 	}
 	
 	/**

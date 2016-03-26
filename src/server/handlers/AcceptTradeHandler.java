@@ -30,11 +30,9 @@ public class AcceptTradeHandler extends AbstractHandler {
 		Gson gson = new Gson();
 		StringWriter writer = new StringWriter();
 		IOUtils.copy(exchange.getRequestBody(), writer);
-		AcceptTrade accept=gson.fromJson(writer.toString(),AcceptTrade.class);
-		
-		exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-		
-		exchange.getResponseBody()
+		AcceptTrade accept=gson.fromJson(writer.toString(),AcceptTrade.class);		
+		checkCookie(exchange);
+		exchange.getResponseBody();
 	}
 
 }
