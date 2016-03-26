@@ -120,10 +120,10 @@ public class Server
 	}
 	
 	private AbstractHandler listHandler = new GameListHandler(facade);
-	private AbstractHandler getAITypeHandler = new ListAIHandler();
+	private AbstractHandler getAITypeHandler = new ListAIHandler(facade);
 	private AbstractHandler modelHandler = new GetModelHandler(facade);
 	private AbstractHandler createHandler = new CreateHandler(facade);
-	private AbstractHandler registerHandler = new RegisterHandler();
+	private AbstractHandler registerHandler = new RegisterHandler(facade);
 	private AbstractHandler acceptTradeHandler = new AcceptTradeHandler(facade);
 	private AbstractHandler buildCityHandler = new BuildCityHandler(facade);
 	private AbstractHandler buildRoadHandler = new BuildRoadHandler(facade);
@@ -131,16 +131,16 @@ public class Server
 	private AbstractHandler buyDevCardHandler = new BuyDevCardHandler(facade);
 	private AbstractHandler discardCardsHandler = new DiscardCardsHandler(facade);
 	private AbstractHandler finishTurnHandler = new FinishTurnHandler(facade);
-	private AbstractHandler maritimeTradeHandler = new MaritimeTradeHandler();
-	private AbstractHandler monopolyHandler = new MonopolyHandler();
-	private AbstractHandler monumentHandler = new MonumentHandler();
-	private AbstractHandler offerTradeHandler = new OfferTradeHandler();
-	private AbstractHandler roadBuildingHandler = new RoadBuildingHandler();
-	private AbstractHandler robPlayerHandler = new RobPlayerHandler();
-	private AbstractHandler rollNumberHandler = new RollNumberHandler();
-	private AbstractHandler sendChatHandler = new SendChatHandler();
-	private AbstractHandler soldierHandler = new SoldierHandler();
-	private AbstractHandler yearOfPlentyHandler = new YearOfPlentyHandler();
-	private AbstractHandler loginHandler = new LoginHandler();
-	private AbstractHandler joinHandler = new JoinHandler();
+	private AbstractHandler maritimeTradeHandler = new MaritimeTradeHandler(facade);
+	private AbstractHandler monopolyHandler = new MonopolyHandler(facade);
+	private AbstractHandler monumentHandler = new MonumentHandler(facade);
+	private AbstractHandler offerTradeHandler = new OfferTradeHandler(facade);
+	private AbstractHandler roadBuildingHandler = new RoadBuildingHandler(facade);
+	private AbstractHandler robPlayerHandler = new RobPlayerHandler(facade);
+	private AbstractHandler rollNumberHandler = new RollNumberHandler(facade);
+	private AbstractHandler sendChatHandler = new SendChatHandler(facade);
+	private AbstractHandler soldierHandler = new SoldierHandler(facade);
+	private AbstractHandler yearOfPlentyHandler = new YearOfPlentyHandler(facade);
+	private AbstractHandler loginHandler = new LoginHandler(facade);
+	private AbstractHandler joinHandler = new JoinHandler(facade);
 }
