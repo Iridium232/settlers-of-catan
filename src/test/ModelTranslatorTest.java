@@ -11,7 +11,9 @@ import shared.communication.ResourceList;
 import shared.communication.fromServer.game.CommunicationModel;
 import shared.communication.fromServer.game.Hex;
 import shared.communication.fromServer.game.Map;
+import shared.communication.fromServer.game.VertexLocation;
 import shared.definitions.HexType;
+import shared.locations.VertexDirection;
 import shared.model.Fascade;
 import shared.model.Game;
 import shared.model.map.GameMap;
@@ -138,41 +140,131 @@ public class ModelTranslatorTest extends TestCase {
     public void testTranslateHexes() throws Exception {
         TerrainHex[][] modelHexes = model.getHexes();
         Hex[] result = mt.testTranslateHexes(model.getMap());
+        for (Hex hex : result) {
+            assertTrue(hexHasMatch(modelHexes, hex));
+        }
     }
 
     @Test
     public void testTranslatePorts() throws Exception {
-
+        shared.model.ports.Port[] modelPorts = model.getMap().getPorts();
+        shared.communication.fromServer.game.Port[] result = mt.testTranslatePorts(model.getMap());
+        assertEquals(modelPorts.length, result.length);
+        assertEquals(modelPorts[0].getRatio(), result[0].getRatio());
+        assertEquals(modelPorts[0].getResource().name().toLowerCase(), result[0].getResource().toLowerCase());
+        assertEquals(modelPorts[0].getLocation().getX(), result[0].getLocation().getX());
+        assertEquals(modelPorts[0].getLocation().getY(), result[0].getLocation().getY());
     }
 
     @Test
     public void testTranslateRoads() throws Exception {
-
+        shared.model.map.Road[] modelRoads = model.getMap().getRoads();
+        shared.communication.fromServer.game.Road[] result = mt.testTranslateRoads(model.getMap());
+        assertEquals(modelRoads.length, result.length);
+        assertEquals(modelRoads[0].getOwnerIndex(), result[0].getOwner());
+        assertEquals(modelRoads[0].getLocation().getLocation().getHexLoc().getX(), result[0].getLocation().getX());
+        assertEquals(modelRoads[0].getLocation().getLocation().getHexLoc().getY(), result[0].getLocation().getY());
+        switch (modelRoads[0].getLocation().getDirection().name().toLowerCase()) {
+            case "north":
+                assertEquals("n", result[0].getLocation().getDirection().toLowerCase());
+                break;
+            case "northeast":
+                assertEquals("ne", result[0].getLocation().getDirection().toLowerCase());
+                break;
+            case "northwest":
+                assertEquals("nw", result[0].getLocation().getDirection().toLowerCase());
+                break;
+            case "south":
+                assertEquals("s", result[0].getLocation().getDirection().toLowerCase());
+                break;
+            case "southwest":
+                assertEquals("sw", result[0].getLocation().getDirection().toLowerCase());
+                break;
+            case "southeast":
+                assertEquals("se", result[0].getLocation().getDirection().toLowerCase());
+                break;
+        }
     }
 
     @Test
     public void testTranslateSettlements() throws Exception {
+        shared.model.map.buildings.Building[] modelBuildings = model.getMap().getBuildings();
+        shared.communication.fromServer.game.VertexObject[] result = mt.testTranslateSettlements(model.getMap());
+        assertEquals(modelBuildings.length, result.length);
+        assertEquals(modelBuildings[0].getOwner(), result[0].getOwner());
+        assertEquals(modelBuildings[0].getLocation().getHexLoc().getX(), result[0].getLocation().getX());
+        assertEquals(modelBuildings[0].getLocation().getHexLoc().getY(), result[0].getLocation().getY());
+        switch (modelBuildings[0].getLocation().getDir().name().toLowerCase()) {
+            case "northwest":
+                assertEquals("nw", result[0].getLocation().getDirection().toLowerCase());
+                break;
+            case "west":
+                assertEquals("w", result[0].getLocation().getDirection().toLowerCase());
+                break;
+            case "southwest":
+                assertEquals("sw", result[0].getLocation().getDirection().toLowerCase());
+                break;
+            case "northeast":
+                assertEquals("ne", result[0].getLocation().getDirection().toLowerCase());
+                break;
+            case "east":
+                assertEquals("e", result[0].getLocation().getDirection().toLowerCase());
+                break;
+            case "southeast":
+                assertEquals("se", result[0].getLocation().getDirection().toLowerCase());
+                break;
+        }
 
+        model.getMap().addBuilding(new shared.model.map.buildings.City());
+        modelBuildings = model.getMap().getBuildings();
+        result = mt.testTranslateSettlements(model.getMap());
+        assertEquals(modelBuildings.length - 1, result.length);
     }
 
     @Test
     public void testTranslateCities() throws Exception {
+        shared.communication.fromServer.game.VertexObject[] result = mt.testTranslateCities(model.getMap());
+        assertEquals(0, result.length);
 
+        VertexLocation location = new VertexLocation(VertexDirection.East, 0, 0);
+        model.getMap().addBuilding(new shared.model.map.buildings.City("blue", location, 0));
+        result = mt.testTranslateCities(model.getMap());
+        assertEquals(1, result.length);
     }
 
     @Test
     public void testTranslateRobber() throws Exception {
-
+        shared.model.map.Robber modelRobber = model.getRobber();
+        shared.communication.fromServer.game.Map result = mt.testTranslateMap(model);
+        assertEquals(modelRobber.getLocation().getX(), result.getRobber().getX());
+        assertEquals(modelRobber.getLocation().getY(), result.getRobber().getY());
     }
 
     @Test
     public void testTranslateDevCardList() throws Exception {
-
+        shared.model.player.DevCardList modelDev = new shared.model.player.DevCardList();
+        modelDev.setMonopoly(1);
+        modelDev.setMonument(2);
+        modelDev.setRoad_building(3);
+        modelDev.setSoldier(4);
+        modelDev.setYear_of_plenty(5);
+        shared.communication.fromServer.game.DevCardList result = mt.testTranslateDevCardList(modelDev);
+        assertEquals(1, result.getMonopoly());
+        assertEquals(2, result.getMonument());
+        assertEquals(3, result.getRoadBuilding());
+        assertEquals(4, result.getSoldier());
+        assertEquals(5, result.getYearOfPlenty());
     }
 
     @Test
     public void testTranslateResourceMultiSet() throws Exception {
-
+        shared.model.player.ResourceMultiSet modelSet = new shared.model.player.ResourceMultiSet(1,2,3,4,5);
+        ResourceList result = mt.testTranslateResourceMultiSet(modelSet);
+        assertEquals(1, result.getBrick());
+        assertEquals(2, result.getWheat());
+        assertEquals(3, result.getOre());
+        assertEquals(4, result.getWood());
+        assertEquals(5, result.getSheep());
     }
 
     @Test
@@ -188,23 +280,25 @@ public class ModelTranslatorTest extends TestCase {
         assertEquals(result.getSheep(), -1);
     }
 
-    private boolean hexHasMatch(TerrainHex[][] modelHexes, Hex[] result) {
-        boolean hasMatch = false;
+    private boolean hexHasMatch(TerrainHex[][] modelHexes, Hex result) {
         for (TerrainHex[] hexes : modelHexes) {
             for (TerrainHex hex : hexes) {
                 if (hex.getType() == HexType.WATER) continue;
-                for (Hex resultHex : result) {
-                    if (hex.getResource().name().equals(resultHex.getResource())) {
-                        if (hex.getLocation().getX() == resultHex.getLocation().getX()) {
-                            if (hex.getLocation().getY() == resultHex.getLocation().getY()) {
-                                hasMatch = true;
-                            }
+                if (hex.getType() == HexType.DESERT && result.getResource() == null) {
+                    return true;
+                } else if (hex.getType() == HexType.DESERT || result.getResource() == null) {
+                    continue;
+                }
+                if (hex.getResource().name().toLowerCase().equals(result.getResource().toLowerCase())) {
+                    if (hex.getLocation().getX() == result.getLocation().getX()) {
+                        if (hex.getLocation().getY() == result.getLocation().getY()) {
+                            return true;
                         }
                     }
                 }
             }
         }
-        return hasMatch;
+        return false;
     }
 
     private String getStrModel() {

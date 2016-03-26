@@ -164,7 +164,7 @@ public class ServerProxyTest {
             sp.login("Pete", "pete");
             sp.joinGame(0, CatanColor.RED);
             sp.finishTurn();
-            result = sp.acceptTrade(0, true);
+            result = sp.acceptTrade(1, true);
         } 
         catch (Exception e) 
         {

@@ -182,7 +182,8 @@ public class Game
 	/**
 	 * @return the version
 	 */
-	public int getVersion() {
+	public int getVersion() 
+	{
 		return version;
 	}
 
@@ -338,6 +339,7 @@ public class Game
 	public void buildNewGame(String name, boolean randomTiles,
 			boolean randomNumbers, boolean randomPorts) throws Exception 
 	{
+		
 		this.game_name = name;
 		map.buildNewGameMap(randomTiles, randomNumbers, randomPorts);
 		this.turn_tracker = new TurnTracker();
@@ -346,6 +348,7 @@ public class Game
 		turn_tracker.setLongest_road_player(-1);
 		turn_tracker.setState(new FirstRoundState());
 		turn_tracker.setStatus(TurnStatus.FIRSTROUND);
+		version++;
 	}
 
 	/**
@@ -362,6 +365,7 @@ public class Game
 		players[commanding_player_index].playDevCard(DevCardType.MONUMENT);
 		players[commanding_player_index].setMonuments(
 				players[commanding_player_index].getMonuments() + 1);
+		version++;
 	}
 
 	/**
@@ -396,6 +400,7 @@ public class Game
 			total_found = 0;
 		}
 		players[commanding_player_index].getResource(resource, total_found);
+		version++;
 	}
 
 	/**
@@ -411,6 +416,7 @@ public class Game
 		players[commanding_player_index].playDevCard(DevCardType.ROAD_BUILD);
 		this.buildRoadAt(commanding_player_index, one, true);
 		this.buildRoadAt(commanding_player_index, two, true);
+		version++;
 	}
 
 	/**
@@ -432,6 +438,7 @@ public class Game
 		players[commanding_player_index].getResource(two, 1);
 		this.resource_bank.pay(one, 1);
 		this.resource_bank.pay(two, 1);
+		version++;
 	}
 	
 	/**
@@ -493,7 +500,7 @@ public class Game
 		players[victimIndex].pay(resource, 1);
 		
 		
-		
+		version++;
 		
 	}
 
@@ -509,7 +516,8 @@ public class Game
 	public void finishTurn(int commanding_player_index) throws Exception 
 	{
 		this.turn_tracker.advanceActivePlayer(commanding_player_index);
-		turn_tracker.setState(new RollingState());
+		//turn_tracker.setState(new RollingState());
+		version++;
 	}
 	
 	
@@ -555,6 +563,7 @@ public class Game
 		players[victimIndex].pay(resource, 1);
 		
 		turn_tracker.getState().finishPhase(turn_tracker, commanding_player_index);
+		version++;
 	}
 
 	public void maritimeTrade(int commanding_player_index, int ratio,
@@ -564,6 +573,7 @@ public class Game
 		players[commanding_player_index].pay(input, ratio);
 		this.resource_bank.add(input, ratio);
 		players[commanding_player_index].getResource(output, 1);
+		version++;
 	}
 
 	/**
@@ -583,6 +593,7 @@ public class Game
 		offer.translateOffer(new ResourceMultiSet(offering));
 		this.trade_offer = offer;
 		turn_tracker.setState(new TradingState());
+		version++;
 	}
 
 	/**
@@ -617,6 +628,7 @@ public class Game
 				players[commanding_player_index].getColor()))); 
 		
 		players[commanding_player_index].placeRoad();
+		version++;
 	}
 
 	/**
@@ -644,6 +656,7 @@ public class Game
 			
 		}
 		turn_tracker.setState(new PlayingState());
+		version++;
 		return;
 		
 	}
@@ -666,6 +679,7 @@ public class Game
 		}
 		String sender = players[commanding_player_index].getName();
 		this.chat.addMessage(new MessageLine(sender, message));
+		version++;
 	}
 
 	/**
@@ -687,6 +701,7 @@ public class Game
 		}
 		Player new_player = new Player(color.name(), name, player_slot, playerID);
 		players[player_slot] = new_player;
+		version++;
 	}
 	
 	/**
@@ -735,6 +750,7 @@ public class Game
 			turn_tracker.setState(new RobbingState());
 			return;
 		}
+		version++;
 	}
 	
 	
@@ -780,6 +796,7 @@ public class Game
 		{
 			player.setDiscarded(false);
 		}
+		version++;
 	}
 
 	/**
@@ -797,6 +814,7 @@ public class Game
 		map.addBuilding(new City(players[player_index].getColor(), 
 				place, player_index));
 		players[player_index].setSettlements(players[player_index].getSettlements() + 1);
+		version++;
 	}
 
 	/**
@@ -816,5 +834,6 @@ public class Game
 		players[player_index].pay(ResourceType.WHEAT, 1);
 		players[player_index].placeSettlement();
 		map.addBuilding(new Settlement(player_index, place, players[player_index].getColor()));
+		version++;
 	}
 }

@@ -49,18 +49,22 @@ public class TurnTracker
 		}
 		if(first_round)
 		{
+			this.setState(new FirstRoundState());
 			if(active_player == 3)
 			{
 				first_round = false;
+				this.setState(new SecondRoundState());
 				second_round = true;
 				return;
 			}
 		}
 		else if (second_round)
 		{
+			this.setState(new SecondRoundState());
 			if(active_player == 0)
 			{
 				second_round = false;
+				this.setState(new PlayingState());
 				return;
 			}
 			active_player--;
@@ -79,7 +83,7 @@ public class TurnTracker
 	{
 		int index = 0;
 		state.finishPhase(this, index);
-
+		
 	}
 	
 	/**

@@ -1436,6 +1436,11 @@ public class Fascade
 		game_model.addPlayer(name, color, playerID);
 	}
 
+	public int getVersion() 
+	{
+		return game_model.getVersion();
+	}
+
 }
 
 

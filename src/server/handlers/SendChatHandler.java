@@ -2,9 +2,14 @@ package server.handlers;
 
 import java.io.IOException;
 
+import client.communication.IServer;
 import com.sun.net.httpserver.HttpExchange;
 
 public class SendChatHandler extends AbstractHandler {
+
+	public SendChatHandler(IServer facade) {
+		super(facade);
+	}
 
 	/**
 	 * 
