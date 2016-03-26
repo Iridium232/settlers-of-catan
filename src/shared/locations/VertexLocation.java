@@ -24,7 +24,30 @@ public class VertexLocation
 	public VertexLocation(shared.communication.fromServer.game.VertexLocation place) 
 	{
 		this.hexLoc = new HexLocation(place.getX(),place.getY());
-		this.dir = VertexDirection.valueOf(place.getDirection().toUpperCase());
+		String arg = "";
+		switch (place.getDirection()) {
+			case "NE":
+				arg = "NorthEast";
+				break;
+			case "E":
+				arg = "East";
+				break;
+			case "NW":
+				arg = "NorthWest";
+				break;
+			case "SE":
+				arg = "SouthEast";
+				break;
+			case "S":
+				arg = "South";
+				break;
+			case "SW":
+				arg = "SouthWest";
+				break;
+			default:
+				arg = place.getDirection().toLowerCase();
+		}
+		this.dir = VertexDirection.valueOf(arg);
 	}
 
 	public HexLocation getHexLoc()
