@@ -34,7 +34,7 @@ public class AcceptTradeHandler extends AbstractHandler {
 		
 		exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 		
-		exchange.getResponseBody()
+		exchange.getResponseBody();
 	}
 
 }
