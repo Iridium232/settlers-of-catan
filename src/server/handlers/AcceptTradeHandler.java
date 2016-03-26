@@ -1,7 +1,6 @@
 package server.handlers;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
 
@@ -12,6 +11,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 import server.facade.ServerFacade;
 import shared.communication.toServer.moves.AcceptTrade;
+
 
 public class AcceptTradeHandler extends AbstractHandler {
 	public AcceptTradeHandler(ServerFacade facade) {

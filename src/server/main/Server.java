@@ -28,6 +28,7 @@ import server.handlers.RollNumberHandler;
 import server.handlers.SendChatHandler;
 import server.handlers.SoldierHandler;
 import server.handlers.YearOfPlentyHandler;
+import server.handlers.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -112,22 +113,24 @@ public class Server
 		server.createContext("/moves/discardCards", discardCardsHandler);
 		server.createContext("/moves/finishTurn", finishTurnHandler);
 		server.createContext("/moves/Monument", monumentHandler);
+		server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
+		server.createContext("/docs/api/view", new Handlers.BasicFile(""));
 		
 		server.start();
 	}
 	
-	private AbstractHandler listHandler = new GameListHandler();
+	private AbstractHandler listHandler = new GameListHandler(facade);
 	private AbstractHandler getAITypeHandler = new ListAIHandler();
-	private AbstractHandler modelHandler = new GetModelHandler();
-	private AbstractHandler createHandler = new CreateHandler();
+	private AbstractHandler modelHandler = new GetModelHandler(facade);
+	private AbstractHandler createHandler = new CreateHandler(facade);
 	private AbstractHandler registerHandler = new RegisterHandler();
 	private AbstractHandler acceptTradeHandler = new AcceptTradeHandler(facade);
-	private AbstractHandler buildCityHandler = new BuildCityHandler();
-	private AbstractHandler buildRoadHandler = new BuildRoadHandler();
-	private AbstractHandler buildSettlementHandler = new BuildSettlementHandler();
-	private AbstractHandler buyDevCardHandler = new BuyDevCardHandler();
-	private AbstractHandler discardCardsHandler = new DiscardCardsHandler();
-	private AbstractHandler finishTurnHandler = new FinishTurnHandler();
+	private AbstractHandler buildCityHandler = new BuildCityHandler(facade);
+	private AbstractHandler buildRoadHandler = new BuildRoadHandler(facade);
+	private AbstractHandler buildSettlementHandler = new BuildSettlementHandler(facade);
+	private AbstractHandler buyDevCardHandler = new BuyDevCardHandler(facade);
+	private AbstractHandler discardCardsHandler = new DiscardCardsHandler(facade);
+	private AbstractHandler finishTurnHandler = new FinishTurnHandler(facade);
 	private AbstractHandler maritimeTradeHandler = new MaritimeTradeHandler();
 	private AbstractHandler monopolyHandler = new MonopolyHandler();
 	private AbstractHandler monumentHandler = new MonumentHandler();

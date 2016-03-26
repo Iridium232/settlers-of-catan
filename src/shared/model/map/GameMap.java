@@ -5,7 +5,13 @@ import shared.definitions.*;
 import shared.model.map.buildings.Building;
 import shared.model.map.buildings.Settlement;
 import shared.model.player.ResourceMultiSet;
+import shared.model.ports.BrickPort;
+import shared.model.ports.MiscPort;
+import shared.model.ports.OrePort;
 import shared.model.ports.Port;
+import shared.model.ports.SheepPort;
+import shared.model.ports.WheatPort;
+import shared.model.ports.WoodPort;
 
 /**
  * The class that represents the map of the game. 
@@ -614,9 +620,10 @@ public class GameMap
 	 * @param randomTiles
 	 * @param randomNumbers
 	 * @param randomPorts
+	 * @throws Exception 
 	 */
 	public void buildNewGameMap(boolean randomTiles, boolean randomNumbers,
-			boolean randomPorts) 
+			boolean randomPorts) throws Exception 
 	{
 		this.port_counter = 0;
 		this.number_counter = 0;
@@ -625,6 +632,7 @@ public class GameMap
 		populateNumberList();
 		populatePortList();
 		
+		//Build Hexes
 		HexType type = getNextHexType(randomTiles);
 		this.addTerrainHex(new TerrainHex(type,0,0,
 				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
@@ -701,7 +709,87 @@ public class GameMap
 		this.addTerrainHex(new TerrainHex(type,-1,0,
 				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
 		
-		//Ports
+		//TODO Ports
+		Port new_port = makePort(getNextPortType(randomPorts),1,2,EdgeDirection.South);
+		this.addPort(new_port);
+		
+		new_port = makePort(getNextPortType(randomPorts),0,-3,EdgeDirection.North);
+		this.addPort(new_port);
+		
+		new_port = makePort(getNextPortType(randomPorts),-1,3,EdgeDirection.South);
+		this.addPort(new_port);
+		
+		new_port = makePort(getNextPortType(randomPorts),-3,3,EdgeDirection.South);
+		this.addPort(new_port);
+		
+		new_port = makePort(getNextPortType(randomPorts),2,-3,EdgeDirection.South);
+		this.addPort(new_port);
+		
+		new_port = makePort(getNextPortType(randomPorts),3,0,EdgeDirection.South);
+		this.addPort(new_port);
+		
+		new_port = makePort(getNextPortType(randomPorts),3,-2,EdgeDirection.South);
+		this.addPort(new_port);
+		
+		new_port = makePort(getNextPortType(randomPorts),-3,1,EdgeDirection.South);
+		this.addPort(new_port);
+		
+		new_port = makePort(getNextPortType(randomPorts),-2,3,EdgeDirection.South);
+		this.addPort(new_port);
+		
+	}
+
+	/**
+	 * Makes a port
+	 * @param nextPortType
+	 * @param i
+	 * @param j
+	 * @param north
+	 * @return
+	 * @throws Exception 
+	 */
+	private Port makePort(PortType nextPortType, int x, int y,
+			EdgeDirection dir) throws Exception 
+	{
+		shared.locations.EdgeLocation spot = 
+				new shared.locations.EdgeLocation(new HexLocation(x,y),dir);
+		Port result;
+		switch (nextPortType)
+		{
+		
+		case BRICK:
+			result = new BrickPort();
+			result.setResource(ResourceType.BRICK);
+			break;
+		case SHEEP:
+			result = new SheepPort();
+			result.setResource(ResourceType.SHEEP);
+			break;
+		case WHEAT:
+			result = new WheatPort();
+			result.setResource(ResourceType.WHEAT);
+			break;
+		case THREE:
+			result = new MiscPort();
+			result.setResource(ResourceType.MISC);
+			break;
+		case WOOD:
+			result = new WoodPort();
+			result.setResource(ResourceType.WOOD);
+			break;
+		case ORE:
+			result = new OrePort();
+			result.setResource(ResourceType.ORE);
+			break;
+		default:
+			throw new Exception("Invalid port type!" + nextPortType);
+		}
+		result.setLocation(new HexLocation(x,y));
+		result.setRatio(nextPortType == PortType.THREE ? 3 : 2);
+		Edge port_edge = new Edge(spot);
+		result.setVertex1(port_edge.getEnd1());
+		result.setVertex2(port_edge.getEnd2());
+		return result;
 	}
 
 	/**

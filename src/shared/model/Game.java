@@ -24,6 +24,7 @@ import shared.model.player.DevCardList;
 import shared.model.player.Player;
 import shared.model.player.ResourceMultiSet;
 import shared.model.player.TradeOffer;
+import shared.model.states.FirstRoundState;
 import shared.model.states.IState;
 import shared.model.states.PlayingState;
 import shared.model.states.RobbingState;
@@ -332,12 +333,19 @@ public class Game
 	 * @param randomTiles
 	 * @param randomNumbers
 	 * @param randomPorts
+	 * @throws Exception 
 	 */
 	public void buildNewGame(String name, boolean randomTiles,
-			boolean randomNumbers, boolean randomPorts) 
+			boolean randomNumbers, boolean randomPorts) throws Exception 
 	{
 		this.game_name = name;
 		map.buildNewGameMap(randomTiles, randomNumbers, randomPorts);
+		this.turn_tracker = new TurnTracker();
+		turn_tracker.setActive_player(0);
+		turn_tracker.setLargest_army_player(-1);
+		turn_tracker.setLongest_road_player(-1);
+		turn_tracker.setState(new FirstRoundState());
+		turn_tracker.setStatus(TurnStatus.FIRSTROUND);
 	}
 
 	/**
@@ -774,6 +782,13 @@ public class Game
 		}
 	}
 
+	/**
+	 * @pre none
+	 * @post the player gets a city on that spot and gets a settlement back
+	 * @param player_index
+	 * @param place
+	 * @throws Exception
+	 */
 	public void buildCity(int player_index, VertexLocation place) throws Exception
 	{
 		players[player_index].pay(ResourceType.WHEAT, 2);
@@ -784,6 +799,15 @@ public class Game
 		players[player_index].setSettlements(players[player_index].getSettlements() + 1);
 	}
 
+	/**
+	 * builds a settlement
+	 * 
+	 * @pre none
+	 * @post the settlement is placed there
+	 * @param player_index
+	 * @param place
+	 * @throws Exception
+	 */
 	public void buildSettlement(int player_index, VertexLocation place) throws Exception 
 	{
 		players[player_index].pay(ResourceType.BRICK, 1);

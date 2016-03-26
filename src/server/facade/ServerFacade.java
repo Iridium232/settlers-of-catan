@@ -121,10 +121,19 @@ public class ServerFacade implements IServer
 	 */
 	@Override
 	public Game createGame(String name, boolean randomTiles,
-			boolean randomNumbers, boolean randomPorts) throws JoinExceptions 
+			boolean randomNumbers, boolean randomPorts) 
 	{
 		shared.model.Fascade new_game_facade = new Fascade();
-		new_game_facade.buildNewGame(name, randomTiles, randomNumbers, randomPorts);
+		try
+		{
+			new_game_facade.buildNewGame(name, randomTiles, randomNumbers, randomPorts);
+		}
+		catch (Exception e)
+		{
+			System.err.print("Game Creation Exception " + e.getMessage() + "\n");
+			e.printStackTrace();
+			return null;
+		}
 		this.games.add(new_game_facade);
 		
 		return null;
@@ -155,17 +164,11 @@ public class ServerFacade implements IServer
 
 	/**
 	 * Get Model
-	 * 
-	 * gets the currrently stored model
-	 * 
-	 * @pre the model is a game that the user has joined
-	 * @post the model is returned serialized 
-	 * 			unless there are no changes to report
+	 * does nothing here
 	 */
 	@Override
 	public String getModel(int id) 
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -179,7 +182,8 @@ public class ServerFacade implements IServer
 	 * 
 	 */
 	@Override
-	public void saveGame(UUID game_id, String file_name) throws JoinExceptions {
+	public void saveGame(UUID game_id, String file_name) throws JoinExceptions 
+	{
 		// TODO Auto-generated method stub
 		
 	}
@@ -709,9 +713,9 @@ public class ServerFacade implements IServer
 		{
 			this.createGame(params.getName(), params.isRandomTiles(), params.isRandomNumbers(), params.isRandomPorts());
 		} 
-		catch (JoinExceptions e) 
+		catch (Exception e) 
 		{
-			System.err.print("\nERROR: FAILED TO CREATE GAME.\n");
+			System.err.print("\nERROR: FAILED TO CREATE GAME.\n" + e.getMessage() + "\n");
 			e.printStackTrace();
 		}
 		return null;
@@ -749,9 +753,9 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public CommunicationModel getModelCommand(int version)
+	public shared.model.Game getModelCommand(int id)
 	{
-		return this.getModelCommand(version);
+		return games.get(id).getModel();
 	}
 	
 	/**
@@ -1085,7 +1089,7 @@ public class ServerFacade implements IServer
 	{
 		commanding_player_index = params.getPlayerIndex();
 		this.RoadBuilding(params.getSpot1(), params.getSpot2());
-		return null;//TODO serialize and return	
+		return null;
 	}
 	
 	/**
