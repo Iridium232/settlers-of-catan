@@ -19,6 +19,7 @@ public class JoinHandler extends AbstractHandler{
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
+		checkCookie(exchange);
 		
 	}
 	

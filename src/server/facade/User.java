@@ -12,7 +12,26 @@ public class User
 {
 	private String name;
 	private String passwordHash;
+	private int playerID;
+	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public User(String name, String password, int playerID) {
+		this.name=name;
+		this.passwordHash=password;
+		this.playerID=playerID;
+	}
+	
+	
+	public int getPlayerID() {
+		return playerID;
+	}
 
+	public void setPlayerID(int playerID) {
+		this.playerID = playerID;
+	}
 
 	/**
 	 * @return the name

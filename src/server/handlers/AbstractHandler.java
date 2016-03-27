@@ -1,23 +1,38 @@
 package server.handlers;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.*;
 
 import client.communication.IServer;
 import server.facade.ServerFacade;
+import server.facade.User;
+import shared.communication.Serializer;
+import shared.communication.toServer.user.Credentials;
 
 public abstract class AbstractHandler implements HttpHandler {
 	IServer server;
 	public AbstractHandler(IServer facade){
 		server=facade;
 	}
-	protected int checkCookie(HttpExchange exchange) {
+	protected int checkCookie(HttpExchange exchange) throws UnsupportedEncodingException {
 		int gameID=0;
 		List<String> cookies=exchange.getRequestHeaders().get("Cookie");
 		String encodedCookie=cookies.get(0);
-		System.out.println(encodedCookie);
+		String decodedCookie=URLDecoder.decode(encodedCookie, "UTF-8");
+		decodedCookie = decodedCookie.substring(11);
+		System.out.println(decodedCookie);
+/*		int locationOfSemicolon = decodedCookie.indexOf(';');
+		String userCookie = decodedCookie.substring(0,locationOfSemicolon);
+		String gameCookie = decodedCookie.substring(locationOfSemicolon + 12);*/
+		Gson gson=new Gson();
+		Credentials user=gson.fromJson(decodedCookie, Credentials.class);
+		
+		
 		return gameID;
 	}
 	@Override
