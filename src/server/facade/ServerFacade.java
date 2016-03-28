@@ -299,7 +299,7 @@ public class ServerFacade implements IServer
 		ResourceMultiSet discards = new ResourceMultiSet(discardedCards);
 		try 
 		{
-			games.get(game_index).discardResources(commanding_player_index, 
+			games.get(game_index).discardResources(commanding_player_index,
 					discards);
 		} 
 		catch (Exception e) 
@@ -960,7 +960,7 @@ public class ServerFacade implements IServer
 			shared.communication.toServer.moves.MaritimeTrade params)
 	{
 		commanding_player_index = params.getPlayerIndex();
-		this.maritimeTrade(params.getRatio(), 
+		this.maritimeTrade(params.getRatio(),
 				ResourceType.valueOf(params.getInputResource().toUpperCase()),
 				ResourceType.valueOf(params.getOutputResource().toUpperCase()));
 		return null;
@@ -1026,7 +1026,7 @@ public class ServerFacade implements IServer
 			shared.communication.toServer.moves.Soldier_ params)
 	{
 		commanding_player_index = params.getPlayerIndex();
-		this.playSoldier(params.getLocation(),new Player(params.getVictimIndex()));
+		this.playSoldier(params.getLocation(), new Player(params.getVictimIndex()));
 		return null;
 	}
 	
@@ -1110,5 +1110,9 @@ public class ServerFacade implements IServer
 	public int getVersionOf(int game_id)
 	{
 		return games.get(game_id).getVersion();
+	}
+
+	public void forTesting(shared.model.Fascade game_facade) {
+		games.add(game_facade);
 	}
 }
