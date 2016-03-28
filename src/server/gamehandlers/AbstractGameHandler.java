@@ -13,7 +13,7 @@ import server.facade.User;
 import shared.communication.toServer.user.Credentials;
 
 public abstract class AbstractGameHandler implements HttpHandler {
-	IServer server;
+	protected IServer server;
 	public AbstractGameHandler(IServer s){
 		server=s;
 	}
@@ -52,7 +52,8 @@ public abstract class AbstractGameHandler implements HttpHandler {
 				Credentials user=gson.fromJson(decodedCookie, Credentials.class);
 				User cur=new User();
 				cur.setName(user.getUsername());
-				cur.setPasswordHash(user.getPassword());
+				cur.setPassword(user.getPassword());
+				cur.setPlayerID(Integer.parseInt(server.login(user.getUsername(), user.getPassword())));
 				return cur;
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
