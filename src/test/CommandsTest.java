@@ -88,17 +88,26 @@ public class CommandsTest {
 
     @Test
     public void testBuildCityCommand() {
+        int settlementsBefore = model.getPlayers()[3].getSettlements();
+        int citiesBefore = model.getPlayers()[3].getCities();
         shared.communication.fromServer.game.VertexLocation location =
                 new shared.communication.fromServer.game.VertexLocation(VertexDirection.SouthWest, -1, 1);
         shared.communication.toServer.moves.BuildCity arg =
-                new shared.communication.toServer.moves.BuildCity(0, location);
+                new shared.communication.toServer.moves.BuildCity(3, location);
         server.commands.BuildCity command = new server.commands.BuildCity(serverFacade);
         command.setParams(arg);
         command.execute();
 
         shared.locations.VertexLocation location2 = new shared.locations.VertexLocation(location);
         Building building = serverFacade.forTestingGet().getModel().getMap().getBuildingOnVertex(new Vertex(location2));
+        model = serverFacade.forTestingGet().getModel();
+        int settlementsAfter = model.getPlayers()[3].getSettlements();
+        int citiesAfter = model.getPlayers()[3].getCities();
+
         assertEquals(City.class, building.getClass());
+        assertEquals(settlementsBefore +1, settlementsAfter);
+        assertEquals(citiesBefore - 1, citiesAfter);
+
     }
 
     @Test
