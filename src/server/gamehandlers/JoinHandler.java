@@ -45,6 +45,7 @@ public class JoinHandler extends AbstractGameHandler{
 			StringBuilder sb=new StringBuilder();
 			sb.append("catan.user");
 			sb.append(URLEncoder.encode((gson.toJson(player)),"UTF-8"));
+
 			sb.append(";Path=/;");
 			sb.append("Catan.game="+gameID+";Path=/;}");
 			String cookie=sb.toString();

@@ -54,6 +54,7 @@ public abstract class AbstractGameHandler implements HttpHandler {
 				cur.setName(user.getUsername());
 				cur.setPassword(user.getPassword());
 				cur.setPlayerID(Integer.parseInt(server.login(user.getUsername(), user.getPassword())));
+
 				return cur;
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block

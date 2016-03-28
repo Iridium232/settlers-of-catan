@@ -1,10 +1,15 @@
 package client.communication;
 
 import java.util.List;
+import shared.communication.fromServer.game.*;
+import shared.communication.toServer.moves.*;
+import shared.communication.toServer.games.*;
+import shared.communication.toServer.game.*;
 import java.util.UUID;
 
 import shared.communication.ResourceList;
 import shared.communication.toServer.moves.Command;
+import shared.communication.toServer.user.Credentials;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -226,4 +231,36 @@ public interface IServer {
 	 * @post you gained a victory point
 	 */
 	public String monument();
+	
+	//THE FOLLOWING PARTS OF THE INTEFACE ARE ONLY USED BY THE SERVER. SEE SERVERFASCADE.java if you want
+	//javadocs for these methods
+	public String registerCommand(Credentials credentials);
+	public String loginCommand(Credentials credentials);
+	public Game[] getGameListCommand();
+	public String createGameCommand(CreateGameRequest params);
+	public CommunicationModel joinGameCommand(JoinGameRequest params);
+	public shared.model.Game getModelCommand(int params);
+	public String saveGameCommand(SaveGameRequest params);
+	public CommunicationModel loadGameCommand(LoadGameRequest params);
+	public CommunicationModel addAIPlayerCommand(AddAIRequest params);
+	public String[] getAITypesCommand();
+	public CommunicationModel sendChatCommand(SendChat params );
+	public CommunicationModel acceptTradeCommand(AcceptTrade params);
+	public CommunicationModel discardCommand(DiscardCards params );
+	public CommunicationModel rollNumberCommand(RollNumber params);
+	public CommunicationModel buildRoadCommand(BuildRoad params);
+	public CommunicationModel buildCityCommand(BuildCity params);
+	public CommunicationModel buildSettlementCommand(BuildSettlement params);
+	public CommunicationModel offerTradeCommand(OfferTrade params);
+	public CommunicationModel maritimeTradeCommand(MaritimeTrade params);
+	public CommunicationModel robCommand(RobPlayer params);
+	public CommunicationModel FinishTurnCommand(FinishTurn params);
+	public CommunicationModel buyDevCardCommand(BuyDevCard params);
+	public CommunicationModel playSoldierCardCommand(Soldier_ params);
+	public CommunicationModel playMonumentCardCommand(Monument_ params);
+	public CommunicationModel playMonopolyCardCommand(Monopoly_ params);
+	public CommunicationModel playYearOfPlentyCardCommand(Year_of_Plenty_ params);
+	public CommunicationModel playRoadBuildingCardCommand(Road_Building_ params);
+	public shared.model.Game getGameModelByID(int params);
+	public int getVersionOf(int game_id);
 }
