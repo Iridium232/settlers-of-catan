@@ -643,7 +643,7 @@ public class Game
 	 */
 	public void replyToTrade(int commanding_player_index, boolean accept) throws Exception 
 	{
-		if(commanding_player_index != trade_offer.getReciever())
+		if(commanding_player_index != trade_offer.getSender())
 		{
 			throw new Exception("ERROR: this person is not part of the trade");
 		}
