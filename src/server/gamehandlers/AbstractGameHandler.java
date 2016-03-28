@@ -31,6 +31,9 @@ public abstract class AbstractGameHandler implements HttpHandler {
 			System.out.println(decodedCookie);
 			Gson gson=new Gson();
 			Credentials user=gson.fromJson(decodedCookie, Credentials.class);
+			if(server.login(user.getUsername(), user.getPassword())==null) {
+				return false;
+			}
 			//check credentials server.loginCommand? throw if fail.
 			return true;
 		} catch (UnsupportedEncodingException e) {
@@ -54,7 +57,6 @@ public abstract class AbstractGameHandler implements HttpHandler {
 				cur.setName(user.getUsername());
 				cur.setPassword(user.getPassword());
 				cur.setPlayerID(Integer.parseInt(server.login(user.getUsername(), user.getPassword())));
-
 				return cur;
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block

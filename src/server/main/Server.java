@@ -49,7 +49,7 @@ public class Server
 	 * @param args
 	 */
 	private HttpServer server;
-	private ServerFacade facade;
+	private ServerFacade facade=new ServerFacade();
 	private Server() {
 		return;
 	}

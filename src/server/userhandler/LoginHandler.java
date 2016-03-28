@@ -36,9 +36,13 @@ public class LoginHandler extends AbstractMoveHandler{
 		if(login==null) {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
 		} else {
+			User user= new User();
+			user.setName(cc.getUsername());
+			user.setPassword(cc.getPassword());
+			user.setPlayerID(Integer.parseInt(login));
 			StringBuilder sb=new StringBuilder();
 			sb.append("catan.user");
-			sb.append(URLEncoder.encode((gson.toJson(cc)),"UTF-8"));
+			sb.append(URLEncoder.encode((gson.toJson(user)),"UTF-8"));
 			sb.append(";Path=/;");
 			String cookie=sb.toString();
 			exchange.getResponseHeaders().add("Set-cookie",cookie);
