@@ -30,6 +30,7 @@ public class GameListHandler extends AbstractGameHandler {
 			OutputStreamWriter output=new OutputStreamWriter(exchange.getResponseBody());
 			output.write(gson.toJson(games));
 			exchange.getResponseBody().close();
+			exchange.close();
 		}
 	}
 
