@@ -30,6 +30,9 @@ public class YearOfPlentyHandler extends AbstractMoveHandler{
 		super(facade);
 	}
 
+	/**
+	 * Handles Year of Plenty Requests to the server
+	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException 
 	{
@@ -41,7 +44,7 @@ public class YearOfPlentyHandler extends AbstractMoveHandler{
 				System.err.print("\nInvalid Cookie. Thowing Error");
 				throw new Exception("INVALID COOKIE!");
 			}
-			int gameID=0;
+			int gameID = 0;
 			//gameID = WHICH????
 			Gson gson=new Gson();
 			StringWriter writer = new StringWriter();
@@ -49,6 +52,7 @@ public class YearOfPlentyHandler extends AbstractMoveHandler{
 			shared.communication.toServer.moves.Year_of_Plenty_ move =
 					gson.fromJson(writer.toString(), Year_of_Plenty_.class);
 			Year_of_Plenty command = new server.commands.Year_of_Plenty(server);
+			command.setParams(move);
 			command.execute();
 			OutputStreamWriter output = new OutputStreamWriter(exchange.getResponseBody());
 			output.write(server.getModel(gameID));
