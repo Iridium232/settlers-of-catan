@@ -1,5 +1,6 @@
 package server.commands;
 
+import shared.communication.toServer.moves.Road_Building_;
 import client.communication.IServer;
 
 /**
@@ -9,14 +10,21 @@ import client.communication.IServer;
  */
 public class Road_Building extends Command {
 
+	private Road_Building_ params;
+
 	public Road_Building(IServer s) {
 		super(s);
 	}
 
 	@Override
-	void execute() {
-		// TODO Auto-generated method stub
-		
+	public void execute()
+	{
+		server.playRoadBuildingCardCommand(params);
+	}
+
+	public void setParams(Road_Building_ move) 
+	{
+		params = move;
 	}
 
 }

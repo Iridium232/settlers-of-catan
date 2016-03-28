@@ -1,5 +1,6 @@
 package server.commands;
 
+import shared.communication.toServer.moves.Soldier_;
 import client.communication.IServer;
 
 /**
@@ -9,13 +10,20 @@ import client.communication.IServer;
  */
 public class Soldier extends Command {
 
+	private Soldier_ params;
+
 	public Soldier(IServer s) {
 		super(s);
 	}
 
 	@Override
-	void execute() {
-		// TODO Auto-generated method stub
-		
+	public void execute() 
+	{
+		this.server.playSoldierCardCommand(params);
+	}
+
+	public void setParams(Soldier_ move) 
+	{
+		this.params = move;
 	}
 }

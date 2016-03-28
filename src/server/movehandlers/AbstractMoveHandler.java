@@ -10,11 +10,14 @@ import com.sun.net.httpserver.*;
 
 import client.communication.IServer;
 import server.facade.User;
+import server.gamehandlers.AbstractGameHandler;
+
 import shared.communication.toServer.user.Credentials;
 
-public abstract class AbstractMoveHandler implements HttpHandler {
-	protected IServer server;
-	public AbstractMoveHandler(IServer facade){
+public abstract class AbstractMoveHandler extends AbstractGameHandler implements HttpHandler {
+	public AbstractMoveHandler(IServer facade)
+	{
+		super(facade);
 		server=facade;
 	}
 	protected int checkCookie(HttpExchange exchange) throws UnsupportedEncodingException {

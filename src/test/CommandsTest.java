@@ -9,8 +9,12 @@ import server.commands.AcceptTradeCommand;
 import server.facade.ServerFacade;
 import shared.communication.ResourceList;
 import shared.communication.toServer.moves.AcceptTrade;
+import shared.locations.VertexDirection;
 import shared.model.Fascade;
 import shared.model.Game;
+import shared.model.map.Vertex;
+import shared.model.map.buildings.Building;
+import shared.model.map.buildings.City;
 
 import static org.junit.Assert.*;
 
@@ -83,7 +87,16 @@ public class CommandsTest {
 
     @Test
     public void testBuildCityCommand() {
-        assertTrue(true);
+        shared.communication.fromServer.game.VertexLocation location =
+                new shared.communication.fromServer.game.VertexLocation(VertexDirection.SouthWest, -1, 1);
+        shared.communication.toServer.moves.BuildCity arg =
+                new shared.communication.toServer.moves.BuildCity(0, location);
+        server.commands.BuildCity command = new server.commands.BuildCity(serverFacade, arg);
+        command.execute();
+
+        shared.locations.VertexLocation location2 = new shared.locations.VertexLocation(location);
+        Building building = serverFacade.forTestingGet().getModel().getMap().getBuildingOnVertex(new Vertex(location2));
+        assertEquals(City.class, building.getClass());
     }
 
     @Test

@@ -15,5 +15,5 @@ public abstract class Command
 	public Command(IServer s) {
 		server=s;
 	}
-	abstract void execute();
+	abstract public void execute();
 }

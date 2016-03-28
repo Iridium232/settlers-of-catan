@@ -183,8 +183,16 @@ public class Player {
      */
     public void pay(ResourceMultiSet cost) throws Exception
     {
-    	
-    	
+        int brick = getResources().getBrick();
+        int wheat = getResources().getWheat();
+        int wood = getResources().getWood();
+        int sheep = getResources().getSheep();
+        int ore = getResources().getOre();
+        getResources().setBrick(brick - cost.getBrick());
+        getResources().setWheat(wheat - cost.getWheat());
+        getResources().setWood(wood - cost.getWood());
+        getResources().setSheep(sheep - cost.getSheep());
+        getResources().setOre(ore - cost.getOre());
     }
     
     /**
@@ -209,7 +217,16 @@ public class Player {
      */
     public void recieve(ResourceMultiSet resource) throws Exception
     {
-    	
+        int brick = getResources().getBrick();
+        int wheat = getResources().getWheat();
+        int wood = getResources().getWood();
+        int sheep = getResources().getSheep();
+        int ore = getResources().getOre();
+        getResources().setBrick(brick + resource.getBrick());
+        getResources().setWheat(wheat + resource.getWheat());
+        getResources().setWood(wood + resource.getWood());
+        getResources().setSheep(sheep + resource.getSheep());
+        getResources().setOre(ore + resource.getOre());
     }
     
     /**
@@ -542,6 +559,7 @@ public class Player {
     public void placeCity() 
     {
     	this.cities--;
+        this.settlements++;
     }
 
     /**

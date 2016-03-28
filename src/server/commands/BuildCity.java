@@ -8,16 +8,16 @@ import client.communication.IServer;
  *
  */
 public class BuildCity extends Command {
+    shared.communication.toServer.moves.BuildCity args;
 
-	public BuildCity(IServer s) {
-		super(s);
-		// TODO Auto-generated constructor stub
-	}
+    public BuildCity(IServer s, shared.communication.toServer.moves.BuildCity args) {
+        super(s);
+        this.args = args;
+    }
 
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void execute() {
+        server.buildCityCommand(args);
+    }
 
 }

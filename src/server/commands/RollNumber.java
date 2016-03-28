@@ -1,5 +1,6 @@
 package server.commands;
 
+
 import client.communication.IServer;
 
 /**
@@ -9,13 +10,20 @@ import client.communication.IServer;
  */
 public class RollNumber extends Command {
 
+	private shared.communication.toServer.moves.RollNumber params;
+
 	public RollNumber(IServer s) {
 		super(s);
 	}
 
 	@Override
-	void execute() {
-		// TODO Auto-generated method stub
-		
+	public void execute() 
+	{
+		server.rollNumberCommand(params);
+	}
+
+	public void setParams(shared.communication.toServer.moves.RollNumber move) 
+	{
+		params = move;
 	}
 }

@@ -1,5 +1,6 @@
 package server.commands;
 
+import shared.communication.toServer.moves.Year_of_Plenty_;
 import client.communication.IServer;
 
 /**
@@ -10,13 +11,20 @@ import client.communication.IServer;
  */
 public class Year_of_Plenty extends Command {
 
+	private Year_of_Plenty_ params;
+	
 	public Year_of_Plenty(IServer s) {
 		super(s);
 	}
 
 	@Override
-	void execute() {
-		// TODO Auto-generated method stub
-		
+	public void execute()
+	{
+		this.server.playYearOfPlentyCardCommand(params);
+	}
+
+	public void setParams(Year_of_Plenty_ move) 
+	{
+		this.params = move;
 	}
 }

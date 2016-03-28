@@ -14,7 +14,7 @@ public class FinishTurn extends Command {
 	}
 
 	@Override
-	void execute() {
+	public void execute() {
 		// TODO Auto-generated method stub
 		
 	}
