@@ -8,20 +8,25 @@ import shared.communication.toServer.moves.AcceptTrade;
  * @author Doug
  *
  */
-public class AcceptTradeCommand extends Command {
-	private int playerIndex;
-	private boolean accept;
-	
-	public AcceptTradeCommand(AcceptTrade at,IServer s) {
+public class AcceptTradeCommand extends Command 
+{
+
+	private AcceptTrade params;
+
+	public AcceptTradeCommand(IServer s) 
+	{
 		super(s);
-		playerIndex=at.getPlayerIndex();
-		accept=at.isWillAccept();
 	}
 	
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		server.acceptTrade(playerIndex,accept);
+	public void execute() 
+	{
+		server.acceptTradeCommand(params);
+	}
+
+	public void setParams(AcceptTrade move) 
+	{
+		params = move;
 	}
 
 }

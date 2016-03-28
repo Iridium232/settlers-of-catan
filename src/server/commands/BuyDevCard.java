@@ -9,13 +9,20 @@ import client.communication.IServer;
  */
 public class BuyDevCard extends Command {
 
+	private shared.communication.toServer.moves.BuyDevCard params;
+
 	public BuyDevCard(IServer s) {
 		super(s);
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
+	public void execute()
+	{
+		server.buyDevCardCommand(params);
+	}
+
+	public void setParams(shared.communication.toServer.moves.BuyDevCard move) 
+	{
+		params = move;
 	}
 }

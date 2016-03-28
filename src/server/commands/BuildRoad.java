@@ -9,14 +9,21 @@ import client.communication.IServer;
  */
 public class BuildRoad extends Command {
 
+	private shared.communication.toServer.moves.BuildRoad params;
+
 	public BuildRoad(IServer s) {
 		super(s);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
+	public void execute() 
+	{
+		server.buildRoadCommand(params);
+	}
+
+	public void setParams(shared.communication.toServer.moves.BuildRoad move) 
+	{
+		params = move; 
 	}
 }
