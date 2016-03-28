@@ -1,5 +1,6 @@
 package server.commands;
 
+import shared.communication.toServer.moves.Road_Building_;
 import client.communication.IServer;
 
 /**
@@ -9,13 +10,21 @@ import client.communication.IServer;
  */
 public class RobPlayer extends Command {
 
+	private shared.communication.toServer.moves.RobPlayer params;
+
 	public RobPlayer(IServer s) {
 		super(s);
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-
+	public void execute() 
+	{
+		server.robCommand(params);
 	}
+
+	public void setParams(shared.communication.toServer.moves.RobPlayer move) 
+	{
+		params = move;
+	}
+
 }
