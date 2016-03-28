@@ -35,7 +35,7 @@ public class JoinHandler extends AbstractGameHandler{
 			if(!checkCookie(exchange, server)){
 				throw new Exception();
 			}
-			User player=this.getUserFromCookie(exchange, server);
+			//User player=this.getUserFromCookie(exchange, server);
 			int gameID=0;
 			Gson gson=new Gson();
 			StringWriter writer = new StringWriter();
@@ -48,9 +48,6 @@ public class JoinHandler extends AbstractGameHandler{
 				throw new Exception();
 			}
 			StringBuilder sb=new StringBuilder();
-			sb.append("catan.user");
-			sb.append(URLEncoder.encode((gson.toJson(player)),"UTF-8"));
-			sb.append(";Path=/;");
 			sb.append("Catan.game="+gameID+";Path=/;");
 			String cookie=sb.toString();
 			System.out.println(cookie);
@@ -61,7 +58,7 @@ public class JoinHandler extends AbstractGameHandler{
 			output.flush();
 			exchange.getResponseBody().close();
 		}catch(Exception e){
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_FORBIDDEN, -1);
 			exchange.getResponseBody().close();
 		}
 	}

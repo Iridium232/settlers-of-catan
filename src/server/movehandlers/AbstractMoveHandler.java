@@ -32,9 +32,12 @@ public abstract class AbstractMoveHandler extends AbstractGameHandler implements
 		System.out.println(decodedCookie);
 		int locationOfSemicolon = decodedCookie.indexOf(';');
 		String userCookie = decodedCookie.substring(0,locationOfSemicolon);
-		String gameCookie = decodedCookie.substring(locationOfSemicolon + 12);
+		String gameCookie = decodedCookie.substring(locationOfSemicolon);
 		Gson gson=new Gson();
 		User user=gson.fromJson(decodedCookie, User.class);
+		if(server.login(user.getName(), user.getPassword())==null) return -1;
+		gson.fromJson(gameCookie, Integer.TYPE);
+		//compare model number
 		System.out.println(gameCookie);
 		return gameID;
 	}

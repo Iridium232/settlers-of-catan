@@ -41,7 +41,7 @@ public class LoginHandler extends AbstractMoveHandler{
 			user.setPassword(cc.getPassword());
 			user.setPlayerID(Integer.parseInt(login));
 			StringBuilder sb=new StringBuilder();
-			sb.append("catan.user");
+			sb.append("catan.user=");
 			sb.append(URLEncoder.encode((gson.toJson(user)),"UTF-8"));
 			sb.append(";Path=/;");
 			String cookie=sb.toString();

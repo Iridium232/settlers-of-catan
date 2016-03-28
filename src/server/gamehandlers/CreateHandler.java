@@ -11,7 +11,9 @@ import com.sun.net.httpserver.HttpExchange;
 import server.facade.ServerFacade;
 import server.facade.User;
 import server.movehandlers.AbstractMoveHandler;
+import shared.communication.toServer.games.CreateGameRequest;
 import shared.communication.toServer.games.JoinGameRequest;
+import sun.net.www.protocol.http.HttpURLConnection;
 
 /**
  * 
@@ -33,13 +35,15 @@ public class CreateHandler extends AbstractGameHandler {
 			if(!checkCookie(exchange, server)){
 				throw new Exception();
 			}
-			User player=this.getUserFromCookie(exchange, server);
-			int gameID=0;
 			Gson gson=new Gson();
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
-			JoinGameRequest join=gson.fromJson(writer.toString(), JoinGameRequest.class);
-
-		} catch
+			CreateGameRequest create=gson.fromJson(writer.toString(), CreateGameRequest.class);
+			server.createGameCommand(create);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+		} catch(Exception e){
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_FORBIDDEN, -1);
+			exchange.getResponseBody().close();
+		}
 	}
 }
