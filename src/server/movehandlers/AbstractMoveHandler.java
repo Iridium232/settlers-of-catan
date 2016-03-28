@@ -9,7 +9,9 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.*;
 
 import client.communication.IServer;
+import server.facade.User;
 import server.gamehandlers.AbstractGameHandler;
+
 import shared.communication.toServer.user.Credentials;
 
 public abstract class AbstractMoveHandler extends AbstractGameHandler implements HttpHandler {
@@ -28,15 +30,18 @@ public abstract class AbstractMoveHandler extends AbstractGameHandler implements
 		String decodedCookie=URLDecoder.decode(encodedCookie, "UTF-8");
 		decodedCookie = decodedCookie.substring(10);
 		System.out.println(decodedCookie);
-/*		int locationOfSemicolon = decodedCookie.indexOf(';');
+		int locationOfSemicolon = decodedCookie.indexOf(';');
 		String userCookie = decodedCookie.substring(0,locationOfSemicolon);
-		String gameCookie = decodedCookie.substring(locationOfSemicolon + 12);*/
+		String gameCookie = decodedCookie.substring(locationOfSemicolon);
 		Gson gson=new Gson();
-		Credentials user=gson.fromJson(decodedCookie, Credentials.class);
-		
-		
+		User user=gson.fromJson(decodedCookie, User.class);
+		if(server.login(user.getName(), user.getPassword())==null) return -1;
+		gson.fromJson(gameCookie, Integer.TYPE);
+		//compare model number
+		System.out.println(gameCookie);
 		return gameID;
 	}
+	
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		

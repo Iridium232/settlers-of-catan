@@ -10,6 +10,7 @@ import org.apache.commons.io.IOUtils;
 import client.communication.IServer;
 import server.facade.User;
 import shared.communication.toServer.games.JoinGameRequest;
+import shared.definitions.CatanColor;
 import sun.net.www.protocol.http.HttpURLConnection;
 
 import com.google.gson.Gson;
@@ -34,20 +35,20 @@ public class JoinHandler extends AbstractGameHandler{
 			if(!checkCookie(exchange, server)){
 				throw new Exception();
 			}
-			User player=this.getUserFromCookie(exchange, server);
+			//User player=this.getUserFromCookie(exchange, server);
 			int gameID=0;
 			Gson gson=new Gson();
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			JoinGameRequest join=gson.fromJson(writer.toString(), JoinGameRequest.class);
 			//call server if successful continue if fail throw exception or terminate.
-			gameID=join.getId();
+			String id =server.joinGame(join.getId(),CatanColor.valueOf(join.getColor().toUpperCase()));
+			gameID=Integer.parseInt(id);
+			if(id==null) {
+				throw new Exception();
+			}
 			StringBuilder sb=new StringBuilder();
-			sb.append("catan.user");
-			sb.append(URLEncoder.encode((gson.toJson(player)),"UTF-8"));
-
-			sb.append(";Path=/;");
-			sb.append("Catan.game="+gameID+";Path=/;}");
+			sb.append("Catan.game="+gameID+";Path=/;");
 			String cookie=sb.toString();
 			System.out.println(cookie);
 			exchange.getResponseHeaders().add("Set-cookie",cookie);
@@ -57,7 +58,7 @@ public class JoinHandler extends AbstractGameHandler{
 			output.flush();
 			exchange.getResponseBody().close();
 		}catch(Exception e){
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_FORBIDDEN, -1);
 			exchange.getResponseBody().close();
 		}
 	}

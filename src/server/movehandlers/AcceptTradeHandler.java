@@ -28,6 +28,7 @@ public class AcceptTradeHandler extends AbstractMoveHandler {
 	 *
 	 */
 	@Override
+
 	public void handle(HttpExchange exchange) throws IOException 
 	{
 		exchange.getResponseHeaders().set("Content-type","application/json");

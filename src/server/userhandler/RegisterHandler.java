@@ -38,18 +38,27 @@ public class RegisterHandler extends AbstractMoveHandler {
 		StringWriter writer = new StringWriter();
 		IOUtils.copy(exchange.getRequestBody(), writer);
 		Credentials cc=gson.fromJson(writer.toString(),Credentials.class);
-		//server.register(cc.getUsername(), cc.getPassword());//throw/catch exception if registration is unsuccessful
-		StringBuilder sb=new StringBuilder();
-		sb.append("catan.user");
-		sb.append(URLEncoder.encode((gson.toJson(cc)),"UTF-8"));
-		sb.append(";Path=/;");
-		String cookie=sb.toString();
-		exchange.getResponseHeaders().add("Set-cookie",cookie);
-		exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-		OutputStreamWriter output = new OutputStreamWriter(exchange.getResponseBody());
-		output.write(sb.toString());
-		output.flush();
-		exchange.getResponseBody().close();
+		String id=server.register(cc.getUsername(), cc.getPassword());//throw/catch exception if registration is unsuccessful
+		if(id==null) {
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);
+			exchange.getResponseBody().close();
+		} else {
+			User user=new User();
+			user.setName(cc.getUsername());
+			user.setPassword(cc.getPassword());
+			user.setPlayerID(Integer.parseInt(id));
+			StringBuilder sb=new StringBuilder();
+			sb.append("catan.user=");
+			sb.append(URLEncoder.encode((gson.toJson(user)),"UTF-8"));
+			sb.append(";Path=/;");
+			String cookie=sb.toString();
+			exchange.getResponseHeaders().add("Set-cookie",cookie);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+			OutputStreamWriter output = new OutputStreamWriter(exchange.getResponseBody());
+			output.write(sb.toString());
+			output.flush();
+			exchange.getResponseBody().close();
+		}
 	}
 
 }
