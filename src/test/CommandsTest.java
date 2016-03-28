@@ -5,7 +5,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import server.commands.AcceptTradeCommand;
 import server.facade.ServerFacade;
+import shared.communication.ResourceList;
+import shared.communication.toServer.moves.AcceptTrade;
 import shared.model.Fascade;
 import shared.model.Game;
 
@@ -37,12 +40,45 @@ public class CommandsTest {
             e.printStackTrace();
         }
         ModelPopulator.populateModel(json, gameFascade);
-        serverFacade.forTesting(gameFascade);
+        model = gameFascade.getModel();
+        serverFacade.forTestingSet(gameFascade);
     }
 
-        @Test
-    public void testAcceptTradeCommand() {
+    @Test
+    public void testOfferTradeCommand() {
         assertTrue(true);
+//        shared.communication.fromServer.game.TradeOffer tradeOffer =
+//                new shared.communication.fromServer.game.TradeOffer(1,0,new ResourceList(1,-1,0,0,0));
+//        server.commands.OfferTrade command = new server.commands.OfferTrade(serverFacade);
+//        assertNotNull(model.getTrade_offer());
+    }
+
+    @Test
+    public void testAcceptTradeCommand() {
+        int senderOldBrick = model.getPlayers()[1].getResources().getBrick();
+        int senderOldOre = model.getPlayers()[1].getResources().getOre();
+        int receiverOldBrick = model.getPlayers()[0].getResources().getBrick();
+        int receiverOldOre = model.getPlayers()[0].getResources().getOre();
+        gameFascade.offerTrade(0, new ResourceList(1,-1,0,0,0), 0);
+        gameFascade.getModel().getTrade_offer().setReciever(0);
+        gameFascade.getModel().getTrade_offer().setSender(1);
+
+
+        serverFacade.forTestingSet(gameFascade);
+        AcceptTrade at = new AcceptTrade(1, true);
+        AcceptTradeCommand command = new AcceptTradeCommand(at, serverFacade);
+        command.execute();
+        model = serverFacade.forTestingGet().getModel();
+
+        int senderNewBrick = model.getPlayers()[1].getResources().getBrick();
+        int senderNewOre = model.getPlayers()[1].getResources().getOre();
+        int receiverNewBrick = model.getPlayers()[0].getResources().getBrick();
+        int receiverNewOre = model.getPlayers()[0].getResources().getOre();
+
+        assertEquals(senderOldBrick + 1, senderNewBrick);
+        assertEquals(senderOldOre - 1, senderNewOre);
+        assertEquals(receiverOldBrick -1, receiverNewBrick);
+        assertEquals(receiverOldOre + 1, receiverNewOre);
     }
 
     @Test
@@ -88,11 +124,6 @@ public class CommandsTest {
     @Test
     public void testMonumentCommand() {
         assertTrue(true);
-    }
-
-    @Test
-    public void testOfferTradeCommand() {
-
     }
 
     @Test
