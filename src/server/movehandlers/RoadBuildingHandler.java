@@ -37,7 +37,7 @@ public class RoadBuildingHandler extends AbstractMoveHandler{
 		exchange.getResponseHeaders().set("Content-type","application/json");
 		try
 		{
-			if(!checkCookie(exchange, server))
+			if(checkCookie(exchange) == -1)
 			{
 				System.err.print("\nInvalid Cookie. Thowing Error");
 				throw new Exception("INVALID COOKIE!");

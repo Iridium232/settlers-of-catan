@@ -1,5 +1,6 @@
 package server.commands;
 
+
 import client.communication.IServer;
 
 /**
@@ -9,13 +10,20 @@ import client.communication.IServer;
  */
 public class FinishTurn extends Command {
 
+	private shared.communication.toServer.moves.FinishTurn params;
+
 	public FinishTurn(IServer s) {
 		super(s);
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
+	public void execute() 
+	{
+		server.FinishTurnCommand(params);
+	}
+
+	public void setParams(shared.communication.toServer.moves.FinishTurn move) 
+	{
+		params = move;
 	}
 }

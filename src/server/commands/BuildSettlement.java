@@ -9,13 +9,20 @@ import client.communication.IServer;
  */
 public class BuildSettlement extends Command {
 
+	private shared.communication.toServer.moves.BuildSettlement params;
+
 	public BuildSettlement(IServer s) {
 		super(s);
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
+	public void execute()
+	{
+		server.buildSettlementCommand(params);
+	}
+
+	public void setParams(shared.communication.toServer.moves.BuildSettlement move) 
+	{
+		params = move;
 	}
 }

@@ -9,14 +9,21 @@ import client.communication.IServer;
  */
 public class OfferTrade extends Command {
 
+	private shared.communication.toServer.moves.OfferTrade params;
+
 	public OfferTrade(IServer s) {
 		super(s);
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
+	public void execute()
+	{
+		server.offerTradeCommand(params);
+	}
+
+	public void setParams(shared.communication.toServer.moves.OfferTrade move) 
+	{
+		params = move;
 	}
 
 }

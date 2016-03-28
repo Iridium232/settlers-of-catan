@@ -1,5 +1,6 @@
 package server.commands;
 
+import shared.communication.toServer.moves.Monument_;
 import client.communication.IServer;
 
 /**
@@ -9,14 +10,21 @@ import client.communication.IServer;
  */
 public class Monument extends Command {
 
+	private Monument_ params;
+
 	public Monument(IServer s) {
 		super(s);
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
+	public void execute() 
+	{
+		server.playMonumentCardCommand(params);
+	}
 
+	public void setParams(Monument_ move) 
+	{
+		params = move;
 	}
 
 }

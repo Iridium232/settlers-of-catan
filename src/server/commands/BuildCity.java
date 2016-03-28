@@ -1,5 +1,6 @@
 package server.commands;
 
+
 import client.communication.IServer;
 
 /**
@@ -7,17 +8,23 @@ import client.communication.IServer;
  * @author Doug
  *
  */
-public class BuildCity extends Command {
+public class BuildCity extends Command 
+{
     shared.communication.toServer.moves.BuildCity args;
 
-    public BuildCity(IServer s, shared.communication.toServer.moves.BuildCity args) {
+    public BuildCity(IServer s) 
+    {
         super(s);
-        this.args = args;
     }
 
     @Override
-    public void execute() {
+    public void execute() 
+    {
         server.buildCityCommand(args);
     }
 
+	public void setParams(shared.communication.toServer.moves.BuildCity move) 
+	{
+		args = move;
+	}
 }
