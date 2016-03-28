@@ -11,8 +11,27 @@ import java.security.NoSuchAlgorithmException;
 public class User 
 {
 	private String name;
-	private String passwordHash;
+	private String password;
+	private int playerID;
+	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public User(String name, String password, int playerID) {
+		this.name=name;
+		this.password=password;
+		this.playerID=playerID;
+	}
+	
+	
+	public int getPlayerID() {
+		return playerID;
+	}
 
+	public void setPlayerID(int playerID) {
+		this.playerID = playerID;
+	}
 
 	/**
 	 * @return the name
@@ -31,46 +50,52 @@ public class User
 	/**
 	 * @return the passwordHash
 	 */
-	public String getPasswordHash() {
-		return passwordHash;
+	public String getPassword() {
+		return password;
 	}
 
 	/**
 	 * @param passwordHash the passwordHash to set
 	 */
-	public void setPasswordHash(String password) 
+	public void setPassword(String password) 
 	{
-		java.security.MessageDigest crypto;
-		try 
-		{
-			crypto = MessageDigest.getInstance("MD5");
-		} 
-		catch (NoSuchAlgorithmException e) 
-		{
-			System.out.print("ERROR Setting user Password!");
-			e.printStackTrace();
-			return;
-		}
-		crypto.update(password.getBytes());
-		this.passwordHash = new String(crypto.digest());
+		this.password = password;
+//		java.security.MessageDigest crypto;
+//		try 
+//		{
+//			crypto = MessageDigest.getInstance("MD5");
+//		} 
+//		catch (NoSuchAlgorithmException e) 
+//		{
+//			System.out.print("ERROR Setting user Password!");
+//			e.printStackTrace();
+//			return;
+//		}
+//		crypto.update(password.getBytes());
+//		this.passwordHash = new String(crypto.digest());
 		return;
 	}
 	
 	public boolean checkPassword(String password)
 	{
-		java.security.MessageDigest crypto;
-		try 
+		if(this.password == null)
 		{
-			crypto = MessageDigest.getInstance("MD5");
-		} 
-		catch (NoSuchAlgorithmException e) 
-		{
-			System.out.print("ERROR Checking user Password!");
-			e.printStackTrace();
 			return false;
 		}
-		crypto.update(password.getBytes());
-		return passwordHash.equals(new String(crypto.digest()));
+		return this.password.equals(password);
+//		java.security.MessageDigest crypto;
+//		try 
+//		{
+//			crypto = MessageDigest.getInstance("MD5");
+//		} 
+//		catch (NoSuchAlgorithmException e) 
+//		{
+//			System.out.print("ERROR Checking user Password!");
+//			e.printStackTrace();
+//			return false;
+//		}
+//		crypto.update(password.getBytes());
+//		return passwordHash.equals(new String(crypto.digest()));
 	}
 	
 	

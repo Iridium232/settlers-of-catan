@@ -34,7 +34,13 @@ public class ServerFacade implements IServer
 	private int game_index = 0;
 	private ArrayList<shared.model.Fascade> games;
 	private ArrayList<User> users;
-	/**
+
+    public ServerFacade() {
+        this.games = new ArrayList<>();
+        this.users = new ArrayList<>();
+    }
+
+    /**
 	 * Constructor for ServerProxy Implements the interface but is unused
 	 */
 	@Override
@@ -58,10 +64,10 @@ public class ServerFacade implements IServer
 		{
 			if (user.checkPassword(password))
 			{
-				return "SUCCESS\n";
+				return Integer.toString(user.getPlayerID());
 			}
 		}
-		return "FAILED\n";
+		return null;
 	}
 	
 	/**
@@ -76,21 +82,22 @@ public class ServerFacade implements IServer
 	{
 		for (User user : users)
 		{
-			if (user.checkPassword(password))
-			{
-				return "FAILED\n";
-			}
+//			if (user.checkPassword(password))
+//			{
+//				return "FAILED\n";
+//			}
 			if (user.getName().equals(username))
 			{
-				return "FAILED\n";
+				return null;
 			}
 		}
 		
 		User new_user = new User();
 		new_user.setName(username);
-		new_user.setPasswordHash(password);
+		new_user.setPassword(password);
+		new_user.setPlayerID(users.size());
 		users.add(new_user);
-		return "SUCCESS\n";
+		return Integer.toString(new_user.getPlayerID());
 	}
 
 	/**
@@ -159,9 +166,9 @@ public class ServerFacade implements IServer
 		catch (Exception e) 
 		{
 			e.printStackTrace();
-			return "FAILED\n";
+			return null;
 		}
-		return "SUCCESS\n";
+		return Integer.toString(game_index);
 	}
 
 	/**
@@ -299,7 +306,7 @@ public class ServerFacade implements IServer
 		ResourceMultiSet discards = new ResourceMultiSet(discardedCards);
 		try 
 		{
-			games.get(game_index).discardResources(commanding_player_index, 
+			games.get(game_index).discardResources(commanding_player_index,
 					discards);
 		} 
 		catch (Exception e) 
@@ -960,7 +967,7 @@ public class ServerFacade implements IServer
 			shared.communication.toServer.moves.MaritimeTrade params)
 	{
 		commanding_player_index = params.getPlayerIndex();
-		this.maritimeTrade(params.getRatio(), 
+		this.maritimeTrade(params.getRatio(),
 				ResourceType.valueOf(params.getInputResource().toUpperCase()),
 				ResourceType.valueOf(params.getOutputResource().toUpperCase()));
 		return null;
@@ -1026,7 +1033,7 @@ public class ServerFacade implements IServer
 			shared.communication.toServer.moves.Soldier_ params)
 	{
 		commanding_player_index = params.getPlayerIndex();
-		this.playSoldier(params.getLocation(),new Player(params.getVictimIndex()));
+		this.playSoldier(params.getLocation(), new Player(params.getVictimIndex()));
 		return null;
 	}
 	
@@ -1102,13 +1109,22 @@ public class ServerFacade implements IServer
 	 * @param game_id_index
 	 * @return
 	 */
-	public Fascade getFacadeByID(int game_id_index)
+	public shared.model.Game getGameModelByID(int game_id_index)
 	{
-		return games.get(game_id_index);
+		return games.get(game_id_index).getModel();
 	}
 	
+	/**
+	 * GetVersion
+	 * @param game_id
+	 * @return
+	 */
 	public int getVersionOf(int game_id)
 	{
 		return games.get(game_id).getVersion();
+	}
+
+	public void forTesting(shared.model.Fascade game_facade) {
+		games.add(game_facade);
 	}
 }
