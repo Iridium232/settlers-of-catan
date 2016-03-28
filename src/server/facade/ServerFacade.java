@@ -1105,12 +1105,15 @@ public class ServerFacade implements IServer
 	/**
 	 * get the facade by ID
 	 * 
+	 * @pre this is a real gameID
+	 * @post returns the Game model objext
 	 * This gets game facades for the serializer to use
 	 * @param game_id_index
 	 * @return
 	 */
 	public shared.model.Game getGameModelByID(int game_id_index)
 	{
+		if(games.get(game_id_index) == null) return null;
 		return games.get(game_id_index).getModel();
 	}
 	
@@ -1124,11 +1127,21 @@ public class ServerFacade implements IServer
 		return games.get(game_id).getVersion();
 	}
 
-    public void forTestingSet(shared.model.Fascade game_facade) {
+	/**
+	 * Used to insert pre-build games in unit tests
+	 * @param game_facade
+	 */
+    public void forTestingSet(shared.model.Fascade game_facade) 
+    {
         games.add(0, game_facade);
     }
 
-    public shared.model.Fascade forTestingGet() {
+    /**
+     * used to get pre-built games in unit tests
+     * @return
+     */
+    public shared.model.Fascade forTestingGet() 
+    {
         return games.get(0);
     }
 }
