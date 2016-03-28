@@ -307,7 +307,7 @@ public class ServerFacade implements IServer
 		try 
 		{
 			games.get(game_index).discardResources(commanding_player_index,
-					discards);
+                    discards);
 		} 
 		catch (Exception e) 
 		{
@@ -357,7 +357,7 @@ public class ServerFacade implements IServer
 		try 
 		{
 			games.get(game_index).buildRoadAt(commanding_player_index,
-					roadLocation, free);
+                    roadLocation, free);
 		} 
 		catch (Exception e) 
 		{
@@ -431,7 +431,7 @@ public class ServerFacade implements IServer
 		try 
 		{
 			games.get(game_index).offerTrade(commanding_player_index,
-					offer, receiver.getPlayerIndex());
+                    offer, receiver.getPlayerIndex());
 		} 
 		catch (Exception e) 
 		{
@@ -457,7 +457,7 @@ public class ServerFacade implements IServer
 		try 
 		{
 			games.get(game_index).maritimeTrade(commanding_player_index,
-					ratio, input, output);
+                    ratio, input, output);
 		} 
 		catch (Exception e) 
 		{
@@ -555,7 +555,7 @@ public class ServerFacade implements IServer
 		try 
 		{
 			games.get(game_index).playSoldier(
-					commanding_player_index, place, victim.getPlayerIndex());
+                    commanding_player_index, place, victim.getPlayerIndex());
 		} 
 		catch (Exception e) 
 		{
@@ -607,7 +607,7 @@ public class ServerFacade implements IServer
 		try 
 		{
 			games.get(game_index).playRoadBuilding(
-					commanding_player_index, one, two);
+                    commanding_player_index, one, two);
 		} 
 		catch (Exception e) 
 		{
@@ -968,8 +968,8 @@ public class ServerFacade implements IServer
 	{
 		commanding_player_index = params.getPlayerIndex();
 		this.maritimeTrade(params.getRatio(),
-				ResourceType.valueOf(params.getInputResource().toUpperCase()),
-				ResourceType.valueOf(params.getOutputResource().toUpperCase()));
+                ResourceType.valueOf(params.getInputResource().toUpperCase()),
+                ResourceType.valueOf(params.getOutputResource().toUpperCase()));
 		return null;
 	}
 	
@@ -1082,7 +1082,7 @@ public class ServerFacade implements IServer
 	{
 		commanding_player_index = params.getPlayerIndex();
 		yearOfPlenty(ResourceType.valueOf(params.getResource1().toUpperCase()),
-				ResourceType.valueOf(params.getResource2().toUpperCase()));
+                ResourceType.valueOf(params.getResource2().toUpperCase()));
 		return null;//TODO serialize and return
 	}
 	
@@ -1124,7 +1124,11 @@ public class ServerFacade implements IServer
 		return games.get(game_id).getVersion();
 	}
 
-	public void forTesting(shared.model.Fascade game_facade) {
-		games.add(game_facade);
-	}
+    public void forTestingSet(shared.model.Fascade game_facade) {
+        games.add(0, game_facade);
+    }
+
+    public shared.model.Fascade forTestingGet() {
+        return games.get(0);
+    }
 }
