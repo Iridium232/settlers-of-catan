@@ -559,7 +559,6 @@ public class Player {
     public void placeCity() 
     {
     	this.cities--;
-        this.settlements++;
     }
 
     /**
