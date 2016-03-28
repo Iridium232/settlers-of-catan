@@ -31,7 +31,9 @@ public class AcceptTradeHandler extends AbstractMoveHandler {
 		StringWriter writer = new StringWriter();
 		IOUtils.copy(exchange.getRequestBody(), writer);
 		AcceptTrade accept=gson.fromJson(writer.toString(),AcceptTrade.class);		
-		checkCookie(exchange);
+		if(checkCookie(exchange)!=-1) {
+			
+		}
 		
 		exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 		
