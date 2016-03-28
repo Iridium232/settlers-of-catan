@@ -14,6 +14,7 @@ import shared.communication.toServer.user.Credentials;
 
 public abstract class AbstractGameHandler implements HttpHandler {
 	protected IServer server;
+	
 	public AbstractGameHandler(IServer s){
 		server=s;
 	}

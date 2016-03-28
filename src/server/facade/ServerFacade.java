@@ -1144,4 +1144,13 @@ public class ServerFacade implements IServer
     {
         return games.get(0);
     }
+
+    /**
+     * getter
+     */
+	@Override
+	public shared.model.Fascade getFacadeByID(int gameID) 
+	{
+		return games.get(gameID);
+	}
 }

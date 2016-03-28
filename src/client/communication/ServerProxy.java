@@ -582,5 +582,10 @@ public class ServerProxy implements IServer {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	@Override
+	public Fascade getFacadeByID(int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
