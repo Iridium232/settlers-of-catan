@@ -8,6 +8,7 @@ import java.io.StringWriter;
 import org.apache.commons.io.IOUtils;
 
 import server.commands.Road_Building;
+import shared.communication.toServer.moves.OfferTrade;
 import shared.communication.toServer.moves.Road_Building_;
 import sun.net.www.protocol.http.HttpURLConnection;
 
@@ -47,8 +48,8 @@ public class OfferTradeHandler extends AbstractMoveHandler{
 			Gson gson=new Gson();
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
-			Road_Building_ move = gson.fromJson(writer.toString(), Road_Building_.class);
-			Road_Building command = new server.commands.Road_Building(server);
+			shared.communication.toServer.moves.OfferTrade move = gson.fromJson(writer.toString(), OfferTrade.class);
+			server.commands.OfferTrade command = new server.commands.OfferTrade(server);
 			command.setParams(move);
 			command.execute();
 			OutputStreamWriter output = new OutputStreamWriter(
