@@ -35,6 +35,7 @@ public class LoginHandler extends AbstractMoveHandler{
 		String login=server.login(cc.getUsername(), cc.getPassword());
 		if(login==null) {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
+			exchange.close();
 		} else {
 			User user= new User();
 			user.setName(cc.getUsername());
@@ -51,6 +52,7 @@ public class LoginHandler extends AbstractMoveHandler{
 			output.write(sb.toString());
 			output.flush();
 			exchange.getResponseBody().close();
+			exchange.close();
 		}
 	}
 	

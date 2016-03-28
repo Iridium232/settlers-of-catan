@@ -56,11 +56,13 @@ public class RoadBuildingHandler extends AbstractMoveHandler{
 			output.write(server.getModel(gameID));
 			output.flush();
 			exchange.getResponseBody().close();
+			exchange.close();
 		}
 		catch(Exception e)
 		{
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
 			exchange.getResponseBody().close();
+			exchange.close();
 		}
 	}
 }

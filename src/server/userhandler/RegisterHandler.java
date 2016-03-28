@@ -42,6 +42,7 @@ public class RegisterHandler extends AbstractMoveHandler {
 		if(id==null) {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);
 			exchange.getResponseBody().close();
+			exchange.close();
 		} else {
 			User user=new User();
 			user.setName(cc.getUsername());

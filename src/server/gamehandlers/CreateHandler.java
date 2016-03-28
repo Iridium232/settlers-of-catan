@@ -41,9 +41,13 @@ public class CreateHandler extends AbstractGameHandler {
 			CreateGameRequest create=gson.fromJson(writer.toString(), CreateGameRequest.class);
 			server.createGameCommand(create);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-		} catch(Exception e){
+			exchange.close();
+		} 
+		catch(Exception e)
+		{
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_FORBIDDEN, -1);
 			exchange.getResponseBody().close();
+			exchange.close();
 		}
 	}
 }
