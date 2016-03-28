@@ -3,6 +3,7 @@ package server.main;
 import com.sun.net.httpserver.HttpServer;
 
 import server.facade.ServerFacade;
+import server.gamehandlers.AbstractGameHandler;
 import server.gamehandlers.CreateHandler;
 import server.gamehandlers.GameListHandler;
 import server.gamehandlers.JoinHandler;
@@ -119,10 +120,10 @@ public class Server
 		server.start();
 	}
 	
-	private AbstractMoveHandler listHandler = new GameListHandler(facade);
+	private AbstractGameHandler listHandler = new GameListHandler(facade);
 	private AbstractMoveHandler getAITypeHandler = new ListAIHandler(facade);
 	private AbstractMoveHandler modelHandler = new GetModelHandler(facade);
-	private AbstractMoveHandler createHandler = new CreateHandler(facade);
+	private AbstractGameHandler createHandler = new CreateHandler(facade);
 	private AbstractMoveHandler registerHandler = new RegisterHandler(facade);
 	private AbstractMoveHandler acceptTradeHandler = new AcceptTradeHandler(facade);
 	private AbstractMoveHandler buildCityHandler = new BuildCityHandler(facade);
@@ -142,5 +143,5 @@ public class Server
 	private AbstractMoveHandler soldierHandler = new SoldierHandler(facade);
 	private AbstractMoveHandler yearOfPlentyHandler = new YearOfPlentyHandler(facade);
 	private AbstractMoveHandler loginHandler = new LoginHandler(facade);
-	private AbstractMoveHandler joinHandler = new JoinHandler(facade);
+	private AbstractGameHandler joinHandler = new JoinHandler(facade);
 }
