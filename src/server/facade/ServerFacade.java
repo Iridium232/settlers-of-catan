@@ -34,7 +34,13 @@ public class ServerFacade implements IServer
 	private int game_index = 0;
 	private ArrayList<shared.model.Fascade> games;
 	private ArrayList<User> users;
-	/**
+
+    public ServerFacade() {
+        this.games = new ArrayList<>();
+        this.users = new ArrayList<>();
+    }
+
+    /**
 	 * Constructor for ServerProxy Implements the interface but is unused
 	 */
 	@Override
