@@ -653,7 +653,14 @@ public class Game
 		}
 		else
 		{
-			
+			Player reciever = players[trade_offer.getReciever()];
+			Player sender =  players[trade_offer.getSender()];
+			ResourceMultiSet sender_gives = trade_offer.getSender_gives();
+			ResourceMultiSet reciever_gives = trade_offer.getReciever_gives();
+			reciever.pay(reciever_gives);
+			reciever.recieve(sender_gives);
+			sender.pay(sender_gives);
+			sender.recieve(reciever_gives);
 		}
 		turn_tracker.setState(new PlayingState());
 		version++;
