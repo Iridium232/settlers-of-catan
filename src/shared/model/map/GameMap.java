@@ -3,6 +3,7 @@ import java.util.*;
 import shared.locations.*;
 import shared.definitions.*;
 import shared.model.map.buildings.Building;
+import shared.model.map.buildings.City;
 import shared.model.map.buildings.Settlement;
 import shared.model.player.ResourceMultiSet;
 import shared.model.ports.BrickPort;
@@ -273,7 +274,10 @@ public class GameMap
 				buildingsAL.add(bldg);
 			}
 		}
-		buildingsAL.add(building);
+        if (building.getClass() == City.class) {
+            buildingsAL = replaceSettlement(building, buildingsAL);
+        }
+        buildingsAL.add(building);
 		Building[] temp = new Building[buildingsAL.size()];
 		for (int i = 0; i < buildingsAL.size(); i++) {
 			temp[i] = buildingsAL.get(i);
@@ -905,6 +909,24 @@ public class GameMap
 			tile_list.add(type);
 		}
 	}
-	
+
+    private ArrayList<Building> replaceSettlement(Building bldg, ArrayList<Building> bldgs) {
+        ArrayList<Building> newBldgs = new ArrayList<>();
+        for (int i = 0; i < bldgs.size(); i++) {
+            boolean match = false;
+            Building current = bldgs.get(i);
+            if (current.getLocation().getHexLoc().getX() == bldg.getLocation().getHexLoc().getX()) {
+                if (current.getLocation().getHexLoc().getY() == bldg.getLocation().getHexLoc().getY()) {
+                    if (current.getLocation().getDir().name().equals(bldg.getLocation().getDir().name())) {
+                        match = true;
+                    }
+                }
+            }
+            if (!match) {
+                newBldgs.add(bldgs.get(i));
+            }
+        }
+        return newBldgs;
+    }
 	
 }
