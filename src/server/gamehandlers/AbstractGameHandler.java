@@ -52,7 +52,7 @@ public abstract class AbstractGameHandler implements HttpHandler {
 				Credentials user=gson.fromJson(decodedCookie, Credentials.class);
 				User cur=new User();
 				cur.setName(user.getUsername());
-				cur.setPasswordHash(user.getPassword());
+				cur.setPassword(user.getPassword());
 				return cur;
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
