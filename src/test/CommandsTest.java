@@ -70,7 +70,8 @@ public class CommandsTest {
 
         serverFacade.forTestingSet(gameFascade);
         AcceptTrade at = new AcceptTrade(1, true);
-        AcceptTradeCommand command = new AcceptTradeCommand(at, serverFacade);
+        AcceptTradeCommand command = new AcceptTradeCommand(serverFacade);
+        command.setParams(at);
         command.execute();
         model = serverFacade.forTestingGet().getModel();
 
@@ -91,7 +92,8 @@ public class CommandsTest {
                 new shared.communication.fromServer.game.VertexLocation(VertexDirection.SouthWest, -1, 1);
         shared.communication.toServer.moves.BuildCity arg =
                 new shared.communication.toServer.moves.BuildCity(0, location);
-        server.commands.BuildCity command = new server.commands.BuildCity(serverFacade, arg);
+        server.commands.BuildCity command = new server.commands.BuildCity(serverFacade);
+        command.setParams(arg);
         command.execute();
 
         shared.locations.VertexLocation location2 = new shared.locations.VertexLocation(location);
