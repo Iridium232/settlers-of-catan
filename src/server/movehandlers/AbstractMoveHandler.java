@@ -12,7 +12,7 @@ import client.communication.IServer;
 import shared.communication.toServer.user.Credentials;
 
 public abstract class AbstractMoveHandler implements HttpHandler {
-	IServer server;
+	protected IServer server;
 	public AbstractMoveHandler(IServer facade){
 		server=facade;
 	}
@@ -31,7 +31,7 @@ public abstract class AbstractMoveHandler implements HttpHandler {
 		String gameCookie = decodedCookie.substring(locationOfSemicolon + 12);*/
 		Gson gson=new Gson();
 		Credentials user=gson.fromJson(decodedCookie, Credentials.class);
-		 
+		
 		
 		return gameID;
 	}
