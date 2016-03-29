@@ -33,9 +33,7 @@ public class GameListHandler extends AbstractGameHandler {
         else 
         {
         	String gamelist = gson.toJson(games).toString();
-        	System.err.print(gamelist);
         	gamelist = gamelist.replaceAll("null", "{}");
-        	System.err.print(gamelist);
             output.write(gamelist);
         }
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
