@@ -35,9 +35,6 @@ public class JoinHandler extends AbstractGameHandler{
 	public void handle(HttpExchange exchange) throws IOException {
 		exchange.getResponseHeaders().set("Content-type","application/text");
 		try{
-//			if(!checkCookie(exchange, server)){
-//				throw new Exception();
-//			}
 			//User player=this.getUserFromCookie(exchange, server);
 			int gameID=0;
 			Gson gson=new Gson();
