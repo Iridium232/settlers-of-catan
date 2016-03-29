@@ -1129,10 +1129,10 @@ public class ServerFacade implements IServer
 	 * @param game_id_index
 	 * @return
 	 */
-	public shared.model.Game getGameModelByID(int game_id_index)
+	public shared.model.Game getGameModelByID(int game_id)
 	{
-		if(games.get(game_id_index) == null) return null;
-		return games.get(game_id_index).getModel();
+        if(indexOfGameID(game_id) == -1) return null;
+        return games.get(indexOfGameID(game_id)).getModel();
 	}
 	
 	/**

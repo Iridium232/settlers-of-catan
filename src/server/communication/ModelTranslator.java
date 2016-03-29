@@ -62,7 +62,14 @@ public class ModelTranslator {
     private shared.communication.fromServer.game.DevCardList translateDeck(shared.model.Game serverModel)
             throws NullPointerException {
         shared.model.player.DevCardList serverDeck = serverModel.getDevelopment_bank();
-        if (serverDeck == null) throw new NullPointerException("the deck in our model is null");
+        if (serverDeck == null) {
+            serverDeck = new shared.model.player.DevCardList();
+            serverDeck.setMonument(5);
+            serverDeck.setMonopoly(5);
+            serverDeck.setRoad_building(5);
+            serverDeck.setSoldier(5);
+            serverDeck.setYear_of_plenty(5);
+        }
 
         int monopoly = serverDeck.getMonopoly();
         int monument = serverDeck.getMonument();
@@ -106,7 +113,7 @@ public class ModelTranslator {
     private MessageList translateLog(shared.model.Game serverModel)
             throws NullPointerException {
         MessageList serverLog = serverModel.getLog();
-        if (serverLog == null) throw new NullPointerException("the log in our model is null");
+        if (serverLog == null) serverLog = new MessageList();
 
         MessageList comLog = new MessageList();
         for (MessageLine message : serverLog.getMessages()) {
