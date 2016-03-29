@@ -7,8 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 import server.commands.AcceptTradeCommand;
 import server.facade.ServerFacade;
+import shared.communication.EdgeLocation;
 import shared.communication.ResourceList;
 import shared.communication.toServer.moves.AcceptTrade;
+import shared.locations.EdgeDirection;
 import shared.locations.VertexDirection;
 import shared.model.Fascade;
 import shared.model.Game;
@@ -88,31 +90,30 @@ public class CommandsTest {
 
     @Test
     public void testBuildCityCommand() {
-        int settlementsBefore = model.getPlayers()[3].getSettlements();
-        int citiesBefore = model.getPlayers()[3].getCities();
         shared.communication.fromServer.game.VertexLocation location =
                 new shared.communication.fromServer.game.VertexLocation(VertexDirection.SouthWest, -1, 1);
         shared.communication.toServer.moves.BuildCity arg =
-                new shared.communication.toServer.moves.BuildCity(3, location);
+                new shared.communication.toServer.moves.BuildCity(0, location);
         server.commands.BuildCity command = new server.commands.BuildCity(serverFacade);
         command.setParams(arg);
         command.execute();
 
         shared.locations.VertexLocation location2 = new shared.locations.VertexLocation(location);
         Building building = serverFacade.forTestingGet().getModel().getMap().getBuildingOnVertex(new Vertex(location2));
-        model = serverFacade.forTestingGet().getModel();
-        int settlementsAfter = model.getPlayers()[3].getSettlements();
-        int citiesAfter = model.getPlayers()[3].getCities();
-
         assertEquals(City.class, building.getClass());
-        assertEquals(settlementsBefore +1, settlementsAfter);
-        assertEquals(citiesBefore - 1, citiesAfter);
-
     }
 
     @Test
     public void testBuildRoadCommand() {
-        assertTrue(true);
+        server.commands.BuildRoad command = new server.commands.BuildRoad(serverFacade);
+        shared.communication.EdgeLocation location = new shared.communication.EdgeLocation(0, 0, EdgeDirection.North);
+        shared.communication.toServer.moves.BuildRoad arg =
+                new shared.communication.toServer.moves.BuildRoad(0, location, true);
+        command.setParams(arg);
+        command.execute();
+
+        shared.model.map.Road[] roads = serverFacade.forTestingGet().getRoads();
+        assertTrue(roadExists(arg, roads));
     }
 
     @Test
@@ -178,6 +179,34 @@ public class CommandsTest {
     @Test
     public void testYear_Of_PlentyCommand() {
         assertTrue(true);
+    }
+
+    private boolean roadExists(shared.communication.toServer.moves.BuildRoad arg, shared.model.map.Road[] roads) {
+        for (shared.model.map.Road road : roads) {
+            if (road.getLocation().getLocation().getHexLoc().getX() == arg.getRoadLocation().getX()) {
+                if (road.getLocation().getLocation().getHexLoc().getY() == arg.getRoadLocation().getY()) {
+                    String str1 = road.getLocation().getLocation().getDir().name();
+                    String str2 = arg.getRoadLocation().getDirection();
+                    if (matchDirection(str1, str2)) {
+                        if (road.getOwnerIndex() == arg.getPlayerIndex()) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean matchDirection(String str1, String str2) {
+        if (str1.toLowerCase().equals(str2.toLowerCase())) return true;
+        if (str1.toLowerCase().equals("northwest") && str2.toLowerCase().equals("nw")) return true;
+        if (str1.toLowerCase().equals("north") && str2.toLowerCase().equals("n")) return true;
+        if (str1.toLowerCase().equals("northeast") && str2.toLowerCase().equals("ne")) return true;
+        if (str1.toLowerCase().equals("southwest") && str2.toLowerCase().equals("sw")) return true;
+        if (str1.toLowerCase().equals("south") && str2.toLowerCase().equals("s")) return true;
+        if (str1.toLowerCase().equals("southeast") && str2.toLowerCase().equals("se")) return true;
+        return false;
     }
 
     private String getStrModel() {
