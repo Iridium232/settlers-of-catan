@@ -763,8 +763,14 @@ public class ServerFacade implements IServer
 	{
 		try 
 		{
+			Fascade game=games.get(params.getId());
+			for(shared.communication.fromServer.games.Player p:game.getPlayers()){
+				if(p.getId()==playerID){
+					return params.getId();
+				} 
+			}
 			User currentUser=users.get(playerID);
-			games.get(params.getId()).addPlayer(currentUser.getName(),CatanColor.valueOf(params.getColor().toUpperCase()),playerID);
+			game.addPlayer(currentUser.getName(),CatanColor.valueOf(params.getColor().toUpperCase()),playerID);
 			return params.getId();
 		} 
 		catch (Exception e)

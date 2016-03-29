@@ -6,6 +6,7 @@ import java.io.StringWriter;
 
 import org.apache.commons.io.IOUtils;
 
+import shared.communication.Serializer;
 import shared.communication.toServer.moves.MaritimeTrade;
 import sun.net.www.protocol.http.HttpURLConnection;
 
@@ -40,15 +41,17 @@ public class GetModelHandler extends AbstractMoveHandler {
 			Gson gson=new Gson();
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());
-			output.write(server.getModel(gameID));
+			output.write(Serializer.getSINGLETON().serialize(server.getModel(gameID)));
 			output.flush();
 			exchange.getResponseBody().close();
 			exchange.close();
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
 			exchange.getResponseBody().close();
 			exchange.close();
