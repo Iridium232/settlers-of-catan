@@ -785,7 +785,7 @@ public class ServerFacade implements IServer
 	 */
 	public shared.model.Game getModelCommand(int id)
 	{
-		return games.get(id).getModel();
+		return games.get(indexOfGameID(id)).getModel();
 		
 	}
 	

@@ -42,8 +42,10 @@ public class GetModelHandler extends AbstractMoveHandler {
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());
-			output.write(server.getModel(gameID));
-			output.flush();
+            String result = server.getModel(gameID);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+			output.write(result);
+			output.close();
 			exchange.getResponseBody().close();
 			exchange.close();
 		}
