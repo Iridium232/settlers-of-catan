@@ -1326,6 +1326,9 @@ public class Fascade
 	public void buildNewGame(String name, boolean randomTiles,
 			boolean randomNumbers, boolean randomPorts) throws Exception 
 	{
+        if (game_model == null) {
+            game_model = new Game();
+        }
 		game_model.buildNewGame(name, randomTiles, randomNumbers, randomPorts);
 	}
 
