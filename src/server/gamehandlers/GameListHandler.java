@@ -22,17 +22,20 @@ public class GameListHandler extends AbstractGameHandler {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		// TODO Auto-generated method stub
-		if(checkCookie(exchange, server)) {
-			exchange.getResponseHeaders().set("Content-type","application/text");
-			Game[] games =  server.getGameList().toArray(new 
-					shared.communication.fromServer.games.Game[server.getGameList().size()]);
-			Gson gson=new Gson();	
-			OutputStreamWriter output=new OutputStreamWriter(exchange.getResponseBody());
-			output.write(gson.toJson(games));
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-			exchange.getResponseBody().close();
-			exchange.close();
-		}
+        exchange.getResponseHeaders().set("Content-type", "application/text");
+        Game[] games =  server.getGameList().toArray(new
+                shared.communication.fromServer.games.Game[server.getGameList().size()]);
+        Gson gson=new Gson();
+        OutputStreamWriter output=new OutputStreamWriter(exchange.getResponseBody());
+        if (games.length == 0) {
+            output.write("{}");
+        } else {
+            output.write(gson.toJson(games));
+        }
+        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+        exchange.getResponseBody().close();
+        exchange.close();
+
 	}
 
 }
