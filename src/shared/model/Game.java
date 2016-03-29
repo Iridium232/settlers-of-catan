@@ -364,7 +364,7 @@ public class Game
 	{
 		players[commanding_player_index].playDevCard(DevCardType.MONUMENT);
 		players[commanding_player_index].setMonuments(
-				players[commanding_player_index].getMonuments() + 1);
+                players[commanding_player_index].getMonuments() + 1);
 		version++;
 	}
 
@@ -621,11 +621,10 @@ public class Game
 		shared.locations.EdgeLocation place = 
 				new shared.locations.EdgeLocation(
 				new HexLocation(roadLocation.getX(),
-				roadLocation.getY()), EdgeDirection.valueOf(
-						roadLocation.getDirection()));
+				roadLocation.getY()), edgeLocationFromStr(
+                        roadLocation.getDirection()));
 		
-		map.addRoad(new Road(place, commanding_player_index, CatanColor.valueOf(
-				players[commanding_player_index].getColor()))); 
+		map.addRoad(new Road(place, commanding_player_index, getCatanColor(players[commanding_player_index])));
 		
 		players[commanding_player_index].placeRoad();
 		version++;
@@ -818,8 +817,8 @@ public class Game
 		players[player_index].pay(ResourceType.WHEAT, 2);
 		players[player_index].pay(ResourceType.ORE, 3);
 		players[player_index].placeCity();
-		map.addBuilding(new City(players[player_index].getColor(), 
-				place, player_index));
+		map.addBuilding(new City(players[player_index].getColor(),
+                place, player_index));
 		players[player_index].setSettlements(players[player_index].getSettlements() + 1);
 		version++;
 	}
@@ -843,4 +842,38 @@ public class Game
 		map.addBuilding(new Settlement(player_index, place, players[player_index].getColor()));
 		version++;
 	}
+
+    private EdgeDirection edgeLocationFromStr(String str) {
+        if (str.toLowerCase().equals("nw") || str.toLowerCase().equals("northwest")) {
+            return EdgeDirection.NorthWest;
+        }
+        if (str.toLowerCase().equals("n") || str.toLowerCase().equals("north")) {
+            return EdgeDirection.North;
+        }
+        if (str.toLowerCase().equals("ne") || str.toLowerCase().equals("northeast")) {
+            return EdgeDirection.NorthEast;
+        }
+        if (str.toLowerCase().equals("sw") || str.toLowerCase().equals("southwest")) {
+            return EdgeDirection.SouthWest;
+        }
+        if (str.toLowerCase().equals("s") || str.toLowerCase().equals("south")) {
+            return EdgeDirection.South;
+        }
+        if (str.toLowerCase().equals("se") || str.toLowerCase().equals("southeast")) {
+            return EdgeDirection.SouthEast;
+        }
+        return null;
+    }
+
+    private CatanColor getCatanColor(shared.model.player.Player player) {
+        if (player.getColor().equals("red")) return CatanColor.RED;
+        if (player.getColor().equals("orange")) return CatanColor.ORANGE;
+        if (player.getColor().equals("yellow")) return CatanColor.YELLOW;
+        if (player.getColor().equals("blue")) return CatanColor.BLUE;
+        if (player.getColor().equals("green")) return CatanColor.GREEN;
+        if (player.getColor().equals("purple")) return CatanColor.PURPLE;
+        if (player.getColor().equals("puce")) return CatanColor.PUCE;
+        if (player.getColor().equals("white")) return CatanColor.WHITE;
+        return CatanColor.BROWN;
+    }
 }
