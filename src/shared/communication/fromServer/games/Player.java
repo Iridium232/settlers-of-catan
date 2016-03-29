@@ -26,6 +26,11 @@ public class Player {
 		this.id = victim.getId();
 	}
 
+	public Player() 
+	{
+		
+	}
+
 	public String getColor() {
         return color;
     }

@@ -29,8 +29,14 @@ public class GameListHandler extends AbstractGameHandler {
         OutputStreamWriter output=new OutputStreamWriter(exchange.getResponseBody());
         if (games.length == 0) {
             output.write("[]");
-        } else {
-            output.write(gson.toJson(games));
+        } 
+        else 
+        {
+        	String gamelist = gson.toJson(games).toString();
+        	System.err.print(gamelist);
+        	gamelist = gamelist.replaceAll("null", "{}");
+        	System.err.print(gamelist);
+            output.write(gamelist);
         }
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
         output.close();
