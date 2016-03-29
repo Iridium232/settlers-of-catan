@@ -120,7 +120,7 @@ public class ServerFacade implements IServer
 		List<Game> result = new ArrayList<Game>();
 		for (Fascade facade : games)
 		{
-			Game game_entry = new Game(facade, games.size());
+			Game game_entry = new Game(facade, facade.getModel().getGameinfo().getId());
 			result.add(game_entry);
 		}
 		return result;
