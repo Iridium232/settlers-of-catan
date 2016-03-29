@@ -14,6 +14,7 @@ import shared.communication.fromServer.game.CommunicationModel;
 import shared.communication.fromServer.game.VertexLocation;
 import shared.communication.fromServer.games.Game;
 import shared.communication.fromServer.games.NewGame;
+import shared.communication.toServer.games.CreateGameRequest;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.exceptions.JoinExceptions;
@@ -44,6 +45,12 @@ public class ServerFacade implements IServer
     public ServerFacade() {
         this.games = new ArrayList<>();
         this.users = new ArrayList<>();
+        createGameCommand(new CreateGameRequest(false,false,false,"Default"));
+        register("Sam","sam");
+        register("Brooke","brooke");
+        register("Pete","pete");
+        register("Mark","Mark");
+        
     }
 
     /**
