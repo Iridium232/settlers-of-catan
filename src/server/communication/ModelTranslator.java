@@ -150,6 +150,11 @@ public class ModelTranslator {
         for (shared.model.player.Player player: serverPlayers) {
             int cities = player.getCities();
             String color = player.getColor();
+            if (color != null) {
+                color = color.toLowerCase();
+            } else {
+                continue;
+            }
             boolean discarded = player.isDiscarded();
             int monuments = player.getMonuments();
             String name = player.getName();
