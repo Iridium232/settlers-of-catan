@@ -458,11 +458,6 @@ public class ServerProxy implements IServer {
 		return null;
 	}
 	@Override
-	public CommunicationModel joinGameCommand(JoinGameRequest params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
 	public shared.model.Game getModelCommand(int params) {
 		// TODO Auto-generated method stub
 		return null;
@@ -586,6 +581,11 @@ public class ServerProxy implements IServer {
 	public Fascade getFacadeByID(int gameID) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public int joinGameCommand(JoinGameRequest params, int playerID) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

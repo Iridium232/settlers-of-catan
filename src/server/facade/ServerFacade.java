@@ -757,20 +757,22 @@ public class ServerFacade implements IServer
 	 * @post the command is executed and a communication class is filled 
 	 * and returned. Null means an error
 	 */
-	public CommunicationModel joinGameCommand(
-			shared.communication.toServer.games.JoinGameRequest params)
+	@Override
+	public int joinGameCommand(
+			shared.communication.toServer.games.JoinGameRequest params, int playerID)
 	{
 		try 
 		{
-			this.joinGame(params.getId(), CatanColor.valueOf(params.getColor().toUpperCase()));
+			User currentUser=users.get(playerID);
+			games.get(params.getId()).addPlayer(currentUser.getName(),CatanColor.valueOf(params.getColor().toUpperCase()),playerID);
+			return params.getId();
 		} 
-		catch (JoinExceptions e)
+		catch (Exception e)
 		{
 			System.err.print("\nERROR: FAILED JOIN REQUEST\n");
 			e.printStackTrace();
-			return null;
+			return -1;
 		}
-		return null;
 	}
 	
 	/**

@@ -35,16 +35,15 @@ public class JoinHandler extends AbstractGameHandler{
 	public void handle(HttpExchange exchange) throws IOException {
 		exchange.getResponseHeaders().set("Content-type","application/text");
 		try{
-			//User player=this.getUserFromCookie(exchange, server);
+			User player=this.getUserFromCookie(exchange, server);
 			int gameID=0;
 			Gson gson=new Gson();
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			JoinGameRequest join=gson.fromJson(writer.toString(), JoinGameRequest.class);
 			//call server if successful continue if fail throw exception or terminate.
-			String id =server.joinGame(join.getId(), CatanColor.valueOf(join.getColor().toUpperCase()));
-			gameID=Integer.parseInt(id);
-			if(id==null) {
+			gameID =server.joinGameCommand(join,player.getPlayerID());
+			if(gameID==-1) {
 				throw new Exception();
 			}
             CommunicationModel comModel = ModelTranslator.translateModel(server.getGameModelByID(gameID));

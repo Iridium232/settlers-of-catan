@@ -238,7 +238,7 @@ public interface IServer {
 	public String loginCommand(Credentials credentials);
 	public Game[] getGameListCommand();
 	public String createGameCommand(CreateGameRequest params);
-	public CommunicationModel joinGameCommand(JoinGameRequest params);
+	public int joinGameCommand(JoinGameRequest params,int playerID);
 	public shared.model.Game getModelCommand(int params);
 	public String saveGameCommand(SaveGameRequest params);
 	public CommunicationModel loadGameCommand(LoadGameRequest params);

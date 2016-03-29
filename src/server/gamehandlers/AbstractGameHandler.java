@@ -51,14 +51,10 @@ public abstract class AbstractGameHandler implements HttpHandler {
 		String decodedCookie;
 			try {
 				decodedCookie=URLDecoder.decode(encodedCookie,"UTF-8");
-				decodedCookie=decodedCookie.substring(10);
+				decodedCookie=decodedCookie.substring(11);
 				Gson gson=new Gson();
-				Credentials user=gson.fromJson(decodedCookie, Credentials.class);
-				User cur=new User();
-				cur.setName(user.getUsername());
-				cur.setPassword(user.getPassword());
-				cur.setPlayerID(Integer.parseInt(server.login(user.getUsername(), user.getPassword())));
-				return cur;
+				User user=gson.fromJson(decodedCookie, User.class);
+				return user;
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
