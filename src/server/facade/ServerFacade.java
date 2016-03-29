@@ -15,6 +15,7 @@ import shared.communication.fromServer.game.VertexLocation;
 import shared.communication.fromServer.games.Game;
 import shared.communication.fromServer.games.NewGame;
 import shared.communication.toServer.games.CreateGameRequest;
+import shared.communication.toServer.games.JoinGameRequest;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.exceptions.JoinExceptions;
@@ -758,8 +759,7 @@ public class ServerFacade implements IServer
 	 * and returned. Null means an error
 	 */
 	@Override
-	public int joinGameCommand(
-			shared.communication.toServer.games.JoinGameRequest params, int playerID)
+	public int joinGameCommand(JoinGameRequest params, int playerID)
 	{
 		try 
 		{
