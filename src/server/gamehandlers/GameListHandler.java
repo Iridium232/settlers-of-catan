@@ -33,6 +33,7 @@ public class GameListHandler extends AbstractGameHandler {
             output.write(gson.toJson(games));
         }
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+        output.close();
         exchange.getResponseBody().close();
         exchange.close();
 

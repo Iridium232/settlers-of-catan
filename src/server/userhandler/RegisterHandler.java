@@ -40,7 +40,10 @@ public class RegisterHandler extends AbstractMoveHandler {
 		Credentials cc=gson.fromJson(writer.toString(),Credentials.class);
 		String id=server.register(cc.getUsername(), cc.getPassword());//throw/catch exception if registration is unsuccessful
 		if(id==null) {
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
+            OutputStreamWriter output = new OutputStreamWriter(exchange.getResponseBody());
+            output.write("Error");
+            output.close();
 			exchange.getResponseBody().close();
 			exchange.close();
 		} else {
@@ -50,14 +53,14 @@ public class RegisterHandler extends AbstractMoveHandler {
 			user.setPlayerID(Integer.parseInt(id));
 			StringBuilder sb=new StringBuilder();
 			sb.append("catan.user=");
-			sb.append(URLEncoder.encode((gson.toJson(user)),"UTF-8"));
+			sb.append(URLEncoder.encode((gson.toJson(user)), "UTF-8"));
 			sb.append(";Path=/;");
 			String cookie=sb.toString();
 			exchange.getResponseHeaders().add("Set-cookie",cookie);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(exchange.getResponseBody());
-			output.write(sb.toString());
-			output.flush();
+			output.write("Success");
+			output.close();
 			exchange.getResponseBody().close();
 			exchange.close();
 		}
