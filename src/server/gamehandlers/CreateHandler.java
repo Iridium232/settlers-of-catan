@@ -43,9 +43,10 @@ public class CreateHandler extends AbstractGameHandler {
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			CreateGameRequest create=gson.fromJson(writer.toString(), CreateGameRequest.class);
 			String response = server.createGameCommand(create);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             OutputStreamWriter output=new OutputStreamWriter(exchange.getResponseBody());
             output.write(response);
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+            output.close();
 			exchange.close();
 		} 
 		catch(Exception e)
