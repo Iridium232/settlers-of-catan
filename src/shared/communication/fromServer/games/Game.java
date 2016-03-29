@@ -14,7 +14,8 @@ public class Game {
     private int id;
     private Player[] players;
 
-    public Game(String title, int id, Player[] players) {
+    public Game(String title, int id, Player[] players) 
+    {
         this.title = title;
         this.id = id;
         this.players = players;
@@ -28,7 +29,16 @@ public class Game {
     {
 		this.title = facade.getGameName();
 		this.id = game_id;
-		this.players = facade.getPlayers();
+		this.players = new Player[4];
+		int i = 0;
+		for(Player player : facade.getPlayers())
+		{
+			if(player.getName() == null)players[i] = null;
+			else
+				{players[i] = new shared.communication.fromServer.games.Player(
+					player.getColor(), player.getName(), player.getId());}
+			i++;
+		}
 	}
 
 	public String getTitle() {
