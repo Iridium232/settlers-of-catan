@@ -8,7 +8,10 @@ import java.net.URLEncoder;
 import org.apache.commons.io.IOUtils;
 
 import client.communication.IServer;
+import server.communication.ModelTranslator;
 import server.facade.User;
+import shared.communication.Serializer;
+import shared.communication.fromServer.game.CommunicationModel;
 import shared.communication.toServer.games.JoinGameRequest;
 import shared.definitions.CatanColor;
 import sun.net.www.protocol.http.HttpURLConnection;
@@ -32,9 +35,9 @@ public class JoinHandler extends AbstractGameHandler{
 	public void handle(HttpExchange exchange) throws IOException {
 		exchange.getResponseHeaders().set("Content-type","application/text");
 		try{
-			if(!checkCookie(exchange, server)){
-				throw new Exception();
-			}
+//			if(!checkCookie(exchange, server)){
+//				throw new Exception();
+//			}
 			//User player=this.getUserFromCookie(exchange, server);
 			int gameID=0;
 			Gson gson=new Gson();
@@ -42,11 +45,13 @@ public class JoinHandler extends AbstractGameHandler{
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			JoinGameRequest join=gson.fromJson(writer.toString(), JoinGameRequest.class);
 			//call server if successful continue if fail throw exception or terminate.
-			String id =server.joinGame(join.getId(),CatanColor.valueOf(join.getColor().toUpperCase()));
+			String id =server.joinGame(join.getId(), CatanColor.valueOf(join.getColor().toUpperCase()));
 			gameID=Integer.parseInt(id);
 			if(id==null) {
 				throw new Exception();
 			}
+            CommunicationModel comModel = ModelTranslator.translateModel(server.getGameModelByID(gameID));
+            String result = Serializer.getSINGLETON().serialize(comModel);
 			StringBuilder sb=new StringBuilder();
 			sb.append("Catan.game="+gameID+";Path=/;");
 			String cookie=sb.toString();
