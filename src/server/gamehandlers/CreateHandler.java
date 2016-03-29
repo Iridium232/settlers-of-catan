@@ -35,9 +35,9 @@ public class CreateHandler extends AbstractGameHandler {
 	public void handle(HttpExchange exchange) throws IOException {
 		exchange.getResponseHeaders().set("Content-type","application/text");
 		try{
-			if(!checkCookie(exchange, server)){
-				throw new Exception();
-			}
+//			if(!checkCookie(exchange, server)){
+//				throw new Exception();
+//			}
 			Gson gson=new Gson();
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
