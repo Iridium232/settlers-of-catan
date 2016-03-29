@@ -341,6 +341,7 @@ public class Game
 	{
 		
 		this.game_name = name;
+		this.development_bank = new DevCardList(14,5,2,2,2);
 		map.buildNewGameMap(randomTiles, randomNumbers, randomPorts);
 		this.turn_tracker = new TurnTracker();
 		turn_tracker.setActive_player(0);

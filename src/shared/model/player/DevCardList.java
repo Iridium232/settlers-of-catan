@@ -23,7 +23,23 @@ public class DevCardList
 	 * @param year_of_plenty
 	 */
 	
-	
+	/**
+	 * Constuctor
+	 * @param i
+	 * @param j
+	 * @param k
+	 * @param l
+	 * @param m
+	 */
+	public DevCardList(int i, int j, int k, int l, int m) 
+	{
+		soldier = i;
+		monument = j;
+		road_building = k;
+		monopoly = l;
+		year_of_plenty = m;
+	}
+
 	/**
 	 * 
 	 * @param cards
