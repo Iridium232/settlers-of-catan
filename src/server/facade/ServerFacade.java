@@ -171,10 +171,11 @@ public class ServerFacade implements IServer
 	@Override
 	public String joinGame(int id, CatanColor color) throws JoinExceptions 
 	{
+		game_index = indexOfGameID(id);
 		try 
 		{
-			User joiner = users.get(indexOfGameID(id));
-			games.get(game_index).addPlayer(joiner.getName(), color, id);
+			User joiner = users.get(commanding_player_index);
+			games.get(game_index).addPlayer(joiner.getName(), color, commanding_player_index);
 		} 
 		catch (Exception e) 
 		{

@@ -8,10 +8,8 @@ import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
-import shared.model.map.Edge;
-import shared.model.map.GameMap;
-import shared.model.map.Robber;
-import shared.model.map.TerrainHex;
+import shared.locations.VertexDirection;
+import shared.model.map.*;
 import shared.model.map.buildings.Building;
 import shared.model.map.buildings.City;
 import shared.model.map.buildings.Settlement;
@@ -85,7 +83,9 @@ public class ModelTranslator {
     private ResourceList translateBank(shared.model.Game serverModel)
             throws NullPointerException {
         ResourceMultiSet serverBank = serverModel.getResource_bank();
-        if (serverBank == null) throw new NullPointerException("the bank in our model is null");
+        if (serverBank == null) {
+            serverBank = new ResourceMultiSet(19,19,19,19,19);
+        }
 
         int brick = serverBank.getBrick();
         int wheat = serverBank.getWheat();
@@ -100,7 +100,9 @@ public class ModelTranslator {
     private MessageList translateChat(shared.model.Game serverModel)
             throws NullPointerException {
         MessageList serverChat = serverModel.getChat();
-        if (serverChat == null) throw new NullPointerException("the chat in our model is null");
+        if (serverChat == null) {
+            serverChat = new MessageList();
+        }
 
         MessageList comChat = new MessageList();
         for (MessageLine message : serverChat.getMessages()) {
@@ -239,7 +241,7 @@ public class ModelTranslator {
         for (shared.model.ports.Port port : serverPorts) {
             String resource = resourceTypeToString(port.getResource());
             HexLocation location = port.getLocation();
-            String direction = edgeDirectionToString(port.getEdgeDirection());
+            String direction = edgeDirectionToString(edgeDirectionFromVertices(port.getVertex1(), port.getVertex2()));
             int ratio = port.getRatio();
             shared.communication.fromServer.game.Port comPort =
                     new shared.communication.fromServer.game.Port(resource, location, direction, ratio);
@@ -606,5 +608,45 @@ public class ModelTranslator {
 
     public ResourceList testTranslateOffer(shared.model.player.TradeOffer serverOffer) {
         return translateOffer(serverOffer);
+    }
+
+    private EdgeDirection edgeDirectionFromVertices(Vertex v1, Vertex v2) {
+        if (v1.getLocation().getDir() == VertexDirection.East) {
+            if (v2.getLocation().getDir() == VertexDirection.NorthEast) {
+                return EdgeDirection.NorthEast;
+            } else {
+                return EdgeDirection.SouthEast;
+            }
+        } else if (v1.getLocation().getDir() == VertexDirection.NorthEast) {
+            if (v2.getLocation().getDir() == VertexDirection.East) {
+                return EdgeDirection.NorthEast;
+            } else {
+                return EdgeDirection.North;
+            }
+        } else if (v1.getLocation().getDir() == VertexDirection.NorthWest) {
+            if (v2.getLocation().getDir() == VertexDirection.West) {
+                return EdgeDirection.NorthWest;
+            } else {
+                return EdgeDirection.North;
+            }
+        } else if (v1.getLocation().getDir() == VertexDirection.West) {
+            if (v2.getLocation().getDir() == VertexDirection.SouthWest) {
+                return EdgeDirection.SouthWest;
+            } else {
+                return EdgeDirection.NorthWest;
+            }
+        } else if (v1.getLocation().getDir() == VertexDirection.SouthWest) {
+            if (v2.getLocation().getDir() == VertexDirection.West) {
+                return EdgeDirection.SouthWest;
+            } else {
+                return EdgeDirection.South;
+            }
+        } else {
+            if (v2.getLocation().getDir() == VertexDirection.East) {
+                return EdgeDirection.SouthEast;
+            } else {
+                return EdgeDirection.South;
+            }
+        }
     }
 }
