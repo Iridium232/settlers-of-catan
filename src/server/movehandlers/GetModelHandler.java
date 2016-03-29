@@ -44,7 +44,9 @@ public class GetModelHandler extends AbstractMoveHandler {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());
-			output.write(Serializer.getSINGLETON().serialize(server.getModel(gameID)));
+            String result = server.getModel(gameID);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+			output.write(result);
 			output.flush();
 			exchange.getResponseBody().close();
 			exchange.close();
