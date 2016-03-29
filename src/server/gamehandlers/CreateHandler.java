@@ -1,8 +1,10 @@
 package server.gamehandlers;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
@@ -11,6 +13,7 @@ import com.sun.net.httpserver.HttpExchange;
 import server.facade.ServerFacade;
 import server.facade.User;
 import server.movehandlers.AbstractMoveHandler;
+import shared.communication.fromServer.games.NewGame;
 import shared.communication.toServer.games.CreateGameRequest;
 import shared.communication.toServer.games.JoinGameRequest;
 import sun.net.www.protocol.http.HttpURLConnection;
@@ -39,7 +42,9 @@ public class CreateHandler extends AbstractGameHandler {
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			CreateGameRequest create=gson.fromJson(writer.toString(), CreateGameRequest.class);
-			server.createGameCommand(create);
+			String response = server.createGameCommand(create);
+            OutputStreamWriter output=new OutputStreamWriter(exchange.getResponseBody());
+            output.write(response);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			exchange.close();
 		} 

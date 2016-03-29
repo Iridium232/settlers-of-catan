@@ -13,6 +13,7 @@ import shared.communication.Serializer;
 import shared.communication.fromServer.game.CommunicationModel;
 import shared.communication.fromServer.game.VertexLocation;
 import shared.communication.fromServer.games.Game;
+import shared.communication.fromServer.games.NewGame;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.exceptions.JoinExceptions;
@@ -29,6 +30,7 @@ import shared.model.player.ResourceMultiSet;
  */
 public class ServerFacade implements IServer
 {
+    private static int nextGameID = 0;
 	
 	private int commanding_player_index;
 	private int game_index = 0;
@@ -721,6 +723,11 @@ public class ServerFacade implements IServer
 		try 
 		{
 			this.createGame(params.getName(), params.isRandomTiles(), params.isRandomNumbers(), params.isRandomPorts());
+            shared.communication.fromServer.games.EmptyPlayer[] emptyPlayers =
+                    new shared.communication.fromServer.games.EmptyPlayer[0];
+            NewGame newGame = new NewGame(params.getName(), ServerFacade.nextGameID++,
+                    emptyPlayers);
+            return Serializer.getSINGLETON().serialize(newGame);
 		} 
 		catch (Exception e) 
 		{
