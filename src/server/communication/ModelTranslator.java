@@ -65,10 +65,10 @@ public class ModelTranslator {
         if (serverDeck == null) {
             serverDeck = new shared.model.player.DevCardList();
             serverDeck.setMonument(5);
-            serverDeck.setMonopoly(5);
-            serverDeck.setRoad_building(5);
-            serverDeck.setSoldier(5);
-            serverDeck.setYear_of_plenty(5);
+            serverDeck.setMonopoly(2);
+            serverDeck.setRoad_building(2);
+            serverDeck.setSoldier(14);
+            serverDeck.setYear_of_plenty(2);
         }
 
         int monopoly = serverDeck.getMonopoly();
