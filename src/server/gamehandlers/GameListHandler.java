@@ -24,11 +24,12 @@ public class GameListHandler extends AbstractGameHandler {
 		// TODO Auto-generated method stub
 		if(checkCookie(exchange, server)) {
 			exchange.getResponseHeaders().set("Content-type","application/text");
-			List<Game> games=server.getGameList();
-			Gson gson=new Gson();
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+			Game[] games =  server.getGameList().toArray(new 
+					shared.communication.fromServer.games.Game[server.getGameList().size()]);
+			Gson gson=new Gson();	
 			OutputStreamWriter output=new OutputStreamWriter(exchange.getResponseBody());
 			output.write(gson.toJson(games));
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			exchange.getResponseBody().close();
 			exchange.close();
 		}

@@ -57,9 +57,11 @@ public class JoinHandler extends AbstractGameHandler{
 			output.write(sb.toString());
 			output.flush();
 			exchange.getResponseBody().close();
+			exchange.close();
 		}catch(Exception e){
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_FORBIDDEN, -1);
 			exchange.getResponseBody().close();
+			exchange.close();
 		}
 	}
 	
