@@ -22,6 +22,7 @@ public class DevCardList
 	 * @param soldier
 	 * @param year_of_plenty
 	 */
+	public DevCardList(){};
 	
 	/**
 	 * Constuctor
