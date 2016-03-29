@@ -28,7 +28,7 @@ public abstract class AbstractGameHandler implements HttpHandler {
 		String decodedCookie;
 		try {
 			decodedCookie = URLDecoder.decode(encodedCookie, "UTF-8");
-			decodedCookie = decodedCookie.substring(10);
+			decodedCookie = decodedCookie.substring(11);
 			System.out.println(decodedCookie);
 			Gson gson=new Gson();
 			Credentials user=gson.fromJson(decodedCookie, Credentials.class);
