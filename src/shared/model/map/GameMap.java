@@ -897,7 +897,7 @@ public class GameMap
 	{
 		HexType[] hex_types = {
 				HexType.BRICK, HexType.BRICK,HexType.BRICK,
-				HexType.WOOD,HexType.WOOD,HexType.WOOD,
+				HexType.WOOD,HexType.WOOD,HexType.WOOD, HexType.WOOD,
 				HexType.ORE,HexType.ORE,HexType.ORE,
 				HexType.WHEAT,HexType.WHEAT,HexType.WHEAT,HexType.WHEAT,
 				HexType.DESERT,
