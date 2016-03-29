@@ -12,7 +12,6 @@ import client.communication.IServer;
 import server.facade.User;
 import server.gamehandlers.AbstractGameHandler;
 
-import shared.communication.toServer.user.Credentials;
 
 public abstract class AbstractMoveHandler extends AbstractGameHandler implements HttpHandler {
 	public AbstractMoveHandler(IServer facade)
@@ -29,7 +28,6 @@ public abstract class AbstractMoveHandler extends AbstractGameHandler implements
 		String encodedCookie=cookies.get(0);
 		String decodedCookie=URLDecoder.decode(encodedCookie, "UTF-8");
 		decodedCookie = decodedCookie.substring(11);
-		System.out.println(decodedCookie);
 		int locationOfSemicolon = decodedCookie.indexOf(';');
 		String userCookie = decodedCookie.substring(0,locationOfSemicolon);
 		String gameCookie = decodedCookie.substring(locationOfSemicolon+1);
