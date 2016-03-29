@@ -49,7 +49,7 @@ public class LoginHandler extends AbstractMoveHandler{
 			exchange.getResponseHeaders().add("Set-cookie",cookie);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(exchange.getResponseBody());
-			output.write(sb.toString());
+			output.write("Success");
 			output.flush();
 			exchange.getResponseBody().close();
 			exchange.close();

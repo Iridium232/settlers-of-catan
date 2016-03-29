@@ -62,7 +62,6 @@ public class RegisterHandler extends AbstractMoveHandler {
 			output.write("Success");
 			output.close();
 			exchange.getResponseBody().close();
-			exchange.close();
 		}
 	}
 

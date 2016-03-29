@@ -876,4 +876,5 @@ public class Game
         if (player.getColor().equals("white")) return CatanColor.WHITE;
         return CatanColor.BROWN;
     }
+
 }

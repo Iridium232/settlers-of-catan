@@ -31,6 +31,10 @@ import shared.model.player.ResourceMultiSet;
 public class ServerFacade implements IServer
 {
     private static int nextGameID = 0;
+
+    public static int getNextGameID() {
+        return nextGameID;
+    }
 	
 	private int commanding_player_index;
 	private int game_index = 0;
@@ -162,7 +166,7 @@ public class ServerFacade implements IServer
 	{
 		try 
 		{
-			User joiner = users.get(id);
+			User joiner = users.get(indexOfGameID(id));
 			games.get(game_index).addPlayer(joiner.getName(), color, id);
 		} 
 		catch (Exception e) 
@@ -1160,4 +1164,13 @@ public class ServerFacade implements IServer
 	{
 		return games.get(gameID);
 	}
+
+    private int indexOfGameID(int id) {
+        for (int i = 0; i < games.size(); i++) {
+            if (games.get(i).getModel().getGameinfo().getId() == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

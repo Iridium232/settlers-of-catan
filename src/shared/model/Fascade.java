@@ -3,9 +3,11 @@ package shared.model;
 import client.catan.GameStatePanel;
 import client.communication.IServer;
 import client.control.IObserver;
+import client.data.GameInfo;
 import client.map.IMapController;
 import org.json.Cookie;
 
+import server.facade.ServerFacade;
 import shared.communication.EdgeLocation;
 import shared.communication.ResourceList;
 import shared.communication.fromServer.game.VertexLocation;
@@ -1329,6 +1331,10 @@ public class Fascade
         if (game_model == null) {
             game_model = new Game();
         }
+        GameInfo info = new GameInfo();
+        info.setId(ServerFacade.getNextGameID());
+        info.setTitle(name);
+        game_model.setGameinfo(info);
 		game_model.buildNewGame(name, randomTiles, randomNumbers, randomPorts);
 	}
 
