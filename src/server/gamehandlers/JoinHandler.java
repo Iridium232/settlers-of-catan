@@ -56,7 +56,7 @@ public class JoinHandler extends AbstractGameHandler{
 			exchange.getResponseHeaders().add("Set-cookie",cookie);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(exchange.getResponseBody());
-			output.write(sb.toString());
+			output.write(result);
 			output.flush();
 			exchange.getResponseBody().close();
 			exchange.close();
