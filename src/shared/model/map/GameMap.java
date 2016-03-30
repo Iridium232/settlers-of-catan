@@ -722,31 +722,31 @@ public class GameMap
 				type == HexType.DESERT ? null : this.getNextNumberChit(randomNumbers)));
 		
 		//TODO Ports
-		Port new_port = makePort(getNextPortType(randomPorts),1,2,EdgeDirection.South);
+		Port new_port = makePort(getNextPortType(randomPorts),1,2,EdgeDirection.North);
 		this.addPort(new_port);
 		
-		new_port = makePort(getNextPortType(randomPorts),0,-3,EdgeDirection.North);
+		new_port = makePort(getNextPortType(randomPorts),0,-3,EdgeDirection.South);
 		this.addPort(new_port);
 		
-		new_port = makePort(getNextPortType(randomPorts),-1,3,EdgeDirection.South);
+		new_port = makePort(getNextPortType(randomPorts),-1,3,EdgeDirection.North);
 		this.addPort(new_port);
 		
-		new_port = makePort(getNextPortType(randomPorts),-3,3,EdgeDirection.South);
+		new_port = makePort(getNextPortType(randomPorts),-3,3,EdgeDirection.NorthEast);
 		this.addPort(new_port);
 		
-		new_port = makePort(getNextPortType(randomPorts),2,-3,EdgeDirection.South);
+		new_port = makePort(getNextPortType(randomPorts),2,-3,EdgeDirection.SouthWest);
 		this.addPort(new_port);
 		
-		new_port = makePort(getNextPortType(randomPorts),3,0,EdgeDirection.South);
+		new_port = makePort(getNextPortType(randomPorts),3,0,EdgeDirection.NorthWest);
 		this.addPort(new_port);
 		
-		new_port = makePort(getNextPortType(randomPorts),3,-2,EdgeDirection.South);
+		new_port = makePort(getNextPortType(randomPorts),3,-2,EdgeDirection.SouthWest);
 		this.addPort(new_port);
 		
-		new_port = makePort(getNextPortType(randomPorts),-3,1,EdgeDirection.South);
+		new_port = makePort(getNextPortType(randomPorts),-3,1,EdgeDirection.SouthEast);
 		this.addPort(new_port);
 		
-		new_port = makePort(getNextPortType(randomPorts),-2,3,EdgeDirection.South);
+		new_port = makePort(getNextPortType(randomPorts),-2,-1,EdgeDirection.SouthEast);
 		this.addPort(new_port);
 	}
 
