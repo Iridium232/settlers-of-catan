@@ -23,7 +23,7 @@ public abstract class AbstractMoveHandler extends AbstractGameHandler implements
 		int gameID=0;
 		List<String> cookies=exchange.getRequestHeaders().get("Cookie");
 		if(cookies.size()!=1){
-			
+			return -1;
 		}
 		String encodedCookie=cookies.get(0);
 		String decodedCookie=URLDecoder.decode(encodedCookie, "UTF-8");
@@ -35,6 +35,7 @@ public abstract class AbstractMoveHandler extends AbstractGameHandler implements
 		User user=gson.fromJson(userCookie, User.class);
 		if(server.login(user.getName(), user.getPassword())==null) return -1;
 		gameCookie=gameCookie.substring(gameCookie.indexOf('=')+1);
+		if(server.getGameModelByID(gameID)==null) return -1;
 		//compare model number
 		gameID=Integer.parseInt(gameCookie);
 		return gameID;

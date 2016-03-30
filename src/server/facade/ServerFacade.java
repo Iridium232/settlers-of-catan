@@ -50,7 +50,7 @@ public class ServerFacade implements IServer
         register("Sam","sam");
         register("Brooke","brooke");
         register("Pete","pete");
-        register("Mark","Mark");
+        register("Mark","mark");
         
     }
 
@@ -272,7 +272,7 @@ public class ServerFacade implements IServer
 	{
 		try 
 		{
-			games.get(game_index).sendChat(commanding_player_index, message);
+			games.get(game_index).sendChat(playerIndex, message);
 		} 
 		catch (Exception e) 
 		{
@@ -765,9 +765,11 @@ public class ServerFacade implements IServer
 		{
 			Fascade game=games.get(params.getId());
 			for(shared.communication.fromServer.games.Player p:game.getPlayers()){
-				if(p.getId()==playerID){
-					return params.getId();
-				} 
+				if(p.getName()!=null){
+					if(p.getId()==playerID){
+						return params.getId();
+					} 
+				}
 			}
 			User currentUser=users.get(playerID);
 			game.addPlayer(currentUser.getName(),CatanColor.valueOf(params.getColor().toUpperCase()),playerID);
