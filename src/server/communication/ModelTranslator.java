@@ -245,6 +245,9 @@ public class ModelTranslator {
 
         for (shared.model.ports.Port port : serverPorts) {
             String resource = resourceTypeToString(port.getResource());
+            if (resource.equals("misc")) {
+                resource = null;
+            }
             HexLocation location = port.getLocation();
             String direction = edgeDirectionToString(edgeDirectionFromVertices(port.getVertex1(), port.getVertex2()));
             int ratio = port.getRatio();
