@@ -135,72 +135,54 @@
 		</javac>
 	</target>
 	
-	<target name="package" depends="compile" description="package the jar file" >
-		<mkdir dir="${java.dist}/lib"/>
-		<copy todir="${java.dist}/lib">
-			<fileset dir="${java.lib}">
-				<include name="**"/>
-			</fileset>
-		</copy>
-		<mkdir dir="${java.dist}/images"/>
-		<copy todir="${java.dist}/images">
-			<fileset dir="${java.images}">
-				<include name="**"/>
-			</fileset>
-		</copy>
-		
-		<!--
-		Package of jars idea from http://stackoverflow.com/questions/10929438/create-jar-with-custom-manifest-with-multiple-libraries-in-classpath
-		-->
-        <jar jarfile="${external}">
-            <zipgroupfileset dir="lib/">
-                <include name="**/*.jar"/>
-            </zipgroupfileset>
-        </jar>
-		
- 		<jar jarfile="${java.dist}/catan-client.jar" basedir="${java.build}">
-			<manifest>
-				<attribute name="Main-Class" value="client.main.Catan"/>
-				<attribute name="Class-Path" 
-					value="${external}"/>
-			</manifest>
-		</jar>
-		
+	 <target name="package" depends="compile" description="package the jar file" >
+	        <mkdir dir="${java.dist}/lib"/>
+	        <copy todir="${java.dist}/lib">
+	            <fileset dir="${java.lib}">
+	                <include name="**"/>
+	            </fileset>
+	        </copy>
+	        <mkdir dir="${java.dist}/images"/>
+	        <copy todir="${java.dist}/images">
+	            <fileset dir="${java.images}">
+	                <include name="**"/>
+	            </fileset>
+	        </copy>
+	        
+	        <!--
+	        Package of jars idea from http://stackoverflow.com/questions/10929438/create-jar-with-custom-manifest-with-multiple-libraries-in-classpath
+	        -->
+	        <jar jarfile="${external}">
+	            <zipgroupfileset dir="lib/">
+	                <include name="**/*.jar"/>
+	            </zipgroupfileset>
+	        </jar>
+	        
+	         <jar jarfile="${java.dist}/catan-client.jar" basedir="${java.build}">
+	            <manifest>
+	                <attribute name="Main-Class" value="client.main.Catan"/>
+	                <attribute name="Class-Path" 
+	                    value="${external}"/>
+	            </manifest>
+	        </jar>
+	        
 
-		
- 		<jar jarfile="${java.dist}/catan-tests.jar" basedir="${java.build}">
-			<manifest>
-				<attribute name="Main-Class" value="test.UnitTest"/>
-				<attribute name="Class-Path" 
-					value="${external}"/>
-			</manifest>
-		</jar>
- 		<jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
-			<manifest>
-				<attribute name="Main-Class" value="PUT THE NAME OF YOUR SERVER'S MAIN CLASS HERE"/>
-				<attribute name="Class-Path" 
-					value="lib/gson-2.2.4.jar" />
-			</manifest>
-		</jar>
-	</target>
-	
-	<target name="our-client" depends="package" description="compiles, packages, and runs the student client">
-		<java jar="${java.dist}/catan-client.jar" dir="${java.dist}" fork="yes">
-			<sysproperty key="com.sun.management.jmxremote" value=""/>
-			<assertions>
-				<enable/>
-			</assertions>
-		</java>
-	</target>
- 	
-	<target name="our-server" depends="package" description="compiles, packages, and runs the student server">
-		<java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
-			<sysproperty key="com.sun.management.jmxremote" value=""/>
-			<assertions>
-				<enable/>
-			</assertions>
-		</java>
-	</target>
+	        
+	         <jar jarfile="${java.dist}/catan-tests.jar" basedir="${java.build}">
+	            <manifest>
+	                <attribute name="Main-Class" value="test.UnitTest"/>
+	                <attribute name="Class-Path" 
+	                    value="${external}"/>
+	            </manifest>
+	        </jar>
+	         <jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
+	            <manifest>
+	                <attribute name="Main-Class" value="server.main.Server"/>
+	                <attribute name="Class-Path" 
+	                    value="${external}" />
+	            </manifest>
+	        </jar>
+	    </target>
     
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
         <zip destfile="./tester.zip" basedir="${java.dist}" />

@@ -37,13 +37,12 @@ public class BuildSettlementHandler extends AbstractMoveHandler {
 		exchange.getResponseHeaders().set("Content-type","application/json");
 		try
 		{
-			if(checkCookie(exchange) == -1)
+			int gameID=checkCookie(exchange);
+			if(gameID== -1)
 			{
 				System.err.print("\nInvalid Cookie. Thowing Error");
 				throw new Exception("INVALID COOKIE!");
 			}
-			int gameID = 0;
-			//gameID = WHICH????
 			Gson gson=new Gson();
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
@@ -51,6 +50,7 @@ public class BuildSettlementHandler extends AbstractMoveHandler {
 			server.commands.BuildSettlement command = new server.commands.BuildSettlement(server);
 			command.setParams(move);
 			command.execute();
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 				exchange.getResponseBody());
 			output.write(server.getModel(gameID));

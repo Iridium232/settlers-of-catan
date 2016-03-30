@@ -12,7 +12,6 @@ import client.communication.IServer;
 import server.facade.User;
 import server.gamehandlers.AbstractGameHandler;
 
-import shared.communication.toServer.user.Credentials;
 
 public abstract class AbstractMoveHandler extends AbstractGameHandler implements HttpHandler {
 	public AbstractMoveHandler(IServer facade)
@@ -24,12 +23,11 @@ public abstract class AbstractMoveHandler extends AbstractGameHandler implements
 		int gameID=0;
 		List<String> cookies=exchange.getRequestHeaders().get("Cookie");
 		if(cookies.size()!=1){
-			
+			return -1;
 		}
 		String encodedCookie=cookies.get(0);
 		String decodedCookie=URLDecoder.decode(encodedCookie, "UTF-8");
 		decodedCookie = decodedCookie.substring(11);
-		System.out.println(decodedCookie);
 		int locationOfSemicolon = decodedCookie.indexOf(';');
 		String userCookie = decodedCookie.substring(0,locationOfSemicolon);
 		String gameCookie = decodedCookie.substring(locationOfSemicolon+1);
@@ -37,6 +35,7 @@ public abstract class AbstractMoveHandler extends AbstractGameHandler implements
 		User user=gson.fromJson(userCookie, User.class);
 		if(server.login(user.getName(), user.getPassword())==null) return -1;
 		gameCookie=gameCookie.substring(gameCookie.indexOf('=')+1);
+		if(server.getGameModelByID(gameID)==null) return -1;
 		//compare model number
 		gameID=Integer.parseInt(gameCookie);
 		return gameID;

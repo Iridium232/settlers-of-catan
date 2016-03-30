@@ -297,6 +297,14 @@ public class GameMap
 	{
 		hexes[hex.getLocation().getX() + GameMap.HEXINDEXOFFSET]
 				[hex.getLocation().getY() + GameMap.HEXINDEXOFFSET] = hex;
+		if(hex.getType()==HexType.DESERT){
+			try {
+				this.moveRobber(hex.getLocation());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public TerrainHex getHexAt(int x, int y)
@@ -740,7 +748,6 @@ public class GameMap
 		
 		new_port = makePort(getNextPortType(randomPorts),-2,3,EdgeDirection.South);
 		this.addPort(new_port);
-		
 	}
 
 	/**

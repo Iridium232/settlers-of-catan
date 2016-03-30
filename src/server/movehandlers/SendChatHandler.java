@@ -34,13 +34,12 @@ public class SendChatHandler extends AbstractMoveHandler {
 		exchange.getResponseHeaders().set("Content-type","application/json");
 		try
 		{
-			if(checkCookie(exchange) == -1)
+			int gameID=checkCookie(exchange);
+			if(gameID== -1)
 			{
 				System.err.print("\nInvalid Cookie. Thowing Error");
 				throw new Exception("INVALID COOKIE!");
 			}
-			int gameID = 0;
-			//gameID = WHICH????
 			Gson gson=new Gson();
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
@@ -48,9 +47,11 @@ public class SendChatHandler extends AbstractMoveHandler {
 			server.commands.SendChat command = new server.commands.SendChat(server);
 			command.setParams(move);
 			command.execute();
+			String result = server.getModel(gameID);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());
-			output.write(server.getModel(gameID));
+			output.write(result);
 			output.flush();
 			exchange.getResponseBody().close();
 			exchange.close();
