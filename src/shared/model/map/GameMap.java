@@ -89,22 +89,22 @@ public class GameMap
 			
 			if(neighbors[0] != null && neighbors[0].equals(location))
 			{
-				System.out.println("added a building");
+				//System.out.println("added a building");
 				builds.add(building);
 			}
 			if(neighbors[1] != null && neighbors[1].equals(location))
 			{
-				System.out.println("added a building");
+				//System.out.println("added a building");
 				builds.add(building);
 			}
 			if(neighbors[2] != null && neighbors[2].equals(location))
 			{
-				System.out.println("added a building");
+				//System.out.println("added a building");
 				builds.add(building);
 			}
 	
 		}
-		System.out.println("Found " + builds.size() + " buildings.");
+		//System.out.println("Found " + builds.size() + " buildings.");
 		return builds.toArray(new Building[builds.size()]);
 	}
 

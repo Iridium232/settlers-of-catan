@@ -548,6 +548,7 @@ public class Game
 		//rob happens
 		if(victimIndex == -1)
 		{
+			turn_tracker.setState(new PlayingState());
 			return;
 		}
 		
@@ -657,6 +658,7 @@ public class Game
 		if(!accept)
 		{
 			this.trade_offer = null;
+			turn_tracker.setState(new PlayingState());
 		}
 		else
 		{
@@ -728,12 +730,14 @@ public class Game
 	 */
 	public void applyDiceRoll(int result) throws Exception
 	{
+		log(turn_tracker.getActive_player(),Action.ROLL,result);
 		if(result != 7)
 		{
 			TerrainHex[] lucky_spots = map.getHexesByNumber(result);
 			for(int i = 0; i < 2; i++)
 			{
 				TerrainHex lucky_spot = lucky_spots[i];
+				if(i == 1 && lucky_spots[i] == null)continue;
 				Building[] buildings = map.getAdjoiningPlayers(lucky_spot.getLocation());
 				for(Building building : buildings)
 				{
@@ -765,7 +769,7 @@ public class Game
 			return;
 		}
 		version++;
-		log(turn_tracker.getActive_player(),Action.ROLL,result);
+		
 	}
 	
 	
