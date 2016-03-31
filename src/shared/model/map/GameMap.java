@@ -119,8 +119,21 @@ public class GameMap
 	 */
 	public TerrainHex[] getHexesByNumber(int number) throws Exception
 	{
-		return null;
-		//TODO
+		int i = 0;
+		TerrainHex[] result = new TerrainHex[2];
+		for (TerrainHex[] hex_row : this.hexes)
+		{
+			for (TerrainHex hex : hex_row)
+			{
+				if(hex == null || hex.getNumber() == null)continue;
+				if (hex.getNumber().getValue() == number)
+				{
+					result[i] = hex;
+					i++;
+				}
+			}
+		}
+		return result;
 	}
 	
 	/**

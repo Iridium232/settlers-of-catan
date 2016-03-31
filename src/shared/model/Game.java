@@ -521,7 +521,7 @@ public class Game
 	public void finishTurn(int commanding_player_index) throws Exception 
 	{
 		this.turn_tracker.advanceActivePlayer(commanding_player_index);
-		turn_tracker.setState(new RollingState());
+		//turn_tracker.setState(new RollingState());
 		version++;
 		log(commanding_player_index,Action.FINISH,-1);
 	}

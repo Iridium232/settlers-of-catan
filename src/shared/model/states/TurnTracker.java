@@ -64,13 +64,17 @@ public class TurnTracker
 			if(active_player == 0)
 			{
 				second_round = false;
-				this.setState(new PlayingState());
+				this.setState(new RollingState());
 				return;
 			}
 			active_player--;
 			return;
 		}
 		active_player = ++active_player % 4;
+		if(!first_round && ! second_round)
+		{
+			this.setState(new RollingState());
+		}
 	}
 	
 	/**
