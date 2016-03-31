@@ -367,6 +367,7 @@ public class Game
 		players[commanding_player_index].setMonuments(
                 players[commanding_player_index].getMonuments() + 1);
 		version++;
+		log(commanding_player_index,Action.MONUMENT,-1);
 	}
 
 	/**
@@ -402,6 +403,7 @@ public class Game
 		}
 		players[commanding_player_index].getResource(resource, total_found);
 		version++;
+		log(commanding_player_index,Action.MONOPOLY,-1);
 	}
 
 	/**
@@ -418,6 +420,7 @@ public class Game
 		this.buildRoadAt(commanding_player_index, one, true);
 		this.buildRoadAt(commanding_player_index, two, true);
 		version++;
+		log(commanding_player_index,Action.ROAD,-1);
 	}
 
 	/**
@@ -440,6 +443,7 @@ public class Game
 		this.resource_bank.pay(one, 1);
 		this.resource_bank.pay(two, 1);
 		version++;
+		log(commanding_player_index,Action.YEAROFPLENTY,-1);
 	}
 	
 	/**
@@ -502,7 +506,7 @@ public class Game
 		
 		
 		version++;
-		
+		log(commanding_player_index,Action.SOLDIER,victimIndex);
 	}
 
 	/**
@@ -517,8 +521,9 @@ public class Game
 	public void finishTurn(int commanding_player_index) throws Exception 
 	{
 		this.turn_tracker.advanceActivePlayer(commanding_player_index);
-		//turn_tracker.setState(new RollingState());
+		turn_tracker.setState(new RollingState());
 		version++;
+		log(commanding_player_index,Action.FINISH,-1);
 	}
 	
 	
@@ -565,6 +570,7 @@ public class Game
 		
 		turn_tracker.getState().finishPhase(turn_tracker, commanding_player_index);
 		version++;
+		log(commanding_player_index,Action.ROB,victimIndex);
 	}
 
 	public void maritimeTrade(int commanding_player_index, int ratio,
@@ -629,6 +635,7 @@ public class Game
 		
 		players[commanding_player_index].placeRoad();
 		version++;
+		log(commanding_player_index,Action.ROAD,-1);
 	}
 
 	/**
@@ -665,7 +672,6 @@ public class Game
 		turn_tracker.setState(new PlayingState());
 		version++;
 		return;
-		
 	}
 
 	/**
@@ -709,6 +715,7 @@ public class Game
 		Player new_player = new Player(color.name(), name, player_slot, playerID);
 		players[player_slot] = new_player;
 		version++;
+		log(player_slot,Action.JOIN,-1);
 	}
 	
 	/**
@@ -758,6 +765,7 @@ public class Game
 			return;
 		}
 		version++;
+		log(turn_tracker.getActive_player(),Action.ROLL,result);
 	}
 	
 	
@@ -822,6 +830,7 @@ public class Game
                 place, player_index));
 		players[player_index].setSettlements(players[player_index].getSettlements() + 1);
 		version++;
+		log(player_index,Action.CITY,-1);
 	}
 
 	/**
@@ -842,8 +851,93 @@ public class Game
 		players[player_index].placeSettlement();
 		map.addBuilding(new Settlement(player_index, place, players[player_index].getColor()));
 		version++;
+		log(player_index,Action.SETTLEMENT,-1);
+	}
+	
+	enum Action 
+	{
+		ROAD,SETTLEMENT,CITY,ROB,FINISH,BUYDEV,ROLL,MONOPOLY,YEAROFPLENTY,SOLDIER,MONUMENT,JOIN
+	};
+	
+	
+	/**
+	 * Hidden function to log actions
+	 * @pre none
+	 * @post there is a log of that action
+	 * @param player_index
+	 * @param action
+	 * @param roll_or_victim
+	 */
+	private void log(int player_index, Action action, int roll_or_victim)
+	{
+		if(log == null)
+		{
+			log = new MessageList();
+		}
+		String player = players[player_index].getName();
+		String message = player + " ";
+		switch(action)
+		{
+		case BUYDEV:
+			message += "bought a development card.";
+			break;
+		case CITY:
+			message += "built a city.";
+			break;
+		case FINISH:
+			message += "ended his or her turn.";
+			break;
+		case MONOPOLY:
+			message += "played the monopoly card.";
+			break;
+		case MONUMENT:
+			message += "played a monument card.";
+			break;
+		case ROAD:
+			message += "built a road.";
+			break;
+		case ROB:
+			if(roll_or_victim < 0)
+			{
+				message += "did not rob anyone.";
+				break;
+			}
+			message += "robbed " + players[roll_or_victim].getName() + ".";
+			break;
+		case ROLL:
+			message += "rolled a " + Integer.toString(roll_or_victim) + ".";
+			break;
+		case SETTLEMENT:
+			message += "placed a settlement.";
+			break;
+		case SOLDIER:
+			if(roll_or_victim < 0)
+			{
+				message += "played the soldier but did not rob anyone.";
+				break;
+			}
+			message += "played the soldier and robbed " + 
+					players[roll_or_victim].getName() + ".";
+			break;
+		case YEAROFPLENTY:
+			message += "played the year of plenty card.";
+			break;
+		case JOIN:
+			message += "joined the game.";
+			break;
+		default:
+			return;
+		}
+		this.log.addMessage(new MessageLine(players[player_index].getName(),message));
 	}
 
+	/**
+	 * get EdgeLocation from String
+	 * @pre none
+	 * @post translates edge locations
+	 * @param str
+	 * @return
+	 */
     private EdgeDirection edgeLocationFromStr(String str) {
         if (str.toLowerCase().equals("nw") || str.toLowerCase().equals("northwest")) {
             return EdgeDirection.NorthWest;
@@ -866,6 +960,14 @@ public class Game
         return null;
     }
 
+    /**
+     * Translates strings to catancolors
+     * @pre  none
+     * @post returns the catancolor that goes with the string
+     * 
+     * @param player
+     * @return
+     */
     private CatanColor getCatanColor(shared.model.player.Player player) {
         if (player.getColor().equals("red")) return CatanColor.RED;
         if (player.getColor().equals("orange")) return CatanColor.ORANGE;
