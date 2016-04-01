@@ -846,13 +846,15 @@ public class Game
 	 * @param place
 	 * @throws Exception
 	 */
-	public void buildSettlement(int player_index, VertexLocation place) throws Exception 
+	public void buildSettlement(int player_index, VertexLocation place, boolean free) throws Exception
 	{
-		players[player_index].pay(ResourceType.BRICK, 1);
-		players[player_index].pay(ResourceType.SHEEP, 1);
-		players[player_index].pay(ResourceType.WOOD, 1);
-		players[player_index].pay(ResourceType.WHEAT, 1);
-		players[player_index].placeSettlement();
+        if (!free) {
+            players[player_index].pay(ResourceType.BRICK, 1);
+            players[player_index].pay(ResourceType.SHEEP, 1);
+            players[player_index].pay(ResourceType.WOOD, 1);
+            players[player_index].pay(ResourceType.WHEAT, 1);
+        }
+        players[player_index].placeSettlement();
 		map.addBuilding(new Settlement(player_index, place, players[player_index].getColor()));
 		version++;
 		log(player_index,Action.SETTLEMENT,-1);

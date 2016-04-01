@@ -193,9 +193,9 @@ public class Fascade
 	 * @post a settlement is built by that player on the specified location
 	 * @post The player's resources are reduced by 1 food, 1 brick, 1 wood, and 1 wool
 	 */
-	public void buildSettlement(int player_index, VertexLocation place) throws Exception
+	public void buildSettlement(int player_index, VertexLocation place, boolean free) throws Exception
 	{
-		game_model.buildSettlement(player_index, place);
+		game_model.buildSettlement(player_index, place, free);
 
 	}
 	

@@ -396,7 +396,7 @@ public class ServerFacade implements IServer
 	{
 		try 
 		{
-			games.get(game_index).buildSettlement(commanding_player_index, place);
+			games.get(game_index).buildSettlement(commanding_player_index, place, free);
 		} 
 		catch (Exception e) 
 		{

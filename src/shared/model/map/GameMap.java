@@ -128,8 +128,11 @@ public class GameMap
 				if(hex == null || hex.getNumber() == null)continue;
 				if (hex.getNumber().getValue() == number)
 				{
-					result[i] = hex;
-					i++;
+					if (result[0] == null) {
+                        result[0] = hex;
+                    } else {
+                        result[1] = hex;
+                    }
 				}
 			}
 		}
