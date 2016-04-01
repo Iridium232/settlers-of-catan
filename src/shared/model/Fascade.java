@@ -137,26 +137,7 @@ public class Fascade
 		return player.canBuyDevCard() && (game_model.getTurnStatus(player_index) == TurnStatus.PLAYING);
 	}
 	
-	/**
-	 * Buy a development card 
-	 * @param player
-	 * 
-	 * @pre PlayerInfo can buy a development card (see previous function)
-	 * @post the player has a new development card.
-	 * @post The player's resources are reduced by 1 food and 1 ore and 1 wool
-	 */
-	public DevCardType buyDevelopmentCard(int player_index) throws Exception
-	{
-		if (!canBuyDevelopmentCard(player_index)) throw new ModelException();
-//		Player player = game_model.getPlayers()[player_index];
-//		BuyDevCard player_buy = player.player_buy_devcard;
-//		player_buy.buyDevCard();
-//		DevCardType devcard = buy_devcard.getDevCard();
-//		player_buy.giveDevCard(devcard);
-//		return devcard;
-		return null;
 
-	}
 	
 	/**
 	 * Can this player build a settlement here?
@@ -1369,6 +1350,19 @@ public class Fascade
 	public void setGameName(String name)
 	{
 		game_model.setName(name);
+	}
+	
+	/**
+	 * Buy a development card 
+	 * @param player
+	 * 
+	 * @pre PlayerInfo can buy a development card (see previous function)
+	 * @post the player has a new development card.
+	 * @post The player's resources are reduced by 1 food and 1 ore and 1 wool
+	 */
+	public void buyDevelopmentCard(int player_index) throws Exception
+	{
+		game_model.buyDevCard(player_index);
 	}
 	
 	public void playMonopoly(int commanding_player_index, ResourceType one) throws Exception 
