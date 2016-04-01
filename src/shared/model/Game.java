@@ -521,7 +521,9 @@ public class Game
 	public void finishTurn(int commanding_player_index) throws Exception 
 	{
 		this.turn_tracker.advanceActivePlayer(commanding_player_index);
-		//turn_tracker.setState(new RollingState());
+		Player player = players[commanding_player_index];
+		player.getOldDevCards().add(player.getNewDevCards());
+		player.setNewDevCards(new DevCardList());
 		version++;
 		log(commanding_player_index,Action.FINISH,-1);
 	}
@@ -602,6 +604,25 @@ public class Game
 		this.trade_offer = offer;
 		turn_tracker.setState(new PlayingState());
 		version++;
+	}
+	
+	/**
+	 * 
+	 * @pre none
+	 * @post  the player buys a dev card and adds it to his hand
+	 * 
+	 * @param player
+	 * @throws Exception 
+	 */
+	public void buyDevCard(int player) throws Exception
+	{
+		Player buyer = players[player];
+		buyer.pay(ResourceType.SHEEP, 1);
+		buyer.pay(ResourceType.ORE, 1);
+		buyer.pay(ResourceType.WHEAT, 1);
+		DevCardType type = development_bank.getRandomCard();
+		buyer.getOldDevCards().add(type, 1);
+		development_bank.play(type);
 	}
 
 	/**

@@ -1,5 +1,8 @@
 package shared.model.player;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import shared.definitions.DevCardType;
 
 /**
@@ -180,5 +183,89 @@ public class DevCardList
 			throw new Exception("ERROR: invalid dev card type");
 		}
 		throw new Exception("ERROR: This player cannot play that card.");
+	}
+
+	/**
+	 * adds this many of this card.
+	 * 
+	 * @pre none
+	 * @post this many of that card is added to the multiset.
+	 * @param type
+	 * @param i
+	 */
+	public void add(DevCardType type, int i) 
+	{
+		switch(type)
+		{
+		case MONOPOLY:
+			monopoly += i;
+			break;
+		case MONUMENT:
+			monument += i;
+			break;
+		case ROAD_BUILD:
+			road_building += i;
+			break;
+		case SOLDIER:
+			soldier += i;
+			break;
+		case YEAR_OF_PLENTY:
+			year_of_plenty += i;
+			break;
+		default:
+			break;
+		
+		}
+	}
+
+	/**
+	 * Draws a random card from this deck
+	 * 
+	 * @pre there are contents of this.
+	 * @post gives back a random card
+	 * @return
+	 */
+	public DevCardType getRandomCard() 
+	{
+		ArrayList<DevCardType> options = new ArrayList<DevCardType>();
+		for (int i = 0; i < monument; i++)
+		{
+			options.add(DevCardType.MONUMENT);
+		}
+		for (int i = 0; i < road_building; i++)
+		{
+			options.add(DevCardType.ROAD_BUILD);
+		}
+		for (int i = 0; i < year_of_plenty; i++)
+		{
+			options.add(DevCardType.YEAR_OF_PLENTY);
+		}
+		for (int i = 0; i < soldier; i++)
+		{
+			options.add(DevCardType.SOLDIER);
+		}
+		for (int i = 0; i < monopoly; i++)
+		{
+			options.add(DevCardType.MONOPOLY);
+		}
+		Random r = new Random(System.currentTimeMillis());
+		return options.get(r.nextInt(options.size()));
+	}
+
+	/**
+	 * the union of the two sets
+	 * 
+	 * @pre none
+	 * @post this many of that card is added to the multiset.
+	 * @param type
+	 * @param i
+	 */
+	public void add(DevCardList other) 
+	{
+		this.monopoly += other.getMonopoly();
+		this.monument += other.getMonument();
+		this.soldier += other.soldier;
+		this.year_of_plenty += other.getYear_of_plenty();
+		this.road_building += other.getRoad_building();
 	}
 }
