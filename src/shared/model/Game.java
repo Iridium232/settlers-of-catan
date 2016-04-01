@@ -672,19 +672,18 @@ public class Game
 	 */
 	public void replyToTrade(int commanding_player_index, boolean accept) throws Exception 
 	{
-		if(commanding_player_index != trade_offer.getSender())
+		if(commanding_player_index != trade_offer.getReciever())
 		{
 			throw new Exception("ERROR: this person is not part of the trade");
 		}
 		if(!accept)
 		{
-			this.trade_offer = null;
 			turn_tracker.setState(new PlayingState());
 		}
 		else
 		{
-			Player reciever = players[trade_offer.getReciever()];
-			Player sender =  players[trade_offer.getSender()];
+			Player sender = players[trade_offer.getReciever()];
+			Player reciever =  players[trade_offer.getSender()];
 			ResourceMultiSet sender_gives = trade_offer.getSender_gives();
 			ResourceMultiSet reciever_gives = trade_offer.getReciever_gives();
 			reciever.pay(reciever_gives);
@@ -692,6 +691,7 @@ public class Game
 			sender.pay(sender_gives);
 			sender.recieve(reciever_gives);
 		}
+        this.trade_offer = null;
 		turn_tracker.setState(new PlayingState());
 		version++;
 		return;
