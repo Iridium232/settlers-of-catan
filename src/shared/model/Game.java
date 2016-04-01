@@ -600,7 +600,7 @@ public class Game
 		TradeOffer offer = new TradeOffer(commanding_player_index, playerIndex);
 		offer.translateOffer(new ResourceMultiSet(offering));
 		this.trade_offer = offer;
-		turn_tracker.setState(new TradingState());
+		turn_tracker.setState(new PlayingState());
 		version++;
 	}
 
