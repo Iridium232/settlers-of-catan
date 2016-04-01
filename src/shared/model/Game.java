@@ -737,6 +737,10 @@ public class Game
 			for(int i = 0; i < 2; i++)
 			{
 				TerrainHex lucky_spot = lucky_spots[i];
+				if(this.map.getRobber().getLocation().equals(lucky_spot.getLocation()))
+				{
+					continue;
+				}
 				if(i == 1 && lucky_spots[i] == null)continue;
 				Building[] buildings = map.getAdjoiningPlayers(lucky_spot.getLocation());
 				for(Building building : buildings)
