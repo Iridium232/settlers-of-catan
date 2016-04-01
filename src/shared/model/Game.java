@@ -973,14 +973,15 @@ public class Game
      * @return
      */
     private CatanColor getCatanColor(shared.model.player.Player player) {
-        if (player.getColor().equals("red")) return CatanColor.RED;
-        if (player.getColor().equals("orange")) return CatanColor.ORANGE;
-        if (player.getColor().equals("yellow")) return CatanColor.YELLOW;
-        if (player.getColor().equals("blue")) return CatanColor.BLUE;
-        if (player.getColor().equals("green")) return CatanColor.GREEN;
-        if (player.getColor().equals("purple")) return CatanColor.PURPLE;
-        if (player.getColor().equals("puce")) return CatanColor.PUCE;
-        if (player.getColor().equals("white")) return CatanColor.WHITE;
+        String color = player.getColor().toLowerCase();
+        if (color.equals("red")) return CatanColor.RED;
+        if (color.equals("orange")) return CatanColor.ORANGE;
+        if (color.equals("yellow")) return CatanColor.YELLOW;
+        if (color.equals("blue")) return CatanColor.BLUE;
+        if (color.equals("green")) return CatanColor.GREEN;
+        if (color.equals("purple")) return CatanColor.PURPLE;
+        if (color.equals("puce")) return CatanColor.PUCE;
+        if (color.equals("white")) return CatanColor.WHITE;
         return CatanColor.BROWN;
     }
 
