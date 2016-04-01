@@ -600,7 +600,7 @@ public class Game
 		TradeOffer offer = new TradeOffer(commanding_player_index, playerIndex);
 		offer.translateOffer(new ResourceMultiSet(offering));
 		this.trade_offer = offer;
-		turn_tracker.setState(new TradingState());
+		turn_tracker.setState(new PlayingState());
 		version++;
 	}
 
@@ -651,19 +651,18 @@ public class Game
 	 */
 	public void replyToTrade(int commanding_player_index, boolean accept) throws Exception 
 	{
-		if(commanding_player_index != trade_offer.getSender())
+		if(commanding_player_index != trade_offer.getReciever())
 		{
 			throw new Exception("ERROR: this person is not part of the trade");
 		}
 		if(!accept)
 		{
-			this.trade_offer = null;
 			turn_tracker.setState(new PlayingState());
 		}
 		else
 		{
-			Player reciever = players[trade_offer.getReciever()];
-			Player sender =  players[trade_offer.getSender()];
+			Player sender = players[trade_offer.getReciever()];
+			Player reciever =  players[trade_offer.getSender()];
 			ResourceMultiSet sender_gives = trade_offer.getSender_gives();
 			ResourceMultiSet reciever_gives = trade_offer.getReciever_gives();
 			reciever.pay(reciever_gives);
@@ -671,6 +670,7 @@ public class Game
 			sender.pay(sender_gives);
 			sender.recieve(reciever_gives);
 		}
+        this.trade_offer = null;
 		turn_tracker.setState(new PlayingState());
 		version++;
 		return;
@@ -737,6 +737,10 @@ public class Game
 			for(int i = 0; i < 2; i++)
 			{
 				TerrainHex lucky_spot = lucky_spots[i];
+				if(this.map.getRobber().getLocation().equals(lucky_spot.getLocation()))
+				{
+					continue;
+				}
 				if(i == 1 && lucky_spots[i] == null)continue;
 				Building[] buildings = map.getAdjoiningPlayers(lucky_spot.getLocation());
 				for(Building building : buildings)
