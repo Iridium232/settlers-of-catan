@@ -421,6 +421,7 @@ public class Game
 		this.buildRoadAt(commanding_player_index, two, true);
 		version++;
 		log(commanding_player_index,Action.ROAD,-1);
+		calculateLongestRoad(commanding_player_index);
 	}
 
 	/**
@@ -463,7 +464,9 @@ public class Game
 		//move robber
 		this.map.moveRobber(place);
 		//rob happens
-		players[commanding_player_index].setSoldiers(players[commanding_player_index].getSoldiers()+ 1);
+		Player current=players[commanding_player_index];
+		current.setSoldiers(current.getSoldiers()+ 1);
+		current.playDevCard(DevCardType.SOLDIER);
 		for (Player player : players)
 		{
 			if(player.getPlayerIndex()==commanding_player_index)
@@ -504,9 +507,9 @@ public class Game
 		players[commanding_player_index].getResource(resource, 1);
 		players[victimIndex].pay(resource, 1);
 		
-		
 		version++;
 		log(commanding_player_index,Action.SOLDIER,victimIndex);
+		current.setPlayedDevCard(true);
 	}
 
 	/**
@@ -524,6 +527,7 @@ public class Game
 		Player player = players[commanding_player_index];
 		player.getOldDevCards().add(player.getNewDevCards());
 		player.setNewDevCards(new DevCardList());
+		player.setPlayedDevCard(false);
 		version++;
 		log(commanding_player_index,Action.FINISH,-1);
 	}
@@ -621,10 +625,23 @@ public class Game
 		buyer.pay(ResourceType.ORE, 1);
 		buyer.pay(ResourceType.WHEAT, 1);
 		DevCardType type = development_bank.getRandomCard();
-		buyer.getOldDevCards().add(type, 1);
+		if(type==DevCardType.MONUMENT){
+			buyer.getOldDevCards().add(type,1);
+		}else{
+			buyer.getNewDevCards().add(type, 1);
+		}
 		development_bank.play(type);
 	}
-
+	
+	public void calculateLongestRoad(int commanding_player_index){
+		int roads=15-players[commanding_player_index].getRoads();
+		if(roads>=5){
+			int longest=15-players[turn_tracker.getLongest_road_player()].getRoads();
+			if(roads>longest){
+				turn_tracker.setLongest_road_player(commanding_player_index);
+			}
+		}
+	}
 	/**
 	 * 
 	 * Build a road at that spot
@@ -658,6 +675,7 @@ public class Game
 		players[commanding_player_index].placeRoad();
 		version++;
 		log(commanding_player_index,Action.ROAD,-1);
+		calculateLongestRoad(commanding_player_index);
 	}
 
 	/**
