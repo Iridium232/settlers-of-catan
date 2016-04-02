@@ -636,6 +636,9 @@ public class Game
 	public void calculateLongestRoad(int commanding_player_index){
 		int roads=15-players[commanding_player_index].getRoads();
 		if(roads>=5){
+			if(turn_tracker.getLongest_road_player()==-1){
+				turn_tracker.setLongest_road_player(commanding_player_index);
+			}
 			int longest=15-players[turn_tracker.getLongest_road_player()].getRoads();
 			if(roads>longest){
 				turn_tracker.setLongest_road_player(commanding_player_index);
