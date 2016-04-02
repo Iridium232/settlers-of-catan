@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import server.commands.AcceptTradeCommand;
 import server.facade.ServerFacade;
-import shared.communication.EdgeLocation;
 import shared.communication.ResourceList;
 import shared.communication.toServer.moves.AcceptTrade;
 import shared.locations.EdgeDirection;
@@ -17,6 +16,7 @@ import shared.model.Game;
 import shared.model.map.Vertex;
 import shared.model.map.buildings.Building;
 import shared.model.map.buildings.City;
+import shared.model.map.buildings.Settlement;
 
 import static org.junit.Assert.*;
 
@@ -52,11 +52,12 @@ public class CommandsTest {
 
     @Test
     public void testOfferTradeCommand() {
-        assertTrue(true);
-//        shared.communication.fromServer.game.TradeOffer tradeOffer =
-//                new shared.communication.fromServer.game.TradeOffer(1,0,new ResourceList(1,-1,0,0,0));
-//        server.commands.OfferTrade command = new server.commands.OfferTrade(serverFacade);
-//        assertNotNull(model.getTrade_offer());
+        shared.communication.toServer.moves.OfferTrade tradeOffer =
+                new shared.communication.toServer.moves.OfferTrade(0,new ResourceList(1,-1,0,0,0), 1);
+        server.commands.OfferTrade command = new server.commands.OfferTrade(serverFacade);
+        command.setParams(tradeOffer);
+        command.execute();
+        assertNotNull(model.getTrade_offer());
     }
 
     @Test
@@ -66,8 +67,8 @@ public class CommandsTest {
         int receiverOldBrick = model.getPlayers()[0].getResources().getBrick();
         int receiverOldOre = model.getPlayers()[0].getResources().getOre();
         gameFascade.offerTrade(0, new ResourceList(1,-1,0,0,0), 0);
-        gameFascade.getModel().getTrade_offer().setReciever(0);
-        gameFascade.getModel().getTrade_offer().setSender(1);
+        gameFascade.getModel().getTrade_offer().setReciever(1);
+        gameFascade.getModel().getTrade_offer().setSender(0);
 
 
         serverFacade.forTestingSet(gameFascade);
@@ -90,6 +91,13 @@ public class CommandsTest {
 
     @Test
     public void testBuildCityCommand() {
+        shared.model.player.Player player = serverFacade.forTestingGet().getModel().getPlayers()[0];
+        int brickBefore = player.getResources().getBrick();
+        int woodBefore = player.getResources().getWood();
+        int wheatBefore = player.getResources().getWheat();
+        int sheepBefore = player.getResources().getSheep();
+        int oreBefore = player.getResources().getOre();
+
         shared.communication.fromServer.game.VertexLocation location =
                 new shared.communication.fromServer.game.VertexLocation(VertexDirection.SouthWest, -1, 1);
         shared.communication.toServer.moves.BuildCity arg =
@@ -101,29 +109,137 @@ public class CommandsTest {
         shared.locations.VertexLocation location2 = new shared.locations.VertexLocation(location);
         Building building = serverFacade.forTestingGet().getModel().getMap().getBuildingOnVertex(new Vertex(location2));
         assertEquals(City.class, building.getClass());
+
+        int brickAfter = player.getResources().getBrick();
+        int woodAfter = player.getResources().getWood();
+        int wheatAfter = player.getResources().getWheat();
+        int sheepAfter = player.getResources().getSheep();
+        int oreAfter = player.getResources().getOre();
+        assertEquals(brickBefore, brickAfter);
+        assertEquals(woodBefore, woodAfter);
+        assertEquals(wheatBefore - 2, wheatAfter);
+        assertEquals(sheepBefore, sheepAfter);
+        assertEquals(oreBefore - 3, oreAfter);
     }
 
     @Test
     public void testBuildRoadCommand() {
-        server.commands.BuildRoad command = new server.commands.BuildRoad(serverFacade);
-        shared.communication.EdgeLocation location = new shared.communication.EdgeLocation(0, 0, EdgeDirection.North);
+        shared.model.player.Player player = serverFacade.forTestingGet().getModel().getPlayers()[0];
+        int brickBefore = player.getResources().getBrick();
+        int woodBefore = player.getResources().getWood();
+        int wheatBefore = player.getResources().getWheat();
+        int sheepBefore = player.getResources().getSheep();
+        int oreBefore = player.getResources().getOre();
+
+        shared.communication.EdgeLocation location = new shared.communication.EdgeLocation(-1, 1, EdgeDirection.North);
         shared.communication.toServer.moves.BuildRoad arg =
                 new shared.communication.toServer.moves.BuildRoad(0, location, true);
+        server.commands.BuildRoad command = new server.commands.BuildRoad(serverFacade);
         command.setParams(arg);
         command.execute();
 
-        shared.model.map.Road[] roads = serverFacade.forTestingGet().getRoads();
-        assertTrue(roadExists(arg, roads));
+        boolean roadExists = roadExists(arg, serverFacade.forTestingGet().getModel().getRoads());
+        assertTrue(roadExists);
+
+        int brickAfter = player.getResources().getBrick();
+        int woodAfter = player.getResources().getWood();
+        int wheatAfter = player.getResources().getWheat();
+        int sheepAfter = player.getResources().getSheep();
+        int oreAfter = player.getResources().getOre();
+        assertEquals(brickBefore, brickAfter);
+        assertEquals(woodBefore, woodAfter);
+        assertEquals(wheatBefore, wheatAfter);
+        assertEquals(sheepBefore, sheepAfter);
+        assertEquals(oreBefore, oreAfter);
+
+        location = new shared.communication.EdgeLocation(-1, 1, EdgeDirection.South);
+        arg = new shared.communication.toServer.moves.BuildRoad(0, location, false);
+        command = new server.commands.BuildRoad(serverFacade);
+        command.setParams(arg);
+        command.execute();
+
+        roadExists = roadExists(arg, serverFacade.forTestingGet().getModel().getRoads());
+        assertTrue(roadExists);
+
+        brickAfter = player.getResources().getBrick();
+        woodAfter = player.getResources().getWood();
+        wheatAfter = player.getResources().getWheat();
+        sheepAfter = player.getResources().getSheep();
+        oreAfter = player.getResources().getOre();
+        assertEquals(brickBefore - 1, brickAfter);
+        assertEquals(woodBefore - 1, woodAfter);
+        assertEquals(wheatBefore, wheatAfter);
+        assertEquals(sheepBefore, sheepAfter);
+        assertEquals(oreBefore, oreAfter);
     }
 
     @Test
     public void testBuildSettlementCommand() {
-        assertTrue(true);
+        shared.model.player.Player player = serverFacade.forTestingGet().getModel().getPlayers()[0];
+        int brickBefore = player.getResources().getBrick();
+        int woodBefore = player.getResources().getWood();
+        int wheatBefore = player.getResources().getWheat();
+        int sheepBefore = player.getResources().getSheep();
+        int oreBefore = player.getResources().getOre();
+
+        shared.communication.fromServer.game.VertexLocation location =
+                new shared.communication.fromServer.game.VertexLocation(VertexDirection.SouthWest, -1, 1);
+        shared.communication.toServer.moves.BuildSettlement arg =
+                new shared.communication.toServer.moves.BuildSettlement(0, location, true);
+        server.commands.BuildSettlement command = new server.commands.BuildSettlement(serverFacade);
+        command.setParams(arg);
+        command.execute();
+
+        shared.locations.VertexLocation location2 = new shared.locations.VertexLocation(location);
+        Building building = serverFacade.forTestingGet().getModel().getMap().getBuildingOnVertex(new Vertex(location2));
+        assertEquals(Settlement.class, building.getClass());
+
+        int brickAfter = player.getResources().getBrick();
+        int woodAfter = player.getResources().getWood();
+        int wheatAfter = player.getResources().getWheat();
+        int sheepAfter = player.getResources().getSheep();
+        int oreAfter = player.getResources().getOre();
+        assertEquals(brickBefore, brickAfter);
+        assertEquals(woodBefore, woodAfter);
+        assertEquals(wheatBefore, wheatAfter);
+        assertEquals(sheepBefore, sheepAfter);
+        assertEquals(oreBefore, oreAfter);
+
+        location = new shared.communication.fromServer.game.VertexLocation(VertexDirection.SouthEast, -1, 1);
+        arg = new shared.communication.toServer.moves.BuildSettlement(0, location, false);
+        command = new server.commands.BuildSettlement(serverFacade);
+        command.setParams(arg);
+        command.execute();
+
+        location2 = new shared.locations.VertexLocation(location);
+        building = serverFacade.forTestingGet().getModel().getMap().getBuildingOnVertex(new Vertex(location2));
+        assertEquals(Settlement.class, building.getClass());
+
+        brickAfter = player.getResources().getBrick();
+        woodAfter = player.getResources().getWood();
+        wheatAfter = player.getResources().getWheat();
+        sheepAfter = player.getResources().getSheep();
+        oreAfter = player.getResources().getOre();
+        assertEquals(brickBefore - 1, brickAfter);
+        assertEquals(woodBefore - 1, woodAfter);
+        assertEquals(wheatBefore - 1, wheatAfter);
+        assertEquals(sheepBefore - 1, sheepAfter);
+        assertEquals(oreBefore, oreAfter);
     }
 
     @Test
     public void testBuyDevCardCommand() {
-        assertTrue(true);
+        shared.model.player.Player player = serverFacade.forTestingGet().getModel().getPlayers()[0];
+        int devCardsBefore = player.getNewDevCards().getTotalCards();
+        shared.communication.toServer.moves.BuyDevCard arg = new shared.communication.toServer.moves.BuyDevCard(0);
+        server.commands.BuyDevCard command = new server.commands.BuyDevCard(serverFacade);
+        command.setParams(arg);
+        command.execute();
+
+        int devCardsAfter = player.getNewDevCards().getTotalCards();
+        assertEquals(devCardsBefore + 1, devCardsAfter);
+        System.out.println(devCardsBefore);
+        System.out.println(devCardsAfter);
     }
 
     @Test
