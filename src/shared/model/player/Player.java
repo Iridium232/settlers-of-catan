@@ -573,7 +573,13 @@ public class Player {
      */
     public void discard(ResourceMultiSet resources) 
     {
-
+        ResourceMultiSet newSet = new ResourceMultiSet();
+        newSet.setBrick(getResources().getBrick() - resources.getBrick());
+        newSet.setWheat(getResources().getWheat() - resources.getWheat());
+        newSet.setWood(getResources().getWood() - resources.getWood());
+        newSet.setSheep(getResources().getSheep() - resources.getSheep());
+        newSet.setOre(getResources().getOre() - resources.getOre());
+        setResources(newSet);
     }
 
 

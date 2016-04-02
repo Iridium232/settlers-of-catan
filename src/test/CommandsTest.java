@@ -9,6 +9,7 @@ import server.commands.AcceptTradeCommand;
 import server.facade.ServerFacade;
 import shared.communication.ResourceList;
 import shared.communication.toServer.moves.AcceptTrade;
+import shared.definitions.TurnStatus;
 import shared.locations.EdgeDirection;
 import shared.locations.VertexDirection;
 import shared.model.Fascade;
@@ -17,6 +18,8 @@ import shared.model.map.Vertex;
 import shared.model.map.buildings.Building;
 import shared.model.map.buildings.City;
 import shared.model.map.buildings.Settlement;
+import shared.model.player.ResourceMultiSet;
+import shared.model.states.DiscardState;
 
 import static org.junit.Assert.*;
 
@@ -238,13 +241,57 @@ public class CommandsTest {
 
         int devCardsAfter = player.getNewDevCards().getTotalCards();
         assertEquals(devCardsBefore + 1, devCardsAfter);
-        System.out.println(devCardsBefore);
-        System.out.println(devCardsAfter);
     }
 
     @Test
     public void testDiscardCardsCommand() {
-        assertTrue(true);
+        shared.model.player.Player player0 = serverFacade.forTestingGet().getModel().getPlayers()[0];
+        shared.model.player.Player player1 = serverFacade.forTestingGet().getModel().getPlayers()[1];
+        shared.model.player.Player player2 = serverFacade.forTestingGet().getModel().getPlayers()[2];
+        player0.setResources(new ResourceMultiSet(10, 10, 10, 10, 10));
+        player2.setResources(new ResourceMultiSet(1, 1, 1, 1, 5));
+
+        int player0ResourcesBefore = getTotalResources(player0);
+        int player1ResourcesBefore = getTotalResources(player1);
+        int player2ResourcesBefore = getTotalResources(player2);
+
+
+        ResourceList discarding = new ResourceList(5,5,5,5,5);
+        shared.communication.toServer.moves.DiscardCards arg =
+                new shared.communication.toServer.moves.DiscardCards(0, discarding);
+        server.commands.DiscardCards command = new server.commands.DiscardCards(serverFacade);
+        command.setParams(arg);
+        command.execute();
+
+        int player0ResourcesAfter = getTotalResources(player0);
+        assertEquals(player0ResourcesBefore / 2, player0ResourcesAfter);
+        assertTrue(player0.isDiscarded());
+        assertFalse(player1.isDiscarded());
+
+
+        assertFalse(player1.isDiscarded());
+        discarding = new ResourceList(0,0,0,0,0);
+        arg = new shared.communication.toServer.moves.DiscardCards(1, discarding);
+        command = new server.commands.DiscardCards(serverFacade);
+        command.setParams(arg);
+        command.execute();
+
+        int player1ResourcesAfter = getTotalResources(player1);
+        assertEquals(player1ResourcesBefore, player1ResourcesAfter);
+        assertTrue(player1.isDiscarded());
+
+
+        discarding = new ResourceList(0,0,0,0,4);
+        arg = new shared.communication.toServer.moves.DiscardCards(2, discarding);
+        command = new server.commands.DiscardCards(serverFacade);
+        command.setParams(arg);
+        command.execute();
+
+        int player2ResourcesAfter = getTotalResources(player2);
+        assertEquals(player2ResourcesBefore-4, player2ResourcesAfter);
+        assertFalse(player0.isDiscarded());
+        assertFalse(player1.isDiscarded());
+        assertFalse(player2.isDiscarded());
     }
 
     @Test
@@ -323,6 +370,17 @@ public class CommandsTest {
         if (str1.toLowerCase().equals("south") && str2.toLowerCase().equals("s")) return true;
         if (str1.toLowerCase().equals("southeast") && str2.toLowerCase().equals("se")) return true;
         return false;
+    }
+
+    private int getTotalResources(shared.model.player.Player player) {
+        int total = 0;
+        ResourceMultiSet resources = player.getResources();
+        total += resources.getBrick();
+        total += resources.getWheat();
+        total += resources.getWood();
+        total += resources.getSheep();
+        total += resources.getOre();
+        return total;
     }
 
     private String getStrModel() {
