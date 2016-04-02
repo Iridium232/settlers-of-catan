@@ -9,7 +9,6 @@ import server.commands.AcceptTradeCommand;
 import server.facade.ServerFacade;
 import shared.communication.ResourceList;
 import shared.communication.toServer.moves.AcceptTrade;
-import shared.definitions.TurnStatus;
 import shared.locations.EdgeDirection;
 import shared.locations.VertexDirection;
 import shared.model.Fascade;
@@ -19,7 +18,7 @@ import shared.model.map.buildings.Building;
 import shared.model.map.buildings.City;
 import shared.model.map.buildings.Settlement;
 import shared.model.player.ResourceMultiSet;
-import shared.model.states.DiscardState;
+import shared.model.states.RollingState;
 
 import static org.junit.Assert.*;
 
@@ -288,20 +287,184 @@ public class CommandsTest {
         command.execute();
 
         int player2ResourcesAfter = getTotalResources(player2);
-        assertEquals(player2ResourcesBefore-4, player2ResourcesAfter);
+        assertEquals(player2ResourcesBefore - 4, player2ResourcesAfter);
         assertFalse(player0.isDiscarded());
         assertFalse(player1.isDiscarded());
         assertFalse(player2.isDiscarded());
     }
 
     @Test
+    public void testRollNumberCommand() {
+        shared.model.player.Player player0 = serverFacade.forTestingGet().getModel().getPlayers()[0];
+        shared.model.player.Player player1 = serverFacade.forTestingGet().getModel().getPlayers()[1];
+        shared.model.player.Player player2 = serverFacade.forTestingGet().getModel().getPlayers()[2];
+        shared.model.player.Player player3 = serverFacade.forTestingGet().getModel().getPlayers()[3];
+
+        int player0BrickBefore = player0.getResources().getBrick();
+        int player0WheatBefore = player0.getResources().getWheat();
+        int player0WoodBefore = player0.getResources().getWood();
+        int player0SheepBefore = player0.getResources().getSheep();
+        int player0OreBefore = player0.getResources().getOre();
+
+        int player1BrickBefore = player1.getResources().getBrick();
+        int player1WheatBefore = player1.getResources().getWheat();
+        int player1WoodBefore = player1.getResources().getWood();
+        int player1SheepBefore = player1.getResources().getSheep();
+        int player1OreBefore = player1.getResources().getOre();
+
+        int player2BrickBefore = player2.getResources().getBrick();
+        int player2WheatBefore = player2.getResources().getWheat();
+        int player2WoodBefore = player2.getResources().getWood();
+        int player2SheepBefore = player2.getResources().getSheep();
+        int player2OreBefore = player2.getResources().getOre();
+
+        int player3BrickBefore = player3.getResources().getBrick();
+        int player3WheatBefore = player3.getResources().getWheat();
+        int player3WoodBefore = player3.getResources().getWood();
+        int player3SheepBefore = player3.getResources().getSheep();
+        int player3OreBefore = player3.getResources().getOre();
+
+        server.commands.RollNumber rollCommand = new server.commands.RollNumber(serverFacade);
+        rollCommand.setParams(new shared.communication.toServer.moves.RollNumber(0, 6));
+        rollCommand.execute();
+
+        int player0BrickAfter = player0.getResources().getBrick();
+        int player0WheatAfter = player0.getResources().getWheat();
+        int player0WoodAfter = player0.getResources().getWood();
+        int player0SheepAfter = player0.getResources().getSheep();
+        int player0OreAfter = player0.getResources().getOre();
+
+        int player1BrickAfter = player1.getResources().getBrick();
+        int player1WheatAfter = player1.getResources().getWheat();
+        int player1WoodAfter = player1.getResources().getWood();
+        int player1SheepAfter = player1.getResources().getSheep();
+        int player1OreAfter = player1.getResources().getOre();
+
+        int player2BrickAfter = player2.getResources().getBrick();
+        int player2WheatAfter = player2.getResources().getWheat();
+        int player2WoodAfter = player2.getResources().getWood();
+        int player2SheepAfter = player2.getResources().getSheep();
+        int player2OreAfter = player2.getResources().getOre();
+
+        int player3BrickAfter = player3.getResources().getBrick();
+        int player3WheatAfter = player3.getResources().getWheat();
+        int player3WoodAfter = player3.getResources().getWood();
+        int player3SheepAfter = player3.getResources().getSheep();
+        int player3OreAfter = player3.getResources().getOre();
+
+        assertEquals(player0BrickBefore, player0BrickAfter);
+        assertEquals(player0WheatBefore + 1, player0WheatAfter);
+        assertEquals(player0WoodBefore, player0WoodAfter);
+        assertEquals(player0SheepBefore, player0SheepAfter);
+        assertEquals(player0OreBefore, player0OreAfter);
+
+        assertEquals(player1BrickBefore, player1BrickAfter);
+        assertEquals(player1WheatBefore, player1WheatAfter);
+        assertEquals(player1WoodBefore + 1, player1WoodAfter);
+        assertEquals(player1SheepBefore, player1SheepAfter);
+        assertEquals(player1OreBefore, player1OreAfter);
+
+        assertEquals(player2BrickBefore, player2BrickAfter);
+        assertEquals(player2WheatBefore, player2WheatAfter);
+        assertEquals(player2WoodBefore, player2WoodAfter);
+        assertEquals(player2SheepBefore, player2SheepAfter);
+        assertEquals(player2OreBefore, player2OreAfter);
+
+        assertEquals(player3BrickBefore, player3BrickAfter);
+        assertEquals(player3WheatBefore, player3WheatAfter);
+        assertEquals(player3WoodBefore + 1, player3WoodAfter);
+        assertEquals(player3SheepBefore, player3SheepAfter);
+        assertEquals(player3OreBefore, player3OreAfter);
+    }
+
+    @Test
     public void testFinishTurnCommand() {
-        assertTrue(true);
+        server.commands.RollNumber rollCommand = new server.commands.RollNumber(serverFacade);
+        rollCommand.setParams(new shared.communication.toServer.moves.RollNumber(0, 6));
+        rollCommand.execute();
+
+        shared.communication.toServer.moves.FinishTurn arg = new shared.communication.toServer.moves.FinishTurn(0);
+        server.commands.FinishTurn command = new server.commands.FinishTurn(serverFacade);
+        command.setParams(arg);
+        command.execute();
+
+        assertEquals(1, serverFacade.forTestingGet().getModel().getTurn_tracker().getActive_player());
     }
 
     @Test
     public void testMaritimeTradeCommand() {
-        assertTrue(true);
+        shared.model.player.Player player = serverFacade.forTestingGet().getModel().getPlayers()[0];
+        int brickBefore = player.getResources().getBrick();
+        int wheatBefore = player.getResources().getWheat();
+        int woodBefore = player.getResources().getWood();
+        int sheepBefore = player.getResources().getSheep();
+        int oreBefore = player.getResources().getOre();
+
+        shared.communication.toServer.moves.MaritimeTrade arg =
+                new shared.communication.toServer.moves.MaritimeTrade(0, 4, "brick", "wheat");
+        server.commands.MaritimeTrade command = new server.commands.MaritimeTrade(serverFacade);
+        command.setParams(arg);
+        command.execute();
+
+        int brickAfter = player.getResources().getBrick();
+        int wheatAfter = player.getResources().getWheat();
+        int woodAfter = player.getResources().getWood();
+        int sheepAfter = player.getResources().getSheep();
+        int oreAfter = player.getResources().getOre();
+
+        assertEquals(brickBefore - 4, brickAfter);
+        assertEquals(wheatBefore + 1, wheatAfter);
+        assertEquals(woodBefore, woodAfter);
+        assertEquals(sheepBefore, sheepAfter);
+        assertEquals(oreBefore, oreAfter);
+
+
+        brickBefore = player.getResources().getBrick();
+        wheatBefore = player.getResources().getWheat();
+        woodBefore = player.getResources().getWood();
+        sheepBefore = player.getResources().getSheep();
+        oreBefore = player.getResources().getOre();
+
+        arg = new shared.communication.toServer.moves.MaritimeTrade(0, 3, "wood", "sheep");
+        command = new server.commands.MaritimeTrade(serverFacade);
+        command.setParams(arg);
+        command.execute();
+
+        brickAfter = player.getResources().getBrick();
+        wheatAfter = player.getResources().getWheat();
+        woodAfter = player.getResources().getWood();
+        sheepAfter = player.getResources().getSheep();
+        oreAfter = player.getResources().getOre();
+
+        assertEquals(brickBefore, brickAfter);
+        assertEquals(wheatBefore, wheatAfter);
+        assertEquals(woodBefore - 3, woodAfter);
+        assertEquals(sheepBefore + 1, sheepAfter);
+        assertEquals(oreBefore, oreAfter);
+
+
+        brickBefore = player.getResources().getBrick();
+        wheatBefore = player.getResources().getWheat();
+        woodBefore = player.getResources().getWood();
+        sheepBefore = player.getResources().getSheep();
+        oreBefore = player.getResources().getOre();
+
+        arg = new shared.communication.toServer.moves.MaritimeTrade(0, 2, "ore", "brick");
+        command = new server.commands.MaritimeTrade(serverFacade);
+        command.setParams(arg);
+        command.execute();
+
+        brickAfter = player.getResources().getBrick();
+        wheatAfter = player.getResources().getWheat();
+        woodAfter = player.getResources().getWood();
+        sheepAfter = player.getResources().getSheep();
+        oreAfter = player.getResources().getOre();
+
+        assertEquals(brickBefore + 1, brickAfter);
+        assertEquals(wheatBefore, wheatAfter);
+        assertEquals(woodBefore, woodAfter);
+        assertEquals(sheepBefore, sheepAfter);
+        assertEquals(oreBefore - 2, oreAfter);
     }
 
     @Test
@@ -321,11 +484,6 @@ public class CommandsTest {
 
     @Test
     public void testRobPlayerCommand() {
-        assertTrue(true);
-    }
-
-    @Test
-    public void testRollNumberCommand() {
         assertTrue(true);
     }
 

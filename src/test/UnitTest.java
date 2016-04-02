@@ -14,7 +14,8 @@ public class UnitTest
 			"test.FascadeTest",
 			"test.TransformerPollerTest",
 			"test.ServerProxyTest",
-            "test.ModelTranslatorTest"
+            "test.ModelTranslatorTest",
+            "test.CommandsTest"
 			};
 		org.junit.runner.JUnitCore.main(testClasses);
 		//"test.TransformerPollerTest""test.ServerProxyTest"
