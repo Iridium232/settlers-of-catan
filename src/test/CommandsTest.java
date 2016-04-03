@@ -9,6 +9,7 @@ import server.commands.AcceptTradeCommand;
 import server.facade.ServerFacade;
 import shared.communication.ResourceList;
 import shared.communication.toServer.moves.AcceptTrade;
+import shared.communication.toServer.moves.Monopoly_;
 import shared.locations.EdgeDirection;
 import shared.locations.VertexDirection;
 import shared.model.Fascade;
@@ -18,7 +19,6 @@ import shared.model.map.buildings.Building;
 import shared.model.map.buildings.City;
 import shared.model.map.buildings.Settlement;
 import shared.model.player.ResourceMultiSet;
-import shared.model.states.RollingState;
 
 import static org.junit.Assert.*;
 
@@ -469,7 +469,36 @@ public class CommandsTest {
 
     @Test
     public void testMonopolyCommand() {
-        assertTrue(true);
+        shared.model.player.Player player = serverFacade.forTestingGet().getModel().getPlayers()[0];
+        player.getNewDevCards().setMonopoly(1);
+        serverFacade.forTestingGet().getModel().getPlayers()[1].getResources().setBrick(3);
+        serverFacade.forTestingGet().getModel().getPlayers()[2].getResources().setBrick(3);
+        serverFacade.forTestingGet().getModel().getPlayers()[3].getResources().setBrick(3);
+
+        int brickBefore = player.getResources().getBrick();
+        int oldMonopolyBefore = player.getOldDevCards().getMonopoly();
+        int newMonopolyBefore = player.getNewDevCards().getMonopoly();
+
+
+        Monopoly_ arg = new Monopoly_(0, "brick");
+        server.commands.Monopoly command = new server.commands.Monopoly(serverFacade);
+        command.setParams(arg);
+        command.execute();
+
+        int brickAfter = player.getResources().getBrick();
+        int oldMonopolyAfter = player.getOldDevCards().getMonopoly();
+        int newMonopolyAfter = player.getNewDevCards().getMonopoly();
+        assertTrue(player.isPlayedDevCard());
+        assertEquals(oldMonopolyBefore + 1, oldMonopolyAfter);
+        assertEquals(newMonopolyBefore - 1, newMonopolyAfter);
+
+        assertEquals(brickBefore + 9, brickAfter);
+        shared.model.player.Player player1 = serverFacade.forTestingGet().getModel().getPlayers()[1];
+        shared.model.player.Player player2 = serverFacade.forTestingGet().getModel().getPlayers()[2];
+        shared.model.player.Player player3 = serverFacade.forTestingGet().getModel().getPlayers()[3];
+        assertEquals(0, player1.getResources().getBrick());
+        assertEquals(0, player2.getResources().getBrick());
+        assertEquals(0, player3.getResources().getBrick());
     }
 
     @Test
