@@ -940,6 +940,7 @@ public class Game
 	
 	/**
 	 * Hidden function to log actions
+	 * also checks if someone has won.
 	 * @pre none
 	 * @post there is a log of that action
 	 * @param player_index
@@ -1007,6 +1008,14 @@ public class Game
 			return;
 		}
 		this.log.addMessage(new MessageLine(players[player_index].getName(),message));
+		for (Player p : players)
+		{
+			if (p.getVictoryPoints() >= 10)
+			{
+				this.winner = p.getPlayerIndex();
+				this.log.addMessage(new MessageLine(p.getName(),p.getName() + " has won the game!"));
+			}
+		}
 	}
 
 	/**
