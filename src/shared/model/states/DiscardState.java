@@ -30,7 +30,7 @@ public class DiscardState implements IState
 	@Override
 	public void finishPhase(TurnTracker turn_tracker_pointer, int player_index) 
 	{
-		turn_tracker_pointer.setState(new PlayingState());
+		turn_tracker_pointer.setState(new RobbingState());
 	}
 
 	/**
