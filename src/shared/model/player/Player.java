@@ -596,7 +596,8 @@ public class Player {
      */
     public void playDevCard(DevCardType devcard) throws Exception 
     {
-    	oldDevCards.play(devcard);
+    	newDevCards.play(devcard);
+        oldDevCards.add(devcard, 1);
     	this.setPlayedDevCard(true);
     }
 
