@@ -467,25 +467,21 @@ public class Game
 		Player current=players[commanding_player_index];
 		current.setSoldiers(current.getSoldiers()+ 1);
 		current.playDevCard(DevCardType.SOLDIER);
-		for (Player player : players)
-		{
-			if(player.getPlayerIndex()==commanding_player_index)
-			{
-				continue;
-			}
-			if(turn_tracker.getLargest_army_player() == -1 && players[commanding_player_index].getSoldiers() 
-						> 2)
-			{
+		if(current.getSoldiers()>2){
+			if(turn_tracker.getLargest_army_player()==-1){
+				current.incrementVictoryPoints(2);
 				turn_tracker.setLargest_army_player(commanding_player_index);
 			}
-			if (player.getPlayerIndex() == turn_tracker.getLargest_army_player() 
-					&& players[commanding_player_index].getSoldiers() 
-						> player.getSoldiers())		
-			{
-				turn_tracker.setLargest_army_player(commanding_player_index);
+			else{
+				Player largest=players[turn_tracker.getLargest_army_player()];
+				if(largest.getPlayerID()!=current.getPlayerID()&&largest.getSoldiers()<current.getSoldiers()){
+					largest.incrementVictoryPoints(-2);
+					turn_tracker.setLargest_army_player(commanding_player_index);
+					current.incrementVictoryPoints(2);
+				}
 			}
 		}
-		
+
 		
 		if(victimIndex == -1)
 		{
@@ -634,14 +630,23 @@ public class Game
 	}
 	
 	public void calculateLongestRoad(int commanding_player_index){
-		int roads=15-players[commanding_player_index].getRoads();
+		Player current=players[commanding_player_index];
+		int roads=15-current.getRoads();
 		if(roads>=5){
 			if(turn_tracker.getLongest_road_player()==-1){
 				turn_tracker.setLongest_road_player(commanding_player_index);
+				current.incrementVictoryPoints(2);
 			}
-			int longest=15-players[turn_tracker.getLongest_road_player()].getRoads();
-			if(roads>longest){
-				turn_tracker.setLongest_road_player(commanding_player_index);
+			else{
+				Player longestOwner=players[turn_tracker.getLongest_road_player()];
+				int longest=15-longestOwner.getRoads();
+				if(roads>longest&&longestOwner.getPlayerID()!=current.getPlayerID()){
+					longestOwner.incrementVictoryPoints(-2);
+//					longestOwner.setVictoryPoints(longestOwner.getVictoryPoints()-2);
+					turn_tracker.setLongest_road_player(commanding_player_index);
+					current.incrementVictoryPoints(2);
+//					current.setVictoryPoints(current.getVictoryPoints()+2);
+				}
 			}
 		}
 	}

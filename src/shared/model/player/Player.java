@@ -534,7 +534,7 @@ public class Player {
     	int citycount = 4 - cities;
     	int settlecount = 5 - settlements;
     	
-        return citycount*2 + settlecount + monuments;
+        return citycount*2 + settlecount + monuments+victoryPoints;
     }
 
     /**
@@ -854,5 +854,9 @@ public class Player {
 	public void pay(ResourceType resource, int quantity) throws Exception 
 	{
 		resources.pay(resource, quantity);
+	}
+	
+	public void incrementVictoryPoints(int amount){
+		victoryPoints+=amount;
 	}
 }

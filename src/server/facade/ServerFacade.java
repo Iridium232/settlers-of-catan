@@ -767,6 +767,8 @@ public class ServerFacade implements IServer
 			for(shared.communication.fromServer.games.Player p:game.getPlayers()){
 				if(p.getName()!=null){
 					if(p.getId()==playerID){
+						p.setColor(params.getColor().toUpperCase());
+						p.getColor();
 						return params.getId();
 					} 
 				}
