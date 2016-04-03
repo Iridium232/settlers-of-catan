@@ -15,6 +15,7 @@ import shared.model.map.GameMap;
 import shared.model.map.Road;
 import shared.model.map.Robber;
 import shared.model.map.TerrainHex;
+import shared.model.map.Vertex;
 import shared.model.map.buildings.Building;
 import shared.model.map.buildings.City;
 import shared.model.map.buildings.Settlement;
@@ -908,6 +909,26 @@ public class Game
         players[player_index].placeSettlement();
 		map.addBuilding(new Settlement(player_index, place, players[player_index].getColor()));
 		version++;
+		if(this.turn_tracker.getState().getState() == TurnStatus.SECONDROUND)
+		{
+			shared.locations.VertexLocation spot = new shared.locations.VertexLocation(place);
+			Vertex locale = new Vertex(spot);
+			HexLocation[] adjacents = locale.getNeigborHexLocations(map);
+			for( HexLocation location : adjacents)
+			{
+				TerrainHex hex = map.getHexAt(location.getX(), location.getY());
+				if (hex == null)
+				{
+					continue;
+				}
+				ResourceType reward = hex.getResource();
+				if (reward == null)
+				{
+					continue;
+				}
+				players[player_index].getResource(reward, 1);
+			}
+		}
 		log(player_index,Action.SETTLEMENT,-1);
 	}
 	
