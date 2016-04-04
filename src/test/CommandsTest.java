@@ -240,7 +240,6 @@ public class CommandsTest {
 
         int devCardsAfter = player.getNewDevCards().getTotalCards();
         assertTrue(devCardsBefore + 1 == devCardsAfter || devCardsBefore == devCardsAfter);
-//        assertEquals(devCardsBefore + 1, devCardsAfter);
     }
 
     @Test
@@ -471,14 +470,13 @@ public class CommandsTest {
     @Test
     public void testMonopolyCommand() {
         shared.model.player.Player player = serverFacade.forTestingGet().getModel().getPlayers()[0];
-        player.getNewDevCards().setMonopoly(1);
+        player.getOldDevCards().setMonopoly(1);
         serverFacade.forTestingGet().getModel().getPlayers()[1].getResources().setBrick(3);
         serverFacade.forTestingGet().getModel().getPlayers()[2].getResources().setBrick(3);
         serverFacade.forTestingGet().getModel().getPlayers()[3].getResources().setBrick(3);
 
         int brickBefore = player.getResources().getBrick();
         int oldMonopolyBefore = player.getOldDevCards().getMonopoly();
-        int newMonopolyBefore = player.getNewDevCards().getMonopoly();
 
 
         Monopoly_ arg = new Monopoly_(0, "brick");
@@ -490,8 +488,7 @@ public class CommandsTest {
         int oldMonopolyAfter = player.getOldDevCards().getMonopoly();
         int newMonopolyAfter = player.getNewDevCards().getMonopoly();
         assertTrue(player.isPlayedDevCard());
-        assertEquals(oldMonopolyBefore + 1, oldMonopolyAfter);
-        assertEquals(newMonopolyBefore - 1, newMonopolyAfter);
+        assertEquals(oldMonopolyBefore - 1, oldMonopolyAfter);
 
         assertEquals(brickBefore + 9, brickAfter);
         shared.model.player.Player player1 = serverFacade.forTestingGet().getModel().getPlayers()[1];
@@ -505,7 +502,7 @@ public class CommandsTest {
     @Test
     public void testMonumentCommand() {
         shared.model.player.Player player = serverFacade.forTestingGet().getModel().getPlayers()[0];
-        player.getNewDevCards().setMonument(1);
+        player.getOldDevCards().setMonument(1);
 
         int victoryPointsBefore = player.getVictoryPoints();
 
@@ -523,7 +520,7 @@ public class CommandsTest {
     @Test
     public void testRoad_BuildingCommand() {
         shared.model.player.Player player = serverFacade.forTestingGet().getModel().getPlayers()[0];
-        player.getNewDevCards().setRoad_building(1);
+        player.getOldDevCards().setRoad_building(1);
 
         shared.communication.EdgeLocation location1 = new shared.communication.EdgeLocation(1,1,EdgeDirection.North);
         shared.communication.EdgeLocation location2 = new shared.communication.EdgeLocation(1,1,EdgeDirection.South);
@@ -578,7 +575,7 @@ public class CommandsTest {
     public void testSoldierCommand() {
         shared.model.player.Player player0 = serverFacade.forTestingGet().getModel().getPlayers()[0];
         shared.model.player.Player player1 = serverFacade.forTestingGet().getModel().getPlayers()[1];
-        player0.getNewDevCards().setSoldier(1);
+        player0.getOldDevCards().setSoldier(1);
 
         int player0TotalBefore = getTotalResources(player0);
         int player1TotalBefore = getTotalResources(player1);
@@ -598,7 +595,7 @@ public class CommandsTest {
     @Test
     public void testYear_Of_PlentyCommand() {
         shared.model.player.Player player = serverFacade.forTestingGet().getModel().getPlayers()[0];
-        player.getNewDevCards().setYear_of_plenty(1);
+        player.getOldDevCards().setYear_of_plenty(1);
 
         int brickBefore = player.getResources().getBrick();
         int wheatBefore = player.getResources().getWheat();
