@@ -7,8 +7,8 @@
     <property name="port.arg" value="8081"/>
     <property name="web.arg" value="gameplay"/>
     <property name="options.arg" value="ug"/>
-	<property name="PORT" value="${port}" />
-	<property name="HOST" value="${host}" />
+	<property name="PORT" value="8081" />
+	<property name="HOST" value="$localhost" />
      
     <!-- Input folders -->
     <property name="java.dir" value="java"/>
