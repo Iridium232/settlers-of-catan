@@ -7,6 +7,8 @@
     <property name="port.arg" value="8081"/>
     <property name="web.arg" value="gameplay"/>
     <property name="options.arg" value="ug"/>
+	<property name="PORT" value="${port}" />
+	<property name="HOST" value="${host}" />
      
     <!-- Input folders -->
     <property name="java.dir" value="java"/>
@@ -192,7 +194,10 @@
 	
 	<target name="our-server" depends="package" description="compiles, packages, and runs the student server">
 			<java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
-				<sysproperty key="com.sun.management.jmxremote" value=""/><assertions><enable/>
+				<sysproperty key="com.sun.management.jmxremote" value=""/>
+				<arg value="${PORT}"/>
+				<arg value="${HOST}"/>
+				<assertions><enable/>
 				</assertions>
 			</java>
 	</target>

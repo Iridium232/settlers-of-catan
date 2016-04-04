@@ -52,3 +52,5 @@ Caused by: com.google.gson.stream.MalformedJsonException: Use JsonReader.setLeni
 	at ch.d(Unknown Source)
 	... 41 more
 
+Apr 04, 2016 11:16:01 AM hl d
+FINE: Player Brooke ended turn.
