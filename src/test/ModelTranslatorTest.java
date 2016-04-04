@@ -151,7 +151,9 @@ public class ModelTranslatorTest extends TestCase {
         shared.communication.fromServer.game.Port[] result = mt.testTranslatePorts(model.getMap());
         assertEquals(modelPorts.length, result.length);
         assertEquals(modelPorts[0].getRatio(), result[0].getRatio());
-        assertEquals(modelPorts[0].getResource().name().toLowerCase(), result[0].getResource().toLowerCase());
+        if (modelPorts[0].getResource() != null && result[0].getResource() != null) {
+            assertEquals(modelPorts[0].getResource().name().toLowerCase(), result[0].getResource().toLowerCase());
+        }
         assertEquals(modelPorts[0].getLocation().getX(), result[0].getLocation().getX());
         assertEquals(modelPorts[0].getLocation().getY(), result[0].getLocation().getY());
     }
@@ -215,7 +217,8 @@ public class ModelTranslatorTest extends TestCase {
                 break;
         }
 
-        model.getMap().addBuilding(new shared.model.map.buildings.City());
+        VertexLocation location = new VertexLocation(VertexDirection.East, 1, 1);
+        model.getMap().addBuilding(new shared.model.map.buildings.City("blue", location, 0));
         modelBuildings = model.getMap().getBuildings();
         result = mt.testTranslateSettlements(model.getMap());
         assertEquals(modelBuildings.length - 1, result.length);
