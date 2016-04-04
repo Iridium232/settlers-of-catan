@@ -1267,6 +1267,11 @@ public class Fascade
 		return game_model.getRobber();
 	}
 	
+	/**
+	 * Get the playing state of someone
+	 * @param player_index
+	 * @return
+	 */
 	public IState getStateOf(int player_index)
 	{
 		return game_model.getTurnState(player_index);
@@ -1347,6 +1352,10 @@ public class Fascade
 		return game_model.getName();
 	}
 
+	/**
+	 * Set the Game's name
+	 * @param name
+	 */
 	public void setGameName(String name)
 	{
 		game_model.setName(name);
@@ -1365,16 +1374,34 @@ public class Fascade
 		game_model.buyDevCard(player_index);
 	}
 	
+	/**
+	 * Play the Monopoly Card
+	 * @param commanding_player_index
+	 * @param one
+	 * @throws Exception
+	 */
 	public void playMonopoly(int commanding_player_index, ResourceType one) throws Exception 
 	{
 		game_model.playMonopoly(commanding_player_index, one);
 	}
 
+	/**
+	 * Play the monument card
+	 * @param commanding_player_index
+	 * @throws Exception
+	 */
 	public void playMonument(int commanding_player_index) throws Exception 
 	{
 		game_model.playMonument(commanding_player_index);
 	}
 
+	/**
+	 * Play the road building card
+	 * @param commanding_player_index
+	 * @param one
+	 * @param two
+	 * @throws Exception
+	 */
 	public void playRoadBuilding(int commanding_player_index, EdgeLocation one,
 			EdgeLocation two) throws Exception 
 	{
@@ -1382,6 +1409,13 @@ public class Fascade
 	}
 	
 
+	/**
+	 * Play the year of plenty card
+	 * @param commanding_player_index
+	 * @param one
+	 * @param two
+	 * @throws Exception
+	 */
 	public void playYearOfPlenty(int commanding_player_index, ResourceType one,
 			ResourceType two) throws Exception 
 	{
