@@ -53,6 +53,12 @@ public class ServerProxyTest {
 			return;
 		}
 		ModelPopulator.populateModel(json,f);
+        sp.login("Sam","sam");
+        sp.joinGame(0, CatanColor.ORANGE);
+        sp.login("Brooke", "brooke");
+        sp.joinGame(0, CatanColor.BLUE);
+        sp.login("Mark", "mark");
+        sp.joinGame(0, CatanColor.GREEN);
 	}
 
 	@Test
@@ -105,7 +111,7 @@ public class ServerProxyTest {
 			e.printStackTrace();
 			assertTrue(false);
 		}
-		String test=sp.joinGame(3, CatanColor.RED);
+		String test=sp.joinGame(0, CatanColor.RED);
 		assertFalse(test.equals("FAILED\n"));
 	}
 
