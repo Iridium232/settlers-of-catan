@@ -763,6 +763,7 @@ public class ServerFacade implements IServer
 	{
 		try 
 		{
+			game_index=params.getId();
 			Fascade game=games.get(params.getId());
 			for(shared.model.player.Player p:game.getModel().getPlayers()){
 				if(p.getName()!=null)

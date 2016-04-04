@@ -142,23 +142,6 @@ public class ServerProxyTest {
 
 	@Test
 	public void testAcceptTrade() {
-		FileReader fr;
-        StringBuilder sb=new StringBuilder();
-        String line;
-        try {
-            fr = new FileReader("commands.txt");
-            BufferedReader br=new BufferedReader(fr);
-            while((line=br.readLine())!=null){
-                sb.append(line);
-            }
-        } catch (FileNotFoundException e1) 
-        {
-            e1.printStackTrace();
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
         String result = "";
         try {
             sp.login("Pete", "pete");
@@ -176,22 +159,6 @@ public class ServerProxyTest {
 
 	@Test
 	 public void testRollNumber() {
-        FileReader fr;
-        StringBuilder sb=new StringBuilder();
-        String line;
-        try {
-            fr = new FileReader("commands.txt");
-            BufferedReader br=new BufferedReader(fr);
-            while((line=br.readLine())!=null){
-                sb.append(line);
-            }
-        } catch (FileNotFoundException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         String result = "";
         try {
             sp.login("Pete", "pete");
@@ -224,27 +191,13 @@ public class ServerProxyTest {
 
 	@Test
 	public void testBuildSettlement() {
-		FileReader fr;
-		StringBuilder sb=new StringBuilder();
-		String line;
 		try {
-			fr = new FileReader("commands.txt");
-			BufferedReader br=new BufferedReader(fr);
-			while((line=br.readLine())!=null){
-				sb.append(line);
-			}
 			sp.login("Pete", "pete");
 			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.buildSettlement(true, new VertexLocation("NE", 0, 0));
 			assertFalse(mon.equals("FAILED\n"));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
