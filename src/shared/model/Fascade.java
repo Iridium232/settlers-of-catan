@@ -1380,6 +1380,7 @@ public class Fascade
 	{
 		game_model.playRoadBuiding(commanding_player_index, one, two);
 	}
+	
 
 	public void playYearOfPlenty(int commanding_player_index, ResourceType one,
 			ResourceType two) throws Exception 
@@ -1387,29 +1388,62 @@ public class Fascade
 		game_model.playYearOfPlenty(commanding_player_index, one, two);
 	}
 
+	/**
+	 * Plays a soldier dev card
+	 * @param commanding_player_index
+	 * @param place
+	 * @param victimIndex
+	 * @throws Exception
+	 */
 	public void playSoldier(int commanding_player_index, HexLocation place,
 			int victimIndex) throws Exception 
 	{
 		game_model.playSoldier(commanding_player_index, place, victimIndex);
 	}
 
+	/**
+	 * Finishes the Turn
+	 * @param commanding_player_index
+	 * @throws Exception
+	 */
 	public void finishTurn(int commanding_player_index) throws Exception 
 	{
 		game_model.finishTurn(commanding_player_index);
 	}
 
+	/**
+	 * Robs someone and moves the robber
+	 * @param commanding_player_index
+	 * @param victim
+	 * @param location
+	 * @throws Exception
+	 */
 	public void rob(int commanding_player_index, Player victim,
 			HexLocation location) throws Exception 
 	{
 		game_model.rob(commanding_player_index, victim, location);
 	}
 
+	/**
+	 * Runs a maritime trade
+	 * @param commanding_player_index
+	 * @param ratio
+	 * @param input
+	 * @param output
+	 * @throws Exception
+	 */
 	public void maritimeTrade(int commanding_player_index, int ratio,
 			ResourceType input, ResourceType output) throws Exception 
 	{
 		game_model.maritimeTrade(commanding_player_index, ratio, input, output);
 	}
 
+	/**
+	 * extends a domestic trade offer
+	 * @param commanding_player_index
+	 * @param offer
+	 * @param playerIndex
+	 */
 	public void offerTrade(int commanding_player_index, ResourceList offer,
 			int playerIndex) 
 	{
@@ -1417,6 +1451,13 @@ public class Fascade
 		
 	}
 
+	/**
+	 * builds a road on that spot
+	 * @param commanding_player_index
+	 * @param roadLocation
+	 * @param free
+	 * @throws Exception
+	 */
 	public void buildRoadAt(int commanding_player_index,
 			EdgeLocation roadLocation, boolean free) throws Exception 
 	{
@@ -1424,21 +1465,59 @@ public class Fascade
 		
 	}
 
+	/**
+	 * replies to a domestic trade offer
+	 * @param commanding_player_index
+	 * @param accept
+	 * @throws Exception
+	 */
 	public void acceptTrade(int commanding_player_index, boolean accept) throws Exception 
 	{
 		game_model.replyToTrade(commanding_player_index, accept);	
 	}
 
+	/**
+	 * sends a chat message
+	 * @param commanding_player_index
+	 * @param message
+	 * @throws Exception
+	 */
 	public void sendChat(int commanding_player_index, String message) throws Exception 
 	{
 		game_model.sendChat(commanding_player_index, message);
 	}
 
+	/**
+	 * adds a player or rejoins a player
+	 * @param name
+	 * @param color
+	 * @param playerID
+	 * @throws Exception
+	 */
 	public void addPlayer(String name, CatanColor color, int playerID) throws Exception 
 	{
+		if(game_model!= null && game_model.getPlayers() != null)
+		{
+			for (Player player : game_model.getPlayers())
+			{
+				if(player == null)continue;
+				if(player.getName() == null)continue;
+				System.out.print("Checking "  + playerID + "against record" + player.getPlayerID() + "\n");
+				if(player.getPlayerID() == playerID)
+				{
+					game_model.reJoin(player.getPlayerIndex(), color);
+					return;
+				}
+			}
+			
+		}
 		game_model.addPlayer(name, color, playerID);
 	}
 
+	/**
+	 * gets the version of the model
+	 * @return
+	 */
 	public int getVersion() 
 	{
 		return game_model.getVersion();

@@ -934,7 +934,7 @@ public class Game
 	
 	enum Action 
 	{
-		ROAD,SETTLEMENT,CITY,ROB,FINISH,BUYDEV,ROLL,MONOPOLY,YEAROFPLENTY,SOLDIER,MONUMENT,JOIN
+		ROAD,SETTLEMENT,CITY,ROB,FINISH,BUYDEV,ROLL,MONOPOLY,YEAROFPLENTY,SOLDIER,MONUMENT,JOIN,REJOIN
 	};
 	
 	
@@ -971,6 +971,9 @@ public class Game
 			break;
 		case MONUMENT:
 			message += "played a monument card.";
+			break;
+		case REJOIN:
+			message += "rejoined the game.";
 			break;
 		case ROAD:
 			message += "built a road.";
@@ -1067,5 +1070,17 @@ public class Game
         if (color.equals("white")) return CatanColor.WHITE;
         return CatanColor.BROWN;
     }
-
+    
+    /**
+     * Rejoin recolors the player who rejoins to match
+     * @pre none
+     * @post the player that rejoined now uses this color
+     */
+    public void reJoin(int index, CatanColor new_color)
+    {
+    	CatanColor old_color = CatanColor.valueOf(players[index].getColor().toUpperCase());
+    	players[index].setColor(new_color.name());
+    	map.recolor(old_color, new_color);
+    	this.log(index, Action.REJOIN, -1);
+    }
 }

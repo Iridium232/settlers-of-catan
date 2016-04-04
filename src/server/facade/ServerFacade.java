@@ -175,7 +175,7 @@ public class ServerFacade implements IServer
 		game_index = indexOfGameID(id);
 		try 
 		{
-			User joiner = users.get(commanding_player_index);
+			User joiner = users.get(commanding_player_index);	
 			games.get(game_index).addPlayer(joiner.getName(), color, commanding_player_index);
 		} 
 		catch (Exception e) 
@@ -764,11 +764,15 @@ public class ServerFacade implements IServer
 		try 
 		{
 			Fascade game=games.get(params.getId());
-			for(shared.communication.fromServer.games.Player p:game.getPlayers()){
-				if(p.getName()!=null){
-					if(p.getId()==playerID){
-						p.setColor(params.getColor().toUpperCase());
-						p.getColor();
+			for(shared.model.player.Player p:game.getModel().getPlayers()){
+				if(p.getName()!=null)
+				{
+					if(p.getPlayerID() == playerID)
+					{
+						String oldColor = p.getColor();
+						p.setColor(params.getColor());
+						game.getModel().getMap().recolor(CatanColor.valueOf(oldColor.toUpperCase()),
+								CatanColor.valueOf(params.getColor().toUpperCase()) );
 						return params.getId();
 					} 
 				}

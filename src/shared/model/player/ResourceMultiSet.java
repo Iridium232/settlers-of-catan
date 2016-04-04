@@ -394,7 +394,7 @@ public class ResourceMultiSet {
 		case WOOD:
 			return this.wood > 0;
 		default: 
-			throw new Exception("ERROR: Unsupported resource type");
+			return false;
 		}
 	}
 

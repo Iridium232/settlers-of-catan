@@ -951,5 +951,31 @@ public class GameMap
         }
         return newBldgs;
     }
+
+    /**
+     * Recolors the map pieces for a player rejoin
+     * 
+     * @pre none
+     * @post the pieces of this color are now the new color
+     * @param old_color
+     * @param new_color
+     */
+	public void recolor(CatanColor old_color, CatanColor new_color) 
+	{
+		for (Road road : roads)
+		{
+			if (road.getColor().equals(old_color))
+			{
+				road.setColor(new_color);
+			}
+		}
+		for (Building building : buildings)
+		{
+			if (building.getColor().equals(old_color))
+			{
+				building.setColor(new_color);
+			}
+		}
+	}
 	
 }
