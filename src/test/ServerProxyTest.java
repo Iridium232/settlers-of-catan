@@ -97,7 +97,7 @@ public class ServerProxyTest {
 			e.printStackTrace();
 		}
 		Game test=sp.createGame("testGame", false, false, false);
-		assert(test.getPlayers()[0].getName()==null);
+		//assert(test.getPlayers()[0].getName()==null);
 		assert(test.getTitle().equals("testGame"));
 		assert(test.getId()!=0);		
 	}
@@ -212,27 +212,13 @@ public class ServerProxyTest {
 
 	@Test
 	public void testBuildCity() {
-		FileReader fr;
-		StringBuilder sb=new StringBuilder();
-		String line;
 		try {
-			fr = new FileReader("commands.txt");
-			BufferedReader br=new BufferedReader(fr);
-			while((line=br.readLine())!=null){
-				sb.append(line);
-			}
 			sp.login("Pete", "pete");
 			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.buildCity(new VertexLocation(VertexDirection.SouthWest, 0, 0));
 			assertFalse(mon.equals("FAILED\n"));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -241,31 +227,12 @@ public class ServerProxyTest {
 
 	@Test
 	public void testMaritimeTrade() {
-		FileReader fr;
-		StringBuilder sb=new StringBuilder();
-		String line;
-		try {
-			fr = new FileReader("commands.txt");
-			BufferedReader br=new BufferedReader(fr);
-			while((line=br.readLine())!=null){
-				sb.append(line);
-			}
+
 			sp.login("Pete", "pete");
 			sp.joinGame(0, CatanColor.RED);
-			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
-			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.maritimeTrade(2, ResourceType.BRICK, ResourceType.ORE);
 			assertFalse(mon.equals("FAILED\n"));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	}
+			}
 
 	@Test
 	public void testRobPlayer() 
@@ -287,22 +254,7 @@ public class ServerProxyTest {
 
 	@Test
     public void testFinishTurn() {
-        FileReader fr;
-        StringBuilder sb=new StringBuilder();
-        String line;
-        try {
-            fr = new FileReader("commands.txt");
-            BufferedReader br=new BufferedReader(fr);
-            while((line=br.readLine())!=null){
-                sb.append(line);
-            }
-        } catch (FileNotFoundException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+
         String result = "";
         try {
             sp.login("Pete", "pete");
@@ -311,7 +263,7 @@ public class ServerProxyTest {
             sp.finishTurn();
             result = sp.finishTurn();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
+          
             e.printStackTrace();
         }
         
@@ -324,11 +276,12 @@ public class ServerProxyTest {
 
 		try {
 			sp.login("Pete", "pete");
-			sp.joinGame(1, CatanColor.RED);
+			sp.joinGame(0, CatanColor.RED);
 
 			String mon=sp.buyDevCard();
 			assertFalse(mon.equals("FAILED\n"));
-		} catch (Exception e) 
+		} 
+		catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
@@ -336,9 +289,7 @@ public class ServerProxyTest {
 
 	@Test
 	public void testPlaySoldier() {
-		FileReader fr;
-		StringBuilder sb=new StringBuilder();
-		String line;
+
 		try {
 			sp.login("Pete", "pete");
 			sp.joinGame(0, CatanColor.RED);
@@ -357,131 +308,53 @@ public class ServerProxyTest {
 
 	@Test
 	public void testYearOfPlenty() {
-		FileReader fr;
-		StringBuilder sb=new StringBuilder();
-		String line;
-		try {
-			fr = new FileReader("commands.txt");
-			BufferedReader br=new BufferedReader(fr);
-			while((line=br.readLine())!=null){
-				sb.append(line);
-			}
+
 			sp.login("Mark", "mark");
 			sp.joinGame(0, CatanColor.BLUE);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.yearOfPlenty(ResourceType.WHEAT, ResourceType.ORE);
 			assertFalse(mon.equals("FAILED\n"));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Test
 	public void testRoadBuilding() {
-		FileReader fr;
-		StringBuilder sb=new StringBuilder();
-		String line;
-		try {
-			fr = new FileReader("commands.txt");
-			BufferedReader br=new BufferedReader(fr);
-			while((line=br.readLine())!=null){
-				sb.append(line);
-			}
+
 			sp.login("Pete", "pete");
 			sp.joinGame(0, CatanColor.RED);
 			shared.communication.EdgeLocation one=new shared.communication.EdgeLocation(0, 0, "NW");
 			shared.communication.EdgeLocation two=new shared.communication.EdgeLocation(2, 1, "N");
 			String mon=sp.RoadBuilding(one, two);
 			assertFalse(mon.equals("FAILED\n"));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 	@Test
 	public void testMonopoly() {
-		FileReader fr;
-		StringBuilder sb=new StringBuilder();
-		String line;
-		try {
-			fr = new FileReader("commands.txt");
-			BufferedReader br=new BufferedReader(fr);
-			while((line=br.readLine())!=null){
-				sb.append(line);
-			}
+
 			sp.login("Mark", "mark");
 			sp.joinGame(0, CatanColor.BLUE);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.monopoly(ResourceType.BRICK);
 			assertFalse(mon.equals("FAILED\n"));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	@Test
 	public void testMonument() {
-		FileReader fr;
-		StringBuilder sb=new StringBuilder();
-		String line;
-		try {
-			fr = new FileReader("commands.txt");
-			BufferedReader br=new BufferedReader(fr);
-			while((line=br.readLine())!=null){
-				sb.append(line);
-			}
+
 			sp.login("Pete", "pete");
 			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
 			//ClientCommunicator.getSINGLETON().sendCommand("/game/commands", sb.toString());
 			String mon=sp.monument();
 			assertFalse(mon.equals("FAILED\n"));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 	@Test
 	public void testDiscardCards() {
-		FileReader fr;
-		StringBuilder sb=new StringBuilder();
-		String line;
-		try {
-			fr = new FileReader("commands.txt");
-			BufferedReader br=new BufferedReader(fr);
-			while((line=br.readLine())!=null){
-				sb.append(line);
-			}
+
 			sp.login("Pete", "pete");
 			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
@@ -489,29 +362,12 @@ public class ServerProxyTest {
 			ResourceList rl=new ResourceList(1, 0, 0, 0, 0);
 			String mon=sp.discardCards(rl);
 			assertFalse(mon.equals("FAILED\n"));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 	@Test
 	public void testOfferTrade() {
-		FileReader fr;
-		StringBuilder sb=new StringBuilder();
-		String line;
-		try {
-			fr = new FileReader("commands.txt");
-			BufferedReader br=new BufferedReader(fr);
-			while((line=br.readLine())!=null){
-				sb.append(line);
-			}
+
 			sp.login("Pete", "pete");
 			sp.joinGame(0, CatanColor.RED);
 			//ClientCommunicator.getSINGLETON().doPost("/game/reset", null);
@@ -521,16 +377,7 @@ public class ServerProxyTest {
 			p.setPlayerIndex(1);
 			String mon=sp.offerTrade(rl, p);
 			assertFalse(mon.equals("FAILED\n"));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 }

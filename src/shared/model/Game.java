@@ -492,7 +492,8 @@ public class Game
 		ResourceMultiSet victim_stuff = players[victimIndex].getResources();
 		if (victim_stuff.total() < 1)
 		{
-			throw new Exception("ERROR! This victim had no resources!");
+			//throw new Exception("ERROR! This victim had no resources!");
+			return;
 		}
 		Random rand = new Random();
 		do
@@ -560,7 +561,8 @@ public class Game
 		ResourceMultiSet victim_stuff = players[victimIndex].getResources();
 		if (victim_stuff.total() < 1)
 		{
-			throw new Exception("ERROR! This victim had no resources!");
+			//throw new Exception("ERROR! This victim had no resources!");
+			return;
 		}
 		Random rand = new Random();
 		do

@@ -784,9 +784,9 @@ public class ServerFacade implements IServer
 		} 
 		catch (Exception e)
 		{
-			System.err.print("\nERROR: FAILED JOIN REQUEST\n");
-			e.printStackTrace();
-			return -1;
+			System.err.print("WARNING: BAD JOIN REQUEST\n");
+			//e.printStackTrace();
+			return params.getId();
 		}
 	}
 	

@@ -365,7 +365,7 @@ public class ResourceMultiSet {
 			this.wood -= quantity;
 			break;
 		default: 
-			throw new Exception("ERROR: Unsupported resource type");
+			//throw new Exception("ERROR: Unsupported resource type");
 		}
 	}
 

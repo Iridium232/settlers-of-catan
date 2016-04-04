@@ -182,7 +182,8 @@ public class DevCardList
 		default:
 			throw new Exception("ERROR: invalid dev card type");
 		}
-		throw new Exception("ERROR: This player cannot play that card.");
+		//throw new Exception("ERROR: This player cannot play that card.");
+		
 	}
 
 	/**

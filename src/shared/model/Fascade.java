@@ -1496,7 +1496,6 @@ public class Fascade
 			EdgeLocation roadLocation, boolean free) throws Exception 
 	{
 		game_model.buildRoadAt(commanding_player_index, roadLocation, free);
-		
 	}
 
 	/**

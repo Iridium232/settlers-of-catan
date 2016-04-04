@@ -45,7 +45,8 @@ public class TurnTracker
 	{
 		if (current_player_index != active_player)
 		{
-			throw new Exception("ERROR! This player is trying to end his turn...\nbut it is not his turn!");
+			//throw new Exception("ERROR! This player is trying to end his turn...\nbut it is not his turn!");
+			return;
 		}
 		if(first_round)
 		{
