@@ -28,6 +28,9 @@ import server.movehandlers.RollNumberHandler;
 import server.movehandlers.SendChatHandler;
 import server.movehandlers.SoldierHandler;
 import server.movehandlers.YearOfPlentyHandler;
+import server.plugin_attachments.PersistenceProvider;
+import server.plugin_attachments.PluginInfo;
+import server.plugin_attachments.PluginRegistry;
 import server.userhandler.LoginHandler;
 import server.userhandler.RegisterHandler;
 
@@ -41,8 +44,10 @@ import java.net.InetSocketAddress;
  */
 public class Server 
 {
-	private static  int SERVER_PORT_NUMBER=8081;
+	private static  int SERVER_PORT_NUMBER = 8081;
 	private static final int MAX_WAITING_CONNECTIONS = 20;
+	private static String PERSISTENCE_TYPE = "NoSQL";
+	private static final String PLUGIN_REGISTRY_RELATIVE_PATH = "plugins.txt";
 	
 	/**
 	 * Main Function that starts up all the pieces of the server.
@@ -56,9 +61,10 @@ public class Server
 	
 	public static void main(String[] args)
 	{
-		new Server().run();
+		
 		String host = "localhost";
 		String port = "8081";
+		String plugin = "NoSQL";
 		if(args.length > 0)
 		{
 			host = args[0];
@@ -75,10 +81,22 @@ public class Server
 		}
 		else
 		{
-			System.out.print("\nNo port specified. Using default '8081'.");
+			System.out.print("\nNo port specified. Using default '8081'.\n");
 		}
-		
+		Server.SERVER_PORT_NUMBER = new Integer(port).intValue();
+		if(args.length > 2)
+		{
+			plugin = args[2];
+			System.out.print("Persistence Plugin: " + plugin + "\n");
+		}
+		else
+		{
+			System.out.print("No Persistence Plugin Name Given. Using Default: NoSQL");
+		}
+		Server.PERSISTENCE_TYPE = plugin;
+		new Server().run();
 		System.out.print("\nServer Running Happily. Have fun!\n");
+		
 		
 	}
 	private void run() {
@@ -87,6 +105,21 @@ public class Server
 		} 
 		catch (IOException e) {
 			return;
+		}
+		
+		try
+		{
+			PluginRegistry registry = PluginRegistry.getSingleton();
+			registry.LoadInPlugins(this.PLUGIN_REGISTRY_RELATIVE_PATH);
+			PluginInfo info = registry.getPluginByName(PERSISTENCE_TYPE);
+			//TODO create the plugin
+			PersistenceProvider pp = null;
+			//
+			facade.addPersistence(pp);
+		}
+		catch (Exception e)
+		{
+			System.err.print("ERROR loading plugins");
 		}
 		
 		server.setExecutor(null);

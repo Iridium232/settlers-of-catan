@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.UUID;
 
 import server.communication.ModelTranslator;
+import server.plugin_attachments.IGameDAO;
+import server.plugin_attachments.IUserDAO;
+import server.plugin_attachments.PersistenceProvider;
 import client.communication.IServer;
 import client.communication.ModelPopulator;
 import shared.communication.EdgeLocation;
@@ -42,6 +45,8 @@ public class ServerFacade implements IServer
 	private int game_index = 0;
 	private ArrayList<shared.model.Fascade> games;
 	private ArrayList<User> users;
+	private PersistenceProvider factory;
+	private PersistenceProvider persistence_factory;
 
     public ServerFacade() {
         this.games = new ArrayList<>();
@@ -215,15 +220,25 @@ public class ServerFacade implements IServer
 	/**
 	 * Load Game
 	 * 
-	 * loads a saved game from a file.
+	 * loads the saved games from a file. Also loads the users
 	 * 
 	 * @pre there is a game at that file address.
-	 * @post the game is reloaded into the server memory.
+	 * @post the games are reloaded into the server memory.
 	 * 
 	 */
 	@Override
-	public void loadGame(String file_name) throws JoinExceptions {
-		// TODO Auto-generated method stub
+	public void loadGame(String file_name) throws JoinExceptions 
+	{
+		try 
+		{
+			IUserDAO userDAO = factory.generateIUserDAO();
+			IGameDAO gameDAO = factory.generateGameDAO();
+		} 
+		catch (Exception e) 
+		{
+			System.err.print("ERROR: Failed to load users and games" +
+					" from persistent storage");
+		}
 		
 	}
 
@@ -1189,7 +1204,15 @@ public class ServerFacade implements IServer
 	{
 		return games.get(gameID);
 	}
-
+	
+	/**
+	 * Gets the game's index in the list
+	 * @pre none 
+	 * @post gets the proper index of that game id 
+	 * 
+	 * @param id
+	 * 
+	 */
     private int indexOfGameID(int id) {
         for (int i = 0; i < games.size(); i++) {
             if (games.get(i).getModel().getGameinfo().getId() == id) {
@@ -1198,4 +1221,46 @@ public class ServerFacade implements IServer
         }
         return -1;
     }
+    
+    /**
+     * gets the user index by user_id
+     * 
+     * @pre none
+     * @post gets the proper index of the user in the list
+     * 
+     */
+    private int indexofUserID(int id)
+    {
+    	int i = 0;
+    	for( User user : this.users)
+    	{
+    		if(user.getPlayerID() == id)
+ 			{
+    			return i;
+    		}
+    		i++;
+    	}
+    	return -1;
+    }
+
+    /**
+     * Add a persistence provider to the server
+     * 
+     * @pre none
+     * @post the persistence provider will be available
+     * @param pp
+     */
+	public void addPersistence(PersistenceProvider pp) 
+	{
+		this.persistence_factory = pp;
+	}
+	
+	/**
+	 * gets the persistence provider factory
+	 * @return
+	 */
+	public PersistenceProvider getPersister()
+	{
+		return persistence_factory;
+	}
 }
