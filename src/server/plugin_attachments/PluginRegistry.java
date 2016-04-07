@@ -1,7 +1,9 @@
 package server.plugin_attachments;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -31,7 +33,7 @@ public class PluginRegistry
 	 */
 	public void LoadInPlugins(String filename) throws FileNotFoundException
 	{
-		Scanner scanner = new Scanner(new File(filename));
+		Scanner scanner = new Scanner(new BufferedReader(new FileReader(new File(filename))));
 		scanner.useDelimiter("\\s");
 		while(scanner.hasNext())
 		{
@@ -40,6 +42,11 @@ public class PluginRegistry
 			new_plugin.setMain_class_name(scanner.next());
 			new_plugin.setJar_relative_uri(scanner.next());
 			plugins.add(new_plugin);
+		}
+		System.out.print("\nLOADING PLUGINS...\n");
+		for (PluginInfo info : plugins)
+		{
+			//System.out.print(info.toString());
 		}
 		scanner.close();
 	}

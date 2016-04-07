@@ -15,14 +15,14 @@ public interface IGameDAO
 	 * @post gets a map of games that is stored in the database
 	 * @return
 	 */
-	public Map<Integer,Fascade> getGames();
+	public Map<Integer,Object> getGames();
 	
 	/**
 	 * @pre none
 	 * @post returns a map of command lists by game_id
 	 * @return
 	 */
-	public Map<Integer,List<Command>> getCommands();
+	public Map<Integer,List<Object>> getCommands();
 	
 	/**
 	 * Adds a command to that game in the database
@@ -32,7 +32,7 @@ public interface IGameDAO
 	 * @param command
 	 * @param game_id
 	 */
-	public void saveCommand(Command command, int game_id);
+	public void saveCommand(Object command, int game_id);
 	
 	/**
 	 * Saves the model and empties the commands in the database
@@ -43,7 +43,7 @@ public interface IGameDAO
 	 * @param game_id
 	 */
 	public void saveModelAndEmptyCommands(
-			shared.communication.fromServer.game.CommunicationModel model, 
+			Object model, 
 			int game_id);
 	
 	/**

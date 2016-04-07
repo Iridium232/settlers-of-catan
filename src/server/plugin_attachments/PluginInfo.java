@@ -46,4 +46,16 @@ public class PluginInfo
 	public void setPlugin_name(String plugin_name) {
 		this.plugin_name = plugin_name;
 	}
+	
+	public String toString()
+	{
+		String result = "~~~~~~~~~~~~~~~~~~~~~~~`\nPlugin Info for: ";
+		result += this.plugin_name;
+		result += "\nMain class path: ";
+		result += this.main_class_name;
+		result += "\nPlugin Location: ";
+		result += this.jar_relative_uri;
+		result += "\n~~~~~~~~~~~~~~~~~~~~~~~";
+		return result;
+	}
 }

@@ -36,6 +36,8 @@ import server.userhandler.RegisterHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 
 /**
@@ -47,7 +49,7 @@ public class Server
 	private static  int SERVER_PORT_NUMBER = 8081;
 	private static final int MAX_WAITING_CONNECTIONS = 20;
 	private static String PERSISTENCE_TYPE = "NoSQL";
-	private static final String PLUGIN_REGISTRY_RELATIVE_PATH = "plugins.txt";
+	private static final String PLUGIN_REGISTRY_RELATIVE_PATH = "src/plugins.config";
 	
 	/**
 	 * Main Function that starts up all the pieces of the server.
@@ -112,14 +114,22 @@ public class Server
 			PluginRegistry registry = PluginRegistry.getSingleton();
 			registry.LoadInPlugins(this.PLUGIN_REGISTRY_RELATIVE_PATH);
 			PluginInfo info = registry.getPluginByName(PERSISTENCE_TYPE);
-			//TODO create the plugin
-			PersistenceProvider pp = null;
-			//
+			System.out.print("\nUsing " + info.getPlugin_name() + " persistence Provider.\n");
+			
+			//http://stackoverflow.com/questions/194698/how-to-load-a-jar-file-at-runtime
+			ClassLoader loader = URLClassLoader.newInstance(
+				    new URL[] { new URL(info.getJar_relative_uri()) },
+				    getClass().getClassLoader()
+				);
+			Class<?> c = Class.forName(info.getMain_class_name(),true,loader);
+			//end StackOverflow reference
+			PersistenceProvider pp = (PersistenceProvider) c.newInstance();
 			facade.addPersistence(pp);
 		}
 		catch (Exception e)
 		{
-			System.err.print("ERROR loading plugins");
+			System.err.print("\nERROR loading persistence plugins\n");
+			e.printStackTrace();
 		}
 		
 		server.setExecutor(null);

@@ -19,9 +19,14 @@ client.roll
 client.turntracker
 client.utils
 server.commands
+server.communication
 server.facade
+server.gamehandlers
 server.handlers
 server.main
+server.movehandlers
+server.plugin_attachments
+server.userhandler
 shared.communication
 shared.communication.fromServer.game
 shared.communication.fromServer.games
