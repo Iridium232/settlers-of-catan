@@ -1,5 +1,12 @@
 package DAOs;
 
+import helpers.MyFileReader;
+import helpers.MyFileWriter;
+import helpers.PluginSerializer;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,7 +26,23 @@ public class UserDAO implements IUserDAO {
      */
     @Override
     public Map<Integer, Object> getUsers() {
-        return null;
+        Map<Integer, Object> map = new HashMap<>();
+        File root = new File("saves");
+        if (!root.exists()) {
+            return null;
+        }
+        File source = new File("users");
+        File fullSource = new File(root.getName() + File.separator + source.getName());
+        String[] files = fullSource.list();
+        if (!fullSource.exists()) {
+            return null;
+        }
+        for (String file: files) {
+            int id = extractID(removeExt(file));
+            List<Object> user = MyFileReader.getSINGLETON().readFile(source, removeExt(file));
+            map.put(id, user.get(0));
+        }
+        return map;
     }
 
     /**
@@ -32,7 +55,11 @@ public class UserDAO implements IUserDAO {
      */
     @Override
     public void addUser(Object user, int user_id) {
-
+        File destDir = new File("users");
+        String fileName = "user_" + String.valueOf(user_id);
+        MyFileWriter writer = MyFileWriter.getSINGLETON();
+        PluginSerializer serializer = PluginSerializer.getSINGLETON();
+        writer.writeFile(destDir, fileName, serializer.toJSON(user), true);
     }
 
     /**
@@ -43,6 +70,20 @@ public class UserDAO implements IUserDAO {
      */
     @Override
     public void clearAll() {
+        File target = new File("saves/users");
+        if (!target.exists()) return;
+        File[] files = target.listFiles();
+        for (File file: files) {
+            file.delete();
+        }
+    }
 
+    private int extractID(String fileName) {
+        String[] strings = fileName.split("_");
+        return Integer.parseInt(strings[1]);
+    }
+
+    private String removeExt(String s) {
+        return s.substring(0, s.indexOf('.'));
     }
 }

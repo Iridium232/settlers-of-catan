@@ -25,15 +25,11 @@ public class PluginSerializer {
     private Gson gson;
 
     private PluginSerializer() {
-        gson = new Gson();
+        gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
     public String toJSON(Object o) {
-        Gson gson2 = new GsonBuilder().setPrettyPrinting().create();
-        JsonParser jp = new JsonParser();
-        JsonElement je = jp.parse(gson.toJson(o));
-        String prettyJsonString = gson2.toJson(je);
-        return prettyJsonString;
+        return gson.toJson(o);
     }
 
     public Object fromJSON(String s) {
