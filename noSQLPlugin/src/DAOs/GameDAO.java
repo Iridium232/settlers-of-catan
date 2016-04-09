@@ -1,9 +1,11 @@
 package DAOs;
 
+import helpers.MyFileReader;
 import helpers.MyFileWriter;
 import helpers.PluginSerializer;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +25,23 @@ public class GameDAO implements IGameDAO {
      */
     @Override
     public Map<Integer, Object> getGames() {
-        return null;
+        Map<Integer, Object> map = new HashMap<>();
+        File root = new File("saves");
+        if (!root.exists()) {
+            return null;
+        }
+        File source = new File("games");
+        File fullSource = new File(root.getName() + File.separator + source.getName());
+        String[] files = fullSource.list();
+        if (!fullSource.exists()) {
+            return null;
+        }
+        for (String file: files) {
+            int id = extractID(file);
+            List<Object> game = MyFileReader.getSINGLETON().readFile(source, removeExt(file));
+            map.put(id, game.get(0));
+        }
+        return map;
     }
 
     /**
@@ -35,7 +53,23 @@ public class GameDAO implements IGameDAO {
      */
     @Override
     public Map<Integer, List<Object>> getCommands() {
-        return null;
+        Map<Integer, List<Object>> map = new HashMap<>();
+        File root = new File("saves");
+        if (!root.exists()) {
+            return null;
+        }
+        File source = new File("commands");
+        File fullSource = new File(root.getName() + File.separator + source.getName());
+        String[] files = fullSource.list();
+        if (!fullSource.exists()) {
+            return null;
+        }
+        for (String file: files) {
+            int id = extractID(file);
+            List<Object> commands = MyFileReader.getSINGLETON().readFile(source, removeExt(file));
+            map.put(id, commands);
+        }
+        return map;
     }
 
     /**
@@ -48,11 +82,11 @@ public class GameDAO implements IGameDAO {
      */
     @Override
     public void saveCommand(Object command, int game_id) {
-        File destDir = new File("Commands");
+        File destDir = new File("commands");
         String fileName = "game_" + String.valueOf(game_id) + "_commands";
         MyFileWriter writer = MyFileWriter.getSINGLETON();
         PluginSerializer serializer = PluginSerializer.getSINGLETON();
-        writer.writeFile(destDir, fileName, serializer.toJSON(0), true);
+        writer.writeFile(destDir, fileName, serializer.toJSON(command), true);
     }
 
     /**
@@ -65,7 +99,13 @@ public class GameDAO implements IGameDAO {
      */
     @Override
     public void saveModelAndEmptyCommands(Object model, int game_id) {
+        File destDir = new File("games");
+        String fileName = "game_" + String.valueOf(game_id) + "_model";
+        MyFileWriter writer = MyFileWriter.getSINGLETON();
+        PluginSerializer serializer = PluginSerializer.getSINGLETON();
+        writer.writeFile(destDir, fileName, serializer.toJSON(model), false);
 
+        emptyCommandsForGame(game_id);
     }
 
     /**
@@ -75,6 +115,42 @@ public class GameDAO implements IGameDAO {
      */
     @Override
     public void eraseAll() {
+        File root = new File("saves");
+        if (!root.exists()) return;
+        recursiveErase(root);
+    }
 
+    private int extractID(String fileName) {
+        String[] strings = fileName.split("_");
+        return Integer.parseInt(strings[1]);
+    }
+
+    private String removeExt(String s) {
+        return s.substring(0, s.indexOf('.'));
+    }
+
+    private void emptyCommandsForGame(int game_id) {
+        File root = new File("saves");
+        if (!root.exists()) return;
+        File destDir = new File(root.getName() + File.separator + "commands");
+        if (!destDir.exists()) return;
+        File[] list = destDir.listFiles();
+        for (File file: list) {
+            if (extractID(file.getName()) == game_id) {
+                file.delete();
+            }
+        }
+    }
+
+    private void recursiveErase(File dir) {
+        File[] list = dir.listFiles();
+        for (File file: list) {
+            if (file.isDirectory() && file.getName().equals("users")) continue;
+            if (file.isDirectory()) {
+                recursiveErase(file);
+            } else {
+                file.delete();
+            }
+        }
     }
 }
