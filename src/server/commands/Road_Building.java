@@ -12,8 +12,8 @@ public class Road_Building extends Command {
 
 	private Road_Building_ params;
 
-	public Road_Building(IServer s) {
-		super(s);
+	public Road_Building(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

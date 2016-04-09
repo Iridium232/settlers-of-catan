@@ -41,7 +41,7 @@ public class MonumentHandler extends AbstractMoveHandler{
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			shared.communication.toServer.moves.Monument_ move = gson.fromJson(writer.toString(), Monument_.class);
-			server.commands.Monument command = new server.commands.Monument(server);
+			server.commands.Monument command = new server.commands.Monument(server,gameID);
 			command.setParams(move);
 			command.execute();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

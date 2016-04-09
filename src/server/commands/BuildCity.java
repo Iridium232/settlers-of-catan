@@ -12,10 +12,9 @@ public class BuildCity extends Command
 {
     shared.communication.toServer.moves.BuildCity args;
 
-    public BuildCity(IServer s) 
-    {
-        super(s);
-    }
+    public BuildCity(IServer s, int gameID) {
+		super(s,gameID);
+	}
 
     @Override
     public void execute() 

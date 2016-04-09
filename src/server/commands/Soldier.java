@@ -12,8 +12,8 @@ public class Soldier extends Command {
 
 	private Soldier_ params;
 
-	public Soldier(IServer s) {
-		super(s);
+	public Soldier(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

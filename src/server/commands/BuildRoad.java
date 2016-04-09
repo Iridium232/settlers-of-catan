@@ -11,9 +11,8 @@ public class BuildRoad extends Command {
 
 	private shared.communication.toServer.moves.BuildRoad params;
 
-	public BuildRoad(IServer s) {
-		super(s);
-		// TODO Auto-generated constructor stub
+	public BuildRoad(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

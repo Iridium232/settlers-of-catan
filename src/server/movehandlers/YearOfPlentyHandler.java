@@ -50,7 +50,7 @@ public class YearOfPlentyHandler extends AbstractMoveHandler{
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			shared.communication.toServer.moves.Year_of_Plenty_ move =
 					gson.fromJson(writer.toString(), Year_of_Plenty_.class);
-			Year_of_Plenty command = new server.commands.Year_of_Plenty(server);
+			Year_of_Plenty command = new server.commands.Year_of_Plenty(server,gameID);
 			command.setParams(move);
 			command.execute();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

@@ -13,8 +13,8 @@ public class Year_of_Plenty extends Command {
 
 	private Year_of_Plenty_ params;
 	
-	public Year_of_Plenty(IServer s) {
-		super(s);
+	public Year_of_Plenty(IServer s,int gameID) {
+		super(s, gameID);
 	}
 
 	@Override

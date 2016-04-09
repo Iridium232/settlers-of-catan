@@ -46,7 +46,7 @@ public class MaritimeTradeHandler extends AbstractMoveHandler{
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			MaritimeTrade move = gson.fromJson(writer.toString(), MaritimeTrade.class);
-			server.commands.MaritimeTrade command = new server.commands.MaritimeTrade(server);
+			server.commands.MaritimeTrade command = new server.commands.MaritimeTrade(server,gameID);
 			command.setParams(move);
 			command.execute();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

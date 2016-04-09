@@ -11,8 +11,8 @@ public class BuyDevCard extends Command {
 
 	private shared.communication.toServer.moves.BuyDevCard params;
 
-	public BuyDevCard(IServer s) {
-		super(s);
+	public BuyDevCard(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

@@ -47,7 +47,7 @@ public class BuildSettlementHandler extends AbstractMoveHandler {
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			BuildSettlement move = gson.fromJson(writer.toString(), BuildSettlement.class);
-			server.commands.BuildSettlement command = new server.commands.BuildSettlement(server);
+			server.commands.BuildSettlement command = new server.commands.BuildSettlement(server,gameID);
 			command.setParams(move);
 			command.execute();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

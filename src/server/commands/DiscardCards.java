@@ -11,8 +11,8 @@ public class DiscardCards extends Command {
 
 	private shared.communication.toServer.moves.DiscardCards params;
 
-	public DiscardCards(IServer s) {
-		super(s);
+	public DiscardCards(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

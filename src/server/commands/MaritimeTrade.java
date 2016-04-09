@@ -12,8 +12,8 @@ public class MaritimeTrade extends Command {
 
 	private shared.communication.toServer.moves.MaritimeTrade params;
 
-	public MaritimeTrade(IServer s) {
-		super(s);
+	public MaritimeTrade(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

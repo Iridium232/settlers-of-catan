@@ -12,8 +12,8 @@ public class RollNumber extends Command {
 
 	private shared.communication.toServer.moves.RollNumber params;
 
-	public RollNumber(IServer s) {
-		super(s);
+	public RollNumber(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

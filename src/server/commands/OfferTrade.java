@@ -11,8 +11,8 @@ public class OfferTrade extends Command {
 
 	private shared.communication.toServer.moves.OfferTrade params;
 
-	public OfferTrade(IServer s) {
-		super(s);
+	public OfferTrade(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

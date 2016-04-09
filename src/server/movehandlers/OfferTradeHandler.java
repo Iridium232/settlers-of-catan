@@ -48,7 +48,7 @@ public class OfferTradeHandler extends AbstractMoveHandler{
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			shared.communication.toServer.moves.OfferTrade move = gson.fromJson(writer.toString(), OfferTrade.class);
-			server.commands.OfferTrade command = new server.commands.OfferTrade(server);
+			server.commands.OfferTrade command = new server.commands.OfferTrade(server,gameID);
 			command.setParams(move);
 			command.execute();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

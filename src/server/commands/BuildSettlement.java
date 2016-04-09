@@ -11,8 +11,8 @@ public class BuildSettlement extends Command {
 
 	private shared.communication.toServer.moves.BuildSettlement params;
 
-	public BuildSettlement(IServer s) {
-		super(s);
+	public BuildSettlement(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

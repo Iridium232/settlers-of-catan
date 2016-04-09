@@ -47,7 +47,7 @@ public class RoadBuildingHandler extends AbstractMoveHandler{
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			Road_Building_ move = gson.fromJson(writer.toString(), Road_Building_.class);
-			Road_Building command = new server.commands.Road_Building(server);
+			Road_Building command = new server.commands.Road_Building(server,gameID);
 			command.setParams(move);
 			command.execute();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

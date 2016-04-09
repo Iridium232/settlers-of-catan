@@ -12,8 +12,8 @@ public class Monument extends Command {
 
 	private Monument_ params;
 
-	public Monument(IServer s) {
-		super(s);
+	public Monument(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

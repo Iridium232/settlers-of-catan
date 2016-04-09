@@ -12,8 +12,8 @@ public class RobPlayer extends Command {
 
 	private shared.communication.toServer.moves.RobPlayer params;
 
-	public RobPlayer(IServer s) {
-		super(s);
+	public RobPlayer(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

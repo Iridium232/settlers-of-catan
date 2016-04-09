@@ -44,7 +44,7 @@ public class BuildCityHandler extends AbstractMoveHandler {
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			BuildCity move = gson.fromJson(writer.toString(), BuildCity.class);
-			server.commands.BuildCity command = new server.commands.BuildCity(server);
+			server.commands.BuildCity command = new server.commands.BuildCity(server,gameID);
 			command.setParams(move);
 			command.execute();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

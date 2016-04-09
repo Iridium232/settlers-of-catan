@@ -12,8 +12,8 @@ public class SendChat extends Command {
 
 	private shared.communication.toServer.moves.SendChat params;
 
-	public SendChat(IServer s) {
-		super(s);
+	public SendChat(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

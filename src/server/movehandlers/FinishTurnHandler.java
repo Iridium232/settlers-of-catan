@@ -41,7 +41,7 @@ public class FinishTurnHandler extends AbstractMoveHandler {
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			FinishTurn move = gson.fromJson(writer.toString(), FinishTurn.class);
-			server.commands.FinishTurn command = new server.commands.FinishTurn(server);
+			server.commands.FinishTurn command = new server.commands.FinishTurn(server,gameID);
 			command.setParams(move);
 			command.execute();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

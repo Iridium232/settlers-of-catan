@@ -12,8 +12,8 @@ public class FinishTurn extends Command {
 
 	private shared.communication.toServer.moves.FinishTurn params;
 
-	public FinishTurn(IServer s) {
-		super(s);
+	public FinishTurn(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

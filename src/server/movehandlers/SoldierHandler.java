@@ -43,7 +43,7 @@ public class SoldierHandler extends AbstractMoveHandler {
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			Soldier_ move = gson.fromJson(writer.toString(), Soldier_.class);
-			Soldier command = new Soldier(server);
+			Soldier command = new Soldier(server,gameID);
 			command.setParams(move);
 			command.execute();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

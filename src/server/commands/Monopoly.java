@@ -12,8 +12,8 @@ public class Monopoly extends Command {
 
 	private Monopoly_ params;
 
-	public Monopoly(IServer s) {
-		super(s);
+	public Monopoly(IServer s, int gameID) {
+		super(s,gameID);
 	}
 
 	@Override

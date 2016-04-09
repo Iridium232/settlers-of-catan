@@ -12,8 +12,10 @@ public abstract class Command
 {
 	IServer server;
 	public static IObserver observer;
-	public Command(IServer s) {
+	private int gameID;
+	public Command(IServer s,int gameID) {
 		server=s;
+		this.gameID=gameID;
 	}
 	abstract public void execute();
 }

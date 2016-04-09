@@ -46,7 +46,7 @@ public class BuildRoadHandler extends AbstractMoveHandler {
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			BuildRoad move = gson.fromJson(writer.toString(), BuildRoad.class);
-			server.commands.BuildRoad command = new server.commands.BuildRoad(server);
+			server.commands.BuildRoad command = new server.commands.BuildRoad(server,gameID);
 			command.setParams(move);
 			command.execute();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
