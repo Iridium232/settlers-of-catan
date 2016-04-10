@@ -169,7 +169,8 @@ public class Game
 	/**
 	 * @return the winner
 	 */
-	public int getWinner() {
+	public int getWinner() 
+	{
 		return winner;
 	}
 
@@ -350,6 +351,7 @@ public class Game
 		turn_tracker.setLongest_road_player(-1);
 		turn_tracker.setState(new FirstRoundState());
 		turn_tracker.setStatus(TurnStatus.FIRSTROUND);
+		this.resource_bank = new ResourceMultiSet(19,19,19,19,19);
 		version++;
 	}
 
@@ -402,7 +404,7 @@ public class Game
 		{
 			total_found = 0;
 		}
-		players[commanding_player_index].getResource(resource, total_found);
+		players[commanding_player_index].getResource(null, resource, total_found);
 		version++;
 		log(commanding_player_index,Action.MONOPOLY,-1);
 	}
@@ -440,8 +442,8 @@ public class Game
 			ResourceType one, ResourceType two) throws Exception 
 	{
 		players[commanding_player_index].playDevCard(DevCardType.YEAR_OF_PLENTY);
-		players[commanding_player_index].getResource(one, 1);
-		players[commanding_player_index].getResource(two, 1);
+		players[commanding_player_index].getResource(this, one, 1);
+		players[commanding_player_index].getResource(this, two, 1);
 		this.resource_bank.pay(one, 1);
 		this.resource_bank.pay(two, 1);
 		version++;
@@ -472,6 +474,7 @@ public class Game
 			if(turn_tracker.getLargest_army_player()==-1){
 				current.incrementVictoryPoints(2);
 				turn_tracker.setLargest_army_player(commanding_player_index);
+				this.log(commanding_player_index, Action.LARGESTARMY, -1);
 			}
 			else{
 				Player largest=players[turn_tracker.getLargest_army_player()];
@@ -502,7 +505,7 @@ public class Game
 		}
 		while (!victim_stuff.has(resource));
 	
-		players[commanding_player_index].getResource(resource, 1);
+		players[commanding_player_index].getResource(null, resource, 1);
 		players[victimIndex].pay(resource, 1);
 		
 		version++;
@@ -571,7 +574,7 @@ public class Game
 		}
 		while (!victim_stuff.has(resource));
 	
-		players[commanding_player_index].getResource(resource, 1);
+		players[commanding_player_index].getResource(null, resource, 1);
 		players[victimIndex].pay(resource, 1);
 		
 		turn_tracker.getState().finishPhase(turn_tracker, commanding_player_index);
@@ -585,7 +588,7 @@ public class Game
 		this.resource_bank.pay(output, 1);
 		players[commanding_player_index].pay(input, ratio);
 		this.resource_bank.add(input, ratio);
-		players[commanding_player_index].getResource(output, 1);
+		players[commanding_player_index].getResource(this, output, 1);
 		version++;
 	}
 
@@ -639,15 +642,19 @@ public class Game
 			if(turn_tracker.getLongest_road_player()==-1){
 				turn_tracker.setLongest_road_player(commanding_player_index);
 				current.incrementVictoryPoints(2);
+				this.log(commanding_player_index, Action.LONGESTROAD, -1);
 			}
-			else{
+			else
+			{
 				Player longestOwner=players[turn_tracker.getLongest_road_player()];
 				int longest=15-longestOwner.getRoads();
 				if(roads>longest&&longestOwner.getPlayerID()!=current.getPlayerID()){
 					longestOwner.incrementVictoryPoints(-2);
+				
 //					longestOwner.setVictoryPoints(longestOwner.getVictoryPoints()-2);
 					turn_tracker.setLongest_road_player(commanding_player_index);
 					current.incrementVictoryPoints(2);
+					this.log(commanding_player_index, Action.LONGESTROAD, -1);
 //					current.setVictoryPoints(current.getVictoryPoints()+2);
 				}
 			}
@@ -795,15 +802,19 @@ public class Game
 				Building[] buildings = map.getAdjoiningPlayers(lucky_spot.getLocation());
 				for(Building building : buildings)
 				{
-					if(building.getClass().getName().equals("City"))
+					//System.out.print("\nBuilding by this hex is a : " + building.getClass().getName() + "\n");
+					if(building.getClass().getName().equals("shared.model.map.buildings.City"))
 					{
+						//System.out.print("\nCity Here\n");
 						players[building.getOwner()].getResource(
-							lucky_spot.getResource(), 2);
+							this, lucky_spot.getResource(), 2);
+						resource_bank.pay(lucky_spot.getResource(), 2);
 					}
 					else
 					{
 						players[building.getOwner()].getResource(
-							lucky_spot.getResource(), 1);
+							this, lucky_spot.getResource(), 1);
+						resource_bank.pay(lucky_spot.getResource(), 1);
 					}	
 				}
 			}
@@ -928,7 +939,7 @@ public class Game
 				{
 					continue;
 				}
-				players[player_index].getResource(reward, 1);
+				players[player_index].getResource(null, reward, 1);
 			}
 		}
 		log(player_index,Action.SETTLEMENT,-1);
@@ -936,7 +947,8 @@ public class Game
 	
 	enum Action 
 	{
-		ROAD,SETTLEMENT,CITY,ROB,FINISH,BUYDEV,ROLL,MONOPOLY,YEAROFPLENTY,SOLDIER,MONUMENT,JOIN,REJOIN
+		ROAD,SETTLEMENT,CITY,ROB,FINISH,BUYDEV,ROLL,MONOPOLY,YEAROFPLENTY,
+		SOLDIER,MONUMENT,JOIN,REJOIN,LARGESTARMY,LONGESTROAD
 	};
 	
 	
@@ -1009,6 +1021,12 @@ public class Game
 		case JOIN:
 			message += "joined the game.";
 			break;
+		case LARGESTARMY:
+			message += "got the largest army.";
+			break;
+		case LONGESTROAD:
+			message += "got the longest road.";
+			break;
 		default:
 			return;
 		}
@@ -1017,8 +1035,9 @@ public class Game
 		{
 			if (p.getVictoryPoints() >= 10)
 			{
+				this.log.addMessage(new MessageLine(p.getName(),p.getName() + 
+						" has won the game!"));
 				this.winner = p.getPlayerIndex();
-				this.log.addMessage(new MessageLine(p.getName(),p.getName() + " has won the game!"));
 			}
 		}
 	}

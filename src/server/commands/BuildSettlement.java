@@ -18,7 +18,7 @@ public class BuildSettlement extends Command {
 	@Override
 	public void execute()
 	{
-		server.buildSettlementCommand(params);
+		server.buildSettlementCommand(params,gameID);
 	}
 
 	public void setParams(shared.communication.toServer.moves.BuildSettlement move) 

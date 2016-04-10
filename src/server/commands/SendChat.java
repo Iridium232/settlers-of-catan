@@ -19,7 +19,7 @@ public class SendChat extends Command {
 	@Override
 	public void execute()
 	{
-		server.sendChatCommand(params);
+		server.sendChatCommand(params,gameID);
 	}
 
 	public void setParams(shared.communication.toServer.moves.SendChat move) 

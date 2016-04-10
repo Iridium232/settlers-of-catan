@@ -28,7 +28,7 @@ import server.movehandlers.RollNumberHandler;
 import server.movehandlers.SendChatHandler;
 import server.movehandlers.SoldierHandler;
 import server.movehandlers.YearOfPlentyHandler;
-import server.plugin_attachments.PersistenceProvider;
+import server.plugin_attachments.IPersistenceProvider;
 import server.plugin_attachments.PluginInfo;
 import server.plugin_attachments.PluginRegistry;
 import server.userhandler.LoginHandler;
@@ -123,7 +123,7 @@ public class Server
 				);
 			Class<?> c = Class.forName(info.getMain_class_name(),true,loader);
 			//end StackOverflow reference
-			PersistenceProvider pp = (PersistenceProvider) c.newInstance();
+			IPersistenceProvider pp = (IPersistenceProvider) c.newInstance();
 			facade.addPersistence(pp);
 		}
 		catch (Exception e)

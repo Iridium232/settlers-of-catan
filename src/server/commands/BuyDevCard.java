@@ -18,7 +18,7 @@ public class BuyDevCard extends Command {
 	@Override
 	public void execute()
 	{
-		server.buyDevCardCommand(params);
+		server.buyDevCardCommand(params,gameID);
 	}
 
 	public void setParams(shared.communication.toServer.moves.BuyDevCard move) 

@@ -19,7 +19,7 @@ public class Monument extends Command {
 	@Override
 	public void execute() 
 	{
-		server.playMonumentCardCommand(params);
+		server.playMonumentCardCommand(params,gameID);
 	}
 
 	public void setParams(Monument_ move) 

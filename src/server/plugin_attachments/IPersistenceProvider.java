@@ -5,7 +5,7 @@ package server.plugin_attachments;
  * @author jeyrey
  *
  */
-public abstract class PersistenceProvider 
+public interface IPersistenceProvider 
 {
 	/**
 	 * Please Override
@@ -14,10 +14,7 @@ public abstract class PersistenceProvider
 	 * @post throws an error.
 	 * @throws Exception
 	 */
-	public IGameDAO generateGameDAO() throws Exception
-	{
-		throw new Exception("ERROR! Persistance Plugin Failed to Load");
-	}
+	public IGameDAO generateGameDAO() throws Exception;
 	
 	/**
 	 * Please Override
@@ -26,8 +23,5 @@ public abstract class PersistenceProvider
 	 * @post throws an error.
 	 * @throws Exception
 	 */
-	public IUserDAO generateIUserDAO() throws Exception
-	{
-		throw new Exception("ERROR! Persistance Plugin Failed to Load");
-	}
+	public IUserDAO generateIUserDAO() throws Exception;
 }

@@ -18,7 +18,7 @@ public class BuildRoad extends Command {
 	@Override
 	public void execute() 
 	{
-		server.buildRoadCommand(params);
+		server.buildRoadCommand(params,gameID);
 	}
 
 	public void setParams(shared.communication.toServer.moves.BuildRoad move) 

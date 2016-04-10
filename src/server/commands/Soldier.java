@@ -19,7 +19,7 @@ public class Soldier extends Command {
 	@Override
 	public void execute() 
 	{
-		this.server.playSoldierCardCommand(params);
+		this.server.playSoldierCardCommand(params,gameID);
 	}
 
 	public void setParams(Soldier_ move) 

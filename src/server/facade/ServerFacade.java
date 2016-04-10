@@ -7,7 +7,7 @@ import java.util.UUID;
 import server.communication.ModelTranslator;
 import server.plugin_attachments.IGameDAO;
 import server.plugin_attachments.IUserDAO;
-import server.plugin_attachments.PersistenceProvider;
+import server.plugin_attachments.IPersistenceProvider;
 import client.communication.IServer;
 import client.communication.ModelPopulator;
 import shared.communication.EdgeLocation;
@@ -45,8 +45,8 @@ public class ServerFacade implements IServer
 	private int game_index = 0;
 	private ArrayList<shared.model.Fascade> games;
 	private ArrayList<User> users;
-	private PersistenceProvider factory;
-	private PersistenceProvider persistence_factory;
+	private IPersistenceProvider factory;
+	private IPersistenceProvider persistence_factory;
 
     public ServerFacade() {
         this.games = new ArrayList<>();
@@ -81,7 +81,7 @@ public class ServerFacade implements IServer
 	{
 		for (User user : users)
 		{
-			if (user.checkPassword(password))
+			if (user.getName().equals(username) && user.checkPassword(password))
 			{
 				return Integer.toString(user.getPlayerID());
 			}
@@ -1131,7 +1131,7 @@ public class ServerFacade implements IServer
 		game_index = gameID;
 		commanding_player_index = params.getPlayerIndex();
 		monopoly(ResourceType.valueOf(params.getResource().toUpperCase()));
-		return null;//TODO serialize and return
+		return null;
 	}
 	
 	/**
@@ -1147,9 +1147,17 @@ public class ServerFacade implements IServer
 	{
 		game_index = gameID;
 		commanding_player_index = params.getPlayerIndex();
-		yearOfPlenty(ResourceType.valueOf(params.getResource1().toUpperCase()),
-                ResourceType.valueOf(params.getResource2().toUpperCase()));
-		return null;//TODO serialize and return
+		try
+		{
+			yearOfPlenty(ResourceType.valueOf(params.getResource1().toUpperCase()),
+				ResourceType.valueOf(params.getResource2().toUpperCase()));
+		}
+		catch(Exception e)
+		{
+			System.err.print("Resource Conversion ERROR");
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	/**
@@ -1266,7 +1274,7 @@ public class ServerFacade implements IServer
      * @post the persistence provider will be available
      * @param pp
      */
-	public void addPersistence(PersistenceProvider pp) 
+	public void addPersistence(IPersistenceProvider pp) 
 	{
 		this.persistence_factory = pp;
 	}
@@ -1275,7 +1283,7 @@ public class ServerFacade implements IServer
 	 * gets the persistence provider factory
 	 * @return
 	 */
-	public PersistenceProvider getPersister()
+	public IPersistenceProvider getPersister()
 	{
 		return persistence_factory;
 	}

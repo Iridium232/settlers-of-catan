@@ -19,7 +19,7 @@ public class FinishTurn extends Command {
 	@Override
 	public void execute() 
 	{
-		server.FinishTurnCommand(params);
+		server.FinishTurnCommand(params,gameID);
 	}
 
 	public void setParams(shared.communication.toServer.moves.FinishTurn move) 

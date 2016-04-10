@@ -12,7 +12,7 @@ public abstract class Command
 {
 	IServer server;
 	public static IObserver observer;
-	private int gameID;
+	protected int gameID;
 	public Command(IServer s,int gameID) {
 		server=s;
 		this.gameID=gameID;

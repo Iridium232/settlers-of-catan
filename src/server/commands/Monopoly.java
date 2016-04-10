@@ -19,7 +19,7 @@ public class Monopoly extends Command {
 	@Override
 	public void execute() 
 	{
-		server.playMonopolyCardCommand(params);
+		server.playMonopolyCardCommand(params,gameID);
 	}
 
 	public void setParams(Monopoly_ move) 

@@ -482,91 +482,7 @@ public class ServerProxy implements IServer {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
-	public CommunicationModel sendChatCommand(SendChat params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel acceptTradeCommand(AcceptTrade params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel discardCommand(DiscardCards params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel rollNumberCommand(RollNumber params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel buildRoadCommand(BuildRoad params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel buildCityCommand(BuildCity params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel buildSettlementCommand(BuildSettlement params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel offerTradeCommand(OfferTrade params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel maritimeTradeCommand(MaritimeTrade params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel robCommand(RobPlayer params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel FinishTurnCommand(FinishTurn params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel buyDevCardCommand(BuyDevCard params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel playSoldierCardCommand(Soldier_ params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel playMonumentCardCommand(Monument_ params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel playMonopolyCardCommand(Monopoly_ params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel playYearOfPlentyCardCommand(Year_of_Plenty_ params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public CommunicationModel playRoadBuildingCardCommand(Road_Building_ params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	@Override
 	public shared.model.Game getGameModelByID(int params) {
 		// TODO Auto-generated method stub
@@ -586,6 +502,97 @@ public class ServerProxy implements IServer {
 	public int joinGameCommand(JoinGameRequest params, int playerID) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	@Override
+	public CommunicationModel sendChatCommand(SendChat params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel acceptTradeCommand(AcceptTrade params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel discardCommand(DiscardCards params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel rollNumberCommand(RollNumber params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel buildRoadCommand(BuildRoad params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel buildCityCommand(BuildCity params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel buildSettlementCommand(BuildSettlement params,
+			int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel offerTradeCommand(OfferTrade params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel maritimeTradeCommand(MaritimeTrade params,
+			int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel robCommand(RobPlayer params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel FinishTurnCommand(FinishTurn params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel buyDevCardCommand(BuyDevCard params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel playSoldierCardCommand(Soldier_ params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel playMonumentCardCommand(Monument_ params,
+			int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel playMonopolyCardCommand(Monopoly_ params,
+			int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel playYearOfPlentyCardCommand(
+			Year_of_Plenty_ params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public CommunicationModel playRoadBuildingCardCommand(
+			Road_Building_ params, int gameID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

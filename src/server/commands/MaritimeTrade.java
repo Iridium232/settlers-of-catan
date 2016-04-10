@@ -19,7 +19,7 @@ public class MaritimeTrade extends Command {
 	@Override
 	public void execute() 
 	{
-		server.maritimeTradeCommand(params);
+		server.maritimeTradeCommand(params,gameID);
 	}
 
 	public void setParams(shared.communication.toServer.moves.MaritimeTrade move) 

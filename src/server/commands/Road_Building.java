@@ -19,7 +19,7 @@ public class Road_Building extends Command {
 	@Override
 	public void execute()
 	{
-		server.playRoadBuildingCardCommand(params);
+		server.playRoadBuildingCardCommand(params,gameID);
 	}
 
 	public void setParams(Road_Building_ move) 

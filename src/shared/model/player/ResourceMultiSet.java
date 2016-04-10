@@ -399,5 +399,25 @@ public class ResourceMultiSet {
 	}
 
 
+	public boolean has(ResourceType resource, int quantity) 
+	{
+		switch (resource)
+		{
+		case BRICK:
+			return this.brick >= quantity;
+		case ORE:
+			return this.ore >= quantity;
+		case SHEEP:
+			return this.sheep >= quantity;
+		case WHEAT:
+			return this.wheat >= quantity;
+		case WOOD:
+			return this.wood >= quantity;
+		default: 
+			return false;
+		}
+	}
+
+
 
 }

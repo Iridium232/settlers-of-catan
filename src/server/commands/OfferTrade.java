@@ -18,7 +18,7 @@ public class OfferTrade extends Command {
 	@Override
 	public void execute()
 	{
-		server.offerTradeCommand(params);
+		server.offerTradeCommand(params,gameID);
 	}
 
 	public void setParams(shared.communication.toServer.moves.OfferTrade move) 

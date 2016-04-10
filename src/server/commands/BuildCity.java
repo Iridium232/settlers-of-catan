@@ -19,7 +19,7 @@ public class BuildCity extends Command
     @Override
     public void execute() 
     {
-        server.buildCityCommand(args);
+        server.buildCityCommand(args,gameID);
     }
 
 	public void setParams(shared.communication.toServer.moves.BuildCity move) 

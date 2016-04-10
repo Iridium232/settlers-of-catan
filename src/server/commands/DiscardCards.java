@@ -18,7 +18,7 @@ public class DiscardCards extends Command {
 	@Override
 	public void execute() 
 	{
-		server.discardCommand(params);
+		server.discardCommand(params,gameID);
 	}
 
 	public void setParams(shared.communication.toServer.moves.DiscardCards move)

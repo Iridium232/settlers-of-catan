@@ -13,14 +13,15 @@ public class Year_of_Plenty extends Command {
 
 	private Year_of_Plenty_ params;
 	
-	public Year_of_Plenty(IServer s,int gameID) {
+	public Year_of_Plenty(IServer s,int gameID) 
+	{
 		super(s, gameID);
 	}
 
 	@Override
 	public void execute()
 	{
-		this.server.playYearOfPlentyCardCommand(params);
+		this.server.playYearOfPlentyCardCommand(params,gameID);
 	}
 
 	public void setParams(Year_of_Plenty_ move) 

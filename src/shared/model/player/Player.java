@@ -6,6 +6,7 @@ import shared.communication.toServer.moves.BuyDevCard;
 import shared.definitions.DevCardType;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
+import shared.model.Game;
 
 /**
  * Michael Rhodes
@@ -846,9 +847,12 @@ public class Player {
         return oldDevCards.includes(soldier_cost) && !playedDevCard;
 	}
 
-	public void getResource(ResourceType resource, int quantity) throws Exception 
+	public void getResource(Game game, ResourceType resource, int quantity) throws Exception 
 	{
-		this.resources.add(resource, quantity);
+		if(game == null || game.getResource_bank().has(resource, quantity))
+		{
+			this.resources.add(resource, quantity);
+		}
 	}
 
 	public void pay(ResourceType resource, int quantity) throws Exception 

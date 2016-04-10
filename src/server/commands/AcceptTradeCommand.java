@@ -22,7 +22,7 @@ public class AcceptTradeCommand extends Command
 	@Override
 	public void execute() 
 	{
-		server.acceptTradeCommand(params);
+		server.acceptTradeCommand(params,gameID);
 	}
 
 	public void setParams(AcceptTrade move) 

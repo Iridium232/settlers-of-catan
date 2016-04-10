@@ -19,7 +19,7 @@ public class RollNumber extends Command {
 	@Override
 	public void execute() 
 	{
-		server.rollNumberCommand(params);
+		server.rollNumberCommand(params,gameID);
 	}
 
 	public void setParams(shared.communication.toServer.moves.RollNumber move) 

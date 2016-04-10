@@ -19,7 +19,7 @@ public class RobPlayer extends Command {
 	@Override
 	public void execute() 
 	{
-		server.robCommand(params);
+		server.robCommand(params,gameID);
 	}
 
 	public void setParams(shared.communication.toServer.moves.RobPlayer move) 
