@@ -53,6 +53,7 @@ public class YearOfPlentyHandler extends AbstractMoveHandler{
 			Year_of_Plenty command = new server.commands.Year_of_Plenty(gameID);
 			command.setParams(move);
 			command.execute(server);
+            this.addCommand(command, gameID);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(exchange.getResponseBody());
 			output.write(server.getModel(gameID));

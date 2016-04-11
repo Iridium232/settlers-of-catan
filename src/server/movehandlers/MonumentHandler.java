@@ -44,6 +44,7 @@ public class MonumentHandler extends AbstractMoveHandler{
 			server.commands.Monument command = new server.commands.Monument(gameID);
 			command.setParams(move);
 			command.execute(server);
+            this.addCommand(command, gameID);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());

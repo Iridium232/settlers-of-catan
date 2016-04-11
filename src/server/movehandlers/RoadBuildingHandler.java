@@ -50,6 +50,7 @@ public class RoadBuildingHandler extends AbstractMoveHandler{
 			Road_Building command = new server.commands.Road_Building(gameID);
 			command.setParams(move);
 			command.execute(server);
+            this.addCommand(command, gameID);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());
