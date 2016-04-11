@@ -57,7 +57,7 @@ public class Server
 	 * @param args
 	 */
 	private HttpServer server;
-	private ServerFacade facade=new ServerFacade();
+	private ServerFacade facade;
 	private Server() {
 		return;
 	}
@@ -98,13 +98,14 @@ public class Server
 		{
 			System.out.print("\nNo command count given, using default: 10.");
 		}
+		
 		Server.PERSISTENCE_TYPE = plugin;
 		new Server().run();
-		System.out.print("\nServer Running Happily. Have fun!\n");
-		
+		System.out.print("\nServer Running Happily. Have fun!\n");	
 		
 	}
 	private void run() {
+		facade=new ServerFacade(COMMANDS_BEFORE_SAVE);
 		try {
 			server = HttpServer.create(new InetSocketAddress(SERVER_PORT_NUMBER),MAX_WAITING_CONNECTIONS);
 		} 

@@ -54,7 +54,7 @@ public class ServerFacade implements IServer
 	private IGameDAO gameDAO;
 	private IUserDAO userDAO;
 	
-    public ServerFacade() {
+    public ServerFacade(int maxSize) {
         this.games = new ArrayList<>();
         this.users = new ArrayList<>();
         this.commands=new HashMap<Integer,ArrayList<Command>>();
@@ -63,6 +63,7 @@ public class ServerFacade implements IServer
         register("Brooke","brooke");
         register("Pete","pete");
         register("Mark","mark");
+        max_command_size=maxSize;
     }
 
     /**
@@ -122,6 +123,7 @@ public class ServerFacade implements IServer
 		new_user.setPassword(password);
 		new_user.setPlayerID(users.size());
 		users.add(new_user);
+		userDAO.addUser(new_user);
 		return Integer.toString(new_user.getPlayerID());
 	}
 
