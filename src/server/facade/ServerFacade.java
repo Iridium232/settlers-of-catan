@@ -123,8 +123,8 @@ public class ServerFacade implements IServer
 		new_user.setPassword(password);
 		new_user.setPlayerID(users.size());
 		users.add(new_user);
-//		userDAO.addUser(new_user, new_user.getPlayerID());
-		return Integer.toString(new_user.getPlayerID());
+        addUser(new_user, new_user.getPlayerID());
+        return Integer.toString(new_user.getPlayerID());
 	}
 
 	/**
