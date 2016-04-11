@@ -1308,6 +1308,7 @@ public class ServerFacade implements IServer
 					w.execute(this);
 				}
 			}
+
 			gameDAO.saveModelAndEmptyCommands(games.get(c.getKey()), c.getKey());
 		}
 	}
