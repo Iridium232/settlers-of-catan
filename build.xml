@@ -8,7 +8,9 @@
     <property name="web.arg" value="gameplay"/>
     <property name="options.arg" value="ug"/>
 	<property name="PORT" value="8081" />
-	<property name="HOST" value="$localhost" />
+	<property name="HOST" value="localhost" />
+	<property name="N" value="10"/>
+	<property name="PERSISTENCE" value="NoSQL"/>
      
     <!-- Input folders -->
     <property name="java.dir" value="java"/>
@@ -198,8 +200,9 @@
 			<java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
 				<sysproperty key="com.sun.management.jmxremote" value=""/>
 				
-				<arg value="${HOST}"/>
 				<arg value="${PORT}"/>
+				<arg value="${PERSISTENCE}"/>
+				<arg value="${N}"/>
 				<assertions><enable/>
 				</assertions>
 			</java>
