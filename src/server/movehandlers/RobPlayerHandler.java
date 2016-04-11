@@ -44,6 +44,7 @@ public class RobPlayerHandler extends AbstractMoveHandler {
 			server.commands.RobPlayer command = new server.commands.RobPlayer(gameID);
 			command.setParams(move);
 			command.execute(server);
+			server.addCommand(gameID, command);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());

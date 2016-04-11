@@ -49,6 +49,7 @@ public class BuildRoadHandler extends AbstractMoveHandler {
 			server.commands.BuildRoad command = new server.commands.BuildRoad(gameID);
 			command.setParams(move);
 			command.execute(server);
+			server.addCommand(gameID, command);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 				exchange.getResponseBody());

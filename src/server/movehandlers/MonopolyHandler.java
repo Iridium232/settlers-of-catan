@@ -44,6 +44,7 @@ public class MonopolyHandler extends AbstractMoveHandler{
 			server.commands.Monopoly command = new server.commands.Monopoly(gameID);
 			command.setParams(move);
 			command.execute(server);
+			server.addCommand(gameID, command);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());

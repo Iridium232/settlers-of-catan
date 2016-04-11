@@ -47,6 +47,7 @@ public class SendChatHandler extends AbstractMoveHandler {
 			server.commands.SendChat command = new server.commands.SendChat(gameID);
 			command.setParams(move);
 			command.execute(server);
+			server.addCommand(gameID, command);
 			String result = server.getModel(gameID);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(

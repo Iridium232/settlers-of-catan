@@ -51,6 +51,7 @@ public class OfferTradeHandler extends AbstractMoveHandler{
 			server.commands.OfferTrade command = new server.commands.OfferTrade(gameID);
 			command.setParams(move);
 			command.execute(server);
+			server.addCommand(gameID, command);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());

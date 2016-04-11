@@ -49,6 +49,7 @@ public class MaritimeTradeHandler extends AbstractMoveHandler{
 			server.commands.MaritimeTrade command = new server.commands.MaritimeTrade(gameID);
 			command.setParams(move);
 			command.execute(server);
+			server.addCommand(gameID, command);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());

@@ -1276,7 +1276,8 @@ public class ServerFacade implements IServer
 
     /**
      * Add a persistence provider to the server
-     * 
+     * Loads all of the users and the games from storage. 
+     * If any game has commands then it runs them to update the model then clears the list.
      * @pre none
      * @post the persistence provider will be available
      * @param pp
@@ -1302,10 +1303,10 @@ public class ServerFacade implements IServer
 			if(coms.size()>0) {
 				for(Object s:coms) {
 					Command w=(Command)s;
-					w.execute();
+					w.execute(this);
 				}
 			}
-			gameDAO.saveModelAndEmptyCommands(model, c.getKey());
+			gameDAO.saveModelAndEmptyCommands(games.get(c.getKey()), c.getKey());
 		}
 	}
 	
@@ -1324,7 +1325,9 @@ public class ServerFacade implements IServer
 		ArrayList<Command> some=this.commands.get(gameID);
 		some.add(c);
 		if(some.size()==max_command_size) {
-			
+			gameDAO.saveModelAndEmptyCommands(games.get(gameID), gameID);
+		} else {
+			gameDAO.saveCommand(c, gameID);
 		}
 	}
 }
