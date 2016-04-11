@@ -1,6 +1,8 @@
 package client.communication;
 
 import java.util.List;
+
+import server.facade.User;
 import shared.communication.fromServer.game.*;
 import shared.communication.toServer.moves.*;
 import shared.communication.toServer.games.*;
@@ -264,6 +266,7 @@ public interface IServer {
 	public shared.model.Game getGameModelByID(int params);
 	public int getVersionOf(int game_id);
 	public void addCommand(int gameID,server.commands.Command c);
+    public void addUser(User user, int user_id);
 
 	public Fascade getFacadeByID(int gameID);
 }

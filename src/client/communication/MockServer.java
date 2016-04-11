@@ -2,6 +2,7 @@ package client.communication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import server.facade.User;
 import shared.communication.ResourceList;
 import shared.communication.fromServer.game.CommunicationModel;
 import shared.communication.fromServer.game.VertexLocation;
@@ -229,7 +230,12 @@ public class MockServer implements IServer {
 		return null;
 	}
 
-	private String getHardCodedModel() {
+    @Override
+    public void addUser(User user, int user_id) {
+        return;
+    }
+
+    private String getHardCodedModel() {
 		return "{\n" +
 				"  \"deck\": {\n" +
 				"    \"yearOfPlenty\": 2,\n" +

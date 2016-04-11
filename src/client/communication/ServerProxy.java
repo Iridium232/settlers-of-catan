@@ -3,6 +3,7 @@ package client.communication;
 import client.control.Reference;
 import com.google.gson.Gson;
 import org.json.JSONObject;
+import server.facade.User;
 import shared.communication.ResourceList;
 import shared.communication.ResourceTranslator;
 import shared.communication.fromServer.game.CommunicationModel;
@@ -600,4 +601,8 @@ public class ServerProxy implements IServer {
 		
 	}
 
+    @Override
+    public void addUser(User user, int user_id) {
+        return;
+    }
 }
