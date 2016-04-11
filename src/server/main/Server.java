@@ -28,7 +28,9 @@ import server.movehandlers.RollNumberHandler;
 import server.movehandlers.SendChatHandler;
 import server.movehandlers.SoldierHandler;
 import server.movehandlers.YearOfPlentyHandler;
+import server.plugin_attachments.IGameDAO;
 import server.plugin_attachments.IPersistenceProvider;
+import server.plugin_attachments.IUserDAO;
 import server.plugin_attachments.PluginInfo;
 import server.plugin_attachments.PluginRegistry;
 import server.userhandler.LoginHandler;
@@ -53,7 +55,7 @@ public class Server
 	private static String PERSISTENCE_TYPE = "NoSQL";
 	private static int COMMANDS_BEFORE_SAVE = 10;
 	private static final String PLUGIN_REGISTRY_RELATIVE_PATH = "src/plugins.config";
-	
+	private static final boolean RESET = false;
 	/**
 	 * Main Function that starts up all the pieces of the server.
 	 * @param args
@@ -145,6 +147,13 @@ public class Server
 			//end StackOverflow references
 			
 			IPersistenceProvider pp =  c.newInstance();
+			if(this.RESET)
+			{
+				IGameDAO games = pp.generateGameDAO();
+				IUserDAO users = pp.generateIUserDAO();
+				games.eraseAll();
+				users.clearAll();
+			}
 			facade.addPersistence(pp);
 		}
 		catch (Exception e)
