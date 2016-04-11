@@ -101,6 +101,7 @@ public class Server
 			System.out.print("\nNo command count given, using default: 10.");
 		}
 		Server.PERSISTENCE_TYPE = plugin;
+		
 		new Server().run();
 		System.out.print("\nServer Running Happily. Have fun!\n");
 		
@@ -113,7 +114,7 @@ public class Server
 		catch (IOException e) {
 			return;
 		}
-		
+		this.facade.setN(this.COMMANDS_BEFORE_SAVE);
 		try
 		{
 			PluginRegistry registry = PluginRegistry.getSingleton();

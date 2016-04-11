@@ -1335,12 +1335,27 @@ public class ServerFacade implements IServer
 	}
 
 	@Override
-	public void addCommand(int gameID, Command c) {
-		// TODO Auto-generated method stub
-		ArrayList<Command> some=this.commands.get(gameID);
+	public void addCommand(int gameID, Command c) 
+	{
+		ArrayList<Command> some = commands.get(gameID);
 		some.add(c);
-		if(some.size()==max_command_size) {
-			
+		if(some.size()==max_command_size) 
+		{
+			try 
+			{
+				persistence_factory.generateGameDAO().
+					saveModelAndEmptyCommands(this.getModel(gameID), gameID);
+			} 
+			catch (Exception e)
+			{
+				System.out.print("Save Command Failed!");
+				e.printStackTrace();
+			}
 		}
+	}
+
+	public void setN(int commands_BEFORE_SAVE)
+	{
+		max_command_size = commands_BEFORE_SAVE;
 	}
 }
