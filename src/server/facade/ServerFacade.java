@@ -1359,6 +1359,9 @@ public class ServerFacade implements IServer
     @Override
     public void addUser(User user, int user_id) {
         IUserDAO userDAO = null;
+        if (persistence_factory == null) {
+            return;
+        }
         try {
             userDAO = persistence_factory.generateIUserDAO();
         } catch (Exception e) {
