@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.*;
 
 import client.communication.IServer;
+import server.commands.Command;
 import server.facade.User;
 import server.gamehandlers.AbstractGameHandler;
 
@@ -39,6 +40,11 @@ public abstract class AbstractMoveHandler extends AbstractGameHandler implements
 		//compare model number
 		gameID=Integer.parseInt(gameCookie);
 		return gameID;
+	}
+	
+	public void addCommand(Command command, int game_id)
+	{
+		server.addCommand(game_id, command);
 	}
 	
 	@Override

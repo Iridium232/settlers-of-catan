@@ -43,7 +43,7 @@ public class RollNumberHandler extends AbstractMoveHandler {
 			server.commands.RollNumber command = new server.commands.RollNumber(gameID);
 			command.setParams(move);
 			command.execute(server);
-			server.addCommand(gameID, command);
+            this.addCommand(command, gameID);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());

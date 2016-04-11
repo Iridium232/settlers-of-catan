@@ -46,7 +46,7 @@ public class SoldierHandler extends AbstractMoveHandler {
 			Soldier command = new Soldier(gameID);
 			command.setParams(move);
 			command.execute(server);
-			server.addCommand(gameID, command);
+            this.addCommand(command, gameID);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());

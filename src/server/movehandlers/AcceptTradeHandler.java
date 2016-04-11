@@ -48,7 +48,7 @@ public class AcceptTradeHandler extends AbstractMoveHandler {
 			server.commands.AcceptTradeCommand command = new server.commands.AcceptTradeCommand(gameID);
 			command.setParams(move);
 			command.execute(server);
-			server.addCommand(gameID, command);
+			this.addCommand(command, gameID);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 				exchange.getResponseBody());

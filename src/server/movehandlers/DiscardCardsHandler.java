@@ -44,7 +44,7 @@ public DiscardCardsHandler(ServerFacade facade, int cOMMANDS_BEFORE_SAVE) {
 			server.commands.DiscardCards command = new server.commands.DiscardCards(gameID);
 			command.setParams(move);
 			command.execute(server);
-			server.addCommand(gameID, command);
+			this.addCommand(command, gameID);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 				exchange.getResponseBody());
