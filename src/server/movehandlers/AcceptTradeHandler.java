@@ -45,9 +45,9 @@ public class AcceptTradeHandler extends AbstractMoveHandler {
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			AcceptTrade move = gson.fromJson(writer.toString(), AcceptTrade.class);
-			server.commands.AcceptTradeCommand command = new server.commands.AcceptTradeCommand(server,gameID);
+			server.commands.AcceptTradeCommand command = new server.commands.AcceptTradeCommand(gameID);
 			command.setParams(move);
-			command.execute();
+			command.execute(server);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 				exchange.getResponseBody());

@@ -10,12 +10,10 @@ import client.control.IObserver;
  */
 public abstract class Command 
 {
-	IServer server;
 	public static IObserver observer;
 	protected int gameID;
-	public Command(IServer s,int gameID) {
-		server=s;
+	public Command(int gameID) {
 		this.gameID=gameID;
 	}
-	abstract public void execute();
+	abstract public void execute(IServer s);
 }

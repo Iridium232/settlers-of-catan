@@ -12,14 +12,14 @@ public class Soldier extends Command {
 
 	private Soldier_ params;
 
-	public Soldier(IServer s, int gameID) {
-		super(s,gameID);
+	public Soldier(int gameID) {
+		super(gameID);
 	}
 
 	@Override
-	public void execute() 
+	public void execute(IServer server)
 	{
-		this.server.playSoldierCardCommand(params,gameID);
+		server.playSoldierCardCommand(params,gameID);
 	}
 
 	public void setParams(Soldier_ move) 

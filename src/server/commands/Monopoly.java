@@ -12,12 +12,12 @@ public class Monopoly extends Command {
 
 	private Monopoly_ params;
 
-	public Monopoly(IServer s, int gameID) {
-		super(s,gameID);
+	public Monopoly(int gameID) {
+		super(gameID);
 	}
 
 	@Override
-	public void execute() 
+	public void execute(IServer server)
 	{
 		server.playMonopolyCardCommand(params,gameID);
 	}

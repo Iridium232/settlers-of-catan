@@ -11,12 +11,12 @@ public class DiscardCards extends Command {
 
 	private shared.communication.toServer.moves.DiscardCards params;
 
-	public DiscardCards(IServer s, int gameID) {
-		super(s,gameID);
+	public DiscardCards(int gameID) {
+		super(gameID);
 	}
 
 	@Override
-	public void execute() 
+	public void execute(IServer server)
 	{
 		server.discardCommand(params,gameID);
 	}

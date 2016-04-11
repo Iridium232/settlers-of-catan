@@ -12,12 +12,12 @@ public class MaritimeTrade extends Command {
 
 	private shared.communication.toServer.moves.MaritimeTrade params;
 
-	public MaritimeTrade(IServer s, int gameID) {
-		super(s,gameID);
+	public MaritimeTrade(int gameID) {
+		super(gameID);
 	}
 
 	@Override
-	public void execute() 
+	public void execute(IServer server)
 	{
 		server.maritimeTradeCommand(params,gameID);
 	}

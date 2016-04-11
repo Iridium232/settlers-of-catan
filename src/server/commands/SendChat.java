@@ -12,12 +12,12 @@ public class SendChat extends Command {
 
 	private shared.communication.toServer.moves.SendChat params;
 
-	public SendChat(IServer s, int gameID) {
-		super(s,gameID);
+	public SendChat(int gameID) {
+		super(gameID);
 	}
 
 	@Override
-	public void execute()
+	public void execute(IServer server)
 	{
 		server.sendChatCommand(params,gameID);
 	}

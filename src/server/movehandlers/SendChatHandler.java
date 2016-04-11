@@ -44,9 +44,9 @@ public class SendChatHandler extends AbstractMoveHandler {
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			SendChat move = gson.fromJson(writer.toString(), SendChat.class);
-			server.commands.SendChat command = new server.commands.SendChat(server,gameID);
+			server.commands.SendChat command = new server.commands.SendChat(gameID);
 			command.setParams(move);
-			command.execute();
+			command.execute(server);
 			String result = server.getModel(gameID);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(

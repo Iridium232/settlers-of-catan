@@ -41,9 +41,9 @@ public class MonopolyHandler extends AbstractMoveHandler{
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			Monopoly_ move = gson.fromJson(writer.toString(), Monopoly_.class);
-			server.commands.Monopoly command = new server.commands.Monopoly(server,gameID);
+			server.commands.Monopoly command = new server.commands.Monopoly(gameID);
 			command.setParams(move);
-			command.execute();
+			command.execute(server);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());

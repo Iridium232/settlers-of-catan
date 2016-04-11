@@ -45,9 +45,9 @@ public class BuyDevCardHandler extends AbstractMoveHandler
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			BuyDevCard move = gson.fromJson(writer.toString(), BuyDevCard.class);
-			server.commands.BuyDevCard command = new server.commands.BuyDevCard(server,gameID);
+			server.commands.BuyDevCard command = new server.commands.BuyDevCard(gameID);
 			command.setParams(move);
-			command.execute();
+			command.execute(server);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 				exchange.getResponseBody());

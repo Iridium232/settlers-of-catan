@@ -11,12 +11,12 @@ public class OfferTrade extends Command {
 
 	private shared.communication.toServer.moves.OfferTrade params;
 
-	public OfferTrade(IServer s, int gameID) {
-		super(s,gameID);
+	public OfferTrade(int gameID) {
+		super(gameID);
 	}
 
 	@Override
-	public void execute()
+	public void execute(IServer server)
 	{
 		server.offerTradeCommand(params,gameID);
 	}

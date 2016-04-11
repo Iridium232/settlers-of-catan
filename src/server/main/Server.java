@@ -34,12 +34,10 @@ import server.plugin_attachments.PluginRegistry;
 import server.userhandler.LoginHandler;
 import server.userhandler.RegisterHandler;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.jar.JarFile;
 
 
 /**
@@ -120,31 +118,20 @@ public class Server
 			registry.LoadInPlugins(this.PLUGIN_REGISTRY_RELATIVE_PATH);
 			PluginInfo info = registry.getPluginByName(PERSISTENCE_TYPE);
 			System.out.print("\nUsing " + info.getPlugin_name() + " persistence Provider.\n");
-
-			//http://stackoverflow.com/questions/60764/how-should-i-load-jars-dynamically-at-runtime
-			File file = new File(info.getJar_relative_uri());
-			//http://www.coderanch.com/t/383279/java/java/dynamically-loading-class-file-jar
-			//String jarurl = "jar:" + file.toURI().toURL() + "!/";
+			
 			//http://stackoverflow.com/questions/194698/how-to-load-a-jar-file-at-runtime
-			
-			ClassLoader loader = new URLClassLoader(
-				    new URL[] { file.toURI().toURL()}//,
-				    //this.getClass().getClassLoader()
+			ClassLoader loader = URLClassLoader.newInstance(
+				    new URL[] { new URL(info.getJar_relative_uri()) },
+				    getClass().getClassLoader()
 				);
-			
-			System.out.print("\nLoading Plugin class: '"  + info.getMain_class_name() + "'\n");
-			Class<? extends IPersistenceProvider> c = 
-					(Class<? extends IPersistenceProvider>) Class.forName(
-							info.getMain_class_name(),true,loader
-							);
-			//end StackOverflow references
-			
-			IPersistenceProvider pp =  c.newInstance();
+			Class<?> c = Class.forName(info.getMain_class_name(),true,loader);
+			//end StackOverflow reference
+			IPersistenceProvider pp = (IPersistenceProvider) c.newInstance();
 			facade.addPersistence(pp);
 		}
 		catch (Exception e)
 		{
-			System.out.print("\nERROR loading persistence plugins\n");
+			System.err.print("\nERROR loading persistence plugins\n");
 			e.printStackTrace();
 		}
 		
@@ -204,7 +191,3 @@ public class Server
 	private AbstractMoveHandler loginHandler = new LoginHandler(facade, this.COMMANDS_BEFORE_SAVE);
 	private AbstractGameHandler joinHandler = new JoinHandler(facade, this.COMMANDS_BEFORE_SAVE);
 }
-
-
-
-

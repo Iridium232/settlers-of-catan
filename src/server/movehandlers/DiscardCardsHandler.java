@@ -41,9 +41,9 @@ public DiscardCardsHandler(ServerFacade facade, int cOMMANDS_BEFORE_SAVE) {
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			DiscardCards move = gson.fromJson(writer.toString(), DiscardCards.class);
-			server.commands.DiscardCards command = new server.commands.DiscardCards(server,gameID);
+			server.commands.DiscardCards command = new server.commands.DiscardCards(gameID);
 			command.setParams(move);
-			command.execute();
+			command.execute(server);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 				exchange.getResponseBody());

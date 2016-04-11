@@ -41,9 +41,9 @@ public class RobPlayerHandler extends AbstractMoveHandler {
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			RobPlayer move = gson.fromJson(writer.toString(), RobPlayer.class);
-			server.commands.RobPlayer command = new server.commands.RobPlayer(server,gameID);
+			server.commands.RobPlayer command = new server.commands.RobPlayer(gameID);
 			command.setParams(move);
-			command.execute();
+			command.execute(server);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());
