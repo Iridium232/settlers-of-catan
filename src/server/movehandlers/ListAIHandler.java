@@ -16,8 +16,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class ListAIHandler extends AbstractMoveHandler{
 
-	public ListAIHandler(IServer facade) {
-		super(facade);
+	public ListAIHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	/**

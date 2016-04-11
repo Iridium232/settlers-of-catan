@@ -17,8 +17,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class MonopolyHandler extends AbstractMoveHandler{
 
-	public MonopolyHandler(IServer facade) {
-		super(facade);
+	public MonopolyHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	/**

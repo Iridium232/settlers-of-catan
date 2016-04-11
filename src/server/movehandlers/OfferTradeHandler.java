@@ -25,8 +25,8 @@ import com.sun.net.httpserver.HttpExchange;
  */
 public class OfferTradeHandler extends AbstractMoveHandler{
 
-	public OfferTradeHandler(IServer facade) {
-		super(facade);
+	public OfferTradeHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	/**

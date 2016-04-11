@@ -26,8 +26,8 @@ import com.sun.net.httpserver.HttpExchange;
  */
 public class YearOfPlentyHandler extends AbstractMoveHandler{
 
-	public YearOfPlentyHandler(IServer facade) {
-		super(facade);
+	public YearOfPlentyHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	/**

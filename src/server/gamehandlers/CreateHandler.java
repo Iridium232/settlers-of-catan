@@ -26,8 +26,8 @@ import sun.net.www.protocol.http.HttpURLConnection;
  */
 public class CreateHandler extends AbstractGameHandler {
 
-	public CreateHandler(ServerFacade facade) {
-		super(facade);
+	public CreateHandler(ServerFacade facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade, cOMMANDS_BEFORE_SAVE);
 		// TODO Auto-generated constructor stub
 	}
 

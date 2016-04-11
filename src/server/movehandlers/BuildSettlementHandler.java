@@ -20,8 +20,8 @@ import sun.net.www.protocol.http.HttpURLConnection;
  *
  */
 public class BuildSettlementHandler extends AbstractMoveHandler {
-	public BuildSettlementHandler(ServerFacade facade) {
-		super(facade);
+	public BuildSettlementHandler(ServerFacade facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 		// TODO Auto-generated constructor stub
 	}
 

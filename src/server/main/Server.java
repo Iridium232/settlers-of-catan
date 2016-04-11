@@ -49,6 +49,7 @@ public class Server
 	private static  int SERVER_PORT_NUMBER = 8081;
 	private static final int MAX_WAITING_CONNECTIONS = 20;
 	private static String PERSISTENCE_TYPE = "NoSQL";
+	private static int COMMANDS_BEFORE_SAVE = 10;
 	private static final String PLUGIN_REGISTRY_RELATIVE_PATH = "src/plugins.config";
 	
 	/**
@@ -64,21 +65,13 @@ public class Server
 	public static void main(String[] args)
 	{
 		
-		String host = "localhost";
+		int n = 10;
 		String port = "8081";
 		String plugin = "NoSQL";
+
 		if(args.length > 0)
 		{
-			host = args[0];
-			System.out.print("Running client on host: http://" + host + ".\n");
-		}
-		else
-		{
-			System.out.print("\nNo host specified. Using default 'localhost'.");
-		}
-		if(args.length > 1)
-		{
-			port = args[1];
+			port = args[0];
 			System.out.print("Port: " + port +".\n");
 		}
 		else
@@ -86,14 +79,24 @@ public class Server
 			System.out.print("\nNo port specified. Using default '8081'.\n");
 		}
 		Server.SERVER_PORT_NUMBER = new Integer(port).intValue();
-		if(args.length > 2)
+		if(args.length > 1)
 		{
-			plugin = args[2];
+			plugin = args[1];
 			System.out.print("Persistence Plugin: " + plugin + "\n");
 		}
 		else
 		{
 			System.out.print("No Persistence Plugin Name Given. Using Default: NoSQL");
+		}
+		if(args.length > 2)
+		{
+			String commandcount = args[2];
+			COMMANDS_BEFORE_SAVE = Integer.parseInt(commandcount);
+			System.out.print("Running client with command_count of " + COMMANDS_BEFORE_SAVE + ".\n");
+		}
+		else
+		{
+			System.out.print("\nNo command count given, using default: 10.");
 		}
 		Server.PERSISTENCE_TYPE = plugin;
 		new Server().run();
@@ -163,28 +166,28 @@ public class Server
 		server.start();
 	}
 	
-	private AbstractGameHandler listHandler = new GameListHandler(facade);
-	private AbstractMoveHandler getAITypeHandler = new ListAIHandler(facade);
-	private AbstractMoveHandler modelHandler = new GetModelHandler(facade);
-	private AbstractGameHandler createHandler = new CreateHandler(facade);
-	private AbstractMoveHandler registerHandler = new RegisterHandler(facade);
-	private AbstractMoveHandler acceptTradeHandler = new AcceptTradeHandler(facade);
-	private AbstractMoveHandler buildCityHandler = new BuildCityHandler(facade);
-	private AbstractMoveHandler buildRoadHandler = new BuildRoadHandler(facade);
-	private AbstractMoveHandler buildSettlementHandler = new BuildSettlementHandler(facade);
-	private AbstractMoveHandler buyDevCardHandler = new BuyDevCardHandler(facade);
-	private AbstractMoveHandler discardCardsHandler = new DiscardCardsHandler(facade);
-	private AbstractMoveHandler finishTurnHandler = new FinishTurnHandler(facade);
-	private AbstractMoveHandler maritimeTradeHandler = new MaritimeTradeHandler(facade);
-	private AbstractMoveHandler monopolyHandler = new MonopolyHandler(facade);
-	private AbstractMoveHandler monumentHandler = new MonumentHandler(facade);
-	private AbstractMoveHandler offerTradeHandler = new OfferTradeHandler(facade);
-	private AbstractMoveHandler roadBuildingHandler = new RoadBuildingHandler(facade);
-	private AbstractMoveHandler robPlayerHandler = new RobPlayerHandler(facade);
-	private AbstractMoveHandler rollNumberHandler = new RollNumberHandler(facade);
-	private AbstractMoveHandler sendChatHandler = new SendChatHandler(facade);
-	private AbstractMoveHandler soldierHandler = new SoldierHandler(facade);
-	private AbstractMoveHandler yearOfPlentyHandler = new YearOfPlentyHandler(facade);
-	private AbstractMoveHandler loginHandler = new LoginHandler(facade);
-	private AbstractGameHandler joinHandler = new JoinHandler(facade);
+	private AbstractGameHandler listHandler = new GameListHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler getAITypeHandler = new ListAIHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler modelHandler = new GetModelHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractGameHandler createHandler = new CreateHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler registerHandler = new RegisterHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler acceptTradeHandler = new AcceptTradeHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler buildCityHandler = new BuildCityHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler buildRoadHandler = new BuildRoadHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler buildSettlementHandler = new BuildSettlementHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler buyDevCardHandler = new BuyDevCardHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler discardCardsHandler = new DiscardCardsHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler finishTurnHandler = new FinishTurnHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler maritimeTradeHandler = new MaritimeTradeHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler monopolyHandler = new MonopolyHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler monumentHandler = new MonumentHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler offerTradeHandler = new OfferTradeHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler roadBuildingHandler = new RoadBuildingHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler robPlayerHandler = new RobPlayerHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler rollNumberHandler = new RollNumberHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler sendChatHandler = new SendChatHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler soldierHandler = new SoldierHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler yearOfPlentyHandler = new YearOfPlentyHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractMoveHandler loginHandler = new LoginHandler(facade, this.COMMANDS_BEFORE_SAVE);
+	private AbstractGameHandler joinHandler = new JoinHandler(facade, this.COMMANDS_BEFORE_SAVE);
 }

@@ -16,8 +16,8 @@ import shared.communication.toServer.moves.BuyDevCard;
 
 
 public class AcceptTradeHandler extends AbstractMoveHandler {
-	public AcceptTradeHandler(ServerFacade facade) {
-		super(facade);
+	public AcceptTradeHandler(ServerFacade facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 		// TODO Auto-generated constructor stub
 	}
 

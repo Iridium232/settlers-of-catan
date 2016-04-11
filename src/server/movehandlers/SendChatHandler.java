@@ -18,8 +18,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class SendChatHandler extends AbstractMoveHandler {
 
-	public SendChatHandler(IServer facade) {
-		super(facade);
+	public SendChatHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	/**

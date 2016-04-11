@@ -27,8 +27,8 @@ import com.sun.net.httpserver.HttpExchange;
  */
 public class JoinHandler extends AbstractGameHandler{
 
-	public JoinHandler(IServer facade) {
-		super(facade);
+	public JoinHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	@Override

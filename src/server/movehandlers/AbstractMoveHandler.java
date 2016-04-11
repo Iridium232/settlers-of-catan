@@ -14,9 +14,9 @@ import server.gamehandlers.AbstractGameHandler;
 
 
 public abstract class AbstractMoveHandler extends AbstractGameHandler implements HttpHandler {
-	public AbstractMoveHandler(IServer facade)
+	public AbstractMoveHandler(IServer facade, int cOMMANDS_BEFORE_SAVE)
 	{
-		super(facade);
+		super(facade, cOMMANDS_BEFORE_SAVE);
 		server=facade;
 	}
 	protected int checkCookie(HttpExchange exchange) throws UnsupportedEncodingException {

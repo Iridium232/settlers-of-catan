@@ -20,8 +20,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class SoldierHandler extends AbstractMoveHandler {
 
-	public SoldierHandler(IServer facade) {
-		super(facade);
+	public SoldierHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	/**

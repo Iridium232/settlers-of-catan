@@ -17,8 +17,8 @@ import sun.net.www.protocol.http.HttpURLConnection;
 
 
 public class BuildRoadHandler extends AbstractMoveHandler {
-	public BuildRoadHandler(ServerFacade facade) {
-		super(facade);
+	public BuildRoadHandler(ServerFacade facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 		// TODO Auto-generated constructor stub
 	}
 

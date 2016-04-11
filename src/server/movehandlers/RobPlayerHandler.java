@@ -18,8 +18,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class RobPlayerHandler extends AbstractMoveHandler {
 
-	public RobPlayerHandler(IServer facade) {
-		super(facade);
+	public RobPlayerHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	/**

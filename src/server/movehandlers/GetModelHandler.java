@@ -18,8 +18,8 @@ import client.communication.IServer;
 
 public class GetModelHandler extends AbstractMoveHandler {
 
-	public GetModelHandler(IServer facade) {
-		super(facade);
+	public GetModelHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 		// TODO Auto-generated constructor stub
 	}
 

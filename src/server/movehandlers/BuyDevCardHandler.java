@@ -18,8 +18,8 @@ import sun.net.www.protocol.http.HttpURLConnection;
 
 public class BuyDevCardHandler extends AbstractMoveHandler 
 {
-	public BuyDevCardHandler(ServerFacade facade) {
-		super(facade);
+	public BuyDevCardHandler(ServerFacade facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 		// TODO Auto-generated constructor stub
 	}
 

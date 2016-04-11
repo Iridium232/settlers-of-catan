@@ -24,8 +24,8 @@ import com.sun.net.httpserver.HttpExchange;
  */
 public class RoadBuildingHandler extends AbstractMoveHandler{
 
-	public RoadBuildingHandler(IServer facade) {
-		super(facade);
+	public RoadBuildingHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	/**

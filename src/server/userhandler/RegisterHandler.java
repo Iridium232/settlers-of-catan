@@ -20,8 +20,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class RegisterHandler extends AbstractMoveHandler {
 
-	public RegisterHandler(IServer facade) {
-		super(facade);
+	public RegisterHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	/**

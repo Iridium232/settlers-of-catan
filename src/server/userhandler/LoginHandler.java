@@ -21,8 +21,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class LoginHandler extends AbstractMoveHandler{
 
-	public LoginHandler(IServer facade) {
-		super(facade);
+	public LoginHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	@Override

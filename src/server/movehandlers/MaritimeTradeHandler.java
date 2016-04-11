@@ -23,8 +23,8 @@ import com.sun.net.httpserver.HttpExchange;
  */
 public class MaritimeTradeHandler extends AbstractMoveHandler{
 
-	public MaritimeTradeHandler(IServer facade) {
-		super(facade);
+	public MaritimeTradeHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	/**

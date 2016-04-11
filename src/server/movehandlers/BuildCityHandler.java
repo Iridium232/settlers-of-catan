@@ -15,8 +15,8 @@ import shared.communication.toServer.moves.BuildRoad;
 import sun.net.www.protocol.http.HttpURLConnection;
 
 public class BuildCityHandler extends AbstractMoveHandler {
-	public BuildCityHandler(ServerFacade facade) {
-		super(facade);
+	public BuildCityHandler(ServerFacade facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 		// TODO Auto-generated constructor stub
 	}
 

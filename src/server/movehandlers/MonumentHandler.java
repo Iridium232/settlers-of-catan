@@ -18,8 +18,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class MonumentHandler extends AbstractMoveHandler{
 
-	public MonumentHandler(IServer facade) {
-		super(facade);
+	public MonumentHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	/**

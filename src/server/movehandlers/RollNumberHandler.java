@@ -17,8 +17,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class RollNumberHandler extends AbstractMoveHandler {
 
-	public RollNumberHandler(IServer facade) {
-		super(facade);
+	public RollNumberHandler(IServer facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade,cOMMANDS_BEFORE_SAVE);
 	}
 
 	/**

@@ -14,9 +14,8 @@ import shared.communication.fromServer.games.Game;
 
 public class GameListHandler extends AbstractGameHandler {
 
-	public GameListHandler(ServerFacade facade) {
-		super(facade);
-		// TODO Auto-generated constructor stub
+	public GameListHandler(ServerFacade facade, int cOMMANDS_BEFORE_SAVE) {
+		super(facade, cOMMANDS_BEFORE_SAVE);
 	}
 
 	@Override

@@ -14,9 +14,11 @@ import shared.communication.toServer.user.Credentials;
 
 public abstract class AbstractGameHandler implements HttpHandler {
 	protected IServer server;
+	protected int COMMAND_COUNT;
 	
-	public AbstractGameHandler(IServer s){
+	public AbstractGameHandler(IServer s, int command_count){
 		server=s;
+		this.COMMAND_COUNT = command_count;
 	}
 	
 	protected boolean checkCookie(HttpExchange exchange,IServer s){

@@ -171,7 +171,14 @@ public class Game
 	 */
 	public int getWinner() 
 	{
-		return winner;
+		if(winner > 0 && players[winner].getVictoryPoints() >= 10)
+		{
+			return winner;
+		}
+		else
+		{
+			return -1;
+		}
 	}
 
 	/**
