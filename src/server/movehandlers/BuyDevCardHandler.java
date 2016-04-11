@@ -48,6 +48,7 @@ public class BuyDevCardHandler extends AbstractMoveHandler
 			server.commands.BuyDevCard command = new server.commands.BuyDevCard(gameID);
 			command.setParams(move);
 			command.execute(server);
+			this.addCommand(command, gameID);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 				exchange.getResponseBody());

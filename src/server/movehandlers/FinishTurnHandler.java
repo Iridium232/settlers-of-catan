@@ -44,6 +44,7 @@ public class FinishTurnHandler extends AbstractMoveHandler {
 			server.commands.FinishTurn command = new server.commands.FinishTurn(gameID);
 			command.setParams(move);
 			command.execute(server);
+			this.addCommand(command, gameID);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());
