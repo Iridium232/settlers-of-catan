@@ -1,15 +1,18 @@
 package server.facade;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
+import server.commands.Command;
 import server.communication.ModelTranslator;
 import server.plugin_attachments.IGameDAO;
 import server.plugin_attachments.IUserDAO;
 import server.plugin_attachments.IPersistenceProvider;
 import client.communication.IServer;
-import client.communication.ModelPopulator;
 import shared.communication.EdgeLocation;
 import shared.communication.ResourceList;
 import shared.communication.Serializer;
@@ -24,7 +27,6 @@ import shared.definitions.ResourceType;
 import shared.exceptions.JoinExceptions;
 import shared.locations.HexLocation;
 import shared.model.Fascade;
-import shared.model.player.DevCardList;
 import shared.model.player.Player;
 import shared.model.player.ResourceMultiSet;
 
@@ -43,20 +45,24 @@ public class ServerFacade implements IServer
 	
 	private int commanding_player_index;
 	private int game_index = 0;
+	private int max_command_size;
 	private ArrayList<shared.model.Fascade> games;
+	private HashMap<Integer,ArrayList<Command>> commands;
 	private ArrayList<User> users;
 	private IPersistenceProvider factory;
 	private IPersistenceProvider persistence_factory;
-
+	private IGameDAO gameDAO;
+	private IUserDAO userDAO;
+	
     public ServerFacade() {
         this.games = new ArrayList<>();
         this.users = new ArrayList<>();
+        this.commands=new HashMap<Integer,ArrayList<Command>>();
         createGameCommand(new CreateGameRequest(false,false,false,"Default"));
         register("Sam","sam");
         register("Brooke","brooke");
         register("Pete","pete");
         register("Mark","mark");
-        
     }
 
     /**
@@ -162,8 +168,9 @@ public class ServerFacade implements IServer
 			e.printStackTrace();
 			return null;
 		}
-		this.games.add(new_game_facade);
 		
+		this.games.add(new_game_facade);
+		this.commands.put(new_game_facade.getGameID(), new ArrayList<Command>());
 		return null;
 	}
 
@@ -1277,6 +1284,29 @@ public class ServerFacade implements IServer
 	public void addPersistence(IPersistenceProvider pp) 
 	{
 		this.persistence_factory = pp;
+		try {
+			userDAO=pp.generateIUserDAO();
+			gameDAO=pp.generateGameDAO();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(Map.Entry<Integer,Object> u:userDAO.getUsers().entrySet()) {
+			users.add(u.getKey(),(User)u.getValue());
+		}
+		for(Map.Entry<Integer,Object> g:gameDAO.getGames().entrySet()) {
+			games.add(g.getKey(),(Fascade)g.getValue());
+		}
+		for(Entry<Integer, List<Object>> c:gameDAO.getCommands().entrySet()) {
+			List<Object> coms=c.getValue();
+			if(coms.size()>0) {
+				for(Object s:coms) {
+					Command w=(Command)s;
+					w.execute();
+				}
+			}
+			gameDAO.saveModelAndEmptyCommands(model, c.getKey());
+		}
 	}
 	
 	/**
@@ -1286,5 +1316,15 @@ public class ServerFacade implements IServer
 	public IPersistenceProvider getPersister()
 	{
 		return persistence_factory;
+	}
+
+	@Override
+	public void addCommand(int gameID, Command c) {
+		// TODO Auto-generated method stub
+		ArrayList<Command> some=this.commands.get(gameID);
+		some.add(c);
+		if(some.size()==max_command_size) {
+			
+		}
 	}
 }

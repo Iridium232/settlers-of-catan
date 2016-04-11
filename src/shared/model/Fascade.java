@@ -1555,7 +1555,10 @@ public class Fascade
 	{
 		return game_model.getVersion();
 	}
-
+	
+	public int getGameID() {
+		return game_model.getGameinfo().getId();		
+	}
 }
 
 

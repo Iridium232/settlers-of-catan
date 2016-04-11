@@ -263,6 +263,7 @@ public interface IServer {
 	public CommunicationModel playRoadBuildingCardCommand(Road_Building_ params,int gameID);
 	public shared.model.Game getGameModelByID(int params);
 	public int getVersionOf(int game_id);
+	public void addCommand(int gameID,server.commands.Command c);
 
 	public Fascade getFacadeByID(int gameID);
 }

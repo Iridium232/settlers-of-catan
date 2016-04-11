@@ -17,6 +17,7 @@ import shared.communication.toServer.moves.BuildCity;
 import shared.communication.toServer.moves.BuildRoad;
 import shared.communication.toServer.moves.BuildSettlement;
 import shared.communication.toServer.moves.BuyDevCard;
+import shared.communication.toServer.moves.Command;
 import shared.communication.toServer.moves.DiscardCards;
 import shared.communication.toServer.moves.FinishTurn;
 import shared.communication.toServer.moves.MaritimeTrade;
@@ -1029,6 +1030,12 @@ public class MockServer implements IServer {
 			Road_Building_ params, int gameID) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void addCommand(int gameID, server.commands.Command c) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -594,5 +594,10 @@ public class ServerProxy implements IServer {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public void addCommand(int gameID, server.commands.Command c) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
