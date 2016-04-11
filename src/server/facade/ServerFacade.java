@@ -1284,28 +1284,44 @@ public class ServerFacade implements IServer
 	public void addPersistence(IPersistenceProvider pp) 
 	{
 		this.persistence_factory = pp;
-		try {
+		try 
+		{
 			userDAO=pp.generateIUserDAO();
 			gameDAO=pp.generateGameDAO();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
-		for(Map.Entry<Integer,Object> u:userDAO.getUsers().entrySet()) {
-			users.add(u.getKey(),(User)u.getValue());
-		}
-		for(Map.Entry<Integer,Object> g:gameDAO.getGames().entrySet()) {
-			games.add(g.getKey(),(Fascade)g.getValue());
-		}
-		for(Entry<Integer, List<Object>> c:gameDAO.getCommands().entrySet()) {
-			List<Object> coms=c.getValue();
-			if(coms.size()>0) {
-				for(Object s:coms) {
-					Command w=(Command)s;
-					w.execute(this);
-				}
+		if(userDAO.getUsers() != null)
+		{
+			for(Map.Entry<Integer,Object> user: userDAO.getUsers().entrySet()) 
+			{
+				users.add(user.getKey(),(User)user.getValue());
 			}
-			//gameDAO.saveModelAndEmptyCommands(model, c.getKey());
+		}
+		if(gameDAO.getGames() != null)
+		{
+			for(Map.Entry<Integer,Object> g:gameDAO.getGames().entrySet()) 
+			{
+				games.add(g.getKey(),(Fascade)g.getValue());
+			}
+		}
+		if(gameDAO.getCommands() != null)
+		{
+			for(Entry<Integer, List<Object>> c:gameDAO.getCommands().entrySet()) 
+			{
+				List<Object> coms = c.getValue();
+				if(coms.size() > 0) 
+				{
+					for(Object s:coms) 
+					{
+						Command w=(Command)s;
+						w.execute(this);
+					}
+				}
+				gameDAO.saveModelAndEmptyCommands(getModel(c.getKey()), c.getKey());
+			}
 		}
 	}
 	
