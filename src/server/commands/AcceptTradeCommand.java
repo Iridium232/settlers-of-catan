@@ -13,14 +13,14 @@ public class AcceptTradeCommand extends Command
 
 	private AcceptTrade params;
 
-	public AcceptTradeCommand(IServer s,int gameID) 
+	public AcceptTradeCommand(int gameID)
 	{
-		super(s,gameID);
+		super(gameID);
 		
 	}
 	
 	@Override
-	public void execute() 
+	public void execute(IServer server)
 	{
 		server.acceptTradeCommand(params,gameID);
 	}

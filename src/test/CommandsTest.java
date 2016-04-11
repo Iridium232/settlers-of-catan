@@ -56,9 +56,9 @@ public class CommandsTest {
     public void testOfferTradeCommand() {
         shared.communication.toServer.moves.OfferTrade tradeOffer =
                 new shared.communication.toServer.moves.OfferTrade(0,new ResourceList(1,-1,0,0,0), 1);
-        server.commands.OfferTrade command = new server.commands.OfferTrade(serverFacade, 0);
+        server.commands.OfferTrade command = new server.commands.OfferTrade(0);
         command.setParams(tradeOffer);
-        command.execute();
+        command.execute(serverFacade);
         assertNotNull(model.getTrade_offer());
     }
 
@@ -75,9 +75,9 @@ public class CommandsTest {
 
         serverFacade.forTestingSet(gameFascade);
         AcceptTrade at = new AcceptTrade(1, true);
-        AcceptTradeCommand command = new AcceptTradeCommand(serverFacade, 0);
+        AcceptTradeCommand command = new AcceptTradeCommand(0);
         command.setParams(at);
-        command.execute();
+        command.execute(serverFacade);
         model = serverFacade.forTestingGet().getModel();
 
         int senderNewBrick = model.getPlayers()[1].getResources().getBrick();
@@ -104,9 +104,9 @@ public class CommandsTest {
                 new shared.communication.fromServer.game.VertexLocation(VertexDirection.SouthWest, -1, 1);
         shared.communication.toServer.moves.BuildCity arg =
                 new shared.communication.toServer.moves.BuildCity(0, location);
-        server.commands.BuildCity command = new server.commands.BuildCity(serverFacade, 0);
+        server.commands.BuildCity command = new server.commands.BuildCity(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         shared.locations.VertexLocation location2 = new shared.locations.VertexLocation(location);
         Building building = serverFacade.forTestingGet().getModel().getMap().getBuildingOnVertex(new Vertex(location2));
@@ -136,9 +136,9 @@ public class CommandsTest {
         shared.communication.EdgeLocation location = new shared.communication.EdgeLocation(-1, 1, EdgeDirection.North);
         shared.communication.toServer.moves.BuildRoad arg =
                 new shared.communication.toServer.moves.BuildRoad(0, location, true);
-        server.commands.BuildRoad command = new server.commands.BuildRoad(serverFacade, 0);
+        server.commands.BuildRoad command = new server.commands.BuildRoad(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         boolean roadExists = roadExists(arg, serverFacade.forTestingGet().getModel().getRoads());
         assertTrue(roadExists);
@@ -156,9 +156,9 @@ public class CommandsTest {
 
         location = new shared.communication.EdgeLocation(-1, 1, EdgeDirection.South);
         arg = new shared.communication.toServer.moves.BuildRoad(0, location, false);
-        command = new server.commands.BuildRoad(serverFacade, 0);
+        command = new server.commands.BuildRoad(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         roadExists = roadExists(arg, serverFacade.forTestingGet().getModel().getRoads());
         assertTrue(roadExists);
@@ -188,9 +188,9 @@ public class CommandsTest {
                 new shared.communication.fromServer.game.VertexLocation(VertexDirection.SouthWest, -1, 1);
         shared.communication.toServer.moves.BuildSettlement arg =
                 new shared.communication.toServer.moves.BuildSettlement(0, location, true);
-        server.commands.BuildSettlement command = new server.commands.BuildSettlement(serverFacade, 0);
+        server.commands.BuildSettlement command = new server.commands.BuildSettlement(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         shared.locations.VertexLocation location2 = new shared.locations.VertexLocation(location);
         Building building = serverFacade.forTestingGet().getModel().getMap().getBuildingOnVertex(new Vertex(location2));
@@ -209,9 +209,9 @@ public class CommandsTest {
 
         location = new shared.communication.fromServer.game.VertexLocation(VertexDirection.SouthEast, -1, 1);
         arg = new shared.communication.toServer.moves.BuildSettlement(0, location, false);
-        command = new server.commands.BuildSettlement(serverFacade, 0);
+        command = new server.commands.BuildSettlement(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         location2 = new shared.locations.VertexLocation(location);
         building = serverFacade.forTestingGet().getModel().getMap().getBuildingOnVertex(new Vertex(location2));
@@ -234,9 +234,9 @@ public class CommandsTest {
         shared.model.player.Player player = serverFacade.forTestingGet().getModel().getPlayers()[0];
         int devCardsBefore = player.getNewDevCards().getTotalCards();
         shared.communication.toServer.moves.BuyDevCard arg = new shared.communication.toServer.moves.BuyDevCard(0);
-        server.commands.BuyDevCard command = new server.commands.BuyDevCard(serverFacade, 0);
+        server.commands.BuyDevCard command = new server.commands.BuyDevCard(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         int devCardsAfter = player.getNewDevCards().getTotalCards();
         assertTrue(devCardsBefore + 1 == devCardsAfter || devCardsBefore == devCardsAfter);
@@ -258,9 +258,9 @@ public class CommandsTest {
         ResourceList discarding = new ResourceList(5,5,5,5,5);
         shared.communication.toServer.moves.DiscardCards arg =
                 new shared.communication.toServer.moves.DiscardCards(0, discarding);
-        server.commands.DiscardCards command = new server.commands.DiscardCards(serverFacade, 0);
+        server.commands.DiscardCards command = new server.commands.DiscardCards(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         int player0ResourcesAfter = getTotalResources(player0);
         assertEquals(player0ResourcesBefore / 2, player0ResourcesAfter);
@@ -271,9 +271,9 @@ public class CommandsTest {
         assertFalse(player1.isDiscarded());
         discarding = new ResourceList(0,0,0,0,0);
         arg = new shared.communication.toServer.moves.DiscardCards(1, discarding);
-        command = new server.commands.DiscardCards(serverFacade, 0);
+        command = new server.commands.DiscardCards(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         int player1ResourcesAfter = getTotalResources(player1);
         assertEquals(player1ResourcesBefore, player1ResourcesAfter);
@@ -282,9 +282,9 @@ public class CommandsTest {
 
         discarding = new ResourceList(0,0,0,0,4);
         arg = new shared.communication.toServer.moves.DiscardCards(2, discarding);
-        command = new server.commands.DiscardCards(serverFacade, 0);
+        command = new server.commands.DiscardCards(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         int player2ResourcesAfter = getTotalResources(player2);
         assertEquals(player2ResourcesBefore - 4, player2ResourcesAfter);
@@ -324,9 +324,9 @@ public class CommandsTest {
         int player3SheepBefore = player3.getResources().getSheep();
         int player3OreBefore = player3.getResources().getOre();
 
-        server.commands.RollNumber rollCommand = new server.commands.RollNumber(serverFacade, 0);
+        server.commands.RollNumber rollCommand = new server.commands.RollNumber(0);
         rollCommand.setParams(new shared.communication.toServer.moves.RollNumber(0, 6));
-        rollCommand.execute();
+        rollCommand.execute(serverFacade);
 
         int player0BrickAfter = player0.getResources().getBrick();
         int player0WheatAfter = player0.getResources().getWheat();
@@ -379,14 +379,14 @@ public class CommandsTest {
 
     @Test
     public void testFinishTurnCommand() {
-        server.commands.RollNumber rollCommand = new server.commands.RollNumber(serverFacade, 0);
+        server.commands.RollNumber rollCommand = new server.commands.RollNumber(0);
         rollCommand.setParams(new shared.communication.toServer.moves.RollNumber(0, 6));
-        rollCommand.execute();
+        rollCommand.execute(serverFacade);
 
         shared.communication.toServer.moves.FinishTurn arg = new shared.communication.toServer.moves.FinishTurn(0);
-        server.commands.FinishTurn command = new server.commands.FinishTurn(serverFacade, 0);
+        server.commands.FinishTurn command = new server.commands.FinishTurn(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         assertEquals(1, serverFacade.forTestingGet().getModel().getTurn_tracker().getActive_player());
     }
@@ -402,9 +402,9 @@ public class CommandsTest {
 
         shared.communication.toServer.moves.MaritimeTrade arg =
                 new shared.communication.toServer.moves.MaritimeTrade(0, 4, "brick", "wheat");
-        server.commands.MaritimeTrade command = new server.commands.MaritimeTrade(serverFacade, 0);
+        server.commands.MaritimeTrade command = new server.commands.MaritimeTrade(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         int brickAfter = player.getResources().getBrick();
         int wheatAfter = player.getResources().getWheat();
@@ -426,9 +426,9 @@ public class CommandsTest {
         oreBefore = player.getResources().getOre();
 
         arg = new shared.communication.toServer.moves.MaritimeTrade(0, 3, "wood", "sheep");
-        command = new server.commands.MaritimeTrade(serverFacade, 0);
+        command = new server.commands.MaritimeTrade(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         brickAfter = player.getResources().getBrick();
         wheatAfter = player.getResources().getWheat();
@@ -450,9 +450,9 @@ public class CommandsTest {
         oreBefore = player.getResources().getOre();
 
         arg = new shared.communication.toServer.moves.MaritimeTrade(0, 2, "ore", "brick");
-        command = new server.commands.MaritimeTrade(serverFacade, 0);
+        command = new server.commands.MaritimeTrade(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         brickAfter = player.getResources().getBrick();
         wheatAfter = player.getResources().getWheat();
@@ -480,9 +480,9 @@ public class CommandsTest {
 
 
         Monopoly_ arg = new Monopoly_(0, "brick");
-        server.commands.Monopoly command = new server.commands.Monopoly(serverFacade, 0);
+        server.commands.Monopoly command = new server.commands.Monopoly(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         int brickAfter = player.getResources().getBrick();
         int oldMonopolyAfter = player.getOldDevCards().getMonopoly();
@@ -507,9 +507,9 @@ public class CommandsTest {
         int victoryPointsBefore = player.getVictoryPoints();
 
         Monument_ arg = new Monument_(0);
-        server.commands.Monument command = new server.commands.Monument(serverFacade, 0);
+        server.commands.Monument command = new server.commands.Monument(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
 
         int victoryPointsAfter = player.getVictoryPoints();
@@ -525,9 +525,9 @@ public class CommandsTest {
         shared.communication.EdgeLocation location1 = new shared.communication.EdgeLocation(1,1,EdgeDirection.North);
         shared.communication.EdgeLocation location2 = new shared.communication.EdgeLocation(1,1,EdgeDirection.South);
         Road_Building_ arg = new Road_Building_(0, location1, location2);
-        server.commands.Road_Building command = new server.commands.Road_Building(serverFacade, 0);
+        server.commands.Road_Building command = new server.commands.Road_Building(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         shared.communication.toServer.moves.BuildRoad firstRoad =
                 new shared.communication.toServer.moves.BuildRoad(0, location1, true);
@@ -546,9 +546,9 @@ public class CommandsTest {
         int player1TotalBefore = getTotalResources(player1);
 
         RobPlayer arg = new RobPlayer(0, 1, new HexLocation(-1,0));
-        server.commands.RobPlayer command = new server.commands.RobPlayer(serverFacade, 0);
+        server.commands.RobPlayer command = new server.commands.RobPlayer(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         int player0TotalAfter = getTotalResources(player0);
         int player1TotalAfter = getTotalResources(player1);
@@ -562,9 +562,9 @@ public class CommandsTest {
         int chatSizeBefore = serverFacade.forTestingGet().getModel().getChat().getMessages().size();
 
         shared.communication.toServer.moves.SendChat arg = new shared.communication.toServer.moves.SendChat(0, "Test");
-        server.commands.SendChat command = new server.commands.SendChat(serverFacade, chatSizeBefore);
+        server.commands.SendChat command = new server.commands.SendChat(chatSizeBefore);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         int chatSizeAfter = serverFacade.forTestingGet().getModel().getChat().getMessages().size();
 
@@ -581,9 +581,9 @@ public class CommandsTest {
         int player1TotalBefore = getTotalResources(player1);
 
         Soldier_ arg = new Soldier_(0, 1, new HexLocation(-1,0));
-        server.commands.Soldier command = new server.commands.Soldier(serverFacade, 0);
+        server.commands.Soldier command = new server.commands.Soldier(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         int player0TotalAfter = getTotalResources(player0);
         int player1TotalAfter = getTotalResources(player1);
@@ -601,9 +601,9 @@ public class CommandsTest {
         int wheatBefore = player.getResources().getWheat();
 
         Year_of_Plenty_ arg = new Year_of_Plenty_(0, "brick", "wheat");
-        server.commands.Year_of_Plenty command = new server.commands.Year_of_Plenty(serverFacade, 0);
+        server.commands.Year_of_Plenty command = new server.commands.Year_of_Plenty(0);
         command.setParams(arg);
-        command.execute();
+        command.execute(serverFacade);
 
         int brickAfter = player.getResources().getBrick();
         int wheatAfter = player.getResources().getWheat();

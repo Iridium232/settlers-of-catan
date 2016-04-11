@@ -11,12 +11,12 @@ public class BuildSettlement extends Command {
 
 	private shared.communication.toServer.moves.BuildSettlement params;
 
-	public BuildSettlement(IServer s, int gameID) {
-		super(s,gameID);
+	public BuildSettlement(int gameID) {
+		super(gameID);
 	}
 
 	@Override
-	public void execute()
+	public void execute(IServer server)
 	{
 		server.buildSettlementCommand(params,gameID);
 	}

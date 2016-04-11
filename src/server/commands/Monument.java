@@ -12,12 +12,12 @@ public class Monument extends Command {
 
 	private Monument_ params;
 
-	public Monument(IServer s, int gameID) {
-		super(s,gameID);
+	public Monument(int gameID) {
+		super(gameID);
 	}
 
 	@Override
-	public void execute() 
+	public void execute(IServer server)
 	{
 		server.playMonumentCardCommand(params,gameID);
 	}

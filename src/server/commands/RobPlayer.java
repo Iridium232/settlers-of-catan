@@ -12,12 +12,12 @@ public class RobPlayer extends Command {
 
 	private shared.communication.toServer.moves.RobPlayer params;
 
-	public RobPlayer(IServer s, int gameID) {
-		super(s,gameID);
+	public RobPlayer(int gameID) {
+		super(gameID);
 	}
 
 	@Override
-	public void execute() 
+	public void execute(IServer server)
 	{
 		server.robCommand(params,gameID);
 	}

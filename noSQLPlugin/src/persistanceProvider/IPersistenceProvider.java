@@ -9,7 +9,7 @@ import DAOs.IUserDAO;
  * Section 2
  * Team 10
  */
-public abstract class PersistanceProvider {
+public interface IPersistenceProvider {
     /**
      * Please Override
      * This function must generate a Game DAO in all plugins
@@ -17,10 +17,7 @@ public abstract class PersistanceProvider {
      * @post throws an error.
      * @throws Exception
      */
-    public IGameDAO generateGameDAO() throws Exception
-    {
-        throw new Exception("ERROR! Persistance Plugin Failed to Load");
-    }
+    public IGameDAO generateGameDAO() throws Exception;
 
     /**
      * Please Override
@@ -29,8 +26,5 @@ public abstract class PersistanceProvider {
      * @post throws an error.
      * @throws Exception
      */
-    public IUserDAO generateIUserDAO() throws Exception
-    {
-        throw new Exception("ERROR! Persistance Plugin Failed to Load");
-    }
+    public IUserDAO generateIUserDAO() throws Exception;
 }

@@ -40,9 +40,9 @@ public class RollNumberHandler extends AbstractMoveHandler {
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(exchange.getRequestBody(), writer);
 			RollNumber move = gson.fromJson(writer.toString(), RollNumber.class);
-			server.commands.RollNumber command = new server.commands.RollNumber(server,gameID);
+			server.commands.RollNumber command = new server.commands.RollNumber(gameID);
 			command.setParams(move);
-			command.execute();
+			command.execute(server);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 			OutputStreamWriter output = new OutputStreamWriter(
 					exchange.getResponseBody());

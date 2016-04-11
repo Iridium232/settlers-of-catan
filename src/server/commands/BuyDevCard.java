@@ -11,12 +11,12 @@ public class BuyDevCard extends Command {
 
 	private shared.communication.toServer.moves.BuyDevCard params;
 
-	public BuyDevCard(IServer s, int gameID) {
-		super(s,gameID);
+	public BuyDevCard(int gameID) {
+		super(gameID);
 	}
 
 	@Override
-	public void execute()
+	public void execute(IServer server)
 	{
 		server.buyDevCardCommand(params,gameID);
 	}

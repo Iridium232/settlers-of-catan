@@ -11,12 +11,12 @@ public class BuildRoad extends Command {
 
 	private shared.communication.toServer.moves.BuildRoad params;
 
-	public BuildRoad(IServer s, int gameID) {
-		super(s,gameID);
+	public BuildRoad(int gameID) {
+		super(gameID);
 	}
 
 	@Override
-	public void execute() 
+	public void execute(IServer server)
 	{
 		server.buildRoadCommand(params,gameID);
 	}

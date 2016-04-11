@@ -11,7 +11,7 @@ import DAOs.UserDAO;
  * Section 2
  * Team 10
  */
-public class NoSQLFactory extends PersistanceProvider {
+public class NoSQLFactory implements IPersistenceProvider {
     /**
      * Generates a Game DAO for serializing games to a file
      * @pre none
