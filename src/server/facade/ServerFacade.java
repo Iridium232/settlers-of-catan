@@ -1302,10 +1302,10 @@ public class ServerFacade implements IServer
 			if(coms.size()>0) {
 				for(Object s:coms) {
 					Command w=(Command)s;
-					w.execute();
+					w.execute(this);
 				}
 			}
-			gameDAO.saveModelAndEmptyCommands(model, c.getKey());
+			//gameDAO.saveModelAndEmptyCommands(model, c.getKey());
 		}
 	}
 	
