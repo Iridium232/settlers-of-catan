@@ -23,7 +23,7 @@ public interface IUserDAO
 	 * @param user
 	 * @param user_id
 	 */
-	public void addUser(Object user);
+	public void addUser(Object user, int user_id);
 	
 	/**
 	 * Clear the list of users in the database

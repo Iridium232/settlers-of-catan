@@ -54,7 +54,7 @@ public class ServerFacade implements IServer
 	private IGameDAO gameDAO;
 	private IUserDAO userDAO;
 	
-    public ServerFacade() {
+    public ServerFacade(int maxSize) {
         this.games = new ArrayList<>();
         this.users = new ArrayList<>();
         this.commands=new HashMap<Integer,ArrayList<Command>>();
@@ -63,6 +63,7 @@ public class ServerFacade implements IServer
         register("Brooke","brooke");
         register("Pete","pete");
         register("Mark","mark");
+        max_command_size=maxSize;
     }
 
     /**
@@ -122,7 +123,8 @@ public class ServerFacade implements IServer
 		new_user.setPassword(password);
 		new_user.setPlayerID(users.size());
 		users.add(new_user);
-		return Integer.toString(new_user.getPlayerID());
+        addUser(new_user, new_user.getPlayerID());
+        return Integer.toString(new_user.getPlayerID());
 	}
 
 	/**
@@ -1276,7 +1278,8 @@ public class ServerFacade implements IServer
 
     /**
      * Add a persistence provider to the server
-     * 
+     * Loads all of the users and the games from storage. 
+     * If any game has commands then it runs them to update the model then clears the list.
      * @pre none
      * @post the persistence provider will be available
      * @param pp
@@ -1334,25 +1337,38 @@ public class ServerFacade implements IServer
 		return persistence_factory;
 	}
 
-	@Override
-	public void addCommand(int gameID, Command c) 
-	{
-		ArrayList<Command> some = commands.get(gameID);
-		some.add(c);
-		if(some.size()==max_command_size) 
-		{
-			try 
-			{
-				persistence_factory.generateGameDAO().
-					saveModelAndEmptyCommands(this.getModel(gameID), gameID);
-			} 
-			catch (Exception e)
-			{
-				System.out.print("Save Command Failed!");
-				e.printStackTrace();
-			}
-		}
-	}
+    @Override
+    public void addCommand(int gameID, Command c)
+    {
+        IGameDAO gameDAO = null;
+        try {
+            gameDAO = persistence_factory.generateGameDAO();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ArrayList<Command> some = commands.get(gameID);
+        some.add(c);
+        gameDAO.saveCommand(c, gameID);
+        if(some.size()==max_command_size)
+        {
+            gameDAO.saveModelAndEmptyCommands(this.getModel(gameID), gameID);
+            some.clear();
+        }
+    }
+
+    @Override
+    public void addUser(User user, int user_id) {
+        IUserDAO userDAO = null;
+        if (persistence_factory == null) {
+            return;
+        }
+        try {
+            userDAO = persistence_factory.generateIUserDAO();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        userDAO.addUser(user, user.getPlayerID());
+    }
 
 	public void setN(int commands_BEFORE_SAVE)
 	{
