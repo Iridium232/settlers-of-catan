@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import server.commands.Command;
 import server.communication.ModelTranslator;
 import server.plugin_attachments.IGameDAO;
@@ -58,7 +60,7 @@ public class ServerFacade implements IServer
         this.games = new ArrayList<>();
         this.users = new ArrayList<>();
         this.commands=new HashMap<Integer,ArrayList<Command>>();
-        createGameCommand(new CreateGameRequest(false,false,false,"Default"));
+        createGameCommand(new CreateGameRequest(false, false, false, "Default"));
         register("Sam","sam");
         register("Brooke","brooke");
         register("Pete","pete");
@@ -1299,7 +1301,12 @@ public class ServerFacade implements IServer
 		{
 			for(Map.Entry<Integer,Object> user: userDAO.getUsers().entrySet()) 
 			{
-				users.add(user.getKey(),(User)user.getValue());
+                LinkedTreeMap<String, Object> userMap = (LinkedTreeMap<String, Object>)user.getValue();
+                String name = (String)userMap.get("name");
+                String password = (String)userMap.get("password");
+                Double id = (Double)userMap.get("playerID");
+                User u = new User(name, password, id.intValue());
+				users.add(u.getPlayerID(),u);
 			}
 		}
 		if(gameDAO.getGames() != null)
