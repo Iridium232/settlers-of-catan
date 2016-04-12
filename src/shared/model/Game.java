@@ -1121,4 +1121,18 @@ public class Game
     	map.recolor(old_color, new_color);
     	this.log(index, Action.REJOIN, -1);
     }
+
+	public void populateBanks() 
+	{
+		ResourceMultiSet bank = new ResourceMultiSet(19,19,19,19,19);
+		for(Player player : players)
+		{
+			if(player==null ||player.getResources() == null)
+			{
+				continue;
+			}
+			bank.pay(player.getResources());	
+		}
+		
+	}
 }
