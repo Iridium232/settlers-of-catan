@@ -54,7 +54,7 @@ public class ServerFacade implements IServer
 	private IGameDAO gameDAO;
 	private IUserDAO userDAO;
 	
-    public ServerFacade(int maxSize) {
+    public ServerFacade() {
         this.games = new ArrayList<>();
         this.users = new ArrayList<>();
         this.commands=new HashMap<Integer,ArrayList<Command>>();
@@ -63,7 +63,6 @@ public class ServerFacade implements IServer
         register("Brooke","brooke");
         register("Pete","pete");
         register("Mark","mark");
-        max_command_size=maxSize;
     }
 
     /**
@@ -1341,9 +1340,12 @@ public class ServerFacade implements IServer
     public void addCommand(int gameID, Command c)
     {
         IGameDAO gameDAO = null;
-        try {
+        try 
+        {
             gameDAO = persistence_factory.generateGameDAO();
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
             e.printStackTrace();
         }
         ArrayList<Command> some = commands.get(gameID);
@@ -1362,9 +1364,12 @@ public class ServerFacade implements IServer
         if (persistence_factory == null) {
             return;
         }
-        try {
+        try 
+        {
             userDAO = persistence_factory.generateIUserDAO();
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
             e.printStackTrace();
         }
         userDAO.addUser(user, user.getPlayerID());

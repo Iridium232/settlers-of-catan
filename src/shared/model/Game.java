@@ -633,6 +633,9 @@ public class Game
 		buyer.pay(ResourceType.SHEEP, 1);
 		buyer.pay(ResourceType.ORE, 1);
 		buyer.pay(ResourceType.WHEAT, 1);
+		this.resource_bank.add(ResourceType.SHEEP, 1);
+		this.resource_bank.add(ResourceType.ORE, 1);
+		this.resource_bank.add(ResourceType.WHEAT, 1);
 		DevCardType type = development_bank.getRandomCard();
 		if(type==DevCardType.MONUMENT){
 			buyer.getOldDevCards().add(type,1);
@@ -657,12 +660,11 @@ public class Game
 				int longest=15-longestOwner.getRoads();
 				if(roads>longest&&longestOwner.getPlayerID()!=current.getPlayerID()){
 					longestOwner.incrementVictoryPoints(-2);
-				
-//					longestOwner.setVictoryPoints(longestOwner.getVictoryPoints()-2);
+
 					turn_tracker.setLongest_road_player(commanding_player_index);
 					current.incrementVictoryPoints(2);
 					this.log(commanding_player_index, Action.LONGESTROAD, -1);
-//					current.setVictoryPoints(current.getVictoryPoints()+2);
+
 				}
 			}
 		}
