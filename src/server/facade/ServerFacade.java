@@ -1309,10 +1309,10 @@ public class ServerFacade implements IServer
 		{
 			for(Map.Entry<Integer,String> g:gameDAO.getGames().entrySet())
 			{
-//                shared.model.Game game = gson.fromJson(g.getValue(), shared.model.Game.class);
-//                Fascade newFascade = new Fascade();
-//                newFascade.changeModel(game);
-//				games.add(g.getKey(), newFascade);
+                shared.model.Game game = gson.fromJson(g.getValue(), shared.model.Game.class);
+                Fascade newFascade = new Fascade();
+                newFascade.changeModel(game);
+				games.add(g.getKey(), newFascade);
 			}
 		}
 		if(gameDAO.getCommands() != null)

@@ -1,0 +1,6 @@
+{
+  "name": "Freddy",
+  "password": "qqqqq",
+  "playerID": 0
+}
+
