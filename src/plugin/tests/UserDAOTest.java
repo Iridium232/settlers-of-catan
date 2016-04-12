@@ -26,7 +26,7 @@ public class UserDAOTest extends TestCase {
         userDAO.addUser(user2, 1);
         userDAO.addUser(user3, 2);
 
-        Map<Integer, Object> result = userDAO.getUsers();
+        Map<Integer, String> result = userDAO.getUsers();
         assertTrue(true);
     }
 

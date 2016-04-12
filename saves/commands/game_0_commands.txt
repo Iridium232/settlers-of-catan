@@ -1,0 +1,25 @@
+{
+  "params": {
+    "ratio": 3,
+    "inputResource": "wood",
+    "outputResource": "brick",
+    "type": "maritimeTrade",
+    "playerIndex": 2
+  },
+  "gameID": 0
+}
+
+{
+  "params": {
+    "roadLocation": {
+      "x": 1,
+      "y": 0,
+      "direction": "NE"
+    },
+    "free": false,
+    "type": "buildRoad",
+    "playerIndex": 2
+  },
+  "gameID": 0
+}
+

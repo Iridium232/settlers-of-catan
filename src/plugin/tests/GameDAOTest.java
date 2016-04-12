@@ -19,12 +19,12 @@ public class GameDAOTest extends TestCase {
     private GameDAO gameDAO = new GameDAO();
 
     public void testGetGames() throws Exception {
-        Map<Integer, Object> result = gameDAO.getGames();
+        Map<Integer, String> result = gameDAO.getGames();
         assertTrue(true);
     }
 
     public void testGetCommands() throws Exception {
-        Map<Integer, List<Object>> result = gameDAO.getCommands();
+        Map<Integer, List<String>> result = gameDAO.getCommands();
         assertTrue(true);
     }
 
