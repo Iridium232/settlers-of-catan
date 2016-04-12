@@ -687,6 +687,8 @@ public class Game
 		{
 			players[commanding_player_index].pay(ResourceType.WOOD, 1);
 			players[commanding_player_index].pay(ResourceType.BRICK, 1);
+			this.resource_bank.add(ResourceType.WOOD, 1);
+			this.resource_bank.add(ResourceType.BRICK, 1);
 		}
 		
 		shared.locations.EdgeLocation place = 
@@ -874,6 +876,7 @@ public class Game
 	public void discard(int player_index, ResourceMultiSet discardedCards) 
 	{
 		players[player_index].discard(discardedCards);
+		this.resource_bank.add(discardedCards);
 		players[player_index].setDiscarded(true);
 		for( Player player : players)
 		{
@@ -902,6 +905,8 @@ public class Game
 		players[player_index].pay(ResourceType.WHEAT, 2);
 		players[player_index].pay(ResourceType.ORE, 3);
 		players[player_index].placeCity();
+		this.resource_bank.add(ResourceType.WHEAT, 2);
+		this.resource_bank.add(ResourceType.ORE, 3);
 		map.addBuilding(new City(players[player_index].getColor(),
                 place, player_index));
 		players[player_index].setSettlements(players[player_index].getSettlements() + 1);
@@ -925,6 +930,10 @@ public class Game
             players[player_index].pay(ResourceType.SHEEP, 1);
             players[player_index].pay(ResourceType.WOOD, 1);
             players[player_index].pay(ResourceType.WHEAT, 1);
+			this.resource_bank.add(ResourceType.WOOD, 1);
+			this.resource_bank.add(ResourceType.BRICK, 1);
+			this.resource_bank.add(ResourceType.SHEEP, 1);
+			this.resource_bank.add(ResourceType.WHEAT, 1);
         }
         players[player_index].placeSettlement();
 		map.addBuilding(new Settlement(player_index, place, players[player_index].getColor()));
@@ -1044,7 +1053,13 @@ public class Game
 			{
 				this.log.addMessage(new MessageLine(p.getName(),p.getName() + 
 						" has won the game!"));
-				this.winner = p.getPlayerIndex();
+				for(int i = 0; i < 4; i++)
+				{
+					if(players[i] != null && players[i].getVictoryPoints() >= 10)
+					{
+						winner = i;
+					}
+				}
 			}
 		}
 	}

@@ -419,5 +419,15 @@ public class ResourceMultiSet {
 	}
 
 
+	public void add(ResourceMultiSet cards) 
+	{
+		this.brick += cards.getBrick();
+		this.ore += cards.getOre();
+		this.sheep += cards.getSheep();
+		this.wheat += cards.getWheat();
+		this.wood += cards.getWood();
+	}
+
+
 
 }
