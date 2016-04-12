@@ -540,9 +540,21 @@ public class ModelPopulator {
         newTracker.setLargest_army_player(serverTracker.getLargestArmy());
         newTracker.setLongest_road_player(serverTracker.getLongestRoad());
         
-
-        if (serverTracker.getStatus().equals("FirstRound")) { newTracker.setStatus(TurnStatus.FIRSTROUND);newTracker.setState(new FirstRoundState()); }
-        if (serverTracker.getStatus().equals("SecondRound")) { newTracker.setStatus(TurnStatus.SECONDROUND);newTracker.setState(new SecondRoundState()); }
+        newTracker.setFirstRound(false);
+        newTracker.setSecondRound(false);
+        if (serverTracker.getStatus().equals("FirstRound")) 
+        { 
+        	newTracker.setStatus(TurnStatus.FIRSTROUND);
+        	newTracker.setState(new FirstRoundState());
+        	newTracker.setFirstRound(true);
+        	newTracker.setSecondRound(true);
+        }
+        if (serverTracker.getStatus().equals("SecondRound"))
+        { 
+        	newTracker.setStatus(TurnStatus.SECONDROUND);
+        	newTracker.setState(new SecondRoundState());
+        	newTracker.setSecondRound(true);
+        }
         if (serverTracker.getStatus().equals("Rolling")) { newTracker.setStatus(TurnStatus.ROLLING);newTracker.setState(new RollingState()); }
         if (serverTracker.getStatus().equals("Robbing")) { newTracker.setStatus(TurnStatus.ROBBING);newTracker.setState(new RobbingState()); }
         if (serverTracker.getStatus().equals("Discarding")) { newTracker.setStatus(TurnStatus.DISCARDING);newTracker.setState(new DiscardState()); }
