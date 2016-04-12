@@ -1,10 +1,7 @@
 {
   "params": {
-    "ratio": 3,
-    "inputResource": "wood",
-    "outputResource": "brick",
-    "type": "maritimeTrade",
-    "playerIndex": 2
+    "type": "finishTurn",
+    "playerIndex": 1
   },
   "gameID": 0
 }
@@ -13,12 +10,43 @@
   "params": {
     "roadLocation": {
       "x": 1,
-      "y": 0,
-      "direction": "NE"
+      "y": -1,
+      "direction": "N"
     },
-    "free": false,
+    "free": true,
     "type": "buildRoad",
-    "playerIndex": 2
+    "playerIndex": 0
+  },
+  "gameID": 0
+}
+
+{
+  "params": {
+    "vertexLocation": {
+      "direction": "NE",
+      "x": 1,
+      "y": -1
+    },
+    "free": true,
+    "type": "buildSettlement",
+    "playerIndex": 0
+  },
+  "gameID": 0
+}
+
+{
+  "params": {
+    "type": "finishTurn",
+    "playerIndex": 0
+  },
+  "gameID": 0
+}
+
+{
+  "params": {
+    "number": 4,
+    "type": "rollNumber",
+    "playerIndex": 0
   },
   "gameID": 0
 }

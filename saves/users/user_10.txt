@@ -1,0 +1,6 @@
+{
+  "name": "lob",
+  "password": "lobby",
+  "playerID": 10
+}
+
