@@ -199,4 +199,11 @@ public class TurnTracker
 	{
 		this.state = playingState;
 	}
+
+	public void setFirstRound(boolean b) {
+		this.first_round = b;
+	}
+	public void setSecondRound(boolean b){
+		this.second_round = b;
+	}
 }
