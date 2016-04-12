@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import client.communication.ModelPopulator;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import org.json.JSONException;
@@ -1313,10 +1314,10 @@ public class ServerFacade implements IServer
 		{
 			for(Map.Entry<Integer,String> g:gameDAO.getGames().entrySet())
 			{
-//                shared.model.Game game = gson.fromJson(g.getValue(), shared.model.Game.class);
-//                Fascade newFascade = new Fascade();
-//                newFascade.changeModel(game);
-//				games.add(g.getKey(), newFascade);
+                JSONObject comObAsJSON = Serializer.getSINGLETON().deserialize(g.getValue());
+                Fascade newFascade = new Fascade();
+                ModelPopulator.populateModel(comObAsJSON, newFascade);
+				games.add(g.getKey(), newFascade);
 			}
 		}
 		if(gameDAO.getCommands() != null)
@@ -1363,7 +1364,8 @@ public class ServerFacade implements IServer
         gameDAO.saveCommand(c, gameID);
         if(some.size()==max_command_size)
         {
-            gameDAO.saveModelAndEmptyCommands(getFacadeByID(gameID).getModel(), gameID);
+            CommunicationModel cm = ModelTranslator.translateModel(getFacadeByID(gameID).getModel());
+            gameDAO.saveModelAndEmptyCommands(cm, gameID);
             some.clear();
         }
     }
