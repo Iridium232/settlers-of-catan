@@ -22,6 +22,12 @@ import shared.model.messages.MessageLine;
 import shared.model.messages.MessageList;
 import shared.model.player.ResourceMultiSet;
 import shared.model.ports.*;
+import shared.model.states.DiscardState;
+import shared.model.states.FirstRoundState;
+import shared.model.states.PlayingState;
+import shared.model.states.RobbingState;
+import shared.model.states.RollingState;
+import shared.model.states.SecondRoundState;
 
 /**
  * Michael Rhodes
@@ -533,14 +539,17 @@ public class ModelPopulator {
         newTracker.setActive_player(serverTracker.getCurrentTurn());
         newTracker.setLargest_army_player(serverTracker.getLargestArmy());
         newTracker.setLongest_road_player(serverTracker.getLongestRoad());
+        
 
-        if (serverTracker.getStatus().equals("FirstRound")) { newTracker.setStatus(TurnStatus.FIRSTROUND); }
-        if (serverTracker.getStatus().equals("SecondRound")) { newTracker.setStatus(TurnStatus.SECONDROUND); }
-        if (serverTracker.getStatus().equals("Rolling")) { newTracker.setStatus(TurnStatus.ROLLING); }
-        if (serverTracker.getStatus().equals("Robbing")) { newTracker.setStatus(TurnStatus.ROBBING); }
-        if (serverTracker.getStatus().equals("Discarding")) { newTracker.setStatus(TurnStatus.DISCARDING); }
-        if (serverTracker.getStatus().equals("Playing")) { newTracker.setStatus(TurnStatus.PLAYING); }
-
+        if (serverTracker.getStatus().equals("FirstRound")) { newTracker.setStatus(TurnStatus.FIRSTROUND);newTracker.setState(new FirstRoundState()); }
+        if (serverTracker.getStatus().equals("SecondRound")) { newTracker.setStatus(TurnStatus.SECONDROUND);newTracker.setState(new SecondRoundState()); }
+        if (serverTracker.getStatus().equals("Rolling")) { newTracker.setStatus(TurnStatus.ROLLING);newTracker.setState(new RollingState()); }
+        if (serverTracker.getStatus().equals("Robbing")) { newTracker.setStatus(TurnStatus.ROBBING);newTracker.setState(new RobbingState()); }
+        if (serverTracker.getStatus().equals("Discarding")) { newTracker.setStatus(TurnStatus.DISCARDING);newTracker.setState(new DiscardState()); }
+        if (serverTracker.getStatus().equals("Playing")) { newTracker.setStatus(TurnStatus.PLAYING);newTracker.setState(new PlayingState()); }
+       
+        
+        
         newModel.setTurn_tracker(newTracker);
     }
 }
