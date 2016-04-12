@@ -1330,7 +1330,9 @@ public class ServerFacade implements IServer
 						w.execute(this);
 					}
 				}
-				gameDAO.saveModelAndEmptyCommands(getModel(c.getKey()), c.getKey());
+                int gameID = c.getKey().intValue();
+                CommunicationModel cm = ModelTranslator.translateModel(getFacadeByID(gameID).getModel());
+                gameDAO.saveModelAndEmptyCommands(cm, gameID);
 			}
 		}
 	}
