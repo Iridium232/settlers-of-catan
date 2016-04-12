@@ -25,8 +25,8 @@ public class GameDAO implements IGameDAO {
      * @return
      */
     @Override
-    public Map<Integer, Object> getGames() {
-        Map<Integer, Object> map = new HashMap<>();
+    public Map<Integer, String> getGames() {
+        Map<Integer, String> map = new HashMap<>();
         File root = new File("saves");
         if (!root.exists()) {
             return null;
@@ -39,7 +39,7 @@ public class GameDAO implements IGameDAO {
         }
         for (String file: files) {
             int id = extractID(file);
-            List<Object> game = MyFileReader.getSINGLETON().readFile(source, removeExt(file));
+            List<String> game = MyFileReader.getSINGLETON().readFile(source, removeExt(file));
             map.put(id, game.get(0));
         }
         return map;
@@ -53,8 +53,8 @@ public class GameDAO implements IGameDAO {
      * @return
      */
     @Override
-    public Map<Integer, List<Object>> getCommands() {
-        Map<Integer, List<Object>> map = new HashMap<>();
+    public Map<Integer, List<String>> getCommands() {
+        Map<Integer, List<String>> map = new HashMap<>();
         File root = new File("saves");
         if (!root.exists()) {
             return null;
@@ -67,7 +67,7 @@ public class GameDAO implements IGameDAO {
         }
         for (String file: files) {
             int id = extractID(file);
-            List<Object> commands = MyFileReader.getSINGLETON().readFile(source, removeExt(file));
+            List<String> commands = MyFileReader.getSINGLETON().readFile(source, removeExt(file));
             map.put(id, commands);
         }
         return map;

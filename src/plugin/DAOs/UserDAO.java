@@ -27,8 +27,8 @@ public class UserDAO implements IUserDAO {
      * @return
      */
     @Override
-    public Map<Integer, Object> getUsers() {
-        Map<Integer, Object> map = new HashMap<>();
+    public Map<Integer, String> getUsers() {
+        Map<Integer, String> map = new HashMap<>();
         File root = new File("saves");
         if (!root.exists()) {
             return null;
@@ -41,7 +41,7 @@ public class UserDAO implements IUserDAO {
         }
         for (String file: files) {
             int id = extractID(removeExt(file));
-            List<Object> user = MyFileReader.getSINGLETON().readFile(source, removeExt(file));
+            List<String> user = MyFileReader.getSINGLETON().readFile(source, removeExt(file));
             map.put(id, user.get(0));
         }
         return map;

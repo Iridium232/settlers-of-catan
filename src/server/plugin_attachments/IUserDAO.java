@@ -13,7 +13,7 @@ public interface IUserDAO
 	 * @post A map of all stored users is returned
 	 * @return
 	 */
-	public Map<Integer, Object> getUsers();
+	public Map<Integer, String> getUsers();
 	
 	/**
 	 * Add a User to the Database

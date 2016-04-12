@@ -15,14 +15,14 @@ public interface IGameDAO
 	 * @post gets a map of games that is stored in the database
 	 * @return
 	 */
-	public Map<Integer,Object> getGames();
+	public Map<Integer,String> getGames();
 	
 	/**
 	 * @pre none
 	 * @post returns a map of command lists by game_id
 	 * @return
 	 */
-	public Map<Integer,List<Object>> getCommands();
+	public Map<Integer,List<String>> getCommands();
 	
 	/**
 	 * Adds a command to that game in the database

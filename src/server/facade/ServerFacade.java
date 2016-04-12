@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import server.commands.Command;
 import server.communication.ModelTranslator;
@@ -1299,28 +1298,23 @@ public class ServerFacade implements IServer
 		}
 		if(userDAO.getUsers() != null)
 		{
-			for(Map.Entry<Integer,Object> user: userDAO.getUsers().entrySet()) 
+			for(Map.Entry<Integer,String> user: userDAO.getUsers().entrySet())
 			{
-                LinkedTreeMap<String, Object> userMap = (LinkedTreeMap<String, Object>)user.getValue();
-                String name = (String)userMap.get("name");
-                String password = (String)userMap.get("password");
-                Double id = (Double)userMap.get("playerID");
-                User u = new User(name, password, id.intValue());
-				users.add(u.getPlayerID(),u);
+//				users.add();
 			}
 		}
 		if(gameDAO.getGames() != null)
 		{
-			for(Map.Entry<Integer,Object> g:gameDAO.getGames().entrySet()) 
+			for(Map.Entry<Integer,String> g:gameDAO.getGames().entrySet())
 			{
-				games.add(g.getKey(),(Fascade)g.getValue());
+//				games.add(g.getKey(), );
 			}
 		}
 		if(gameDAO.getCommands() != null)
 		{
-			for(Entry<Integer, List<Object>> c:gameDAO.getCommands().entrySet()) 
+			for(Entry<Integer, List<String>> c:gameDAO.getCommands().entrySet())
 			{
-				List<Object> coms = c.getValue();
+				List<String> coms = c.getValue();
 				if(coms.size() > 0) 
 				{
 					for(Object s:coms) 
@@ -1360,7 +1354,7 @@ public class ServerFacade implements IServer
         gameDAO.saveCommand(c, gameID);
         if(some.size()==max_command_size)
         {
-            gameDAO.saveModelAndEmptyCommands(this.getModel(gameID), gameID);
+            gameDAO.saveModelAndEmptyCommands(getFacadeByID(gameID).getModel(), gameID);
             some.clear();
         }
     }

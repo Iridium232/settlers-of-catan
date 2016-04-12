@@ -28,7 +28,7 @@ public class MyFileReader {
 
     private MyFileReader() {}
 
-    public List<Object> readFile(File destDir, String fileName) {
+    public List<String> readFile(File destDir, String fileName) {
         File savesRoot = new File("saves");
         if (!savesRoot.exists()) {
             return null;
@@ -40,14 +40,14 @@ public class MyFileReader {
         File destination = new File(savesRoot.getPath() + File.separator + destDir.getName() +
                 File.separator + fileName + ".txt");
 
-        List<Object> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         try {
             input = new Scanner(new BufferedInputStream(new FileInputStream(destination)));
             input.useDelimiter("\n\n");
             String holder;
             while (input.hasNext()) {
                 holder = input.next();
-                list.add(PluginSerializer.getSINGLETON().fromJSON(holder));
+                list.add(holder);
             }
             input.close();
         } catch (FileNotFoundException e) {
