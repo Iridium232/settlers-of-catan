@@ -171,14 +171,7 @@ public class Game
 	 */
 	public int getWinner() 
 	{
-		if(winner > 0 && players[winner].getVictoryPoints() >= 10)
-		{
-			return winner;
-		}
-		else
-		{
-			return -1;
-		}
+		return winner;
 	}
 
 	/**
@@ -1059,7 +1052,7 @@ public class Game
 				{
 					if(players[i] != null && players[i].getVictoryPoints() >= 10)
 					{
-						winner = i;
+						winner = players[i].getPlayerID();
 					}
 				}
 			}

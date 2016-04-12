@@ -1,0 +1,56 @@
+{
+  "params": {
+    "roadLocation": {
+      "x": 2,
+      "y": -2,
+      "direction": "NW"
+    },
+    "free": false,
+    "type": "buildRoad",
+    "playerIndex": 1
+  },
+  "gameID": 0
+}
+
+{
+  "params": {
+    "type": "finishTurn",
+    "playerIndex": 1
+  },
+  "gameID": 0
+}
+
+{
+  "params": {
+    "number": 5,
+    "type": "rollNumber",
+    "playerIndex": 2
+  },
+  "gameID": 0
+}
+
+{
+  "params": {
+    "ratio": 3,
+    "inputResource": "wheat",
+    "outputResource": "brick",
+    "type": "maritimeTrade",
+    "playerIndex": 2
+  },
+  "gameID": 0
+}
+
+{
+  "params": {
+    "roadLocation": {
+      "x": -2,
+      "y": 1,
+      "direction": "NW"
+    },
+    "free": false,
+    "type": "buildRoad",
+    "playerIndex": 2
+  },
+  "gameID": 0
+}
+
