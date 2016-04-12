@@ -61,7 +61,7 @@ public class Server
 	 * @param args
 	 */
 	private HttpServer server;
-	private ServerFacade facade;
+	private ServerFacade facade=new ServerFacade();
 	private Server() {
 		return;
 	}
@@ -110,7 +110,6 @@ public class Server
 		
 	}
 	private void run() {
-		facade=new ServerFacade(COMMANDS_BEFORE_SAVE);
 		try {
 			server = HttpServer.create(new InetSocketAddress(SERVER_PORT_NUMBER),MAX_WAITING_CONNECTIONS);
 		} 
