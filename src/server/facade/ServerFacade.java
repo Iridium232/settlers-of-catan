@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.UUID;
 
 import client.communication.ModelPopulator;
+import client.data.GameInfo;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import org.json.JSONException;
@@ -1314,6 +1315,9 @@ public class ServerFacade implements IServer
                 JSONObject comObAsJSON = Serializer.getSINGLETON().deserialize(g.getValue());
                 Fascade newFascade = new Fascade();
                 ModelPopulator.populateModel(comObAsJSON, newFascade);
+                GameInfo info = new GameInfo();
+                info.setId(g.getKey());
+                newFascade.getModel().setGameinfo(info);
 				games.add(g.getKey(), newFascade);
 			}
 		}
