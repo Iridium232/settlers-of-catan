@@ -37,7 +37,7 @@ public class CommandsTest {
     @Before
     public void setUp() {
         this.gameFascade = new Fascade();
-        this.serverFacade = new ServerFacade(10);
+        this.serverFacade = new ServerFacade();
         this.model = new Game();
         this.strModel = getStrModel();
 
