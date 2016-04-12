@@ -63,8 +63,8 @@ public class ServerFacade implements IServer
 	private IUserDAO userDAO;
 	
     public ServerFacade() {
-        this.games = new ArrayList<>();
-        this.users = new ArrayList<>();
+        this.games = new ArrayList<shared.model.Fascade>();
+        this.users = new ArrayList<User>();
         this.commands=new HashMap<Integer,ArrayList<Command>>();
         //createGameCommand(new CreateGameRequest(false, false, false, "Default"));
     }
