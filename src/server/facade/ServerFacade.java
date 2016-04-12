@@ -9,6 +9,10 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
+import org.json.JSONException;
+import org.json.JSONObject;
+import server.commands.AcceptTradeCommand;
+import server.commands.BuildCity;
 import server.commands.Command;
 import server.communication.ModelTranslator;
 import server.plugin_attachments.IGameDAO;
@@ -1305,10 +1309,10 @@ public class ServerFacade implements IServer
 		{
 			for(Map.Entry<Integer,String> g:gameDAO.getGames().entrySet())
 			{
-                shared.model.Game game = gson.fromJson(g.getValue(), shared.model.Game.class);
-                Fascade newFascade = new Fascade();
-                newFascade.changeModel(game);
-				games.add(g.getKey(), newFascade);
+//                shared.model.Game game = gson.fromJson(g.getValue(), shared.model.Game.class);
+//                Fascade newFascade = new Fascade();
+//                newFascade.changeModel(game);
+//				games.add(g.getKey(), newFascade);
 			}
 		}
 		if(gameDAO.getCommands() != null)
@@ -1320,7 +1324,7 @@ public class ServerFacade implements IServer
 				{
 					for(String s:coms)
 					{
-						Command w=gson.fromJson(s, Command.class);
+						Command w=getCommandInstance(s);
 						w.execute(this);
 					}
 				}
@@ -1381,4 +1385,55 @@ public class ServerFacade implements IServer
 	{
 		max_command_size = commands_BEFORE_SAVE;
 	}
+
+    private Command getCommandInstance(String s) {
+        Gson gson = new Gson();
+        JSONObject j = Serializer.getSINGLETON().deserialize(s);
+        JSONObject j2 = null;
+        String j3 = null;
+        try {
+            j2 = (JSONObject)j.get("params");
+            j3 = (String)j2.get("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        switch (j3) {
+            case "acceptTrade":
+                return gson.fromJson(s, AcceptTradeCommand.class);
+            case "buildCity":
+                return gson.fromJson(s, server.commands.BuildCity.class);
+            case "buildRoad":
+                return gson.fromJson(s, server.commands.BuildRoad.class);
+            case "buildSettlement":
+                return gson.fromJson(s, server.commands.BuildSettlement.class);
+            case "buyDevCard":
+                return gson.fromJson(s, server.commands.BuyDevCard.class);
+            case "discardCards":
+                return gson.fromJson(s, server.commands.DiscardCards.class);
+            case "finishTurn":
+                return gson.fromJson(s, server.commands.FinishTurn.class);
+            case "maritimeTrade":
+                return gson.fromJson(s, server.commands.MaritimeTrade.class);
+            case "Monopoly":
+                return gson.fromJson(s, server.commands.Monopoly.class);
+            case "Monument":
+                return gson.fromJson(s, server.commands.Monument.class);
+            case "offerTrade":
+                return gson.fromJson(s, server.commands.OfferTrade.class);
+            case "Road_Building":
+                return gson.fromJson(s, server.commands.Road_Building.class);
+            case "robPlayer":
+                return gson.fromJson(s, server.commands.RobPlayer.class);
+            case "rollNumber":
+                return gson.fromJson(s, server.commands.RollNumber.class);
+            case "sendChat":
+                return gson.fromJson(s, server.commands.SendChat.class);
+            case "Soldier":
+                return gson.fromJson(s, server.commands.Soldier.class);
+            case "Year_of_Plenty":
+                return gson.fromJson(s, server.commands.Year_of_Plenty.class);
+            default:
+                return null;
+        }
+    }
 }
