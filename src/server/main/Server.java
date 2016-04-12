@@ -55,7 +55,7 @@ public class Server
 	private static String PERSISTENCE_TYPE = "NoSQL";
 	private static int COMMANDS_BEFORE_SAVE = 10;
 	private static final String PLUGIN_REGISTRY_RELATIVE_PATH = "src/plugins.config";
-	private static final boolean RESET = true;
+	private static final boolean RESET = false;
 	/**
 	 * Main Function that starts up all the pieces of the server.
 	 * @param args
