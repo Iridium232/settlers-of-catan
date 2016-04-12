@@ -60,11 +60,7 @@ public class ServerFacade implements IServer
         this.games = new ArrayList<>();
         this.users = new ArrayList<>();
         this.commands=new HashMap<Integer,ArrayList<Command>>();
-        createGameCommand(new CreateGameRequest(false, false, false, "Default"));
-        register("Sam","sam");
-        register("Brooke","brooke");
-        register("Pete","pete");
-        register("Mark","mark");
+        //createGameCommand(new CreateGameRequest(false, false, false, "Default"));
     }
 
     /**
