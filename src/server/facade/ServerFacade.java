@@ -1442,4 +1442,9 @@ public class ServerFacade implements IServer
                 return null;
         }
     }
+    
+    public void populateBanks(Fascade facade)
+    {
+    	facade.populateBanks();
+    }
 }

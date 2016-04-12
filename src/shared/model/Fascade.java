@@ -1559,6 +1559,11 @@ public class Fascade
 	public int getGameID() {
 		return game_model.getGameinfo().getId();		
 	}
+
+	public void populateBanks() 
+	{
+		game_model.populateBanks();
+	}
 }
 
 
