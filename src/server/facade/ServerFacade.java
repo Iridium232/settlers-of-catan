@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import server.commands.Command;
 import server.communication.ModelTranslator;
@@ -1286,6 +1287,7 @@ public class ServerFacade implements IServer
      */
 	public void addPersistence(IPersistenceProvider pp) 
 	{
+        Gson gson = new Gson();
 		this.persistence_factory = pp;
 		try 
 		{
@@ -1300,14 +1302,17 @@ public class ServerFacade implements IServer
 		{
 			for(Map.Entry<Integer,String> user: userDAO.getUsers().entrySet())
 			{
-//				users.add();
+				users.add(gson.fromJson(user.getValue(), User.class));
 			}
 		}
 		if(gameDAO.getGames() != null)
 		{
 			for(Map.Entry<Integer,String> g:gameDAO.getGames().entrySet())
 			{
-//				games.add(g.getKey(), );
+                shared.model.Game game = gson.fromJson(g.getValue(), shared.model.Game.class);
+                Fascade newFascade = new Fascade();
+                newFascade.changeModel(game);
+				games.add(g.getKey(), newFascade);
 			}
 		}
 		if(gameDAO.getCommands() != null)
@@ -1317,9 +1322,9 @@ public class ServerFacade implements IServer
 				List<String> coms = c.getValue();
 				if(coms.size() > 0) 
 				{
-					for(Object s:coms) 
+					for(String s:coms)
 					{
-						Command w=(Command)s;
+						Command w=gson.fromJson(s, Command.class);
 						w.execute(this);
 					}
 				}
